@@ -2,111 +2,240 @@ import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Volume2, VolumeX, Eye, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, Volume2, VolumeX, Sparkles } from 'lucide-react';
 
 interface CinematicIntro3DProps {
   onComplete: () => void;
 }
 
-// 3D Scene Components
-function AshramBuilding() {
+// ==========================================
+// 1. REALISTIC VYENKATESH ASHRAM 3D MODEL
+// Reconstructed faithfully from owner-provided photos:
+// - L-shaped 2-story building
+// - Terracotta pitched hipped roofs with bracketed eaves
+// - Cream/sandstone stucco with warm stone corner accents
+// - Ground-floor continuous shaded veranda with stone columns
+// - First-floor open balcony with railings
+// - Wooden framed shuttered windows and opening double doors
+// - Prominent signboard: "व्यंकटेश आश्रम / VYENKATESH ASHRAM"
+// ==========================================
+function AshramBuilding({ doorsOpenProgress }: { doorsOpenProgress: number }) {
+  const doorAngle = doorsOpenProgress * (Math.PI / 2.3);
+
   return (
-    <group position={[0, 0, -45]}>
-      {/* Foundation plinth */}
-      <mesh position={[0, 0.4, 0]} receiveShadow>
-        <boxGeometry args={[30, 0.8, 18]} />
-        <meshStandardMaterial color="#8B7D6B" roughness={0.9} />
+    <group position={[0, 0, -42]}>
+      {/* Stone Foundation Plinth & Veranda Platform */}
+      <mesh position={[0, 0.45, 0]} receiveShadow>
+        <boxGeometry args={[32, 0.9, 20]} />
+        <meshStandardMaterial color="#A39382" roughness={0.9} />
       </mesh>
 
-      {/* Ground Floor Main Structure */}
-      <mesh position={[0, 3.2, 0]} castShadow receiveShadow>
+      {/* Veranda steps leading to entrance */}
+      <mesh position={[0, 0.2, 8.5]} receiveShadow>
+        <boxGeometry args={[8, 0.4, 2.5]} />
+        <meshStandardMaterial color="#BDB2A6" roughness={0.85} />
+      </mesh>
+      <mesh position={[0, 0.38, 7.8]} receiveShadow>
+        <boxGeometry args={[6.5, 0.36, 1.8]} />
+        <meshStandardMaterial color="#BDB2A6" roughness={0.85} />
+      </mesh>
+
+      {/* Main Building Wing (Ground Floor) */}
+      <mesh position={[2, 3.3, -1]} castShadow receiveShadow>
         <boxGeometry args={[26, 4.8, 14]} />
-        <meshStandardMaterial color="#F5EFE6" roughness={0.8} />
+        <meshStandardMaterial color="#F7F1E5" roughness={0.8} />
       </mesh>
 
-      {/* Ground floor shaded veranda roof / balcony floor */}
-      <mesh position={[0, 5.8, 2.5]} castShadow receiveShadow>
-        <boxGeometry args={[28, 0.5, 9]} />
-        <meshStandardMaterial color="#A47551" roughness={0.7} />
+      {/* Perpendicular Left Wing (L-shape as seen in reference photo) */}
+      <mesh position={[-10, 3.3, 3]} castShadow receiveShadow>
+        <boxGeometry args={[10, 4.8, 12]} />
+        <meshStandardMaterial color="#F7F1E5" roughness={0.8} />
       </mesh>
 
-      {/* Ground Floor Veranda Columns (Pillars) */}
-      {[-12, -8, -4, 0, 4, 8, 12].map((x, i) => (
-        <group key={`col-${i}`} position={[x, 2.8, 6.5]}>
-          <mesh castShadow>
-            <cylinderGeometry args={[0.32, 0.38, 4.8, 16]} />
-            <meshStandardMaterial color="#D7C4B7" roughness={0.6} />
+      {/* Sandstone masonry corner quoins / accent blocks */}
+      {[-14.8, -5.2, 14.8].map((x, xi) => (
+        <group key={`quoin-${xi}`} position={[x, 3.3, 5.8]}>
+          {[0, 1.2, 2.4, 3.6].map((y, yi) => (
+            <mesh key={`q-${yi}`} position={[0, y - 1.8, 0]}>
+              <boxGeometry args={[0.55, 0.55, 0.55]} />
+              <meshStandardMaterial color="#D7C4B7" roughness={0.85} />
+            </mesh>
+          ))}
+        </group>
+      ))}
+
+      {/* Ground Floor Shaded Veranda Roof / Balcony Floor */}
+      <mesh position={[2, 5.8, 3.5]} castShadow receiveShadow>
+        <boxGeometry args={[27.5, 0.45, 8.5]} />
+        <meshStandardMaterial color="#BC9E82" roughness={0.7} />
+      </mesh>
+
+      {/* Veranda Support Pillars (Stone columns with plinths & capitals) */}
+      {[-4, 0, 4, 8, 12, 15].map((x, i) => (
+        <group key={`ashram-pillar-${i}`} position={[x, 3.0, 7.2]}>
+          {/* Main shaft */}
+          <mesh castShadow receiveShadow>
+            <boxGeometry args={[0.65, 4.9, 0.65]} />
+            <meshStandardMaterial color="#E0D2C3" roughness={0.7} />
           </mesh>
-          {/* Base */}
-          <mesh position={[0, -2.2, 0]}>
-            <boxGeometry args={[0.9, 0.4, 0.9]} />
-            <meshStandardMaterial color="#9C8979" />
+          {/* Base plinth */}
+          <mesh position={[0, -2.3, 0]}>
+            <boxGeometry args={[0.9, 0.45, 0.9]} />
+            <meshStandardMaterial color="#8A7A6A" />
           </mesh>
-          {/* Capital */}
-          <mesh position={[0, 2.2, 0]}>
-            <boxGeometry args={[0.9, 0.3, 0.9]} />
-            <meshStandardMaterial color="#9C8979" />
+          {/* Capital header */}
+          <mesh position={[0, 2.3, 0]}>
+            <boxGeometry args={[0.9, 0.35, 0.9]} />
+            <meshStandardMaterial color="#8A7A6A" />
           </mesh>
         </group>
       ))}
 
-      {/* Main Entrance Double Door */}
-      <mesh position={[0, 2.5, 7.05]}>
-        <boxGeometry args={[3.2, 4.2, 0.15]} />
-        <meshStandardMaterial color="#4A2E18" roughness={0.5} />
-      </mesh>
+      {/* Left Wing Veranda Pillar */}
+      <group position={[-14, 3.0, 7.2]}>
+        <mesh castShadow receiveShadow>
+          <boxGeometry args={[0.65, 4.9, 0.65]} />
+          <meshStandardMaterial color="#E0D2C3" roughness={0.7} />
+        </mesh>
+        <mesh position={[0, -2.3, 0]}><boxGeometry args={[0.9, 0.45, 0.9]} /><meshStandardMaterial color="#8A7A6A" /></mesh>
+        <mesh position={[0, 2.3, 0]}><boxGeometry args={[0.9, 0.35, 0.9]} /><meshStandardMaterial color="#8A7A6A" /></mesh>
+      </group>
 
-      {/* Ground Floor Windows with warm interior light */}
-      {[-8, -4, 4, 8].map((x, i) => (
-        <group key={`win-gf-${i}`} position={[x, 2.8, 7.05]}>
+      {/* Main Ashram Entrance Double Door Frame */}
+      <group position={[2, 2.8, 5.95]}>
+        {/* Door Frame */}
+        <mesh>
+          <boxGeometry args={[3.2, 4.4, 0.15]} />
+          <meshStandardMaterial color="#3D2B1F" roughness={0.7} />
+        </mesh>
+        {/* Door Recess Interior */}
+        <mesh position={[0, 0, -0.1]}>
+          <boxGeometry args={[2.8, 4.0, 0.1]} />
+          <meshStandardMaterial color="#1F1A17" />
+        </mesh>
+        {/* Left Door Leaf (Hinged on left) */}
+        <group position={[-1.35, 0, 0]} rotation={[0, -doorAngle, 0]}>
+          <mesh position={[0.67, 0, 0]} castShadow>
+            <boxGeometry args={[1.35, 4.0, 0.08]} />
+            <meshStandardMaterial color="#5C381E" roughness={0.5} />
+          </mesh>
+          {/* Brass Door Handle */}
+          <mesh position={[1.15, 0, 0.06]}>
+            <cylinderGeometry args={[0.03, 0.03, 0.35, 8]} />
+            <meshStandardMaterial color="#D4AF37" metalness={0.8} />
+          </mesh>
+        </group>
+        {/* Right Door Leaf (Hinged on right) */}
+        <group position={[1.35, 0, 0]} rotation={[0, doorAngle, 0]}>
+          <mesh position={[-0.67, 0, 0]} castShadow>
+            <boxGeometry args={[1.35, 4.0, 0.08]} />
+            <meshStandardMaterial color="#5C381E" roughness={0.5} />
+          </mesh>
+          {/* Brass Door Handle */}
+          <mesh position={[-1.15, 0, 0.06]}>
+            <cylinderGeometry args={[0.03, 0.03, 0.35, 8]} />
+            <meshStandardMaterial color="#D4AF37" metalness={0.8} />
+          </mesh>
+        </group>
+      </group>
+
+      {/* Ground Floor Windows with wooden shutters */}
+      {[-9, -3, 8, 13].map((wx, wi) => (
+        <group key={`ashram-gf-win-${wi}`} position={[wx, 3.2, 5.95]}>
           <mesh>
-            <boxGeometry args={[2.0, 2.2, 0.1]} />
-            <meshStandardMaterial color="#2B3A42" roughness={0.3} />
+            <boxGeometry args={[2.0, 2.4, 0.12]} />
+            <meshStandardMaterial color="#4A3423" />
           </mesh>
-          <pointLight color="#FFE4B5" intensity={0.8} distance={3} position={[0, 0, 0.2]} />
+          <mesh position={[0, 0, 0.05]}>
+            <boxGeometry args={[1.6, 2.0, 0.08]} />
+            <meshStandardMaterial color="#2B363C" roughness={0.3} />
+          </mesh>
+          {/* Window Sill */}
+          <mesh position={[0, -1.25, 0.1]}>
+            <boxGeometry args={[2.3, 0.15, 0.3]} />
+            <meshStandardMaterial color="#D7C4B7" />
+          </mesh>
         </group>
       ))}
 
-      {/* First Floor Structure */}
-      <mesh position={[0, 8.4, 0]} castShadow receiveShadow>
-        <boxGeometry args={[22, 4.6, 12]} />
-        <meshStandardMaterial color="#FAF5EE" roughness={0.8} />
+      {/* First Floor Main Structure */}
+      <mesh position={[2, 8.5, -1]} castShadow receiveShadow>
+        <boxGeometry args={[24, 4.6, 12]} />
+        <meshStandardMaterial color="#FBF7EF" roughness={0.8} />
       </mesh>
 
-      {/* First Floor Balcony Railing */}
-      <mesh position={[0, 6.7, 6.8]}>
-        <boxGeometry args={[24, 1.2, 0.1]} />
-        <meshStandardMaterial color="#3D3A37" metalness={0.6} roughness={0.4} />
+      {/* Left Wing First Floor */}
+      <mesh position={[-10, 8.5, 2]} castShadow receiveShadow>
+        <boxGeometry args={[9, 4.6, 10]} />
+        <meshStandardMaterial color="#FBF7EF" roughness={0.8} />
       </mesh>
+
+      {/* First Floor Balcony Railings */}
+      <group position={[2, 6.8, 7.3]}>
+        {/* Top rail */}
+        <mesh position={[0, 0.45, 0]}>
+          <boxGeometry args={[26, 0.08, 0.08]} />
+          <meshStandardMaterial color="#555" metalness={0.8} roughness={0.2} />
+        </mesh>
+        {/* Bottom rail */}
+        <mesh position={[0, -0.45, 0]}>
+          <boxGeometry args={[26, 0.08, 0.08]} />
+          <meshStandardMaterial color="#555" metalness={0.8} roughness={0.2} />
+        </mesh>
+        {/* Vertical Balusters */}
+        {Array.from({ length: 26 }).map((_, bi) => (
+          <mesh key={`bal-${bi}`} position={[-12.5 + bi, 0, 0]}>
+            <cylinderGeometry args={[0.02, 0.02, 0.9, 6]} />
+            <meshStandardMaterial color="#666" metalness={0.8} roughness={0.2} />
+          </mesh>
+        ))}
+      </group>
 
       {/* First Floor Windows */}
-      {[-7, -2.5, 2.5, 7].map((x, i) => (
-        <group key={`win-ff-${i}`} position={[x, 8.5, 6.05]}>
+      {[-9, -3, 3, 9].map((wx, wi) => (
+        <group key={`ashram-ff-win-${wi}`} position={[wx, 8.6, 5.0]}>
           <mesh>
             <boxGeometry args={[1.8, 2.2, 0.1]} />
-            <meshStandardMaterial color="#2B3A42" roughness={0.3} />
+            <meshStandardMaterial color="#4A3423" />
           </mesh>
-          <pointLight color="#FFE4B5" intensity={0.6} distance={2.5} position={[0, 0, 0.2]} />
+          <mesh position={[0, 0, 0.04]}>
+            <boxGeometry args={[1.4, 1.8, 0.06]} />
+            <meshStandardMaterial color="#2B363C" roughness={0.3} />
+          </mesh>
         </group>
       ))}
 
-      {/* Terracotta Pitched Sloping Roof */}
-      <group position={[0, 11.8, 0]}>
+      {/* Terracotta Pitched Roof with Overhangs & Eaves */}
+      <group position={[2, 11.9, -1]}>
+        {/* Main Hipped Roof Prism */}
         <mesh castShadow receiveShadow rotation={[0, 0, 0]}>
-          <coneGeometry args={[17, 3.4, 4]} />
-          <meshStandardMaterial color="#BC4749" roughness={0.7} />
+          <coneGeometry args={[17.5, 3.8, 4]} />
+          <meshStandardMaterial color="#B84435" roughness={0.65} />
+        </mesh>
+        {/* Ridge Cap */}
+        <mesh position={[0, 1.9, 0]}>
+          <boxGeometry args={[10, 0.25, 0.6]} />
+          <meshStandardMaterial color="#8F3025" />
         </mesh>
       </group>
 
-      {/* Ashram Grand Signboard */}
-      <group position={[0, 10.8, 6.1]}>
+      {/* Left Wing Roof */}
+      <group position={[-10, 11.8, 2]}>
+        <mesh castShadow receiveShadow>
+          <coneGeometry args={[8.5, 3.4, 4]} />
+          <meshStandardMaterial color="#B84435" roughness={0.65} />
+        </mesh>
+      </group>
+
+      {/* Ashram Official Facade Signboard */}
+      <group position={[2, 11.0, 5.2]}>
         <mesh castShadow>
-          <boxGeometry args={[10, 1.4, 0.2]} />
-          <meshStandardMaterial color="#1B4332" roughness={0.3} />
+          <boxGeometry args={[11.5, 1.4, 0.2]} />
+          <meshStandardMaterial color="#FFFFFF" roughness={0.3} />
         </mesh>
         {/* Gold Border */}
         <mesh position={[0, 0, 0.11]}>
-          <boxGeometry args={[9.8, 1.2, 0.05]} />
+          <boxGeometry args={[11.3, 1.2, 0.04]} />
           <meshStandardMaterial color="#D4AF37" metalness={0.8} roughness={0.3} />
         </mesh>
       </group>
@@ -114,114 +243,170 @@ function AshramBuilding() {
   );
 }
 
-// Double Entrance Gate with Outward Swinging Leaves
-function EntranceGate({ openProgress }: { openProgress: number }) {
-  // openProgress ranges from 0 (closed) to 1 (fully open at 85 degrees)
-  const openAngle = openProgress * (Math.PI / 2.2);
+// ==========================================
+// 2. SSBM FOUNDATION ENTRANCE GATE & WALL
+// - Realistic boundary wall extending left and right
+// - Prominent double gates on hinges
+// - Overhead arch sign: "SSBM SOCIAL FOUNDATION" with logo medallion
+// ==========================================
+function FoundationEntranceGate({
+  openProgress,
+  logoTexture
+}: {
+  openProgress: number;
+  logoTexture: THREE.Texture | null;
+}) {
+  // Gate swing angle: 0 (closed) to ~85 degrees outward
+  const gateAngle = openProgress * (Math.PI / 2.15);
 
   return (
     <group position={[0, 0, 0]}>
-      {/* Left Stone Pillar */}
-      <group position={[-5.5, 0, 0]}>
-        <mesh position={[0, 3, 0]} castShadow receiveShadow>
-          <boxGeometry args={[1.6, 6, 1.6]} />
-          <meshStandardMaterial color="#5C554E" roughness={0.85} />
+      {/* Central Road Surface */}
+      <mesh position={[0, 0.01, 0]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[8, 30]} />
+        <meshStandardMaterial color="#AFA595" roughness={0.9} />
+      </mesh>
+
+      {/* Roadside stone curbs */}
+      <mesh position={[-4.1, 0.12, 0]} receiveShadow>
+        <boxGeometry args={[0.3, 0.24, 30]} />
+        <meshStandardMaterial color="#7D746B" roughness={0.8} />
+      </mesh>
+      <mesh position={[4.1, 0.12, 0]} receiveShadow>
+        <boxGeometry args={[0.3, 0.24, 30]} />
+        <meshStandardMaterial color="#7D746B" roughness={0.8} />
+      </mesh>
+
+      {/* Left Boundary Wall */}
+      <mesh position={[-16, 1.8, 0]} castShadow receiveShadow>
+        <boxGeometry args={[22, 3.6, 0.6]} />
+        <meshStandardMaterial color="#E2DDD5" roughness={0.85} />
+      </mesh>
+      <mesh position={[-16, 3.65, 0]}>
+        <boxGeometry args={[22.4, 0.2, 0.8]} />
+        <meshStandardMaterial color="#B09E8C" roughness={0.7} />
+      </mesh>
+
+      {/* Right Boundary Wall */}
+      <mesh position={[16, 1.8, 0]} castShadow receiveShadow>
+        <boxGeometry args={[22, 3.6, 0.6]} />
+        <meshStandardMaterial color="#E2DDD5" roughness={0.85} />
+      </mesh>
+      <mesh position={[16, 3.65, 0]}>
+        <boxGeometry args={[22.4, 0.2, 0.8]} />
+        <meshStandardMaterial color="#B09E8C" roughness={0.7} />
+      </mesh>
+
+      {/* Left Main Gate Pillar */}
+      <group position={[-4.7, 0, 0]}>
+        <mesh position={[0, 2.5, 0]} castShadow receiveShadow>
+          <boxGeometry args={[1.3, 5.0, 1.3]} />
+          <meshStandardMaterial color="#6B6258" roughness={0.8} />
         </mesh>
         {/* Pillar Cap */}
-        <mesh position={[0, 6.2, 0]} castShadow>
-          <boxGeometry args={[2.0, 0.4, 2.0]} />
-          <meshStandardMaterial color="#8B7D6B" roughness={0.7} />
+        <mesh position={[0, 5.15, 0]} castShadow>
+          <boxGeometry args={[1.6, 0.35, 1.6]} />
+          <meshStandardMaterial color="#4A443D" roughness={0.6} />
         </mesh>
-        {/* Warm Lantern */}
-        <group position={[0, 7.2, 0]}>
-          <mesh castShadow>
-            <cylinderGeometry args={[0.3, 0.4, 0.9, 8]} />
-            <meshStandardMaterial color="#D4AF37" metalness={0.7} />
-          </mesh>
-          <mesh position={[0, 0, 0]}>
-            <sphereGeometry args={[0.25, 12, 12]} />
-            <meshBasicMaterial color="#FFD580" />
-          </mesh>
-          <pointLight color="#FFA500" intensity={1.5} distance={7} />
-        </group>
-        {/* Foundation Plaque Left */}
-        <mesh position={[0.85, 3.2, 0]} rotation={[0, Math.PI / 2, 0]}>
-          <boxGeometry args={[1.0, 1.8, 0.08]} />
-          <meshStandardMaterial color="#FDFBF7" roughness={0.4} />
+        {/* Pillar Lantern */}
+        <mesh position={[0, 5.8, 0]}>
+          <cylinderGeometry args={[0.2, 0.28, 0.7, 8]} />
+          <meshStandardMaterial color="#D4AF37" metalness={0.8} roughness={0.3} />
         </mesh>
       </group>
 
-      {/* Right Stone Pillar */}
-      <group position={[5.5, 0, 0]}>
-        <mesh position={[0, 3, 0]} castShadow receiveShadow>
-          <boxGeometry args={[1.6, 6, 1.6]} />
-          <meshStandardMaterial color="#5C554E" roughness={0.85} />
+      {/* Right Main Gate Pillar */}
+      <group position={[4.7, 0, 0]}>
+        <mesh position={[0, 2.5, 0]} castShadow receiveShadow>
+          <boxGeometry args={[1.3, 5.0, 1.3]} />
+          <meshStandardMaterial color="#6B6258" roughness={0.8} />
         </mesh>
         {/* Pillar Cap */}
-        <mesh position={[0, 6.2, 0]} castShadow>
-          <boxGeometry args={[2.0, 0.4, 2.0]} />
-          <meshStandardMaterial color="#8B7D6B" roughness={0.7} />
+        <mesh position={[0, 5.15, 0]} castShadow>
+          <boxGeometry args={[1.6, 0.35, 1.6]} />
+          <meshStandardMaterial color="#4A443D" roughness={0.6} />
         </mesh>
-        {/* Warm Lantern */}
-        <group position={[0, 7.2, 0]}>
-          <mesh castShadow>
-            <cylinderGeometry args={[0.3, 0.4, 0.9, 8]} />
-            <meshStandardMaterial color="#D4AF37" metalness={0.7} />
-          </mesh>
-          <mesh position={[0, 0, 0]}>
-            <sphereGeometry args={[0.25, 12, 12]} />
-            <meshBasicMaterial color="#FFD580" />
-          </mesh>
-          <pointLight color="#FFA500" intensity={1.5} distance={7} />
-        </group>
-        {/* Foundation Plaque Right */}
-        <mesh position={[-0.85, 3.2, 0]} rotation={[0, -Math.PI / 2, 0]}>
-          <boxGeometry args={[1.0, 1.8, 0.08]} />
-          <meshStandardMaterial color="#FDFBF7" roughness={0.4} />
+        {/* Pillar Lantern */}
+        <mesh position={[0, 5.8, 0]}>
+          <cylinderGeometry args={[0.2, 0.28, 0.7, 8]} />
+          <meshStandardMaterial color="#D4AF37" metalness={0.8} roughness={0.3} />
         </mesh>
       </group>
 
-      {/* Left Gate Wing (Swings outward) */}
-      <group position={[-4.7, 0, 0]} rotation={[0, -openAngle, 0]}>
-        <group position={[2.2, 2.4, 0]}>
-          {/* Gate Outer Frame */}
-          <mesh castShadow>
-            <boxGeometry args={[4.4, 4.6, 0.1]} />
-            <meshStandardMaterial color="#1F2421" metalness={0.8} roughness={0.3} wireframe={false} />
+      {/* Elegant Overhead Arch Sign: "SSBM SOCIAL FOUNDATION" */}
+      <group position={[0, 5.6, 0]}>
+        {/* Arch Beam */}
+        <mesh castShadow>
+          <boxGeometry args={[10.6, 0.9, 0.45]} />
+          <meshStandardMaterial color="#1B4332" roughness={0.4} />
+        </mesh>
+        {/* Gold Border Trim */}
+        <mesh position={[0, 0, 0.24]}>
+          <boxGeometry args={[10.4, 0.75, 0.05]} />
+          <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.25} />
+        </mesh>
+        {/* Signboard Backing */}
+        <mesh position={[0, 0, 0.27]}>
+          <boxGeometry args={[10.1, 0.65, 0.02]} />
+          <meshStandardMaterial color="#0D2818" />
+        </mesh>
+
+        {/* Central Official Logo Medallion */}
+        <group position={[0, 0.75, 0.1]}>
+          <mesh castShadow rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.85, 0.85, 0.12, 32]} />
+            <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.2} />
           </mesh>
-          {/* Vertical Bars and Traditional Arch */}
-          {[-1.8, -1.2, -0.6, 0, 0.6, 1.2, 1.8].map((bx, bi) => (
-            <mesh key={`lbar-${bi}`} position={[bx, 0, 0]} castShadow>
-              <cylinderGeometry args={[0.04, 0.04, 4.4, 8]} />
-              <meshStandardMaterial color="#D4AF37" metalness={0.8} roughness={0.2} />
+          {logoTexture && (
+            <mesh position={[0, 0, 0.07]}>
+              <circleGeometry args={[0.78, 32]} />
+              <meshBasicMaterial map={logoTexture} />
+            </mesh>
+          )}
+        </group>
+      </group>
+
+      {/* Left Double Gate Leaf (Hinged at left pillar) */}
+      <group position={[-4.0, 0, 0]} rotation={[0, -gateAngle, 0]}>
+        <group position={[1.9, 2.1, 0]}>
+          {/* Outer Frame */}
+          <mesh castShadow>
+            <boxGeometry args={[3.8, 4.2, 0.08]} />
+            <meshStandardMaterial color="#1F2421" metalness={0.8} roughness={0.3} />
+          </mesh>
+          {/* Vertical Wrought Iron Grille Bars */}
+          {[-1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5].map((bx, bi) => (
+            <mesh key={`left-grille-${bi}`} position={[bx, 0, 0.04]} castShadow>
+              <cylinderGeometry args={[0.035, 0.035, 4.0, 8]} />
+              <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.25} />
             </mesh>
           ))}
-          {/* Central Medallion */}
-          <mesh position={[0, 0, 0.08]}>
-            <cylinderGeometry args={[0.7, 0.7, 0.1, 24]} />
+          {/* Decorative Medallion */}
+          <mesh position={[0, 0, 0.06]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.55, 0.55, 0.08, 16]} />
             <meshStandardMaterial color="#D4AF37" metalness={0.9} roughness={0.2} />
           </mesh>
         </group>
       </group>
 
-      {/* Right Gate Wing (Swings outward) */}
-      <group position={[4.7, 0, 0]} rotation={[0, openAngle, 0]}>
-        <group position={[-2.2, 2.4, 0]}>
-          {/* Gate Outer Frame */}
+      {/* Right Double Gate Leaf (Hinged at right pillar) */}
+      <group position={[4.0, 0, 0]} rotation={[0, gateAngle, 0]}>
+        <group position={[-1.9, 2.1, 0]}>
+          {/* Outer Frame */}
           <mesh castShadow>
-            <boxGeometry args={[4.4, 4.6, 0.1]} />
-            <meshStandardMaterial color="#1F2421" metalness={0.8} roughness={0.3} wireframe={false} />
+            <boxGeometry args={[3.8, 4.2, 0.08]} />
+            <meshStandardMaterial color="#1F2421" metalness={0.8} roughness={0.3} />
           </mesh>
-          {/* Vertical Bars and Traditional Arch */}
-          {[-1.8, -1.2, -0.6, 0, 0.6, 1.2, 1.8].map((bx, bi) => (
-            <mesh key={`rbar-${bi}`} position={[bx, 0, 0]} castShadow>
-              <cylinderGeometry args={[0.04, 0.04, 4.4, 8]} />
-              <meshStandardMaterial color="#D4AF37" metalness={0.8} roughness={0.2} />
+          {/* Vertical Wrought Iron Grille Bars */}
+          {[-1.5, -1.0, -0.5, 0, 0.5, 1.0, 1.5].map((bx, bi) => (
+            <mesh key={`right-grille-${bi}`} position={[bx, 0, 0.04]} castShadow>
+              <cylinderGeometry args={[0.035, 0.035, 4.0, 8]} />
+              <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.25} />
             </mesh>
           ))}
-          {/* Central Medallion */}
-          <mesh position={[0, 0, 0.08]}>
-            <cylinderGeometry args={[0.7, 0.7, 0.1, 24]} />
+          {/* Decorative Medallion */}
+          <mesh position={[0, 0, 0.06]} rotation={[Math.PI / 2, 0, 0]}>
+            <cylinderGeometry args={[0.55, 0.55, 0.08, 16]} />
             <meshStandardMaterial color="#D4AF37" metalness={0.9} roughness={0.2} />
           </mesh>
         </group>
@@ -230,65 +415,70 @@ function EntranceGate({ openProgress }: { openProgress: number }) {
   );
 }
 
-// Surrounding Pathway, Trees, and Garden Elements
-function PathwayAndLandscape() {
+// ==========================================
+// 3. ROAD & SURROUNDINGS (ANJIKAR BAGH)
+// - Realistic paved approach road leading into premises
+// - Flanking orchard trees (mango & neem) and natural green foliage
+// - Boundary walls and low stone barriers
+// ==========================================
+function RoadAndSurroundings() {
   return (
     <group>
-      {/* Stone paved path leading from gate (z=15) into ashram (z=-45) */}
-      <mesh position={[0, 0.02, -15]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[7.5, 65]} />
-        <meshStandardMaterial color="#C5B5A1" roughness={0.9} />
+      {/* Ground plane / green grass */}
+      <mesh position={[0, -0.02, -15]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[140, 120]} />
+        <meshStandardMaterial color="#355834" roughness={0.95} />
       </mesh>
 
-      {/* Cobblestone pathway borders */}
-      <mesh position={[-3.9, 0.1, -15]} receiveShadow>
-        <boxGeometry args={[0.4, 0.2, 65]} />
-        <meshStandardMaterial color="#8B7D6B" roughness={0.8} />
-      </mesh>
-      <mesh position={[3.9, 0.1, -15]} receiveShadow>
-        <boxGeometry args={[0.4, 0.2, 65]} />
-        <meshStandardMaterial color="#8B7D6B" roughness={0.8} />
+      {/* Inner paved roadway from gate (z=0) to ashram steps (z=-38) */}
+      <mesh position={[0, 0.015, -19]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[7.2, 40]} />
+        <meshStandardMaterial color="#B0A696" roughness={0.9} />
       </mesh>
 
-      {/* Lush Green Lawn & Ground */}
-      <mesh position={[0, -0.05, -15]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[120, 100]} />
-        <meshStandardMaterial color="#3A5A40" roughness={0.95} />
+      {/* Roadside stone curbs */}
+      <mesh position={[-3.7, 0.1, -19]} receiveShadow>
+        <boxGeometry args={[0.3, 0.2, 40]} />
+        <meshStandardMaterial color="#7A6F64" roughness={0.85} />
+      </mesh>
+      <mesh position={[3.7, 0.1, -19]} receiveShadow>
+        <boxGeometry args={[0.3, 0.2, 40]} />
+        <meshStandardMaterial color="#7A6F64" roughness={0.85} />
       </mesh>
 
-      {/* Orchard Trees flanking the pathway (Anjikar Bagh mango & neem grove) */}
+      {/* Orchard Trees flanking the road (Anjikar Bagh mango & neem trees) */}
       {[
-        [-9, 0, 8], [-11, 0, -5], [-10, 0, -18], [-12, 0, -32],
-        [9, 0, 8], [11, 0, -5], [10, 0, -18], [12, 0, -32]
-      ].map(([x, y, z], i) => (
-        <group key={`tree-${i}`} position={[x, y, z]}>
+        [-9, 0, -4], [-11, 0, -14], [-10, 0, -25], [-12, 0, -34],
+        [9, 0, -4], [11, 0, -14], [10, 0, -25], [12, 0, -34]
+      ].map(([tx, ty, tz], i) => (
+        <group key={`orchard-tree-${i}`} position={[tx, ty, tz]}>
           {/* Trunk */}
           <mesh position={[0, 2.5, 0]} castShadow>
-            <cylinderGeometry args={[0.45, 0.65, 5, 10]} />
-            <meshStandardMaterial color="#4A3525" roughness={0.9} />
+            <cylinderGeometry args={[0.4, 0.6, 5, 8]} />
+            <meshStandardMaterial color="#4A3423" roughness={0.9} />
           </mesh>
-          {/* Lush Green Canopy */}
-          <mesh position={[0, 6.2, 0]} castShadow>
-            <sphereGeometry args={[3.2, 14, 14]} />
+          {/* Main green leafy canopy */}
+          <mesh position={[0, 5.8, 0]} castShadow>
+            <sphereGeometry args={[2.8, 12, 12]} />
             <meshStandardMaterial color={i % 2 === 0 ? "#2D6A4F" : "#1B4332"} roughness={0.85} />
           </mesh>
-          <mesh position={[0.5, 7.5, 0.2]} castShadow>
-            <sphereGeometry args={[2.2, 10, 10]} />
+          <mesh position={[0.4, 7.0, 0.2]} castShadow>
+            <sphereGeometry args={[2.0, 10, 10]} />
             <meshStandardMaterial color="#40916C" roughness={0.8} />
           </mesh>
         </group>
       ))}
 
-      {/* Marigold and Flowering Flowerbeds alongside path */}
-      {[-8, -16, -24, -32].map((z, i) => (
-        <React.Fragment key={`flower-${i}`}>
-          <mesh position={[-4.8, 0.25, z]}>
+      {/* Flowering shrub borders (marigold & foliage) along roadside */}
+      {[-6, -14, -22, -30].map((fz, fi) => (
+        <React.Fragment key={`fl-border-${fi}`}>
+          <mesh position={[-4.5, 0.3, fz]}>
             <sphereGeometry args={[0.45, 8, 8]} />
-            <meshStandardMaterial color="#F39C12" roughness={0.6} />
+            <meshStandardMaterial color="#F39C12" roughness={0.7} />
           </mesh>
-          <mesh position={[4.8, 0.25, z]}>
+          <mesh position={[4.5, 0.3, fz]}>
             <sphereGeometry args={[0.45, 8, 8]} />
-            <meshStandardMaterial color="#E67E22" roughness={0.6} />
+            <meshStandardMaterial color="#E67E22" roughness={0.7} />
           </mesh>
         </React.Fragment>
       ))}
@@ -296,97 +486,87 @@ function PathwayAndLandscape() {
   );
 }
 
-// Atmospheric Mist and Clouds
-function AtmosphericMist({ density }: { density: number }) {
-  const particlesRef = useRef<THREE.Points>(null);
-  const particleCount = 200;
-
-  const [positions] = useState(() => {
-    const pos = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 50;
-      pos[i * 3 + 1] = Math.random() * 8 + 0.5;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 60 - 10;
-    }
-    return pos;
-  });
-
-  useFrame((_, delta) => {
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y += delta * 0.02;
-    }
-  });
-
-  return (
-    <points ref={particlesRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          args={[positions, 3]}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={3.5}
-        color="#FDFBF7"
-        transparent
-        opacity={0.35 * density}
-        depthWrite={false}
-      />
-    </points>
-  );
-}
-
-// Camera Motion Controller coordinating the 5 Cinematic Scenes
-function CameraSequenceController({
+// ==========================================
+// 4. NATURAL EYE-LEVEL JOURNEY CONTROLLER
+// Direct Eye-Level Movement (1.7m):
+// Scene 1: Eye-level facing SSBM Foundation entrance gate (z=13 -> 12)
+// Scene 2: Gate swings open naturally
+// Scene 3: Camera moves forward along the road (z=12 -> -20)
+// Scene 4: Approaching the realistic Vyenkatesh Ashram model (z=-20 -> -32)
+// Scene 5: Welcoming entrance (ashram doors open, title card appears)
+// Scene 6: Transition into the website
+// ==========================================
+function EyeLevelJourneyController({
+  hasStartedEntering,
   onSceneUpdate,
   onComplete
 }: {
-  onSceneUpdate: (sceneIndex: number, progressPercent: number) => void;
+  hasStartedEntering: boolean;
+  onSceneUpdate: (sceneNumber: number, gateProgress: number, doorProgress: number) => void;
   onComplete: () => void;
 }) {
   const startTimeRef = useRef<number | null>(null);
-  const DURATION = 9.5; // Target 9.5 seconds total sequence
+  const JOURNEY_DURATION = 8.5; // Smooth, realistic 8.5-second journey
 
   useFrame((state) => {
+    // If visitor hasn't started or we are in initial Scene 1 (standing outside facing entrance)
+    if (!hasStartedEntering) {
+      // Natural eye level standing outside gate
+      state.camera.position.set(0, 1.75, 13.5);
+      state.camera.lookAt(0, 2.8, 0);
+      onSceneUpdate(1, 0, 0);
+      return;
+    }
+
     if (startTimeRef.current === null) {
       startTimeRef.current = state.clock.getElapsedTime();
     }
 
     const elapsed = state.clock.getElapsedTime() - startTimeRef.current;
-    const t = Math.min(elapsed / DURATION, 1.0);
+    const t = Math.min(elapsed / JOURNEY_DURATION, 1.0);
 
-    // 5 Stages
-    let sceneIdx = 1;
-    if (t < 0.25) sceneIdx = 1; // Scene 1: Mist & Atmospheric Reveal
-    else if (t < 0.45) sceneIdx = 2; // Scene 2: Double Gate Opening
-    else if (t < 0.70) sceneIdx = 3; // Scene 3: Pathway Glide
-    else if (t < 0.92) sceneIdx = 4; // Scene 4: Ashram Architecture Reveal
-    else sceneIdx = 5; // Scene 5: Entering & Transition
+    let sceneNum = 2;
+    let gateProg = 0;
+    let doorProg = 0;
 
-    onSceneUpdate(sceneIdx, Math.round(t * 100));
-
-    // Dynamic Camera Keyframing
-    if (t < 0.25) {
-      // Scene 1: Outside gate in mist, looking at closed gates
-      const subT = t / 0.25;
-      state.camera.position.set(0, 3.2 - subT * 0.4, 18 - subT * 3);
-      state.camera.lookAt(0, 3.0, 0);
-    } else if (t < 0.45) {
-      // Scene 2: Approaching gate as it swings open
-      const subT = (t - 0.25) / 0.2;
-      state.camera.position.set(0, 2.8, 15 - subT * 10);
-      state.camera.lookAt(0, 3.0, -10);
-    } else if (t < 0.70) {
-      // Scene 3: Gliding through the open gateway into Anjikar Bagh path
-      const subT = (t - 0.45) / 0.25;
-      state.camera.position.set(Math.sin(subT * Math.PI) * 0.8, 2.7, 5 - subT * 22);
-      state.camera.lookAt(0, 3.2, -45);
+    if (t < 0.20) {
+      // Scene 2: Gate opens on hinges as we take the first steps forward
+      sceneNum = 2;
+      const subT = t / 0.20;
+      gateProg = Math.min(1.0, subT * 1.2);
+      const camZ = 13.5 - subT * 4.5; // 13.5 -> 9.0
+      state.camera.position.set(0, 1.75, camZ);
+      state.camera.lookAt(0, 2.5, -20);
+    } else if (t < 0.65) {
+      // Scene 3: Journey along the road through Anjikar Bagh
+      sceneNum = 3;
+      gateProg = 1.0;
+      const subT = (t - 0.20) / 0.45;
+      const camZ = 9.0 - subT * 27.0; // 9.0 -> -18.0
+      // Gentle natural eye-level walking stride
+      const stepBounce = Math.sin(subT * Math.PI * 12) * 0.025;
+      state.camera.position.set(0, 1.75 + stepBounce, camZ);
+      state.camera.lookAt(0, 2.8, -42);
+    } else if (t < 0.88) {
+      // Scene 4: Approaching realistic Vyenkatesh Ashram model
+      sceneNum = 4;
+      gateProg = 1.0;
+      const subT = (t - 0.65) / 0.23;
+      const camZ = -18.0 - subT * 12.0; // -18.0 -> -30.0
+      doorProg = Math.min(1.0, Math.max(0, (subT - 0.3) / 0.7));
+      state.camera.position.set(0, 1.8 + subT * 0.4, camZ);
+      state.camera.lookAt(0, 3.2, -42);
     } else {
-      // Scene 4 & 5: Approaching building, tilting up gently to reveal facade and roof
-      const subT = (t - 0.70) / 0.30;
-      state.camera.position.set(0, 2.7 + subT * 1.5, -17 - subT * 14);
-      state.camera.lookAt(0, 4.5 + subT * 2.0, -45);
+      // Scene 5 & 6: Welcoming entrance & transition
+      sceneNum = 5;
+      gateProg = 1.0;
+      doorProg = 1.0;
+      const subT = (t - 0.88) / 0.12;
+      state.camera.position.set(0, 2.2, -30.0 - subT * 3.0);
+      state.camera.lookAt(0, 3.2, -42);
     }
+
+    onSceneUpdate(sceneNum, gateProg, doorProg);
 
     if (t >= 1.0) {
       onComplete();
@@ -396,34 +576,40 @@ function CameraSequenceController({
   return null;
 }
 
+// ==========================================
+// 5. MAIN COMPONENT EXPORT
+// ==========================================
 export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }) => {
+  const [hasStartedEntering, setHasStartedEntering] = useState(false);
   const [currentScene, setCurrentScene] = useState<number>(1);
-  const [progress, setProgress] = useState<number>(0);
-  const [gateOpen, setGateOpen] = useState<number>(0);
-  const [isMuted, setIsMuted] = useState<boolean>(true);
-  const [hasWebGLError, setHasWebGLError] = useState<boolean>(false);
+  const [gateOpenProgress, setGateOpenProgress] = useState<number>(0);
+  const [ashramDoorProgress, setAshramDoorProgress] = useState<number>(0);
+  const [hasWebGLError, setHasWebGLError] = useState(false);
+  const [logoTexture, setLogoTexture] = useState<THREE.Texture | null>(null);
 
-  // Scene labels
-  const sceneLabels = [
-    'Atmospheric Dawn Reveal',
-    'Grand Gates Opening',
-    'Pathway through Anjikar Bagh',
-    'Vyenkatesh Ashram Reveal',
-    'Entering the World of Care'
-  ];
+  // Load logo texture for overhead arch sign
+  useEffect(() => {
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      '/assets/images/logo.jpg',
+      (tex) => setLogoTexture(tex),
+      undefined,
+      () => setLogoTexture(null)
+    );
+  }, []);
 
-  const handleSceneUpdate = (sceneIdx: number, pct: number) => {
-    setCurrentScene(sceneIdx);
-    setProgress(pct);
+  // Automatic gentle start if user doesn't click within 2.5s
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setHasStartedEntering(true);
+    }, 2400);
+    return () => clearTimeout(timer);
+  }, []);
 
-    // Gate opening calculation (opens during scene 2: 25% - 48%)
-    if (pct < 25) {
-      setGateOpen(0);
-    } else if (pct >= 25 && pct <= 50) {
-      setGateOpen((pct - 25) / 25);
-    } else {
-      setGateOpen(1);
-    }
+  const handleSceneUpdate = (scene: number, gateProg: number, doorProg: number) => {
+    setCurrentScene(scene);
+    setGateOpenProgress(gateProg);
+    setAshramDoorProgress(doorProg);
   };
 
   const handleSkip = () => {
@@ -431,114 +617,106 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     onComplete();
   };
 
+  const handleStartJourney = () => {
+    setHasStartedEntering(true);
+  };
+
   return (
-    <div className="fixed inset-0 z-50 bg-[#0D2818] overflow-hidden flex flex-col justify-between select-none">
-      {/* Fallback View if WebGL fails */}
+    <div className="fixed inset-0 z-50 bg-[#162118] overflow-hidden flex flex-col justify-between select-none">
       {hasWebGLError ? (
+        // Clean fallback
         <div className="relative w-full h-full flex flex-col items-center justify-center p-6 text-center text-white bg-gradient-to-b from-[#0D2818] to-[#1B4332]">
           <img
             src="/assets/images/logo.jpg"
-            alt="SSBM Foundation Logo"
-            className="w-28 h-28 rounded-full border-4 border-[#D4AF37] shadow-2xl mb-6"
+            alt="SSBM Social Foundation Logo"
+            className="w-24 h-24 rounded-full border-4 border-foundation-gold shadow-2xl mb-5"
           />
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-foundation-sandstone mb-3">
-            VYENKATESH ASHRAM
+          <h1 className="text-3xl sm:text-4xl font-display font-bold text-foundation-sandstone mb-2">
+            SSBM SOCIAL FOUNDATION
           </h1>
-          <p className="text-lg md:text-xl text-foundation-sageLight max-w-xl mb-6">
-            A Place of Care, Dignity and Belonging. Operated by SBBM Social Foundation Society at Anjikar Bagh, Mahuli.
+          <h2 className="text-xl sm:text-2xl font-display text-foundation-ivory mb-3">
+            Vyenkatesh Ashram
+          </h2>
+          <p className="text-sm text-foundation-sageLight max-w-lg mb-6">
+            A Place of Care, Dignity and Belonging • Anjikar Bagh, Mahuli (Nagpur)
           </p>
           <button
             onClick={handleSkip}
             className="px-8 py-3.5 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold rounded-full shadow-lg transition-all flex items-center space-x-2"
           >
             <span>Enter Website Directly</span>
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       ) : (
         <>
-          {/* Top Control Bar */}
-          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 via-black/40 to-transparent">
-            {/* Branding Header */}
+          {/* Top Bar: Minimal header with Skip Option */}
+          <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-black/70 via-black/25 to-transparent">
             <div className="flex items-center space-x-3">
               <img
                 src="/assets/images/logo.jpg"
-                alt="SSBM Foundation"
-                className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-foundation-gold/60 shadow-md"
+                alt="SSBM Foundation Logo"
+                className="w-10 h-10 rounded-full border border-foundation-gold/70 shadow"
               />
               <div>
-                <p className="text-xs tracking-widest uppercase text-foundation-gold font-medium">
-                  SBBM Social Foundation
+                <p className="text-xs uppercase tracking-wider text-foundation-gold font-bold">
+                  SSBM Social Foundation
                 </p>
-                <h2 className="text-sm md:text-base font-display font-bold text-foundation-ivory">
+                <h2 className="text-xs md:text-sm font-display font-bold text-white">
                   Vyenkatesh Ashram
                 </h2>
               </div>
             </div>
 
-            {/* Actions: Skip Intro & Audio */}
-            <div className="flex items-center space-x-3">
-              <button
-                onClick={() => setIsMuted(!isMuted)}
-                className="p-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white backdrop-blur-md transition-all border border-white/15"
-                title={isMuted ? 'Unmute Audio' : 'Mute Audio'}
-                aria-label="Toggle Sound"
-              >
-                {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-              </button>
-
-              <button
-                onClick={handleSkip}
-                className="group px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-semibold text-xs md:text-sm shadow-xl transition-all flex items-center space-x-2"
-                id="skip-3d-intro-btn"
-              >
-                <span>Skip Intro</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
-            </div>
+            <button
+              onClick={handleSkip}
+              className="group px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/20 font-semibold text-xs md:text-sm backdrop-blur-md shadow-lg transition-all flex items-center space-x-2"
+              id="skip-3d-intro-btn"
+            >
+              <span>Skip to Website</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </button>
           </div>
 
-          {/* Three.js 3D WebGL Canvas */}
+          {/* Realistic Three.js 3D WebGL Canvas */}
           <div className="absolute inset-0 z-0">
             <Canvas
               shadows
-              camera={{ position: [0, 3.2, 18], fov: 50, near: 0.1, far: 200 }}
+              camera={{ position: [0, 1.75, 13.5], fov: 50, near: 0.1, far: 180 }}
               onCreated={({ gl }) => {
                 gl.toneMapping = THREE.ACESFilmicToneMapping;
-                gl.toneMappingExposure = 1.1;
+                gl.toneMappingExposure = 1.05;
               }}
               onError={() => setHasWebGLError(true)}
             >
-              {/* Sky and Morning Sunrise Lighting */}
-              <color attach="background" args={['#F9E8D2']} />
-              <fog attach="fog" args={['#EEDBC5', 15, 95]} />
+              {/* Natural Daylight & Clear Sky */}
+              <color attach="background" args={['#C9E1F0']} />
 
-              <ambientLight intensity={0.65} color="#FFF4E6" />
+              {/* Natural Sun & Daylight Lighting */}
+              <ambientLight intensity={0.75} color="#FFFFFF" />
               <directionalLight
                 castShadow
-                position={[25, 30, 20]}
-                intensity={1.4}
-                color="#FFE3BA"
+                position={[20, 28, 18]}
+                intensity={1.35}
+                color="#FFFDF7"
                 shadow-mapSize-width={1024}
                 shadow-mapSize-height={1024}
-                shadow-camera-far={120}
-                shadow-camera-left={-25}
-                shadow-camera-right={25}
-                shadow-camera-top={25}
-                shadow-camera-bottom={-25}
+                shadow-camera-far={110}
+                shadow-camera-left={-28}
+                shadow-camera-right={28}
+                shadow-camera-top={28}
+                shadow-camera-bottom={-28}
               />
+              <hemisphereLight args={['#D8EEFF', '#3D5A38', 0.5]} />
 
-              {/* Soft sky light fill */}
-              <hemisphereLight args={['#FFF0D4', '#2D6A4F', 0.5]} />
+              {/* Genuine 3D Geometry: Entrance Gate, Road, and Ashram */}
+              <FoundationEntranceGate openProgress={gateOpenProgress} logoTexture={logoTexture} />
+              <RoadAndSurroundings />
+              <AshramBuilding doorsOpenProgress={ashramDoorProgress} />
 
-              {/* 3D Scene Geometry */}
-              <PathwayAndLandscape />
-              <EntranceGate openProgress={gateOpen} />
-              <AshramBuilding />
-              <AtmosphericMist density={currentScene === 1 ? 1.0 : Math.max(0, 1.0 - (progress - 20) / 40)} />
-
-              {/* Sequence Driver */}
-              <CameraSequenceController
+              {/* Journey Controller */}
+              <EyeLevelJourneyController
+                hasStartedEntering={hasStartedEntering}
                 onSceneUpdate={handleSceneUpdate}
                 onComplete={() => {
                   localStorage.setItem('ssbm_intro_viewed', 'true');
@@ -548,46 +726,75 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
             </Canvas>
           </div>
 
-          {/* Cinematic Overlay Cards / Captions */}
-          <div className="absolute bottom-8 left-0 right-0 z-20 px-4 md:px-8 max-w-4xl mx-auto pointer-events-none">
+          {/* Interactive Bottom Control & Elegant Overlay Text */}
+          <div className="absolute bottom-8 left-0 right-0 z-20 px-4 md:px-8 max-w-2xl mx-auto text-center pointer-events-none">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={currentScene}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.6 }}
-                className="bg-foundation-forestDark/80 backdrop-blur-md border border-foundation-gold/30 rounded-2xl p-4 md:p-6 text-center shadow-2xl text-foundation-ivory pointer-events-auto"
-              >
-                <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-gold/20 text-foundation-goldLight text-xs font-semibold mb-2">
-                  <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
-                  <span>Scene {currentScene} of 5 • {sceneLabels[currentScene - 1]}</span>
-                </div>
+              {/* Scene 1: Initial Eye-Level Entrance Prompt */}
+              {currentScene === 1 && !hasStartedEntering && (
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="bg-black/70 backdrop-blur-md border border-white/20 rounded-2xl p-5 shadow-2xl text-white pointer-events-auto space-y-3"
+                >
+                  <div>
+                    <span className="text-[11px] uppercase tracking-widest text-foundation-gold font-bold">
+                      Main Entrance
+                    </span>
+                    <h3 className="text-xl md:text-2xl font-display font-bold text-foundation-sandstone">
+                      SSBM SOCIAL FOUNDATION
+                    </h3>
+                    <p className="text-xs text-stone-300 mt-1">
+                      Anjikar Bagh, Mansar Mahuli Road • Mahuli, Nagpur
+                    </p>
+                  </div>
 
-                <h3 className="text-lg md:text-2xl font-display font-bold text-foundation-sandstone">
-                  {currentScene === 1 && "Entering the Peaceful World of SBBM Foundation"}
-                  {currentScene === 2 && "The Grand Double Gates Open into Anjikar Bagh"}
-                  {currentScene === 3 && "Winding Path Flanked by Verdant Trees & Gardens"}
-                  {currentScene === 4 && "Vyenkatesh Ashram: A Sanctuary of Peace & Care"}
-                  {currentScene === 5 && "Welcome to a Place of Care, Dignity & Belonging"}
-                </h3>
+                  <button
+                    onClick={handleStartJourney}
+                    className="px-6 py-2.5 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold text-xs rounded-full shadow-lg transition-all inline-flex items-center space-x-2"
+                  >
+                    <span>Enter Premises</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </motion.div>
+              )}
 
-                <p className="text-xs md:text-sm text-foundation-ivory/80 mt-1 max-w-2xl mx-auto">
-                  {currentScene === 1 && "Mahuli, Parseoni • Where compassionate service meets quiet dignity."}
-                  {currentScene === 2 && "Charitable, non-granted old-age home established to nurture elder souls."}
-                  {currentScene === 3 && "Lush greenery, clean air, Go-Seva Kendra and natural therapy."}
-                  {currentScene === 4 && "Authentic architectural home designed with comfortable rooms, verandas and companionship."}
-                  {currentScene === 5 && "Connecting you with verified services, admission information and community seva."}
-                </p>
+              {/* Scene 2 & 3: Travelling through Premises */}
+              {(currentScene === 2 || currentScene === 3) && (
+                <motion.div
+                  key="scene-journey"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="bg-black/60 backdrop-blur-md border border-white/15 rounded-xl px-4 py-2.5 shadow-xl text-white inline-block pointer-events-auto"
+                >
+                  <p className="text-xs md:text-sm font-medium text-foundation-sandstone">
+                    Travelling along the road toward Vyenkatesh Ashram...
+                  </p>
+                </motion.div>
+              )}
 
-                {/* Progress bar */}
-                <div className="w-full bg-white/20 h-1.5 rounded-full mt-4 overflow-hidden">
-                  <div
-                    className="h-full bg-gradient-to-r from-foundation-gold to-yellow-300 transition-all duration-200"
-                    style={{ width: `${progress}%` }}
-                  />
-                </div>
-              </motion.div>
+              {/* Scene 4 & 5: Welcoming Entrance at Ashram */}
+              {(currentScene === 4 || currentScene === 5) && (
+                <motion.div
+                  key="scene-welcome"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6 }}
+                  className="bg-foundation-forestDark/85 backdrop-blur-md border border-foundation-gold/40 rounded-2xl p-5 md:p-6 shadow-2xl text-white pointer-events-auto space-y-1.5"
+                >
+                  <h3 className="text-xl md:text-2xl font-display font-bold text-foundation-sandstone">
+                    Welcome to Vyenkatesh Ashram
+                  </h3>
+                  <p className="text-xs md:text-sm text-foundation-goldLight font-medium">
+                    “A Place of Care, Dignity and Belonging.”
+                  </p>
+                  <p className="text-[11px] text-stone-300 pt-1">
+                    Charitable, Non-Granted Old Age Home • Entering website...
+                  </p>
+                </motion.div>
+              )}
             </AnimatePresence>
           </div>
         </>
