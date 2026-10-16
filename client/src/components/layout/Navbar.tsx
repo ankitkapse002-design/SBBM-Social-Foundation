@@ -105,34 +105,36 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Main Navigation Bar */}
-      <nav className="bg-foundation-ivory border-b border-foundation-borderMuted px-4 md:px-8 py-3 transition-all">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
+      <nav className="bg-foundation-ivory border-b border-foundation-borderMuted px-4 md:px-6 xl:px-8 py-2.5 transition-all">
+        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3 xl:gap-4">
           {/* Logo & Foundation Name */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to="/" className="flex items-center space-x-2.5 md:space-x-3 group shrink-0">
             <img
               src="/assets/images/logo.jpg"
               alt="SBBM Social Foundation Society Logo"
-              className="w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-foundation-gold shadow-md group-hover:scale-105 transition-transform"
+              className="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 border-foundation-gold shadow-md group-hover:scale-105 transition-transform"
             />
             <div className="flex flex-col">
-              <span className="text-xs tracking-wider uppercase text-foundation-forest font-bold">
+              <span className="text-[11px] tracking-wider uppercase text-foundation-forest font-bold leading-none whitespace-nowrap">
                 SBBM Social Foundation
               </span>
-              <span className="text-base md:text-xl font-display font-bold text-foundation-charcoal leading-tight">
+              <span className="text-base md:text-lg font-display font-bold text-foundation-charcoal leading-tight whitespace-nowrap">
                 VYENKATESH ASHRAM
               </span>
-              <span className="text-[10px] text-foundation-sage tracking-wider">
+              <span className="text-[9.5px] text-foundation-sage tracking-wider leading-none whitespace-nowrap">
                 A Place of Care, Dignity & Belonging
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden xl:flex items-center space-x-6 text-sm font-semibold text-foundation-charcoal">
+          {/* Desktop Navigation Links - Single clean horizontal line with whitespace-nowrap */}
+          <div className="hidden xl:flex items-center gap-1 xl:gap-1.5 2xl:gap-3 text-[13px] 2xl:text-sm font-semibold text-foundation-charcoal">
             <Link
               to="/"
-              className={`hover:text-foundation-forest transition-colors py-1 ${
-                isActive('/') && location.pathname === '/' ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
+                isActive('/') && location.pathname === '/'
+                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
               }`}
             >
               Home
@@ -146,12 +148,14 @@ export const Navbar: React.FC = () => {
             >
               <Link
                 to="/about"
-                className={`flex items-center space-x-1 hover:text-foundation-forest py-1 ${
-                  isActive('/about') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+                className={`whitespace-nowrap inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg transition-colors ${
+                  isActive('/about')
+                    ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                    : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
                 }`}
               >
                 <span>About Us</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${isAboutDropdownOpen ? 'rotate-180' : ''}`} />
               </Link>
 
               {isAboutDropdownOpen && (
@@ -184,12 +188,14 @@ export const Navbar: React.FC = () => {
             >
               <Link
                 to="/services"
-                className={`flex items-center space-x-1 hover:text-foundation-forest py-1 ${
-                  isActive('/services') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+                className={`whitespace-nowrap inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg transition-colors ${
+                  isActive('/services')
+                    ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                    : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
                 }`}
               >
                 <span>Services</span>
-                <ChevronDown className="w-4 h-4" />
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${isServicesDropdownOpen ? 'rotate-180' : ''}`} />
               </Link>
 
               {isServicesDropdownOpen && (
@@ -224,8 +230,10 @@ export const Navbar: React.FC = () => {
 
             <Link
               to="/old-age-home"
-              className={`hover:text-foundation-forest transition-colors py-1 ${
-                isActive('/old-age-home') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
+                isActive('/old-age-home')
+                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
               }`}
             >
               Old Age Home
@@ -233,8 +241,10 @@ export const Navbar: React.FC = () => {
 
             <Link
               to="/events"
-              className={`hover:text-foundation-forest transition-colors py-1 ${
-                isActive('/events') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
+                isActive('/events')
+                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
               }`}
             >
               Events
@@ -242,8 +252,10 @@ export const Navbar: React.FC = () => {
 
             <Link
               to="/gallery"
-              className={`hover:text-foundation-forest transition-colors py-1 ${
-                isActive('/gallery') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
+                isActive('/gallery')
+                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
               }`}
             >
               Gallery
@@ -251,8 +263,10 @@ export const Navbar: React.FC = () => {
 
             <Link
               to="/faq"
-              className={`hover:text-foundation-forest transition-colors py-1 ${
-                isActive('/faq') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
+                isActive('/faq')
+                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
               }`}
             >
               FAQs
@@ -260,42 +274,56 @@ export const Navbar: React.FC = () => {
 
             <Link
               to="/contact"
-              className={`hover:text-foundation-forest transition-colors py-1 ${
-                isActive('/contact') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
+              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
+                isActive('/contact')
+                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
+                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
               }`}
             >
               Contact
             </Link>
           </div>
 
-          {/* Right Action Controls: Login/Account Icon & Admission CTA */}
-          <div className="hidden sm:flex items-center space-x-3">
-            {/* Dedicated Login / Portal Icon Button with Consolidated Dropdown */}
-            <div className="relative" ref={accountDropdownRef}>
+          {/* Right Action Controls: Admission CTA & Login/Account Icon to its RIGHT */}
+          <div className="hidden xl:flex items-center space-x-2.5 shrink-0">
+            {/* 1. Admission CTA Button */}
+            <Link
+              to="/admission"
+              className="whitespace-nowrap h-9 px-4 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold rounded-full text-xs shadow-sm hover:shadow transition-all inline-flex items-center justify-center shrink-0"
+            >
+              <span>Admission Enquiry</span>
+            </Link>
+
+            {/* 2. Dedicated Login / Portal Icon Button - Placed to the RIGHT of Admission Enquiry */}
+            <div className="relative shrink-0" ref={accountDropdownRef}>
               <button
                 onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                className={`flex items-center space-x-2 px-3.5 py-2 rounded-full border transition-all cursor-pointer ${
+                className={`whitespace-nowrap h-9 inline-flex items-center space-x-1.5 px-3 rounded-full border transition-all cursor-pointer ${
                   user
-                    ? 'bg-foundation-forest text-foundation-gold border-foundation-gold shadow-md'
+                    ? 'bg-foundation-forest text-foundation-gold border-foundation-gold shadow-sm'
                     : isAccountDropdownOpen
                     ? 'bg-foundation-warmGray text-foundation-forest border-foundation-forest ring-2 ring-foundation-forest/20'
-                    : 'bg-white hover:bg-foundation-warmGray text-foundation-charcoal border-foundation-borderMuted shadow-sm hover:border-foundation-gold'
+                    : 'bg-white hover:bg-foundation-warmGray text-foundation-charcoal border-stone-200 hover:border-foundation-gold shadow-sm'
                 }`}
                 id="portal-login-icon-btn"
                 aria-label="Account and Portals"
                 title="Account, Seva Members, Volunteers & Admin Login"
               >
-                <div className="w-7 h-7 rounded-full bg-foundation-forest/10 flex items-center justify-center text-foundation-forest">
+                <div className="w-5 h-5 rounded-full bg-foundation-forest/10 flex items-center justify-center text-foundation-forest shrink-0">
                   {user ? (
-                    <span className="font-bold text-xs text-foundation-gold">{user.fullName.charAt(0).toUpperCase()}</span>
+                    <span className="font-bold text-[11px] text-foundation-gold">{user.fullName.charAt(0).toUpperCase()}</span>
                   ) : (
-                    <User className="w-4 h-4 text-foundation-forest" />
+                    <User className="w-3.5 h-3.5 text-foundation-forest" />
                   )}
                 </div>
-                <span className="text-xs font-bold">
-                  {user ? user.fullName.split(' ')[0] : 'Login / Portals'}
+                <span className="text-xs font-bold whitespace-nowrap">
+                  {user ? user.fullName.split(' ')[0] : 'Login'}
                 </span>
-                <ChevronDown className={`w-3.5 h-3.5 text-stone-500 transition-transform duration-200 ${isAccountDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  className={`w-3.5 h-3.5 text-stone-400 transition-transform duration-200 ${
+                    isAccountDropdownOpen ? 'rotate-180 text-foundation-forest' : ''
+                  }`}
+                />
               </button>
 
               {/* Account / Portals Dropdown Card */}
@@ -445,18 +473,18 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            {/* Admission CTA Button */}
-            <Link
-              to="/admission"
-              className="px-5 py-2.5 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold rounded-full text-xs shadow-md transition-all flex items-center space-x-1.5"
-            >
-              <span>Admission Enquiry</span>
-            </Link>
           </div>
 
-          {/* Mobile Right Controls: Mobile User Icon + Mobile Menu Hamburger */}
+          {/* Mobile Right Controls: Admission CTA + Mobile User Icon to its RIGHT + Hamburger */}
           <div className="flex xl:hidden items-center space-x-2">
-            {/* Mobile Account Icon Button */}
+            <Link
+              to="/admission"
+              className="whitespace-nowrap px-3 py-1.5 bg-foundation-forest text-foundation-ivory font-bold rounded-full text-xs shadow-sm"
+            >
+              Admission
+            </Link>
+
+            {/* Mobile Account Icon Button - Placed RIGHT to Admission */}
             <div className="relative" ref={mobileAccountDropdownRef}>
               <button
                 onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
@@ -465,12 +493,12 @@ export const Navbar: React.FC = () => {
                     ? 'bg-foundation-forest text-foundation-gold border-foundation-gold'
                     : isAccountDropdownOpen
                     ? 'bg-foundation-warmGray text-foundation-forest border-foundation-forest'
-                    : 'bg-white text-foundation-charcoal border-foundation-borderMuted'
+                    : 'bg-white text-foundation-charcoal border-stone-200'
                 }`}
                 aria-label="Account Portals"
                 title="Account Portals"
               >
-                <User className="w-5 h-5" />
+                <User className="w-4 h-4" />
               </button>
 
               {/* Mobile Account Dropdown Popover */}
@@ -538,13 +566,6 @@ export const Navbar: React.FC = () => {
                 </div>
               )}
             </div>
-
-            <Link
-              to="/admission"
-              className="px-3 py-1.5 bg-foundation-forest text-foundation-ivory font-bold rounded-full text-xs"
-            >
-              Admission
-            </Link>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
