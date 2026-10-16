@@ -838,43 +838,56 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     };
   }, [handleWheel, handleTouchStart, handleTouchMove, handleKeyDown]);
 
+  // Dedicated transition trigger function:
+  const triggerAutoTransition = useCallback(() => {
+    if (hasTriggeredTransition.current) return;
+    hasTriggeredTransition.current = true;
+
+    // Start smooth cross-dissolve overlay
+    setIsTransitioning(true);
+
+    // After 600ms dissolve, enter the website landing page!
+    setTimeout(() => {
+      onComplete();
+    }, 600);
+  }, [onComplete]);
+
+  const autoTransitionTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   const handleProgressUpdate = (p: number, gateProg: number, doorProg: number) => {
     setDisplayProgress(p);
     setGateOpenProgress(gateProg);
     setAshramDoorProgress(doorProg);
-  };
 
-  // =========================================================================
-  // AUTOMATIC WELCOMING & LANDING PAGE TRANSITION
-  // Once the ashram doors swing open (ashramDoorProgress >= 0.70 or progress >= 0.80):
-  // The welcoming greeting appears, and the experience automatically transitions
-  // smoothly into the landing page without requiring any extra buttons or clicks!
-  // =========================================================================
-  useEffect(() => {
-    if (hasTriggeredTransition.current) return;
-
-    if (ashramDoorProgress >= 0.70 || displayProgress >= 0.80) {
-      hasTriggeredTransition.current = true;
-
-      // Natural pause: Allow visitor ~1.6s to view open sanctum & welcoming blessing
-      const delay = displayProgress >= 0.96 ? 400 : 1600;
-      const timer = setTimeout(() => {
-        setIsTransitioning(true);
-
-        // Smooth dissolve overlay transitions effortlessly into landing page
-        setTimeout(() => {
-          onComplete();
-        }, 700);
-      }, delay);
-
-      return () => clearTimeout(timer);
+    // 1. DIRECT SCROLL ENTRY: When visitor scrolls to the entry threshold (p >= 0.88),
+    // automatically open the website immediately without any manual click!
+    if (p >= 0.88 && !hasTriggeredTransition.current) {
+      triggerAutoTransition();
+      return;
     }
-  }, [ashramDoorProgress, displayProgress, onComplete]);
+
+    // 2. TIMED ENTRY: If visitor scrolls to where doors are open (p >= 0.68) and pauses,
+    // give them 1.8s to view the welcoming greeting, then open the website automatically!
+    if (p >= 0.68 && !hasTriggeredTransition.current && !autoTransitionTimer.current) {
+      autoTransitionTimer.current = setTimeout(() => {
+        triggerAutoTransition();
+      }, 1800);
+    }
+
+    // If visitor reverses away backward, reset the pause timer so they can explore
+    if (p < 0.55 && autoTransitionTimer.current && !hasTriggeredTransition.current) {
+      clearTimeout(autoTransitionTimer.current);
+      autoTransitionTimer.current = null;
+    }
+  };
 
   // Keep existing "Skip to Website" button fully functional
   const handleSkip = () => {
     if (hasTriggeredTransition.current) return;
     hasTriggeredTransition.current = true;
+    if (autoTransitionTimer.current) {
+      clearTimeout(autoTransitionTimer.current);
+    }
     onComplete();
   };
 
