@@ -587,6 +587,20 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
   const hasTriggeredTransition = useRef<boolean>(false);
   const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Prevent background page scrolling while 3D intro is mounted; restore cleanly on exit
+  useEffect(() => {
+    const prevOverflow = document.body.style.overflow;
+    const prevTouchAction = document.body.style.touchAction;
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+
+    return () => {
+      document.body.style.overflow = prevOverflow || '';
+      document.body.style.touchAction = prevTouchAction || '';
+      window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior });
+    };
+  }, []);
+
   // High-Resolution Crisp Signboard & Paver Canvas Textures
   const gateSignTexture = useMemo(() => {
     if (typeof document === 'undefined') return null;
@@ -711,39 +725,43 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     );
   }, []);
 
-  // Mouse Scroll Wheel Event Listener
+  // Mouse Scroll Wheel / Touchpad Listener
   const handleWheel = useCallback((e: WheelEvent) => {
+    if (hasTriggeredTransition.current) return;
     e.preventDefault();
     let delta = e.deltaY;
     if (e.deltaMode === 1) delta *= 33;
     else if (e.deltaMode === 2) delta *= 100;
 
     // Positive deltaY = scroll down = advance forward; Negative = scroll up = reverse
-    const step = delta * 0.00065;
+    const step = delta * 0.00075;
     targetProgress.current = Math.max(0, Math.min(1, targetProgress.current + step));
   }, []);
 
   // Touch Swipe Gesture Listener for Mobile
   const touchStartY = useRef<number>(0);
   const handleTouchStart = useCallback((e: TouchEvent) => {
+    if (hasTriggeredTransition.current) return;
     if (e.touches.length > 0) {
       touchStartY.current = e.touches[0].clientY;
     }
   }, []);
 
   const handleTouchMove = useCallback((e: TouchEvent) => {
+    if (hasTriggeredTransition.current) return;
     if (e.touches.length > 0) {
       if (e.cancelable) e.preventDefault();
       const currentY = e.touches[0].clientY;
       const delta = touchStartY.current - currentY;
       touchStartY.current = currentY;
-      const step = delta * 0.0022;
+      const step = delta * 0.0024;
       targetProgress.current = Math.max(0, Math.min(1, targetProgress.current + step));
     }
   }, []);
 
   // Keyboard navigation for accessibility
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
+    if (hasTriggeredTransition.current) return;
     if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
       e.preventDefault();
       targetProgress.current = Math.min(1, targetProgress.current + 0.06);
@@ -773,28 +791,30 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     setAshramDoorProgress(doorProg);
   };
 
-  // Seamless Automatic Transition Trigger:
-  // Once the welcoming message has appeared and the entrance doors have opened (displayProgress >= 0.92),
-  // automatically and smoothly transition the visitor into the main website without extra buttons or prompts.
+  // Designated entry point transition:
+  // When visitor approaches the open ashram entrance (displayProgress >= 0.94),
+  // automatically trigger seamless transition into homepage without extra button clicks.
   useEffect(() => {
     if (hasTriggeredTransition.current) return;
 
-    if (displayProgress >= 0.92) {
+    if (displayProgress >= 0.94) {
       if (!transitionTimerRef.current) {
-        const delay = displayProgress >= 0.97 ? 400 : 1200;
+        // Natural brief pause (~800ms) to experience the open sanctum and welcome
+        const delay = displayProgress >= 0.98 ? 300 : 800;
         transitionTimerRef.current = setTimeout(() => {
           if (hasTriggeredTransition.current) return;
           hasTriggeredTransition.current = true;
           setIsTransitioning(true);
           localStorage.setItem('ssbm_intro_viewed', 'true');
+
           // Smooth luminous cross-dissolve into the website
           setTimeout(() => {
             onComplete();
-          }, 850);
+          }, 750);
         }, delay);
       }
     } else {
-      // If visitor reverses away from entrance, cancel transition
+      // If visitor reverses away from entrance, cancel pending transition
       if (transitionTimerRef.current) {
         clearTimeout(transitionTimerRef.current);
         transitionTimerRef.current = null;
@@ -808,6 +828,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     };
   }, [displayProgress, onComplete]);
 
+  // Keep existing "Skip to Website" button fully functional
   const handleSkip = () => {
     if (hasTriggeredTransition.current) return;
     hasTriggeredTransition.current = true;
@@ -836,7 +857,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
           </p>
           <button
             onClick={handleSkip}
-            className="px-8 py-3.5 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold rounded-full shadow-lg transition-all flex items-center space-x-2"
+            className="px-8 py-3.5 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold rounded-full shadow-lg transition-all flex items-center space-x-2 cursor-pointer"
           >
             <span>Enter Website Directly</span>
             <ArrowRight className="w-4 h-4" />
@@ -844,7 +865,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
         </div>
       ) : (
         <>
-          {/* Top Header: Foundation Identity & Direct Skip Button */}
+          {/* Top Header: Foundation Identity & Existing "Skip to Website" Button */}
           <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 via-black/35 to-transparent">
             <div className="flex items-center space-x-3">
               <img
@@ -862,11 +883,11 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
               </div>
             </div>
 
-            {/* Top Right: Skip to Website */}
+            {/* Top Right: Skip to Website Button (Kept visible, fully functional & unchanged) */}
             <div className="flex items-center space-x-3">
               <button
                 onClick={handleSkip}
-                className="group px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/20 font-semibold text-xs md:text-sm backdrop-blur-md shadow-lg transition-all flex items-center space-x-2"
+                className="group px-4 py-2 md:px-5 md:py-2.5 rounded-full bg-white/15 hover:bg-white/25 text-white border border-white/20 font-semibold text-xs md:text-sm backdrop-blur-md shadow-lg transition-all flex items-center space-x-2 cursor-pointer"
                 id="skip-3d-intro-btn"
               >
                 <span>Skip to Website</span>
@@ -926,7 +947,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
             </Canvas>
           </div>
 
-          {/* Centered Ashram Welcoming Message (Revealed naturally as ashram entrance opens) */}
+          {/* Centered Ashram Welcoming Message (Synchronized with ashram entrance doors opening) */}
           <div className="absolute bottom-8 left-0 right-0 z-20 px-4 md:px-8 max-w-xl mx-auto text-center pointer-events-none">
             <AnimatePresence>
               {displayProgress >= 0.68 && (
@@ -991,7 +1012,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.85, ease: 'easeInOut' }}
+                transition={{ duration: 0.75, ease: 'easeInOut' }}
                 className="fixed inset-0 z-50 bg-[#162118] pointer-events-none"
               />
             )}
