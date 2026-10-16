@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Menu, X, ChevronDown, Phone, Heart, User, ShieldCheck,
-  Calendar, Image, Home, HelpCircle, MapPin, Sparkles, LogOut
+  Menu, X, ChevronDown, Phone, Heart, User, UserCheck, ShieldCheck,
+  HeartHandshake, Award, LogOut, MapPin, Lock, Sparkles
 } from 'lucide-react';
 import { getAuthToken, clearAuthToken, apiRequest } from '../../api';
 
@@ -19,8 +19,32 @@ export const Navbar: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [user, setUser] = useState<UserState | null>(null);
 
+  const accountDropdownRef = useRef<HTMLDivElement>(null);
+  const mobileAccountDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close account dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        accountDropdownRef.current &&
+        !accountDropdownRef.current.contains(event.target as Node) &&
+        mobileAccountDropdownRef.current &&
+        !mobileAccountDropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsAccountDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Fetch logged in user profile
   useEffect(() => {
     const token = getAuthToken();
     if (token) {
@@ -42,6 +66,8 @@ export const Navbar: React.FC = () => {
   const handleLogout = () => {
     clearAuthToken();
     setUser(null);
+    setIsAccountDropdownOpen(false);
+    setIsMobileMenuOpen(false);
     navigate('/');
   };
 
@@ -52,7 +78,7 @@ export const Navbar: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-40 w-full shadow-md">
-      {/* Top Notification Bar */}
+      {/* Top Notification Bar - Streamlined, clean, without scattered portal links */}
       <div className="bg-foundation-forestDark text-foundation-sandstone text-xs py-1.5 px-4 md:px-8 border-b border-foundation-gold/20 flex flex-wrap items-center justify-between">
         <div className="flex items-center space-x-4">
           <span className="flex items-center space-x-1.5 text-foundation-ivory">
@@ -71,43 +97,10 @@ export const Navbar: React.FC = () => {
         </div>
 
         <div className="flex items-center space-x-4 text-xs">
-          <Link to="/support" className="flex items-center space-x-1 text-foundation-gold hover:underline font-semibold">
-            <Heart className="w-3 h-3 text-red-400 fill-red-400" />
+          <Link to="/support" className="flex items-center space-x-1.5 text-foundation-gold hover:underline font-semibold">
+            <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" />
             <span>Support / Donate</span>
           </Link>
-          <span className="text-foundation-sageLight/50">|</span>
-          <Link to="/volunteer" className="hover:text-foundation-ivory transition-colors">
-            Volunteer Seva
-          </Link>
-          <span className="text-foundation-sageLight/50">|</span>
-          {user ? (
-            <div className="flex items-center space-x-2">
-              <Link
-                to={user.role === 'admin' ? '/admin/dashboard' : '/member/dashboard'}
-                className="font-semibold text-foundation-gold hover:underline flex items-center space-x-1"
-              >
-                <User className="w-3 h-3" />
-                <span>{user.fullName.split(' ')[0]} ({user.role === 'admin' ? 'Admin' : 'Member'})</span>
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="text-stone-300 hover:text-red-300 ml-1"
-                title="Logout"
-              >
-                <LogOut className="w-3 h-3" />
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-2">
-              <Link to="/login" className="hover:text-foundation-ivory font-medium">
-                Member Login
-              </Link>
-              <span>/</span>
-              <Link to="/admin-login" className="text-foundation-gold hover:underline font-medium">
-                Admin
-              </Link>
-            </div>
-          )}
         </div>
       </div>
 
@@ -239,15 +232,6 @@ export const Navbar: React.FC = () => {
             </Link>
 
             <Link
-              to="/membership"
-              className={`hover:text-foundation-forest transition-colors py-1 ${
-                isActive('/membership') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
-              }`}
-            >
-              Membership
-            </Link>
-
-            <Link
               to="/events"
               className={`hover:text-foundation-forest transition-colors py-1 ${
                 isActive('/events') ? 'text-foundation-forest border-b-2 border-foundation-forest' : ''
@@ -284,8 +268,184 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          {/* CTA Buttons */}
+          {/* Right Action Controls: Login/Account Icon & Admission CTA */}
           <div className="hidden sm:flex items-center space-x-3">
+            {/* Dedicated Login / Portal Icon Button with Consolidated Dropdown */}
+            <div className="relative" ref={accountDropdownRef}>
+              <button
+                onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
+                className={`flex items-center space-x-2 px-3.5 py-2 rounded-full border transition-all cursor-pointer ${
+                  user
+                    ? 'bg-foundation-forest text-foundation-gold border-foundation-gold shadow-md'
+                    : isAccountDropdownOpen
+                    ? 'bg-foundation-warmGray text-foundation-forest border-foundation-forest ring-2 ring-foundation-forest/20'
+                    : 'bg-white hover:bg-foundation-warmGray text-foundation-charcoal border-foundation-borderMuted shadow-sm hover:border-foundation-gold'
+                }`}
+                id="portal-login-icon-btn"
+                aria-label="Account and Portals"
+                title="Account, Seva Members, Volunteers & Admin Login"
+              >
+                <div className="w-7 h-7 rounded-full bg-foundation-forest/10 flex items-center justify-center text-foundation-forest">
+                  {user ? (
+                    <span className="font-bold text-xs text-foundation-gold">{user.fullName.charAt(0).toUpperCase()}</span>
+                  ) : (
+                    <User className="w-4 h-4 text-foundation-forest" />
+                  )}
+                </div>
+                <span className="text-xs font-bold">
+                  {user ? user.fullName.split(' ')[0] : 'Login / Portals'}
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 text-stone-500 transition-transform duration-200 ${isAccountDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {/* Account / Portals Dropdown Card */}
+              {isAccountDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-foundation-borderMuted p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  {user ? (
+                    // Logged In State
+                    <div className="space-y-3">
+                      <div className="bg-foundation-warmGray p-3 rounded-xl border border-foundation-borderMuted/60">
+                        <div className="flex items-center space-x-2.5">
+                          <div className="w-10 h-10 rounded-full bg-foundation-forest text-foundation-gold flex items-center justify-center font-bold text-sm">
+                            {user.fullName.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="overflow-hidden">
+                            <p className="text-xs font-bold text-foundation-charcoal truncate">{user.fullName}</p>
+                            <p className="text-[11px] text-stone-500 truncate">{user.email}</p>
+                            <span className="inline-block mt-1 px-2 py-0.5 bg-foundation-forest/10 text-foundation-forest text-[10px] font-bold rounded-full uppercase">
+                              {user.role} Account
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <Link
+                          to={user.role === 'admin' ? '/admin/dashboard' : '/member/dashboard'}
+                          onClick={() => setIsAccountDropdownOpen(false)}
+                          className="flex items-center space-x-2.5 px-3 py-2.5 rounded-xl hover:bg-foundation-warmGray text-xs font-bold text-foundation-forest transition-colors"
+                        >
+                          <ShieldCheck className="w-4 h-4 text-foundation-gold" />
+                          <span>Go to Dashboard</span>
+                        </Link>
+                        <Link
+                          to={user.role === 'admin' ? '/admin/dashboard' : '/member/profile'}
+                          onClick={() => setIsAccountDropdownOpen(false)}
+                          className="flex items-center space-x-2.5 px-3 py-2.5 rounded-xl hover:bg-foundation-warmGray text-xs font-medium text-stone-700 transition-colors"
+                        >
+                          <User className="w-4 h-4 text-stone-500" />
+                          <span>Profile & Details</span>
+                        </Link>
+                      </div>
+
+                      <div className="pt-2 border-t border-stone-100">
+                        <button
+                          onClick={handleLogout}
+                          className="w-full flex items-center justify-center space-x-2 px-3 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold transition-colors cursor-pointer"
+                        >
+                          <LogOut className="w-3.5 h-3.5" />
+                          <span>Logout</span>
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    // Logged Out State - Consolidated Portals (Volunteer, Seva Member, Admin)
+                    <div className="space-y-2">
+                      <div className="px-2 py-1.5 border-b border-stone-100">
+                        <p className="text-xs font-bold text-foundation-forest uppercase tracking-wider flex items-center space-x-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
+                          <span>Portals & Community</span>
+                        </p>
+                        <p className="text-[11px] text-stone-500">
+                          Select your required portal to proceed
+                        </p>
+                      </div>
+
+                      {/* 1. Member / Seva Member Login */}
+                      <Link
+                        to="/login"
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-foundation-forest/10 flex items-center justify-center text-foundation-forest shrink-0 group-hover:bg-foundation-forest group-hover:text-white transition-colors">
+                          <UserCheck className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-foundation-forest transition-colors">
+                            Seva Member Login
+                          </p>
+                          <p className="text-[11px] text-stone-500 leading-tight">
+                            Access member dashboard, receipts & seva records
+                          </p>
+                        </div>
+                      </Link>
+
+                      {/* 2. Become a Seva Member */}
+                      <Link
+                        to="/membership"
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600 shrink-0 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                          <Award className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-amber-700 transition-colors">
+                            Become a Seva Member
+                          </p>
+                          <p className="text-[11px] text-stone-500 leading-tight">
+                            Join as Life Member, Patron or Executive Member
+                          </p>
+                        </div>
+                      </Link>
+
+                      {/* 3. Volunteer Seva Application */}
+                      <Link
+                        to="/volunteer"
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                      >
+                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                          <HeartHandshake className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-emerald-700 transition-colors">
+                            Volunteer Seva
+                          </p>
+                          <p className="text-[11px] text-stone-500 leading-tight">
+                            Join volunteer activities in elder care & ashram seva
+                          </p>
+                        </div>
+                      </Link>
+
+                      {/* 4. Admin Governance Login */}
+                      <div className="pt-1 border-t border-stone-100">
+                        <Link
+                          to="/admin-login"
+                          onClick={() => setIsAccountDropdownOpen(false)}
+                          className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                        >
+                          <div className="w-8 h-8 rounded-lg bg-foundation-forestDark/10 flex items-center justify-center text-foundation-forestDark shrink-0 group-hover:bg-foundation-forestDark group-hover:text-foundation-gold transition-colors">
+                            <ShieldCheck className="w-4 h-4" />
+                          </div>
+                          <div>
+                            <p className="text-xs font-bold text-foundation-forestDark flex items-center space-x-1">
+                              <span>Admin Governance Login</span>
+                              <Lock className="w-3 h-3 text-foundation-gold" />
+                            </p>
+                            <p className="text-[11px] text-stone-500 leading-tight">
+                              Trustees & administrative staff portal
+                            </p>
+                          </div>
+                        </Link>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Admission CTA Button */}
             <Link
               to="/admission"
               className="px-5 py-2.5 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold rounded-full text-xs shadow-md transition-all flex items-center space-x-1.5"
@@ -294,14 +454,98 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Right Controls: Mobile User Icon + Mobile Menu Hamburger */}
           <div className="flex xl:hidden items-center space-x-2">
+            {/* Mobile Account Icon Button */}
+            <div className="relative" ref={mobileAccountDropdownRef}>
+              <button
+                onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
+                className={`p-2 rounded-full border transition-all cursor-pointer ${
+                  user
+                    ? 'bg-foundation-forest text-foundation-gold border-foundation-gold'
+                    : isAccountDropdownOpen
+                    ? 'bg-foundation-warmGray text-foundation-forest border-foundation-forest'
+                    : 'bg-white text-foundation-charcoal border-foundation-borderMuted'
+                }`}
+                aria-label="Account Portals"
+                title="Account Portals"
+              >
+                <User className="w-5 h-5" />
+              </button>
+
+              {/* Mobile Account Dropdown Popover */}
+              {isAccountDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-foundation-borderMuted p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                  {user ? (
+                    <div className="space-y-2">
+                      <div className="p-2.5 bg-foundation-warmGray rounded-xl">
+                        <p className="text-xs font-bold text-foundation-forest">{user.fullName}</p>
+                        <p className="text-[10px] text-stone-500 capitalize">{user.role} Account</p>
+                      </div>
+                      <Link
+                        to={user.role === 'admin' ? '/admin/dashboard' : '/member/dashboard'}
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="block px-3 py-2 bg-foundation-forest text-white rounded-lg text-xs font-bold text-center"
+                      >
+                        Dashboard
+                      </Link>
+                      <button
+                        onClick={handleLogout}
+                        className="w-full px-3 py-2 bg-red-50 text-red-700 rounded-lg text-xs font-bold text-center cursor-pointer"
+                      >
+                        Logout
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="space-y-1.5 text-left">
+                      <p className="text-[10px] font-bold text-foundation-forest uppercase tracking-wider px-1">
+                        Select Portal
+                      </p>
+                      <Link
+                        to="/login"
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-charcoal"
+                      >
+                        <UserCheck className="w-4 h-4 text-foundation-forest" />
+                        <span>Seva Member Login</span>
+                      </Link>
+                      <Link
+                        to="/membership"
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-charcoal"
+                      >
+                        <Award className="w-4 h-4 text-amber-600" />
+                        <span>Become a Seva Member</span>
+                      </Link>
+                      <Link
+                        to="/volunteer"
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-charcoal"
+                      >
+                        <HeartHandshake className="w-4 h-4 text-emerald-600" />
+                        <span>Volunteer Seva</span>
+                      </Link>
+                      <Link
+                        to="/admin-login"
+                        onClick={() => setIsAccountDropdownOpen(false)}
+                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-forestDark border-t border-stone-100"
+                      >
+                        <ShieldCheck className="w-4 h-4 text-foundation-gold" />
+                        <span>Admin Login</span>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
             <Link
               to="/admission"
               className="px-3 py-1.5 bg-foundation-forest text-foundation-ivory font-bold rounded-full text-xs"
             >
               Admission
             </Link>
+
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-lg text-foundation-charcoal hover:bg-foundation-warmGray"
@@ -312,7 +556,7 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Mobile Dropdown Menu Drawer */}
+        {/* Mobile Dropdown Navigation Drawer */}
         {isMobileMenuOpen && (
           <div className="xl:hidden mt-3 pt-3 border-t border-foundation-borderMuted bg-white rounded-2xl p-4 shadow-xl space-y-3">
             <Link
@@ -358,11 +602,11 @@ export const Navbar: React.FC = () => {
               • Naturopathy & Yoga
             </Link>
             <Link
-              to="/membership"
+              to="/services/education"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
+              className="block text-sm text-stone-600 py-1 pl-4"
             >
-              Membership
+              • Rural Education Support
             </Link>
             <Link
               to="/events"
@@ -386,13 +630,6 @@ export const Navbar: React.FC = () => {
               Support / Donate
             </Link>
             <Link
-              to="/volunteer"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
-            >
-              Volunteer Seva
-            </Link>
-            <Link
               to="/faq"
               onClick={() => setIsMobileMenuOpen(false)}
               className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
@@ -407,7 +644,11 @@ export const Navbar: React.FC = () => {
               Contact Us
             </Link>
 
-            <div className="pt-2 border-t border-stone-200 flex flex-col space-y-2">
+            {/* Mobile Drawer Portals & Account Section */}
+            <div className="pt-2 border-t border-stone-200">
+              <p className="text-[11px] font-bold text-foundation-forest uppercase tracking-wider mb-2">
+                Portals & Accounts
+              </p>
               {user ? (
                 <div className="flex items-center justify-between bg-stone-100 p-2.5 rounded-xl">
                   <div>
@@ -435,16 +676,34 @@ export const Navbar: React.FC = () => {
                   <Link
                     to="/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-center py-2 bg-stone-100 text-foundation-charcoal rounded-xl text-xs font-bold"
+                    className="p-2 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
                   >
-                    Member Login
+                    <UserCheck className="w-3.5 h-3.5 text-foundation-forest" />
+                    <span>Member Login</span>
+                  </Link>
+                  <Link
+                    to="/membership"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
+                  >
+                    <Award className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Seva Member</span>
+                  </Link>
+                  <Link
+                    to="/volunteer"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
+                  >
+                    <HeartHandshake className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>Volunteer</span>
                   </Link>
                   <Link
                     to="/admin-login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-center py-2 bg-foundation-forest text-foundation-ivory rounded-xl text-xs font-bold"
+                    className="p-2 bg-foundation-forest text-foundation-ivory rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
                   >
-                    Admin Portal
+                    <ShieldCheck className="w-3.5 h-3.5 text-foundation-gold" />
+                    <span>Admin Portal</span>
                   </Link>
                 </div>
               )}
