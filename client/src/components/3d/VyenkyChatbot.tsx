@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { apiRequest } from '../../api';
+import { SSBMBotAvatar } from './SSBMBotAvatar';
 
 // Mini 3D Avatar inside Chat Header / Launcher
 function VyenkyHeadModel() {
@@ -208,41 +209,44 @@ export const VyenkyChatbot: React.FC = () => {
 
   return (
     <>
-      {/* Floating Chat Launcher Button */}
-      <div className="fixed bottom-6 right-6 z-40">
-        <motion.button
+      {/* Floating 3D Animated Bot Launcher with Greetings & Real-time Background Removal */}
+      <div className="fixed bottom-5 right-5 md:bottom-7 md:right-7 z-40">
+        <motion.div
+          whileHover={{ scale: 1.08, y: -4 }}
+          whileTap={{ scale: 0.95 }}
+          className="relative group cursor-pointer flex flex-col items-center"
           onClick={() => setIsOpen(!isOpen)}
-          whileHover={{ scale: 1.06 }}
-          whileTap={{ scale: 0.94 }}
-          className="relative group flex items-center space-x-3 bg-gradient-to-r from-foundation-forest to-foundation-forestLight text-foundation-ivory p-2 md:pr-5 rounded-full shadow-2xl border-2 border-foundation-gold/60 focus:outline-none focus:ring-4 focus:ring-foundation-gold/40"
           id="vyenky-chat-launcher"
+          role="button"
+          tabIndex={0}
           aria-label="Open Vyenky 3D Assistant"
         >
-          {/* Avatar Icon Circle with mini 3D head */}
-          <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-foundation-sandstone/30 overflow-hidden relative border-2 border-foundation-gold flex items-center justify-center shadow-inner">
-            <Canvas camera={{ position: [0, 0, 2.4], fov: 45 }}>
-              <ambientLight intensity={1.2} />
-              <directionalLight position={[2, 4, 3]} intensity={1.5} />
-              <VyenkyHeadModel />
-            </Canvas>
+          {/* Transparent 3D Bot Avatar with Synchronized Greetings */}
+          <SSBMBotAvatar
+            size={110}
+            showGreetingBadge={!isOpen}
+            interactiveHover={false}
+          />
+
+          {/* Elegant Floating Pill Label */}
+          <div className="-mt-3 bg-gradient-to-r from-foundation-forestDark via-foundation-forest to-foundation-forestLight text-foundation-ivory px-3.5 py-1 rounded-full shadow-lg border border-foundation-gold/70 flex items-center space-x-1.5 backdrop-blur-sm group-hover:border-foundation-gold transition-colors">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="text-[11px] font-bold tracking-wide text-foundation-gold">
+              Vyenky AI
+            </span>
+            <span className="text-[10px] text-foundation-sandstone/80 hidden sm:inline">
+              • Guide
+            </span>
           </div>
 
-          <div className="hidden md:flex flex-col text-left">
-            <div className="flex items-center space-x-1.5">
-              <span className="font-bold text-sm text-foundation-gold">Vyenky (वेन्की)</span>
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            </div>
-            <span className="text-xs text-foundation-sandstone">3D Guide • How can I help?</span>
-          </div>
-
-          {/* Unread / Active badge */}
+          {/* Unread / Active Ping Indicator */}
           {!isOpen && (
-            <span className="absolute -top-1 -right-1 flex h-4 w-4">
+            <span className="absolute top-2 right-2 flex h-3.5 w-3.5 pointer-events-none">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foundation-gold opacity-75" />
-              <span className="relative inline-flex rounded-full h-4 w-4 bg-foundation-gold" />
+              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-foundation-gold" />
             </span>
           )}
-        </motion.button>
+        </motion.div>
       </div>
 
       {/* Expandable Chat Drawer */}
@@ -255,15 +259,11 @@ export const VyenkyChatbot: React.FC = () => {
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
             className="fixed bottom-24 right-4 md:right-8 w-[92vw] sm:w-[420px] h-[580px] max-h-[82vh] bg-foundation-ivory rounded-3xl shadow-2xl border border-foundation-borderMuted z-50 flex flex-col overflow-hidden"
           >
-            {/* Header with 3D Canvas character avatar & Language switch */}
-            <div className="bg-gradient-to-r from-foundation-forestDark via-foundation-forest to-foundation-forestLight text-foundation-ivory p-4 flex items-center justify-between border-b border-foundation-gold/30">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 rounded-full bg-foundation-sandstone/20 overflow-hidden border-2 border-foundation-gold flex items-center justify-center">
-                  <Canvas camera={{ position: [0, 0, 2.4], fov: 45 }}>
-                    <ambientLight intensity={1.2} />
-                    <directionalLight position={[2, 4, 3]} intensity={1.5} />
-                    <VyenkyHeadModel />
-                  </Canvas>
+            {/* Header with 3D Animated Bot character avatar & Language switch */}
+            <div className="bg-gradient-to-r from-foundation-forestDark via-foundation-forest to-foundation-forestLight text-foundation-ivory p-3.5 flex items-center justify-between border-b border-foundation-gold/30">
+              <div className="flex items-center space-x-2.5">
+                <div className="w-12 h-12 rounded-full bg-foundation-forestDark/80 border border-foundation-gold/60 flex items-center justify-center overflow-hidden shadow-inner shrink-0">
+                  <SSBMBotAvatar size={48} showGreetingBadge={false} interactiveHover={false} />
                 </div>
                 <div>
                   <div className="flex items-center space-x-2">
