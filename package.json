@@ -1,0 +1,23 @@
+{
+  "name": "ssbm-website",
+  "version": "1.0.0",
+  "description": "Full-Stack Web Application for SBBM Social Foundation & Vyenkatesh Ashram",
+  "scripts": {
+    "dev:server": "npm run dev --prefix server",
+    "dev:client": "npm run dev --prefix client",
+    "build:server": "npm run build --prefix server",
+    "build:client": "npm run build --prefix client",
+    "build": "npm run build:server && npm run build:client",
+    "dev": "npx concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm run dev:server\" \"npm run dev:client\"",
+    "start": "node server/dist/index.js"
+  },
+  "keywords": [
+    "vyenkatesh-ashram",
+    "sbbm-social-foundation",
+    "old-age-home",
+    "nagpur",
+    "mahuli"
+  ],
+  "author": "SBBM Social Foundation Society",
+  "license": "ISC"
+}
