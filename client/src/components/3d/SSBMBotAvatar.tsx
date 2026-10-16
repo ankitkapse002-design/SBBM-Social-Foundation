@@ -46,9 +46,9 @@ export const SSBMBotAvatar: React.FC<SSBMBotAvatarProps> = ({
     video.loop = true;
     video.autoplay = true;
 
-    // Offscreen canvas for frame extraction
-    const W = 160;
-    const H = 160;
+    // Offscreen canvas for frame extraction with high visual fidelity
+    const W = 200;
+    const H = 200;
     const offscreen = document.createElement('canvas');
     offscreen.width = W;
     offscreen.height = H;
@@ -252,16 +252,16 @@ export const SSBMBotAvatar: React.FC<SSBMBotAvatarProps> = ({
       {/* Floating Greeting Speech Bubble (Synchronized with 3D Bot) */}
       {showGreetingBadge && (
         <div
-          className="absolute -top-12 right-0 md:-right-4 whitespace-nowrap z-50 pointer-events-none transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
+          className="absolute -top-9 md:-top-10 right-2 md:-right-2 whitespace-nowrap z-50 pointer-events-none transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
           id="ssbm-bot-greeting-bubble"
         >
-          <div className="bg-foundation-forestDark/95 text-foundation-ivory text-[11px] font-bold px-3 py-1.5 rounded-2xl shadow-xl border border-foundation-gold/60 backdrop-blur-md flex items-center space-x-1.5 relative">
+          <div className="bg-foundation-forestDark/95 text-foundation-ivory text-xs font-bold px-3.5 py-1.5 rounded-2xl shadow-xl border border-foundation-gold/60 backdrop-blur-md flex items-center space-x-2 relative">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
             <span className="text-foundation-sandstone tracking-wide">
               {greetings[greetingIndex]}
             </span>
             {/* Speech bubble pointer */}
-            <div className="absolute -bottom-1.5 right-6 w-3 h-3 bg-foundation-forestDark/95 border-r border-b border-foundation-gold/60 transform rotate-45" />
+            <div className="absolute -bottom-1.5 right-8 md:right-10 w-3 h-3 bg-foundation-forestDark/95 border-r border-b border-foundation-gold/60 transform rotate-45" />
           </div>
         </div>
       )}

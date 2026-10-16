@@ -210,7 +210,7 @@ export const VyenkyChatbot: React.FC = () => {
   return (
     <>
       {/* Floating 3D Animated Bot Launcher with Greetings & Real-time Background Removal */}
-      <div className="fixed bottom-5 right-5 md:bottom-7 md:right-7 z-40">
+      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40">
         <motion.div
           whileHover={{ scale: 1.08, y: -4 }}
           whileTap={{ scale: 0.95 }}
@@ -221,27 +221,16 @@ export const VyenkyChatbot: React.FC = () => {
           tabIndex={0}
           aria-label="Open Vyenky 3D Assistant"
         >
-          {/* Transparent 3D Bot Avatar with Synchronized Greetings */}
+          {/* Transparent 3D Bot Avatar with Synchronized Greetings (Enlarged, Clean) */}
           <SSBMBotAvatar
-            size={110}
+            size={160}
             showGreetingBadge={!isOpen}
             interactiveHover={false}
           />
 
-          {/* Elegant Floating Pill Label */}
-          <div className="-mt-3 bg-gradient-to-r from-foundation-forestDark via-foundation-forest to-foundation-forestLight text-foundation-ivory px-3.5 py-1 rounded-full shadow-lg border border-foundation-gold/70 flex items-center space-x-1.5 backdrop-blur-sm group-hover:border-foundation-gold transition-colors">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            <span className="text-[11px] font-bold tracking-wide text-foundation-gold">
-              Vyenky AI
-            </span>
-            <span className="text-[10px] text-foundation-sandstone/80 hidden sm:inline">
-              • Guide
-            </span>
-          </div>
-
           {/* Unread / Active Ping Indicator */}
           {!isOpen && (
-            <span className="absolute top-2 right-2 flex h-3.5 w-3.5 pointer-events-none">
+            <span className="absolute top-3 right-5 flex h-3.5 w-3.5 pointer-events-none">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foundation-gold opacity-75" />
               <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-foundation-gold" />
             </span>
