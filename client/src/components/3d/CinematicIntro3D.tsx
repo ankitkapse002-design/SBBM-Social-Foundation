@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, ChevronDown, Mouse, Sparkles, Compass } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 
 interface CinematicIntro3DProps {
   onComplete: () => void;
@@ -19,7 +19,7 @@ function smoothstep(min: number, max: number, value: number): number {
 // Perfectly centered around x = 0:
 // - Main wing centered on approach road
 // - Symmetrical grand veranda columns and entrance steps
-// - Wooden entrance double doors centered at x = 0
+// - Wooden entrance double doors centered at x = 0 with warm interior glow
 // - Balcony railings and hipped terracotta roof centered at x = 0
 // - Signboard: "व्यंकटेश आश्रम / VYENKATESH ASHRAM" centered at x = 0
 // - Authentic left perpendicular L-wing extending behind
@@ -102,6 +102,15 @@ function AshramBuilding({
         </group>
       ))}
 
+      {/* Warm interior welcoming light emanating from the open entrance */}
+      <pointLight
+        position={[0, 3.0, 6.8]}
+        color="#FFE090"
+        intensity={doorsOpenProgress * 2.5}
+        distance={15}
+        decay={2}
+      />
+
       {/* Main Ashram Entrance Double Door (Precisely Centered at x = 0) */}
       <group position={[0, 2.8, 7.02]}>
         {/* Frame Outer */}
@@ -112,7 +121,11 @@ function AshramBuilding({
         {/* Recessed Interior Glow */}
         <mesh position={[0, 0, -0.1]}>
           <boxGeometry args={[2.8, 4.0, 0.1]} />
-          <meshStandardMaterial color="#2B1D12" />
+          <meshStandardMaterial
+            color={doorsOpenProgress > 0.05 ? "#FFF2D6" : "#2B1D12"}
+            emissive="#D4AF37"
+            emissiveIntensity={doorsOpenProgress * 0.45}
+          />
         </mesh>
 
         {/* Left Door Leaf (Hinged on left at x = -1.35) */}
@@ -526,11 +539,11 @@ function ScrollControlledCamera({
     const p = Math.max(0, Math.min(1, currentPos.current));
 
     // Calculate gate and ashram door states smoothly from progress p:
-    // Gate opens between 0.04 and 0.28
+    // Foundation entrance gate opens between 0.04 and 0.28
     const gateProg = smoothstep(0.04, 0.28, p);
 
-    // Ashram doors open between 0.70 and 0.92
-    const doorProg = smoothstep(0.70, 0.92, p);
+    // Ashram entrance doors open naturally as visitor approaches between 0.68 and 0.90
+    const doorProg = smoothstep(0.68, 0.90, p);
 
     // Camera movement along strict central axis (x = 0):
     // p = 0.0 -> Outside gate at z = 16.0
@@ -570,6 +583,9 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
   const [ashramDoorProgress, setAshramDoorProgress] = useState<number>(0);
   const [hasWebGLError, setHasWebGLError] = useState(false);
   const [logoTexture, setLogoTexture] = useState<THREE.Texture | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState<boolean>(false);
+  const hasTriggeredTransition = useRef<boolean>(false);
+  const transitionTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // High-Resolution Crisp Signboard & Paver Canvas Textures
   const gateSignTexture = useMemo(() => {
@@ -757,12 +773,44 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     setAshramDoorProgress(doorProg);
   };
 
-  const handleSkip = () => {
-    localStorage.setItem('ssbm_intro_viewed', 'true');
-    onComplete();
-  };
+  // Seamless Automatic Transition Trigger:
+  // Once the welcoming message has appeared and the entrance doors have opened (displayProgress >= 0.92),
+  // automatically and smoothly transition the visitor into the main website without extra buttons or prompts.
+  useEffect(() => {
+    if (hasTriggeredTransition.current) return;
 
-  const handleEnterWebsite = () => {
+    if (displayProgress >= 0.92) {
+      if (!transitionTimerRef.current) {
+        const delay = displayProgress >= 0.97 ? 400 : 1200;
+        transitionTimerRef.current = setTimeout(() => {
+          if (hasTriggeredTransition.current) return;
+          hasTriggeredTransition.current = true;
+          setIsTransitioning(true);
+          localStorage.setItem('ssbm_intro_viewed', 'true');
+          // Smooth luminous cross-dissolve into the website
+          setTimeout(() => {
+            onComplete();
+          }, 850);
+        }, delay);
+      }
+    } else {
+      // If visitor reverses away from entrance, cancel transition
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+        transitionTimerRef.current = null;
+      }
+    }
+
+    return () => {
+      if (transitionTimerRef.current) {
+        clearTimeout(transitionTimerRef.current);
+      }
+    };
+  }, [displayProgress, onComplete]);
+
+  const handleSkip = () => {
+    if (hasTriggeredTransition.current) return;
+    hasTriggeredTransition.current = true;
     localStorage.setItem('ssbm_intro_viewed', 'true');
     onComplete();
   };
@@ -796,7 +844,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
         </div>
       ) : (
         <>
-          {/* Top Header: Foundation Identity & Controls */}
+          {/* Top Header: Foundation Identity & Direct Skip Button */}
           <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 via-black/35 to-transparent">
             <div className="flex items-center space-x-3">
               <img
@@ -878,88 +926,76 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
             </Canvas>
           </div>
 
-          {/* Bottom Interactive Guidance & Narrative Cards */}
-          <div className="absolute bottom-6 left-0 right-0 z-20 px-4 md:px-8 max-w-xl mx-auto text-center pointer-events-none">
-            {/* Journey Progress Bar */}
-            <div className="w-full bg-black/40 backdrop-blur-md border border-white/15 h-2 rounded-full mb-3 overflow-hidden p-0.5">
-              <div
-                className="h-full bg-gradient-to-r from-foundation-gold to-yellow-400 rounded-full transition-all duration-75"
-                style={{ width: `${Math.round(displayProgress * 100)}%` }}
-              />
-            </div>
-
-            <AnimatePresence mode="wait">
-              {/* Phase 1: Outside Entrance Gate (0% to 25%) */}
-              {displayProgress < 0.25 && (
+          {/* Centered Ashram Welcoming Message (Revealed naturally as ashram entrance opens) */}
+          <div className="absolute bottom-8 left-0 right-0 z-20 px-4 md:px-8 max-w-xl mx-auto text-center pointer-events-none">
+            <AnimatePresence>
+              {displayProgress >= 0.68 && (
                 <motion.div
-                  key="phase-gate"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="bg-black/75 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:p-5 shadow-2xl text-white pointer-events-auto space-y-2"
+                  key="ashram-welcome-message"
+                  initial={{ opacity: 0, scale: 0.94, y: 16 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.97, y: -8 }}
+                  transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
+                  className="text-center px-6 py-6 md:px-10 md:py-8 rounded-3xl bg-black/60 backdrop-blur-xl border border-foundation-gold/35 shadow-[0_0_60px_rgba(212,175,55,0.22)] max-w-lg mx-auto pointer-events-none"
                 >
-                  <div className="flex items-center justify-center space-x-2 text-foundation-gold text-xs font-bold uppercase tracking-widest">
-                    <Mouse className="w-4 h-4 animate-bounce" />
-                    <span>Scroll Down / Swipe Up to Enter</span>
-                  </div>
-                  <h3 className="text-lg md:text-xl font-display font-bold text-foundation-sandstone">
-                    SSBM SOCIAL FOUNDATION
-                  </h3>
-                  <p className="text-[11px] md:text-xs text-stone-300">
-                    Anjikar Bagh, Mansar Mahuli Road • Mahuli, Parseoni (Nagpur)
-                  </p>
-                </motion.div>
-              )}
+                  <motion.div
+                    initial={{ opacity: 0, y: -4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.15, duration: 0.5 }}
+                    className="flex items-center justify-center space-x-2 mb-2"
+                  >
+                    <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
+                    <span className="text-[11px] uppercase tracking-[0.25em] text-foundation-gold font-bold">
+                      श्री संत बापूजी मौदाकर सामाजिक संस्था
+                    </span>
+                    <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
+                  </motion.div>
 
-              {/* Phase 2: Along the Road (25% to 75%) */}
-              {displayProgress >= 0.25 && displayProgress < 0.75 && (
-                <motion.div
-                  key="phase-road"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="bg-black/70 backdrop-blur-md border border-white/15 rounded-xl px-5 py-3 shadow-xl text-white inline-block pointer-events-auto"
-                >
-                  <p className="text-xs md:text-sm font-semibold text-foundation-sandstone flex items-center justify-center space-x-2">
-                    <span>Approaching Vyenkatesh Ashram through Anjikar Bagh avenue...</span>
-                  </p>
-                  <p className="text-[10px] text-stone-300 mt-0.5">
-                    Scroll down to advance • Scroll up to reverse
-                  </p>
-                </motion.div>
-              )}
+                  <motion.h2
+                    initial={{ opacity: 0, y: 6 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.25, duration: 0.6 }}
+                    className="text-2xl md:text-3xl font-display font-bold text-white tracking-wide mb-1"
+                  >
+                    व्यंकटेश आश्रम
+                  </motion.h2>
 
-              {/* Phase 3: Ashram Welcoming Arrival (75% to 100%) */}
-              {displayProgress >= 0.75 && (
-                <motion.div
-                  key="phase-welcome"
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0 }}
-                  className="bg-foundation-forestDark/90 backdrop-blur-md border border-foundation-gold/40 rounded-2xl p-5 md:p-6 shadow-2xl text-white pointer-events-auto space-y-2"
-                >
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-foundation-gold bg-foundation-gold/20 px-3 py-1 rounded-full inline-block">
-                    Sanctuary of Dignified Elder Care
-                  </span>
-                  <h3 className="text-xl md:text-2xl font-display font-bold text-foundation-sandstone">
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.4, duration: 0.6 }}
+                    className="text-base md:text-lg font-serif italic text-amber-200/95 mb-3"
+                  >
                     Welcome to Vyenkatesh Ashram
-                  </h3>
-                  <p className="text-xs md:text-sm text-foundation-goldLight font-medium">
-                    “A Place of Care, Dignity and Belonging.”
-                  </p>
-                  <div className="pt-2 flex items-center justify-center space-x-3">
-                    <button
-                      onClick={handleEnterWebsite}
-                      className="px-6 py-2.5 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold text-xs rounded-full shadow-lg transition-all inline-flex items-center space-x-2"
-                    >
-                      <span>Enter Website</span>
-                      <ArrowRight className="w-4 h-4" />
-                    </button>
-                  </div>
+                  </motion.p>
+
+                  <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-foundation-gold to-transparent mx-auto mb-3" />
+
+                  <motion.p
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.55, duration: 0.6 }}
+                    className="text-xs md:text-sm text-stone-200 font-light tracking-wide italic"
+                  >
+                    “A Place of Care, Dignity and Belonging”
+                  </motion.p>
                 </motion.div>
               )}
             </AnimatePresence>
           </div>
+
+          {/* Seamless Automated Transition Cross-Dissolve Overlay */}
+          <AnimatePresence>
+            {isTransitioning && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.85, ease: 'easeInOut' }}
+                className="fixed inset-0 z-50 bg-[#162118] pointer-events-none"
+              />
+            )}
+          </AnimatePresence>
         </>
       )}
     </div>
