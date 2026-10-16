@@ -34,11 +34,8 @@ function ScrollToTop() {
 }
 
 export function App() {
-  const [show3DIntro, setShow3DIntro] = useState<boolean>(() => {
-    // Check if first-time visitor has seen intro
-    const hasViewed = localStorage.getItem('ssbm_intro_viewed');
-    return !hasViewed;
-  });
+  // Always start with the 3D opening scene on fresh visit or reload
+  const [show3DIntro, setShow3DIntro] = useState<boolean>(true);
 
   const handleReplayIntro = () => {
     setShow3DIntro(true);

@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 interface CinematicIntro3DProps {
   onComplete: () => void;
@@ -16,22 +16,25 @@ function smoothstep(min: number, max: number, value: number): number {
 
 // ==========================================
 // 1. REALISTIC VYENKATESH ASHRAM 3D MODEL
-// Perfectly centered around x = 0:
-// - Main wing centered on approach road
+// With Authentic Interior Welcoming Sanctum:
+// - Main wing centered on approach road (x = 0)
 // - Symmetrical grand veranda columns and entrance steps
-// - Wooden entrance double doors centered at x = 0 with warm interior glow
+// - Wooden entrance double doors at z = 7.02
+// - INTERIOR WELCOMING SANCTUM at z = 3.6 inside the ashram foyer
+//   (100% physically occluded when doors are closed; emerges as doors open)
 // - Balcony railings and hipped terracotta roof centered at x = 0
 // - Signboard: "व्यंकटेश आश्रम / VYENKATESH ASHRAM" centered at x = 0
-// - Authentic left perpendicular L-wing extending behind
 // ==========================================
 function AshramBuilding({
   doorsOpenProgress,
-  ashramSignTexture
+  ashramSignTexture,
+  interiorWelcomeTexture
 }: {
   doorsOpenProgress: number;
   ashramSignTexture: THREE.Texture | null;
+  interiorWelcomeTexture: THREE.Texture | null;
 }) {
-  const doorAngle = doorsOpenProgress * (Math.PI / 2.2);
+  const doorAngle = doorsOpenProgress * (Math.PI / 2.15);
 
   return (
     <group position={[0, 0, -42]}>
@@ -102,33 +105,96 @@ function AshramBuilding({
         </group>
       ))}
 
-      {/* Warm interior welcoming light emanating from the open entrance */}
-      <pointLight
-        position={[0, 3.0, 6.8]}
-        color="#FFE090"
-        intensity={doorsOpenProgress * 2.5}
-        distance={15}
-        decay={2}
-      />
+      {/* ================================================================= */}
+      {/* 3D INTERIOR WELCOMING SANCTUM (Physically Inside Ashram at Z = 3.6) */}
+      {/* Situated inside the foyer behind the doors at Z = 7.02            */}
+      {/* 100% physically occluded when doors are shut; emerges as doors open */}
+      {/* ================================================================= */}
+      <group position={[0, 2.8, 3.6]}>
+        {/* Interior Foyer Backwall */}
+        <mesh position={[0, 0.4, -0.6]} receiveShadow>
+          <boxGeometry args={[7.6, 5.2, 0.3]} />
+          <meshStandardMaterial color="#EAE2D5" roughness={0.85} />
+        </mesh>
 
-      {/* Main Ashram Entrance Double Door (Precisely Centered at x = 0) */}
+        {/* Polished Teakwood Display Stand / Altar Frame */}
+        <mesh position={[0, 0.1, 0]} castShadow>
+          <boxGeometry args={[4.5, 3.4, 0.2]} />
+          <meshStandardMaterial color="#351F10" roughness={0.5} />
+        </mesh>
+
+        {/* Gold Leaf Filigree Outer Rim */}
+        <mesh position={[0, 0.1, 0.11]}>
+          <boxGeometry args={[4.38, 3.28, 0.04]} />
+          <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.25} />
+        </mesh>
+
+        {/* High-Resolution Welcoming Message Canvas Surface */}
+        {interiorWelcomeTexture && (
+          <mesh position={[0, 0.1, 0.14]}>
+            <planeGeometry args={[4.26, 3.16]} />
+            <meshStandardMaterial
+              map={interiorWelcomeTexture}
+              roughness={0.3}
+              emissive="#FFF8EA"
+              emissiveIntensity={0.25 + doorsOpenProgress * 0.4}
+            />
+          </mesh>
+        )}
+
+        {/* Traditional Brass Standing Oil Lamps (Samai) Flanking the Message */}
+        {[-2.55, 2.55].map((lx, li) => (
+          <group key={`interior-samai-${li}`} position={[lx, -1.2, 0.35]}>
+            {/* Tiered Brass Base */}
+            <mesh castShadow>
+              <cylinderGeometry args={[0.22, 0.32, 0.15, 16]} />
+              <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.25} />
+            </mesh>
+            {/* Slender Turned Shaft */}
+            <mesh position={[0, 1.0, 0]} castShadow>
+              <cylinderGeometry args={[0.04, 0.06, 1.9, 12]} />
+              <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.25} />
+            </mesh>
+            {/* Oil Wick Bowl */}
+            <mesh position={[0, 2.0, 0]}>
+              <cylinderGeometry args={[0.22, 0.12, 0.12, 16]} />
+              <meshStandardMaterial color="#D4AF37" metalness={0.85} roughness={0.25} />
+            </mesh>
+            {/* Glowing Golden Flame Diya */}
+            <mesh position={[0, 2.15, 0]}>
+              <coneGeometry args={[0.05, 0.16, 8]} />
+              <meshBasicMaterial color="#FFB703" />
+            </mesh>
+            {/* Warm Flame Point Light */}
+            <pointLight
+              position={[0, 2.2, 0.1]}
+              color="#FFB703"
+              intensity={0.5 + doorsOpenProgress * 0.9}
+              distance={4.5}
+              decay={2}
+            />
+          </group>
+        ))}
+
+        {/* Warm Golden Foyer Light Illuminating Interior */}
+        <pointLight
+          position={[0, 1.8, 1.4]}
+          color="#FFE5A3"
+          intensity={0.8 + doorsOpenProgress * 2.4}
+          distance={14}
+          decay={2}
+        />
+      </group>
+
+      {/* Main Ashram Entrance Double Door Frame (At Z = 7.02) */}
       <group position={[0, 2.8, 7.02]}>
         {/* Frame Outer */}
         <mesh>
           <boxGeometry args={[3.2, 4.4, 0.15]} />
           <meshStandardMaterial color="#3D2B1F" roughness={0.7} />
         </mesh>
-        {/* Recessed Interior Glow */}
-        <mesh position={[0, 0, -0.1]}>
-          <boxGeometry args={[2.8, 4.0, 0.1]} />
-          <meshStandardMaterial
-            color={doorsOpenProgress > 0.05 ? "#FFF2D6" : "#2B1D12"}
-            emissive="#D4AF37"
-            emissiveIntensity={doorsOpenProgress * 0.45}
-          />
-        </mesh>
 
-        {/* Left Door Leaf (Hinged on left at x = -1.35) */}
+        {/* Left Door Leaf (Hinged on left at x = -1.35, swings outward to open gap) */}
         <group position={[-1.35, 0, 0]} rotation={[0, -doorAngle, 0]}>
           <mesh position={[0.67, 0, 0]} castShadow>
             <boxGeometry args={[1.35, 4.0, 0.08]} />
@@ -141,7 +207,7 @@ function AshramBuilding({
           </mesh>
         </group>
 
-        {/* Right Door Leaf (Hinged on right at x = +1.35) */}
+        {/* Right Door Leaf (Hinged on right at x = +1.35, swings outward to open gap) */}
         <group position={[1.35, 0, 0]} rotation={[0, doorAngle, 0]}>
           <mesh position={[-0.67, 0, 0]} castShadow>
             <boxGeometry args={[1.35, 4.0, 0.08]} />
@@ -267,11 +333,11 @@ function AshramBuilding({
 
 // ==========================================
 // 2. SSBM FOUNDATION ENTRANCE GATE & WALL
-// Perfectly symmetrical around x = 0:
+// Symmetrical around x = 0:
 // - Left pillar at x = -4.8, Right pillar at x = +4.8
-// - Overhead arch sign centered at x = 0
-// - Left gate leaf hinged at x = -4.15, swings outward smoothly
-// - Right gate leaf hinged at x = +4.15, swings outward smoothly
+// - Overhead arch sign centered at x = 0: "SSBM SOCIAL FOUNDATION"
+// - Official Logo Medallion
+// - Left gate leaf hinged at x = -4.15, Right gate leaf at x = +4.15
 // ==========================================
 function FoundationEntranceGate({
   openProgress,
@@ -418,7 +484,7 @@ function FoundationEntranceGate({
 
 // ==========================================
 // 3. ROAD & SURROUNDINGS (ANJIKAR BAGH)
-// Perfectly aligned with the central approach road (x = 0):
+// Perfectly aligned with central approach road (x = 0):
 // - Roadway width: 7.8m centered at x = 0
 // - Roadside stone curbs symmetrical at x = ±4.0m
 // - Solar garden streetlamps along curbs
@@ -538,34 +604,34 @@ function ScrollControlledCamera({
     currentPos.current = THREE.MathUtils.lerp(currentPos.current, scrollProgressRef.current, 0.08);
     const p = Math.max(0, Math.min(1, currentPos.current));
 
-    // Calculate gate and ashram door states smoothly from progress p:
-    // Foundation entrance gate opens between 0.04 and 0.28
+    // Foundation entrance gate opens smoothly between 0.04 and 0.28
     const gateProg = smoothstep(0.04, 0.28, p);
 
-    // Ashram entrance doors open naturally as visitor approaches between 0.68 and 0.90
-    const doorProg = smoothstep(0.68, 0.90, p);
+    // Ashram entrance doors open naturally as visitor approaches between 0.65 and 0.88
+    const doorProg = smoothstep(0.65, 0.88, p);
 
     // Camera movement along strict central axis (x = 0):
     // p = 0.0 -> Outside gate at z = 16.0
     // p = 0.30 -> Crossing open gate at z = 0.0
-    // p = 0.70 -> Paved approach at z = -16.0
-    // p = 1.0 -> Welcoming entrance framing the facade at z = -26.5
+    // p = 0.70 -> Paved avenue approach at z = -18.0
+    // p = 0.90 -> In front of open veranda at z = -27.5
+    // p = 1.0 -> Welcoming threshold facing interior display at z = -31.5
     const zCurve = p < 0.30
       ? (p / 0.30) * 0.30
-      : 0.30 + Math.pow((p - 0.30) / 0.70, 0.92) * 0.70;
-    const camZ = 16.0 - zCurve * 42.5;
+      : 0.30 + Math.pow((p - 0.30) / 0.70, 0.94) * 0.70;
+    const camZ = 16.0 - zCurve * 47.5;
 
     // Natural eye-level height with subtle walking stride bounce
     const stepBounce = Math.sin(p * Math.PI * 18) * (p > 0.04 && p < 0.94 ? 0.022 : 0.0);
-    const camY = 1.80 + p * 0.20 + stepBounce;
+    const camY = 1.80 + p * 0.25 + stepBounce;
 
     // Camera position strictly centered on x = 0
     camera.position.set(0, camY, camZ);
 
     // Camera focal lookAt point:
-    // Always looks straight ahead down the central axis (x = 0) at the ashram entrance (z = -42)
-    const targetY = 2.5 + p * 0.7;
-    camera.lookAt(0, targetY, -42);
+    // Coordinates focal point right at the interior welcoming display (z = -38.4)
+    const targetY = 2.4 + p * 0.45;
+    camera.lookAt(0, targetY, -38.4);
 
     onProgressUpdate(p, gateProg, doorProg);
   });
@@ -601,7 +667,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     };
   }, []);
 
-  // High-Resolution Crisp Signboard & Paver Canvas Textures
+  // 1. High-Resolution Overhead Gate Signboard Texture
   const gateSignTexture = useMemo(() => {
     if (typeof document === 'undefined') return null;
     const canvas = document.createElement('canvas');
@@ -640,6 +706,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     return texture;
   }, []);
 
+  // 2. High-Resolution Ashram Exterior Facade Signboard Texture
   const ashramSignTexture = useMemo(() => {
     if (typeof document === 'undefined') return null;
     const canvas = document.createElement('canvas');
@@ -675,6 +742,112 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
     return texture;
   }, []);
 
+  // 3. Authentic Interior 3D Welcoming Sanctum Texture (Revealed from Inside Ashram Door)
+  const interiorWelcomeTexture = useMemo(() => {
+    if (typeof document === 'undefined') return null;
+    const canvas = document.createElement('canvas');
+    canvas.width = 1536;
+    canvas.height = 1152;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+
+    // Warm Ivory Parchment Background with soft golden gradient
+    const grad = ctx.createLinearGradient(0, 0, 0, 1152);
+    grad.addColorStop(0, '#FFFDF8');
+    grad.addColorStop(0.5, '#FBF5E8');
+    grad.addColorStop(1, '#F3E8D0');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 1536, 1152);
+
+    // Ornate Gold Double Border
+    ctx.strokeStyle = '#C99726';
+    ctx.lineWidth = 14;
+    ctx.strokeRect(20, 20, 1496, 1112);
+
+    ctx.strokeStyle = '#D4AF37';
+    ctx.lineWidth = 4;
+    ctx.strokeRect(36, 36, 1464, 1080);
+
+    // Corner decorative accents
+    const corners = [
+      [50, 50],
+      [1486, 50],
+      [50, 1102],
+      [1486, 1102]
+    ];
+    ctx.fillStyle = '#C99726';
+    corners.forEach(([cx, cy]) => {
+      ctx.beginPath();
+      ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+
+    // Society Invocations
+    ctx.fillStyle = '#6E4E18';
+    ctx.font = 'bold 34px "Noto Sans", system-ui, sans-serif';
+    ctx.fillText('॥ श्री गणेशाय नमः ॥   ॥ श्री संत बापूजी मौदाकर प्रसन्न ॥', 768, 110);
+
+    // Society Name
+    ctx.fillStyle = '#1B4332';
+    ctx.font = 'bold 44px "Cinzel", serif, system-ui';
+    ctx.fillText('श्री संत बापूजी मौदाकर सामाजिक संस्था, नागपूर', 768, 190);
+
+    // Decorative divider line
+    ctx.strokeStyle = '#D4AF37';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(300, 240);
+    ctx.lineTo(1236, 240);
+    ctx.stroke();
+
+    // Central Welcoming Greeting in Marathi Devanagari
+    ctx.fillStyle = '#8B2500';
+    ctx.font = 'bold 64px "Cinzel", "Noto Sans", serif, system-ui';
+    ctx.fillText('व्यंकटेश आश्रम मध्ये आपले सहर्ष स्वागत आहे', 768, 360);
+
+    // Main English Welcoming Title
+    ctx.fillStyle = '#0D2818';
+    ctx.font = '900 68px "Cinzel", serif, system-ui';
+    ctx.fillText('WELCOME TO VYENKATESH ASHRAM', 768, 480);
+
+    // Gold divider
+    const goldGrad = ctx.createLinearGradient(400, 0, 1136, 0);
+    goldGrad.addColorStop(0, 'rgba(212, 175, 55, 0)');
+    goldGrad.addColorStop(0.5, 'rgba(212, 175, 55, 1)');
+    goldGrad.addColorStop(1, 'rgba(212, 175, 55, 0)');
+    ctx.fillStyle = goldGrad;
+    ctx.fillRect(400, 560, 736, 4);
+
+    // Foundational Motto / Vision
+    ctx.fillStyle = '#6E4E18';
+    ctx.font = 'italic bold 44px "Outfit", serif, system-ui';
+    ctx.fillText('“A Place of Care, Dignity & Belonging”', 768, 640);
+
+    // Descriptive Mission
+    ctx.fillStyle = '#2C3E50';
+    ctx.font = '500 32px "Outfit", system-ui, sans-serif';
+    ctx.fillText('Dedicated to Loving Elder Care, Dignity & Senior Wellness', 768, 730);
+
+    // Location & Registration Details
+    ctx.fillStyle = '#555555';
+    ctx.font = '600 28px system-ui, sans-serif';
+    ctx.fillText('Anjikar Bagh, Mansar Mahuli Road • Mahuli, Parseoni (Nagpur)', 768, 830);
+    ctx.fillText('Society Reg. No. 332-15-Nag (Est. 2015)', 768, 880);
+
+    // Traditional Sacred Blessing
+    ctx.fillStyle = '#C99726';
+    ctx.font = 'bold 36px "Noto Sans", serif, system-ui';
+    ctx.fillText('॥ अतिथि देवो भव ॥', 768, 980);
+
+    const texture = new THREE.CanvasTexture(canvas);
+    texture.anisotropy = 8;
+    return texture;
+  }, []);
+
+  // 4. Approach Road Stone Paver Texture with Yellow Guideline
   const roadTexture = useMemo(() => {
     if (typeof document === 'undefined') return null;
     const canvas = document.createElement('canvas');
@@ -799,18 +972,17 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
 
     if (displayProgress >= 0.94) {
       if (!transitionTimerRef.current) {
-        // Natural brief pause (~800ms) to experience the open sanctum and welcome
-        const delay = displayProgress >= 0.98 ? 300 : 800;
+        // Natural brief pause (~750ms) to take in the open sanctum and welcome
+        const delay = displayProgress >= 0.98 ? 250 : 750;
         transitionTimerRef.current = setTimeout(() => {
           if (hasTriggeredTransition.current) return;
           hasTriggeredTransition.current = true;
           setIsTransitioning(true);
-          localStorage.setItem('ssbm_intro_viewed', 'true');
 
           // Smooth luminous cross-dissolve into the website
           setTimeout(() => {
             onComplete();
-          }, 750);
+          }, 700);
         }, delay);
       }
     } else {
@@ -832,7 +1004,6 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
   const handleSkip = () => {
     if (hasTriggeredTransition.current) return;
     hasTriggeredTransition.current = true;
-    localStorage.setItem('ssbm_intro_viewed', 'true');
     onComplete();
   };
 
@@ -937,6 +1108,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
               <AshramBuilding
                 doorsOpenProgress={ashramDoorProgress}
                 ashramSignTexture={ashramSignTexture}
+                interiorWelcomeTexture={interiorWelcomeTexture}
               />
 
               {/* Synchronized Scroll Camera Controller */}
@@ -947,64 +1119,6 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
             </Canvas>
           </div>
 
-          {/* Centered Ashram Welcoming Message (Synchronized with ashram entrance doors opening) */}
-          <div className="absolute bottom-8 left-0 right-0 z-20 px-4 md:px-8 max-w-xl mx-auto text-center pointer-events-none">
-            <AnimatePresence>
-              {displayProgress >= 0.68 && (
-                <motion.div
-                  key="ashram-welcome-message"
-                  initial={{ opacity: 0, scale: 0.94, y: 16 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.97, y: -8 }}
-                  transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-center px-6 py-6 md:px-10 md:py-8 rounded-3xl bg-black/60 backdrop-blur-xl border border-foundation-gold/35 shadow-[0_0_60px_rgba(212,175,55,0.22)] max-w-lg mx-auto pointer-events-none"
-                >
-                  <motion.div
-                    initial={{ opacity: 0, y: -4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.15, duration: 0.5 }}
-                    className="flex items-center justify-center space-x-2 mb-2"
-                  >
-                    <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
-                    <span className="text-[11px] uppercase tracking-[0.25em] text-foundation-gold font-bold">
-                      श्री संत बापूजी मौदाकर सामाजिक संस्था
-                    </span>
-                    <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
-                  </motion.div>
-
-                  <motion.h2
-                    initial={{ opacity: 0, y: 6 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.25, duration: 0.6 }}
-                    className="text-2xl md:text-3xl font-display font-bold text-white tracking-wide mb-1"
-                  >
-                    व्यंकटेश आश्रम
-                  </motion.h2>
-
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.4, duration: 0.6 }}
-                    className="text-base md:text-lg font-serif italic text-amber-200/95 mb-3"
-                  >
-                    Welcome to Vyenkatesh Ashram
-                  </motion.p>
-
-                  <div className="w-20 h-0.5 bg-gradient-to-r from-transparent via-foundation-gold to-transparent mx-auto mb-3" />
-
-                  <motion.p
-                    initial={{ opacity: 0, y: 4 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.55, duration: 0.6 }}
-                    className="text-xs md:text-sm text-stone-200 font-light tracking-wide italic"
-                  >
-                    “A Place of Care, Dignity and Belonging”
-                  </motion.p>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
           {/* Seamless Automated Transition Cross-Dissolve Overlay */}
           <AnimatePresence>
             {isTransitioning && (
@@ -1012,7 +1126,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.75, ease: 'easeInOut' }}
+                transition={{ duration: 0.70, ease: 'easeInOut' }}
                 className="fixed inset-0 z-50 bg-[#162118] pointer-events-none"
               />
             )}
