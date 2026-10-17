@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Heart, Shield, Sparkles, Phone, ArrowRight, CheckCircle2,
-  Calendar, Eye, Compass, Users, Clock, MapPin, Play, HelpCircle
+  Calendar, Eye, Compass, Users, Clock, MapPin, Play,
+  ChevronDown, HelpCircle, Award, Star
 } from 'lucide-react';
+import { Card3D } from '../components/ui/Card3D';
+import { StatCard3D } from '../components/ui/StatCard3D';
+import { HeroParticles3D } from '../components/3d/HeroParticles3D';
 
 interface HomeProps {
   onReplayIntro?: () => void;
@@ -12,164 +16,255 @@ interface HomeProps {
 
 export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 25 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+    },
+  };
+
+  const faqs = [
+    {
+      q: 'What is the procedure for admission to Vyenkatesh Ashram?',
+      a: 'Admission requires submitting an initial enquiry form or visiting our office. Because we maintain high care standards and limited capacity, accommodation availability, medical suitability, and admission formalities must be confirmed directly with the management (+91 98908 98081).',
+    },
+    {
+      q: 'Is SBBM Social Foundation a registered society?',
+      a: 'Yes, SBBM Social Foundation Society was established in 2015 and is officially registered under the Societies Registration Act (Reg No: 332-15-Nag). It operates Vyenkatesh Ashram as a charitable, non-granted old-age home.',
+    },
+    {
+      q: 'Can family members and visitors visit the ashram?',
+      a: 'Yes, family members and well-wishers are welcomed. Prior notification via telephone (+91 98908 98081) is requested to ensure resident rest hours and daily schedules are respected.',
+    },
+    {
+      q: 'What facilities and daily routines are provided for residents?',
+      a: 'Residents receive nutritious freshly prepared vegetarian meals, private and semi-private rooms, round-the-clock attendants, morning yoga/naturopathy sessions, Go-Seva interaction, and regular healthcare monitoring.',
+    },
+  ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-foundation-ivory text-foundation-charcoal">
-      {/* Hero Section */}
+    <div className="flex flex-col min-h-screen bg-foundation-ivory text-foundation-charcoal overflow-hidden">
+      {/* 1. Hero Section with 3D Particles & Staggered Animations */}
       <section className="relative overflow-hidden bg-gradient-to-b from-foundation-forestDark via-foundation-forest to-foundation-forestDark text-foundation-ivory py-16 md:py-24 border-b-4 border-foundation-gold">
+        {/* Ambient 3D floating golden particles */}
+        <HeroParticles3D />
+
         {/* Decorative background subtle glow */}
         <div className="absolute inset-0 opacity-15 pointer-events-none parchment-pattern" />
         <div className="absolute top-1/4 -right-24 w-96 h-96 bg-foundation-gold/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute bottom-10 -left-20 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Heading and CTAs */}
-          <div className="lg:col-span-7 space-y-6">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-foundation-gold/20 border border-foundation-gold/40 text-foundation-goldLight text-xs font-semibold tracking-wide">
-              <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
+          {/* Left Column: Heading, Staggered Texts, and CTAs */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="lg:col-span-7 space-y-6"
+          >
+            <motion.div
+              variants={itemVariants}
+              className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-foundation-gold/20 border border-foundation-gold/50 text-foundation-goldLight text-xs font-semibold tracking-wide backdrop-blur-md shadow-inner"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-foundation-gold animate-spin-slow" />
               <span>Charitable Old Age Home • Society Reg: 332-15-Nag (Est. 2015)</span>
-            </div>
+            </motion.div>
 
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-foundation-sandstone leading-[1.15]">
-              A Place of Care, Dignity & Belonging.
-            </h1>
+            <motion.h1
+              variants={itemVariants}
+              className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-foundation-sandstone leading-[1.15] drop-shadow-md"
+            >
+              A Place of Care, <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-foundation-goldLight via-foundation-gold to-yellow-300">
+                Dignity & Belonging.
+              </span>
+            </motion.h1>
 
-            <p className="text-base sm:text-lg text-foundation-sageLight leading-relaxed max-w-2xl font-light">
+            <motion.p
+              variants={itemVariants}
+              className="text-base sm:text-lg text-foundation-sageLight leading-relaxed max-w-2xl font-light"
+            >
               SBBM Social Foundation operates <strong>VYENKATESH ASHRAM</strong> at Anjikar Bagh, Mahuli (Nagpur). A peaceful, non-granted old-age home providing senior citizens with a clean, supportive, and dignified living environment surrounded by nature.
-            </p>
+            </motion.p>
 
-            {/* Hero CTAs */}
-            <div className="flex flex-wrap items-center gap-3 pt-2">
-              <Link
-                to="/admission"
-                className="px-6 py-3.5 rounded-full bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold text-sm shadow-xl hover:shadow-2xl transition-all flex items-center space-x-2"
-                id="hero-admission-cta"
-              >
-                <span>Admission Enquiry</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+            {/* Hero Interactive CTAs */}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-3 pt-2"
+            >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to="/admission"
+                  className="px-6 py-3.5 rounded-full bg-gradient-to-r from-foundation-gold to-yellow-500 hover:from-yellow-400 hover:to-yellow-500 text-foundation-forestDark font-bold text-sm shadow-xl hover:shadow-2xl transition-all flex items-center space-x-2 border border-yellow-300/60"
+                  id="hero-admission-cta"
+                >
+                  <span>Admission Enquiry</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
 
               {onReplayIntro && (
-                <button
-                  onClick={onReplayIntro}
-                  className="px-5 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-foundation-ivory border border-white/20 font-semibold text-sm backdrop-blur-md transition-all flex items-center space-x-2"
-                  id="hero-replay-3d-btn"
-                >
-                  <Play className="w-4 h-4 text-foundation-gold fill-foundation-gold" />
-                  <span>Experience 3D Entrance</span>
-                </button>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <button
+                    onClick={onReplayIntro}
+                    className="px-5 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-foundation-ivory border border-white/20 font-semibold text-sm backdrop-blur-md transition-all flex items-center space-x-2"
+                    id="hero-replay-3d-btn"
+                  >
+                    <Play className="w-4 h-4 text-foundation-gold fill-foundation-gold" />
+                    <span>Experience 3D Entrance</span>
+                  </button>
+                </motion.div>
               )}
 
-              <Link
-                to="/support"
-                className="px-5 py-3.5 rounded-full bg-transparent hover:bg-white/10 text-foundation-sandstone border border-foundation-gold/40 font-semibold text-sm transition-all flex items-center space-x-2"
-              >
-                <Heart className="w-4 h-4 text-red-400" />
-                <span>Support the Ashram</span>
-              </Link>
-            </div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Link
+                  to="/support"
+                  className="px-5 py-3.5 rounded-full bg-transparent hover:bg-white/10 text-foundation-sandstone border border-foundation-gold/40 font-semibold text-sm transition-all flex items-center space-x-2 backdrop-blur-sm"
+                >
+                  <Heart className="w-4 h-4 text-red-400 fill-red-400" />
+                  <span>Support the Ashram</span>
+                </Link>
+              </motion.div>
+            </motion.div>
 
             {/* Helpline quick strip */}
-            <div className="pt-4 flex items-center space-x-3 text-xs text-foundation-sandstone/90 border-t border-white/15">
+            <motion.div
+              variants={itemVariants}
+              className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-foundation-sandstone/90 border-t border-white/15"
+            >
               <Phone className="w-4 h-4 text-foundation-gold" />
-              <span>Official Management Helpline: <a href="tel:+919890898081" className="font-bold underline text-white">+91 98908 98081</a></span>
+              <span>Official Helpline: <a href="tel:+919890898081" className="font-bold underline text-white hover:text-foundation-gold">+91 98908 98081</a></span>
               <span className="text-stone-400">•</span>
               <span>Village Mahuli, Tehsil Parseoni, Nagpur</span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
-          {/* Right Column: Authentic Building Card with Verified Badge */}
+          {/* Right Column: Interactive 3D Parallax Building Card */}
           <div className="lg:col-span-5">
-            <div className="relative group rounded-3xl overflow-hidden border-2 border-foundation-gold/50 shadow-2xl bg-foundation-forestDark/60">
-              <img
-                src="/assets/images/ashram_building.jpg"
-                alt="Vyenkatesh Ashram Architectural Building in Mahuli Nagpur"
-                className="w-full h-80 sm:h-96 object-cover group-hover:scale-105 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+            <Card3D maxRotate={12} scaleOnHover={1.03}>
+              <div className="relative group rounded-3xl overflow-hidden border-2 border-foundation-gold/60 shadow-2xl bg-foundation-forestDark/80">
+                <img
+                  src="/assets/images/ashram_building.jpg"
+                  alt="Vyenkatesh Ashram Architectural Building in Mahuli Nagpur"
+                  className="w-full h-80 sm:h-96 object-cover group-hover:scale-108 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
 
-              <div className="absolute bottom-0 left-0 right-0 p-5 text-foundation-ivory space-y-1.5">
-                <div className="flex items-center justify-between">
-                  <span className="text-xs uppercase tracking-widest text-foundation-gold font-bold">
-                    Vyenkatesh Ashram Residence
-                  </span>
-                  <span className="bg-emerald-600/80 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center space-x-1">
-                    <Shield className="w-3 h-3" />
-                    <span>Verified Facility</span>
-                  </span>
-                </div>
-                <h3 className="text-lg font-display font-bold text-foundation-sandstone">
-                  Anjikar Bagh, Mansar Mahuli Road
-                </h3>
-                <p className="text-xs text-stone-300">
-                  Two-story home with comfortable rooms, shaded verandas, separate clean restrooms, and peaceful gardens.
-                </p>
-                <div className="pt-2 flex items-center space-x-2 text-xs">
-                  <Link
-                    to="/old-age-home"
-                    className="text-foundation-gold font-bold hover:underline flex items-center space-x-1"
-                  >
-                    <span>Explore Facilities & Daily Life</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-foundation-ivory space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs uppercase tracking-widest text-foundation-gold font-bold flex items-center space-x-1.5">
+                      <Star className="w-3.5 h-3.5 fill-foundation-gold text-foundation-gold" />
+                      <span>Vyenkatesh Ashram Residence</span>
+                    </span>
+                    <span className="bg-emerald-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center space-x-1 shadow-sm border border-emerald-400/40">
+                      <Shield className="w-3 h-3" />
+                      <span>Verified Facility</span>
+                    </span>
+                  </div>
+                  <h3 className="text-xl font-display font-bold text-foundation-sandstone">
+                    Anjikar Bagh, Mansar Mahuli Road
+                  </h3>
+                  <p className="text-xs text-stone-300 leading-relaxed">
+                    Two-story home with comfortable rooms, shaded verandas, separate clean restrooms, and peaceful gardens.
+                  </p>
+                  <div className="pt-2 flex items-center space-x-2 text-xs">
+                    <Link
+                      to="/old-age-home"
+                      className="text-foundation-gold font-bold hover:underline flex items-center space-x-1"
+                    >
+                      <span>Explore Facilities & Daily Life</span>
+                      <ArrowRight className="w-3.5 h-3.5" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Card3D>
           </div>
         </div>
       </section>
 
-      {/* Verified Institutional Highlights Strip */}
-      <section className="bg-foundation-sandstone/30 border-b border-foundation-borderMuted py-8">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-          <div className="p-4 bg-white/70 rounded-2xl shadow-soft-sm border border-foundation-borderMuted">
-            <p className="text-2xl md:text-3xl font-display font-bold text-foundation-forest">2015</p>
-            <p className="text-xs font-semibold text-foundation-charcoal mt-1">Established Year</p>
-            <p className="text-[11px] text-stone-500">Reg No: 332-15-Nag</p>
-          </div>
-
-          <div className="p-4 bg-white/70 rounded-2xl shadow-soft-sm border border-foundation-borderMuted">
-            <p className="text-2xl md:text-3xl font-display font-bold text-foundation-forest">100%</p>
-            <p className="text-xs font-semibold text-foundation-charcoal mt-1">Non-Granted Charity</p>
-            <p className="text-[11px] text-stone-500">Pure community elder care</p>
-          </div>
-
-          <div className="p-4 bg-white/70 rounded-2xl shadow-soft-sm border border-foundation-borderMuted">
-            <p className="text-2xl md:text-3xl font-display font-bold text-foundation-forest">Go-Seva</p>
-            <p className="text-xs font-semibold text-foundation-charcoal mt-1">Sacred Cow Sanctuary</p>
-            <p className="text-[11px] text-stone-500">Therapeutic care & fresh milk</p>
-          </div>
-
-          <div className="p-4 bg-white/70 rounded-2xl shadow-soft-sm border border-foundation-borderMuted">
-            <p className="text-2xl md:text-3xl font-display font-bold text-foundation-forest">Naturopathy</p>
-            <p className="text-xs font-semibold text-foundation-charcoal mt-1">Holistic Wellness</p>
-            <p className="text-[11px] text-stone-500">Morning yoga & herbal garden</p>
-          </div>
+      {/* 2. 3D Institutional Highlights Strip */}
+      <section className="bg-gradient-to-r from-foundation-sandstone/20 via-foundation-warmGray to-foundation-sandstone/20 border-b border-foundation-borderMuted py-10 relative">
+        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+          <StatCard3D
+            value="2015"
+            label="Established Year"
+            subtext="Society Reg: 332-15-Nag"
+            icon={Calendar}
+            delay={0.05}
+          />
+          <StatCard3D
+            value="100%"
+            label="Non-Granted Charity"
+            subtext="Pure community elder care"
+            icon={Heart}
+            delay={0.15}
+          />
+          <StatCard3D
+            value="Go-Seva"
+            label="Sacred Cow Sanctuary"
+            subtext="Therapeutic care & fresh milk"
+            icon={Sparkles}
+            delay={0.25}
+          />
+          <StatCard3D
+            value="Ayush"
+            label="Naturopathy & Yoga"
+            subtext="Morning yoga & herbal garden"
+            icon={Compass}
+            delay={0.35}
+          />
         </div>
       </section>
 
-      {/* Organization & Founders Introduction */}
+      {/* 3. Organization & Founders Introduction with 3D Gate Parallax */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 md:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-5 space-y-4">
-            <div className="relative rounded-3xl overflow-hidden border-2 border-foundation-borderMuted shadow-xl">
-              <img
-                src="/assets/images/entrance_gate.jpg"
-                alt="Vyenkatesh Ashram Grand Gate"
-                className="w-full h-80 object-cover"
-              />
-              <div className="p-4 bg-foundation-warmGray border-t border-foundation-borderMuted text-xs">
-                <p className="font-bold text-foundation-forest">Vyenkatesh Ashram Grand Entrance Gates</p>
-                <p className="text-stone-500 text-[11px]">Anjikar Bagh, Mansar Mahuli Road, Mahuli, Parseoni, Nagpur</p>
+            <Card3D maxRotate={10} scaleOnHover={1.025}>
+              <div className="relative rounded-3xl overflow-hidden border-2 border-foundation-gold/40 shadow-xl bg-white">
+                <img
+                  src="/assets/images/entrance_gate.jpg"
+                  alt="Vyenkatesh Ashram Grand Gate"
+                  className="w-full h-84 object-cover"
+                />
+                <div className="p-4 bg-foundation-warmGray/90 border-t border-foundation-borderMuted text-xs">
+                  <p className="font-bold text-foundation-forest flex items-center space-x-1.5">
+                    <Shield className="w-3.5 h-3.5 text-foundation-gold" />
+                    <span>Vyenkatesh Ashram Grand Entrance Gates</span>
+                  </p>
+                  <p className="text-stone-500 text-[11px] mt-0.5">Anjikar Bagh, Mansar Mahuli Road, Mahuli, Parseoni, Nagpur</p>
+                </div>
               </div>
-            </div>
+            </Card3D>
           </div>
 
-          <div className="lg:col-span-7 space-y-5">
-            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest">
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+            className="lg:col-span-7 space-y-5"
+          >
+            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest inline-block px-3 py-1 bg-foundation-forest/10 rounded-full">
               Compassionate Mission
             </span>
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-foundation-charcoal">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foundation-charcoal leading-tight">
               Serving the Elderly with Reverence, Comfort & Peace
             </h2>
             <p className="text-sm md:text-base text-stone-600 leading-relaxed">
@@ -179,29 +274,31 @@ export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
               At <strong>Vyenkatesh Ashram</strong>, residents enjoy clean living quarters, separate well-maintained restroom facilities, nutritious freshly cooked vegetarian meals, morning yoga in Anjikar Bagh orchards, spiritual bhajans, and compassionate round-the-clock attendants.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-              <div className="flex items-start space-x-2.5">
-                <CheckCircle2 className="w-5 h-5 text-foundation-forest flex-shrink-0 mt-0.5" />
-                <span className="text-xs md:text-sm font-medium text-stone-700">Non-commercial, charitable dedication</span>
-              </div>
-              <div className="flex items-start space-x-2.5">
-                <CheckCircle2 className="w-5 h-5 text-foundation-forest flex-shrink-0 mt-0.5" />
-                <span className="text-xs md:text-sm font-medium text-stone-700">Rural greenery away from pollution</span>
-              </div>
-              <div className="flex items-start space-x-2.5">
-                <CheckCircle2 className="w-5 h-5 text-foundation-forest flex-shrink-0 mt-0.5" />
-                <span className="text-xs md:text-sm font-medium text-stone-700">Active Go-Seva Kendra & cow therapy</span>
-              </div>
-              <div className="flex items-start space-x-2.5">
-                <CheckCircle2 className="w-5 h-5 text-foundation-forest flex-shrink-0 mt-0.5" />
-                <span className="text-xs md:text-sm font-medium text-stone-700">Official Society Reg: 332-15-Nag</span>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+              {[
+                'Non-commercial, charitable dedication',
+                'Rural greenery away from pollution',
+                'Active Go-Seva Kendra & cow therapy',
+                'Official Society Reg: 332-15-Nag',
+              ].map((point, idx) => (
+                <motion.div
+                  key={idx}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: idx * 0.1, duration: 0.4 }}
+                  className="flex items-start space-x-2.5 p-2 rounded-xl bg-white/60 border border-foundation-borderMuted/60 shadow-sm"
+                >
+                  <CheckCircle2 className="w-5 h-5 text-foundation-forest flex-shrink-0 mt-0.5" />
+                  <span className="text-xs md:text-sm font-semibold text-stone-700">{point}</span>
+                </motion.div>
+              ))}
             </div>
 
             <div className="pt-4 flex items-center space-x-4">
               <Link
                 to="/about"
-                className="px-6 py-2.5 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold text-xs rounded-full shadow-md transition-all flex items-center space-x-1.5"
+                className="px-6 py-3 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold text-xs rounded-full shadow-md hover:shadow-lg transition-all flex items-center space-x-1.5"
               >
                 <span>Read Full Foundation Story</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -213,15 +310,21 @@ export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
                 Founder's Message →
               </Link>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Core Services Section */}
-      <section className="bg-foundation-warmGray/70 py-16 md:py-24 border-y border-foundation-borderMuted">
+      {/* 4. Core Services Section with 3D Tilt Cards */}
+      <section className="bg-gradient-to-b from-foundation-warmGray/60 to-white py-16 md:py-24 border-y border-foundation-borderMuted relative">
         <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
-          <div className="text-center max-w-3xl mx-auto space-y-3">
-            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-3xl mx-auto space-y-3"
+          >
+            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest inline-block px-3 py-1 bg-foundation-forest/10 rounded-full">
               What We Do
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foundation-charcoal">
@@ -230,169 +333,182 @@ export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
             <p className="text-sm text-stone-600">
               From elder residential comfort to animal welfare, naturopathy and student empowerment.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Service 1: Old Age Home */}
-            <div className="bg-white rounded-3xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-soft-lg transition-all group flex flex-col justify-between">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    src="/assets/images/ashram_building.jpg"
-                    alt="Vyenkatesh Ashram Old Age Home"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-3 left-3 px-3 py-1 bg-foundation-forest text-foundation-ivory text-[10px] font-bold rounded-full uppercase tracking-wider">
-                    Primary Mission
-                  </span>
+            {/* Service 1: Old Age Home in 3D Card */}
+            <Card3D maxRotate={9} scaleOnHover={1.03}>
+              <div className="bg-white rounded-3xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-2xl transition-all h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-52 overflow-hidden relative">
+                    <img
+                      src="/assets/images/ashram_building.jpg"
+                      alt="Vyenkatesh Ashram Old Age Home"
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                    />
+                    <span className="absolute top-3 left-3 px-3 py-1 bg-foundation-forest text-foundation-ivory text-[10px] font-bold rounded-full uppercase tracking-wider shadow-md">
+                      Primary Mission
+                    </span>
+                  </div>
+                  <div className="p-6 space-y-2.5">
+                    <h3 className="text-xl font-display font-bold text-foundation-charcoal">
+                      Vyenkatesh Ashram
+                    </h3>
+                    <p className="text-xs text-stone-600 leading-relaxed">
+                      Dignified residential living for seniors in need with nutritious vegetarian food, separate restrooms, and a serene family atmosphere.
+                    </p>
+                    <ul className="text-xs text-stone-500 space-y-1 pt-1 font-medium">
+                      <li>• Safe, hygienic rooms & 24/7 care</li>
+                      <li>• Rural tranquility at Anjikar Bagh</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="p-6 space-y-2.5">
-                  <h3 className="text-xl font-display font-bold text-foundation-charcoal">
-                    Vyenkatesh Ashram
-                  </h3>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    Dignified residential living for seniors in need with nutritious vegetarian food, separate restrooms, and a serene family atmosphere.
-                  </p>
-                  <ul className="text-xs text-stone-500 space-y-1 pt-1">
-                    <li>• Safe, hygienic rooms & 24/7 care</li>
-                    <li>• Rural tranquility at Anjikar Bagh</li>
-                  </ul>
+                <div className="p-6 pt-0">
+                  <Link
+                    to="/old-age-home"
+                    className="inline-flex items-center space-x-1.5 text-xs font-bold text-foundation-forest hover:text-foundation-forestLight"
+                  >
+                    <span>Explore Facilities & Routine</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
-              <div className="p-6 pt-0">
-                <Link
-                  to="/old-age-home"
-                  className="inline-flex items-center space-x-1.5 text-xs font-bold text-foundation-forest hover:text-foundation-forestLight"
-                >
-                  <span>Explore Facilities & Routine</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+            </Card3D>
 
-            {/* Service 2: Go-Seva Kendra */}
-            <div className="bg-white rounded-3xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-soft-lg transition-all group flex flex-col justify-between">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    src="/assets/images/goseva.jpg"
-                    alt="Go-Seva Kendra at Vyenkatesh Ashram"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-3 left-3 px-3 py-1 bg-amber-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider">
-                    Active Sanctuary
-                  </span>
+            {/* Service 2: Go-Seva Kendra in 3D Card */}
+            <Card3D maxRotate={9} scaleOnHover={1.03}>
+              <div className="bg-white rounded-3xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-2xl transition-all h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-52 overflow-hidden relative">
+                    <img
+                      src="/assets/images/goseva.jpg"
+                      alt="Go-Seva Kendra at Vyenkatesh Ashram"
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                    />
+                    <span className="absolute top-3 left-3 px-3 py-1 bg-amber-600 text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-md">
+                      Active Sanctuary
+                    </span>
+                  </div>
+                  <div className="p-6 space-y-2.5">
+                    <h3 className="text-xl font-display font-bold text-foundation-charcoal">
+                      Go-Seva Kendra
+                    </h3>
+                    <p className="text-xs text-stone-600 leading-relaxed">
+                      Shelter and compassionate care for indigenous Gir cows, providing elders with therapeutic companionship and fresh nutritious milk.
+                    </p>
+                    <ul className="text-xs text-stone-500 space-y-1 pt-1 font-medium">
+                      <li>• Clean, airy gaushala shelter</li>
+                      <li>• Green fodder donation support</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="p-6 space-y-2.5">
-                  <h3 className="text-xl font-display font-bold text-foundation-charcoal">
-                    Go-Seva Kendra
-                  </h3>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    Shelter and compassionate care for indigenous Gir cows, providing elders with therapeutic companionship and fresh nutritious milk.
-                  </p>
-                  <ul className="text-xs text-stone-500 space-y-1 pt-1">
-                    <li>• Clean, airy gaushala shelter</li>
-                    <li>• Green fodder donation support</li>
-                  </ul>
+                <div className="p-6 pt-0">
+                  <Link
+                    to="/services/goseva-kendra"
+                    className="inline-flex items-center space-x-1.5 text-xs font-bold text-foundation-forest hover:text-foundation-forestLight"
+                  >
+                    <span>Learn About Go-Seva</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
-              <div className="p-6 pt-0">
-                <Link
-                  to="/services/goseva-kendra"
-                  className="inline-flex items-center space-x-1.5 text-xs font-bold text-foundation-forest hover:text-foundation-forestLight"
-                >
-                  <span>Learn About Go-Seva</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+            </Card3D>
 
-            {/* Service 3: Naturopathy */}
-            <div className="bg-white rounded-3xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-soft-lg transition-all group flex flex-col justify-between">
-              <div>
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    src="/assets/images/naturopathy.jpg"
-                    alt="Naturopathy and Yoga at Vyenkatesh Ashram"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <span className="absolute top-3 left-3 px-3 py-1 bg-emerald-700 text-white text-[10px] font-bold rounded-full uppercase tracking-wider">
-                    Holistic Routine
-                  </span>
+            {/* Service 3: Naturopathy in 3D Card */}
+            <Card3D maxRotate={9} scaleOnHover={1.03}>
+              <div className="bg-white rounded-3xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-2xl transition-all h-full flex flex-col justify-between">
+                <div>
+                  <div className="h-52 overflow-hidden relative">
+                    <img
+                      src="/assets/images/naturopathy.jpg"
+                      alt="Naturopathy and Yoga at Vyenkatesh Ashram"
+                      className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-700"
+                    />
+                    <span className="absolute top-3 left-3 px-3 py-1 bg-emerald-700 text-white text-[10px] font-bold rounded-full uppercase tracking-wider shadow-md">
+                      Holistic Routine
+                    </span>
+                  </div>
+                  <div className="p-6 space-y-2.5">
+                    <h3 className="text-xl font-display font-bold text-foundation-charcoal">
+                      Naturopathy & Yoga
+                    </h3>
+                    <p className="text-xs text-stone-600 leading-relaxed">
+                      Gentle morning pranayama, herbal remedies from our medicinal garden, sunlight therapy and joint mobility exercises for seniors.
+                    </p>
+                    <ul className="text-xs text-stone-500 space-y-1 pt-1 font-medium">
+                      <li>• Outdoor garden yoga pavilion</li>
+                      <li>• Tulsi, Neem and natural herbs</li>
+                    </ul>
+                  </div>
                 </div>
-                <div className="p-6 space-y-2.5">
-                  <h3 className="text-xl font-display font-bold text-foundation-charcoal">
-                    Naturopathy & Yoga
-                  </h3>
-                  <p className="text-xs text-stone-600 leading-relaxed">
-                    Gentle morning pranayama, herbal remedies from our medicinal garden, sunlight therapy and joint mobility exercises for seniors.
-                  </p>
-                  <ul className="text-xs text-stone-500 space-y-1 pt-1">
-                    <li>• Outdoor garden yoga pavilion</li>
-                    <li>• Tulsi, Neem and natural herbs</li>
-                  </ul>
+                <div className="p-6 pt-0">
+                  <Link
+                    to="/services/naturopathy"
+                    className="inline-flex items-center space-x-1.5 text-xs font-bold text-foundation-forest hover:text-foundation-forestLight"
+                  >
+                    <span>Naturopathy Details</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </Link>
                 </div>
               </div>
-              <div className="p-6 pt-0">
-                <Link
-                  to="/services/naturopathy"
-                  className="inline-flex items-center space-x-1.5 text-xs font-bold text-foundation-forest hover:text-foundation-forestLight"
-                >
-                  <span>Naturopathy Details</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
+            </Card3D>
           </div>
 
           <div className="text-center pt-4">
             <Link
               to="/services"
-              className="px-6 py-3 rounded-full bg-foundation-forest text-foundation-ivory font-bold text-xs shadow-md hover:bg-foundation-forestLight transition-all"
+              className="px-7 py-3.5 rounded-full bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold text-xs shadow-md hover:shadow-xl transition-all inline-flex items-center space-x-2"
             >
-              View All 6 Foundation Initiatives & Services →
+              <span>View All 6 Foundation Initiatives & Services</span>
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Admission Enquiry Fast-Track Callout */}
-      <section className="bg-gradient-to-r from-foundation-forest to-foundation-forestDark text-foundation-ivory py-12 px-4 md:px-8 border-y border-foundation-gold/30">
-        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      {/* 5. Admission Enquiry Fast-Track Callout with 3D Float */}
+      <section className="bg-gradient-to-r from-foundation-forest to-foundation-forestDark text-foundation-ivory py-14 px-4 md:px-8 border-y border-foundation-gold/40 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-80 h-80 bg-foundation-gold/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
           <div className="space-y-2 text-center md:text-left">
-            <span className="text-xs uppercase tracking-widest text-foundation-gold font-bold">
-              Direct Inquiries Welcomed
+            <span className="text-xs uppercase tracking-widest text-foundation-gold font-bold flex items-center justify-center md:justify-start space-x-1.5">
+              <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
+              <span>Direct Inquiries Welcomed</span>
             </span>
             <h3 className="text-2xl md:text-3xl font-display font-bold text-foundation-sandstone">
               Looking for a Dignified Home for an Elder?
             </h3>
-            <p className="text-xs md:text-sm text-stone-300 max-w-2xl">
+            <p className="text-xs md:text-sm text-stone-300 max-w-2xl leading-relaxed">
               Accommodation availability, admission suitability and formalities must be confirmed directly with management. Submit an online enquiry or call +91 98908 98081.
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
-            <Link
-              to="/admission"
-              className="px-6 py-3 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold rounded-full text-xs shadow-xl transition-all"
-            >
-              Submit Admission Enquiry
-            </Link>
-            <a
-              href="tel:+919890898081"
-              className="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-full text-xs border border-white/20 transition-all flex items-center space-x-2"
-            >
-              <Phone className="w-3.5 h-3.5 text-foundation-gold" />
-              <span>Call +91 98908 98081</span>
-            </a>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link
+                to="/admission"
+                className="px-6 py-3.5 bg-gradient-to-r from-foundation-gold to-yellow-500 hover:from-yellow-400 hover:to-yellow-500 text-foundation-forestDark font-bold rounded-full text-xs shadow-xl transition-all block"
+              >
+                Submit Admission Enquiry
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <a
+                href="tel:+919890898081"
+                className="px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-full text-xs border border-white/20 transition-all flex items-center space-x-2 backdrop-blur-md"
+              >
+                <Phone className="w-3.5 h-3.5 text-foundation-gold" />
+                <span>Call +91 98908 98081</span>
+              </a>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Gallery Showcase Section */}
+      {/* 6. Gallery Showcase Section with Staggered 3D Lift */}
       <section className="py-16 md:py-24 max-w-7xl mx-auto px-4 md:px-8 space-y-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest">
+            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest inline-block px-3 py-1 bg-foundation-forest/10 rounded-full mb-2">
               Authentic Glimpses
             </span>
             <h2 className="text-3xl md:text-4xl font-display font-bold text-foundation-charcoal">
@@ -431,55 +547,73 @@ export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
               src: '/assets/images/naturopathy.jpg',
             },
           ].map((item, idx) => (
-            <div
+            <motion.div
               key={`gal-home-${idx}`}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              whileHover={{ y: -8, scale: 1.03 }}
               onClick={() => setSelectedPhoto(item.src)}
-              className="cursor-pointer group relative rounded-2xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-soft-lg transition-all"
+              className="cursor-pointer group relative rounded-3xl overflow-hidden border border-foundation-borderMuted shadow-soft hover:shadow-2xl transition-all duration-300"
             >
               <img
                 src={item.src}
                 alt={item.title}
-                className="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+                className="w-full h-60 object-cover group-hover:scale-110 transition-transform duration-700"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent opacity-80 group-hover:opacity-95 transition-opacity" />
               <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                <span className="text-[10px] text-foundation-gold font-bold uppercase">
+                <span className="text-[10px] text-foundation-gold font-bold uppercase tracking-wider">
                   {item.category}
                 </span>
-                <p className="text-xs font-bold font-display">{item.title}</p>
+                <p className="text-xs font-bold font-display mt-0.5">{item.title}</p>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Lightbox Modal for Photos */}
-      {selectedPhoto && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center p-4"
-          onClick={() => setSelectedPhoto(null)}
-        >
-          <div className="relative max-w-4xl max-h-[90vh] overflow-hidden rounded-2xl">
-            <img
-              src={selectedPhoto}
-              alt="Enlarged view"
-              className="w-full h-full object-contain"
-            />
-            <button
-              onClick={() => setSelectedPhoto(null)}
-              className="absolute top-4 right-4 bg-white/20 text-white p-2 rounded-full hover:bg-white/40"
+      {/* Lightbox Modal with Framer Motion AnimatePresence */}
+      <AnimatePresence>
+        {selectedPhoto && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 cursor-pointer"
+            onClick={() => setSelectedPhoto(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              className="relative max-w-4xl max-h-[90vh] overflow-hidden rounded-3xl border-2 border-foundation-gold/40 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
             >
-              ✕
-            </button>
-          </div>
-        </div>
-      )}
+              <img
+                src={selectedPhoto}
+                alt="Enlarged view"
+                className="w-full h-full object-contain"
+              />
+              <button
+                onClick={() => setSelectedPhoto(null)}
+                className="absolute top-4 right-4 bg-black/60 hover:bg-black/90 text-white p-2.5 rounded-full border border-white/20 transition-colors"
+                aria-label="Close photo"
+              >
+                ✕
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Frequently Asked Questions Preview */}
-      <section className="bg-foundation-warmGray py-16 md:py-24 border-t border-foundation-borderMuted">
+      {/* 7. Interactive Framer Motion Animated FAQ Accordion */}
+      <section className="bg-gradient-to-b from-foundation-warmGray to-white py-16 md:py-24 border-t border-foundation-borderMuted">
         <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-8">
           <div className="text-center space-y-2">
-            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest">
+            <span className="text-xs uppercase tracking-widest font-bold text-foundation-forest inline-block px-3 py-1 bg-foundation-forest/10 rounded-full">
               Common Questions
             </span>
             <h2 className="text-2xl md:text-3xl font-display font-bold text-foundation-charcoal">
@@ -487,33 +621,53 @@ export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
             </h2>
           </div>
 
-          <div className="space-y-4">
-            <div className="bg-white p-5 rounded-2xl border border-foundation-borderMuted shadow-soft-sm">
-              <h4 className="font-bold text-sm text-foundation-forest">
-                What is the procedure for admission to Vyenkatesh Ashram?
-              </h4>
-              <p className="text-xs text-stone-600 mt-2 leading-relaxed">
-                Admission requires submitting an initial enquiry form or visiting our office. Because we maintain high care standards and limited capacity, accommodation availability, medical suitability, and admission formalities must be confirmed directly with the management (+91 98908 98081).
-              </p>
-            </div>
+          <div className="space-y-3.5">
+            {faqs.map((faq, index) => {
+              const isOpen = openFaqIndex === index;
+              return (
+                <motion.div
+                  key={`faq-acc-${index}`}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08 }}
+                  className="bg-white rounded-2xl border border-foundation-borderMuted shadow-sm overflow-hidden transition-colors"
+                >
+                  <button
+                    onClick={() => setOpenFaqIndex(isOpen ? null : index)}
+                    className="w-full p-5 text-left flex items-center justify-between space-x-4 cursor-pointer hover:bg-stone-50 transition-colors"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="font-bold text-sm text-foundation-forest">
+                      {faq.q}
+                    </span>
+                    <motion.div
+                      animate={{ rotate: isOpen ? 180 : 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="shrink-0 text-stone-400"
+                    >
+                      <ChevronDown className="w-4 h-4" />
+                    </motion.div>
+                  </button>
 
-            <div className="bg-white p-5 rounded-2xl border border-foundation-borderMuted shadow-soft-sm">
-              <h4 className="font-bold text-sm text-foundation-forest">
-                Is SBBM Social Foundation a registered society?
-              </h4>
-              <p className="text-xs text-stone-600 mt-2 leading-relaxed">
-                Yes, SBBM Social Foundation Society was established in 2015 and is officially registered under the Societies Registration Act (Reg No: 332-15-Nag). It operates Vyenkatesh Ashram as a charitable, non-granted old-age home.
-              </p>
-            </div>
-
-            <div className="bg-white p-5 rounded-2xl border border-foundation-borderMuted shadow-soft-sm">
-              <h4 className="font-bold text-sm text-foundation-forest">
-                Can family members and visitors visit the ashram?
-              </h4>
-              <p className="text-xs text-stone-600 mt-2 leading-relaxed">
-                Yes, family members and well-wishers are welcomed. Prior notification via telephone (+91 98908 98081) is requested to ensure resident rest hours and daily schedules are respected.
-              </p>
-            </div>
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] as const }}
+                        className="overflow-hidden"
+                      >
+                        <div className="px-5 pb-5 text-xs text-stone-600 leading-relaxed border-t border-stone-100 pt-3">
+                          {faq.a}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              );
+            })}
           </div>
 
           <div className="text-center pt-2">
