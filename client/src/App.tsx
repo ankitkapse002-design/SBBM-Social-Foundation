@@ -23,6 +23,7 @@ import { Register } from './pages/Register';
 import { AdminLogin } from './pages/AdminLogin';
 import { MemberDashboard } from './pages/member/MemberDashboard';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { DemoPresentation } from './pages/DemoPresentation';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -94,6 +95,10 @@ export function App() {
             {/* Admin Portal */}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
+
+            {/* Owner Demo & Introductory Presentation */}
+            <Route path="/demo" element={<DemoPresentation />} />
+            <Route path="/presentation" element={<DemoPresentation />} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

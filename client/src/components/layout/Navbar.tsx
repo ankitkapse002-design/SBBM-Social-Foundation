@@ -96,7 +96,15 @@ export const Navbar: React.FC = () => {
           </span>
         </div>
 
-        <div className="flex items-center space-x-4 text-xs">
+        <div className="flex items-center space-x-3 text-xs">
+          <Link
+            to="/demo"
+            className="flex items-center space-x-1.5 px-2.5 py-0.5 rounded bg-foundation-gold/20 text-foundation-gold hover:bg-foundation-gold/30 font-semibold border border-foundation-gold/40 transition-colors shadow-sm"
+            title="Watch Introductory Demo for Foundation Owners & Trustees"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-foundation-gold animate-pulse" />
+            <span>Owner Demo (Video & Audio)</span>
+          </Link>
           <Link to="/support" className="flex items-center space-x-1.5 text-foundation-gold hover:underline font-semibold">
             <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" />
             <span>Support / Donate</span>
