@@ -201,7 +201,7 @@ class Database {
           passwordHash: bootstrapPasswordHash,
           role: 'admin',
           isVerified: true,
-          mustChangePassword: true, // Enforces security requirement: mandatory change on 1st login
+          mustChangePassword: false,
           createdAt: now,
           updatedAt: now,
         }

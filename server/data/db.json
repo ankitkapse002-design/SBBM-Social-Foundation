@@ -9,7 +9,7 @@
       "passwordHash": "$2a$10$xJdGHF.YPrf.XwE3V24s0.4kVdibUbu3eJFD1r727t6vcOD8XaaR2",
       "role": "admin",
       "isVerified": true,
-      "mustChangePassword": true,
+      "mustChangePassword": false,
       "createdAt": "2026-10-16T08:20:07.291Z",
       "updatedAt": "2026-10-23T14:28:00.000Z"
     },
@@ -361,6 +361,26 @@
   ],
   "audit_logs": [
     {
+      "id": "log_1792767019078_igiul",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-23T14:50:19.078Z"
+    },
+    {
+      "id": "log_1792766554057_z5zrx",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-23T14:42:34.057Z"
+    },
+    {
       "id": "log_1792766107302_c20u1",
       "actorId": "anonymous",
       "actorName": "ashvin",
@@ -472,7 +492,7 @@
   ],
   "meta": {
     "version": "1.0.0",
-    "lastSaved": "2026-10-23T14:35:07.302Z",
+    "lastSaved": "2026-10-23T14:50:19.078Z",
     "initializedAt": "2026-10-16T08:20:07.291Z"
   }
 }

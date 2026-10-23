@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ShieldCheck, Users, Heart, Calendar, Image,
-  MessageSquare, FileText, KeyRound, LogOut, CheckCircle2,
+  MessageSquare, FileText, LogOut, CheckCircle2,
   AlertCircle, Plus, Trash2, Edit, Save, Clock, Search, X
 } from 'lucide-react';
 import { apiRequest, clearAuthToken } from '../../api';
@@ -244,26 +244,6 @@ export const AdminDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-foundation-ivory py-8 md:py-12">
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8">
-        {/* Enforced Password Rotation Security Alert */}
-        {currentUser?.mustChangePassword && (
-          <div className="p-5 bg-amber-500/15 border-2 border-amber-600 rounded-3xl text-amber-950 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
-            <div className="flex items-start space-x-3">
-              <KeyRound className="w-6 h-6 text-amber-700 flex-shrink-0 mt-0.5" />
-              <div>
-                <p className="font-bold text-sm">Security Requirement: Rotate Initial Bootstrap Password</p>
-                <p className="text-xs text-amber-900">
-                  You are logged in with the initial bootstrap credential. Please rotate to a confidential permanent administrator password.
-                </p>
-              </div>
-            </div>
-            <button
-              onClick={() => setActiveTab('security')}
-              className="px-5 py-2 bg-amber-700 hover:bg-amber-800 text-white font-bold text-xs rounded-full shadow"
-            >
-              Rotate Password Now
-            </button>
-          </div>
-        )}
 
         {/* Dashboard Top Navigation & Status */}
         <div className="bg-white rounded-3xl p-6 md:p-8 border border-foundation-borderMuted shadow-soft flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
