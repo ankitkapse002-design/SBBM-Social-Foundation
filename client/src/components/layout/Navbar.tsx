@@ -96,15 +96,7 @@ export const Navbar: React.FC = () => {
           </span>
         </div>
 
-        <div className="flex items-center space-x-3 text-xs">
-          <Link
-            to="/demo"
-            className="flex items-center space-x-1.5 px-2.5 py-0.5 rounded bg-foundation-gold/20 text-foundation-gold hover:bg-foundation-gold/30 font-semibold border border-foundation-gold/40 transition-colors shadow-sm"
-            title="Watch Introductory Demo for Foundation Owners & Trustees"
-          >
-            <Sparkles className="w-3.5 h-3.5 text-foundation-gold animate-pulse" />
-            <span>Owner Demo (Video & Audio)</span>
-          </Link>
+        <div className="flex items-center space-x-4 text-xs">
           <Link to="/support" className="flex items-center space-x-1.5 text-foundation-gold hover:underline font-semibold">
             <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" />
             <span>Support / Donate</span>
@@ -113,7 +105,7 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Main Navigation Bar */}
-      <nav className="bg-foundation-ivory border-b border-foundation-borderMuted px-4 md:px-6 xl:px-8 py-2.5 transition-all">
+      <nav className="bg-foundation-ivory/95 backdrop-blur-md border-b border-foundation-borderMuted px-4 md:px-6 xl:px-8 py-2.5 transition-all">
         <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3 xl:gap-4">
           {/* Logo & Foundation Name */}
           <Link to="/" className="flex items-center space-x-2.5 md:space-x-3 group shrink-0">
@@ -297,8 +289,9 @@ export const Navbar: React.FC = () => {
             {/* 1. Admission CTA Button */}
             <Link
               to="/admission"
-              className="whitespace-nowrap h-9 px-4 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold rounded-full text-xs shadow-sm hover:shadow transition-all inline-flex items-center justify-center shrink-0"
+              className="whitespace-nowrap h-9 px-4.5 bg-gradient-to-r from-foundation-forest to-foundation-forestLight hover:from-foundation-forestLight hover:to-foundation-forest text-foundation-ivory font-bold rounded-full text-xs shadow-sm hover:shadow-md transition-all inline-flex items-center space-x-1.5 shrink-0 border border-foundation-gold/40"
             >
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>Admission Enquiry</span>
             </Link>
 

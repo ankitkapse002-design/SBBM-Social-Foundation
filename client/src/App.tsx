@@ -23,7 +23,6 @@ import { Register } from './pages/Register';
 import { AdminLogin } from './pages/AdminLogin';
 import { MemberDashboard } from './pages/member/MemberDashboard';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
-import { DemoPresentation } from './pages/DemoPresentation';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -35,8 +34,8 @@ function ScrollToTop() {
 }
 
 export function App() {
-  // Always start with the 3D opening scene on fresh visit or reload
-  const [show3DIntro, setShow3DIntro] = useState<boolean>(true);
+  // Visitors open directly into the cinematic immersive Hero; 3D walk-through available on demand
+  const [show3DIntro, setShow3DIntro] = useState<boolean>(false);
 
   const handleReplayIntro = () => {
     setShow3DIntro(true);
@@ -95,10 +94,6 @@ export function App() {
             {/* Admin Portal */}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
-
-            {/* Owner Demo & Introductory Presentation */}
-            <Route path="/demo" element={<DemoPresentation />} />
-            <Route path="/presentation" element={<DemoPresentation />} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

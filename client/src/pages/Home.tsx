@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from 'framer-motion';
 import {
   Heart, Shield, Sparkles, Phone, ArrowRight, CheckCircle2,
   Calendar, Eye, Compass, Users, Clock, MapPin, Play,
-  ChevronDown, HelpCircle, Award, Star
+  ChevronDown, HelpCircle, Award, Star, Volume2, VolumeX
 } from 'lucide-react';
 import { Card3D } from '../components/ui/Card3D';
 import { StatCard3D } from '../components/ui/StatCard3D';
-import { HeroParticles3D } from '../components/3d/HeroParticles3D';
+import { CinematicHero3D } from '../components/3d/CinematicHero3D';
+import { SanctuaryPortalMatrix } from '../components/ui/SanctuaryPortalMatrix';
+import { sacredAmbience } from '../utils/audioAmbience';
 
 interface HomeProps {
   onReplayIntro?: () => void;
@@ -17,24 +19,31 @@ interface HomeProps {
 export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string | null>(null);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [isAudioPlaying, setIsAudioPlaying] = useState<boolean>(false);
+
+  const toggleAtmosphereAudio = () => {
+    const playing = sacredAmbience.toggle();
+    setIsAudioPlaying(playing);
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
+        staggerChildren: 0.14,
         delayChildren: 0.1,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 25 },
+    hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+      filter: 'blur(0px)',
+      transition: { duration: 0.75, ease: [0.16, 1, 0.3, 1] as const },
     },
   };
 
@@ -59,148 +68,196 @@ export const Home: React.FC<HomeProps> = ({ onReplayIntro }) => {
 
   return (
     <div className="flex flex-col min-h-screen bg-foundation-ivory text-foundation-charcoal overflow-hidden">
-      {/* 1. Hero Section with 3D Particles & Staggered Animations */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-foundation-forestDark via-foundation-forest to-foundation-forestDark text-foundation-ivory py-16 md:py-24 border-b-4 border-foundation-gold">
-        {/* Ambient 3D floating golden particles */}
-        <HeroParticles3D />
+      {/* 1. CINEMATIC IMMERSIVE HERO EXPERIENCE */}
+      <section className="relative overflow-hidden bg-[#07190F] text-foundation-ivory min-h-[92vh] lg:min-h-screen flex flex-col justify-between pt-10 pb-16 md:pt-16 md:pb-24 border-b-2 border-foundation-gold/40">
+        {/* Interactive 3D WebGL Canvas: Golden Sacred Mandala & Cosmic Embers */}
+        <CinematicHero3D />
 
-        {/* Decorative background subtle glow */}
-        <div className="absolute inset-0 opacity-15 pointer-events-none parchment-pattern" />
-        <div className="absolute top-1/4 -right-24 w-96 h-96 bg-foundation-gold/20 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute bottom-10 -left-20 w-80 h-80 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-
-        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Left Column: Heading, Staggered Texts, and CTAs */}
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className="lg:col-span-7 space-y-6"
-          >
+        <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-20 w-full my-auto py-6">
+          {/* Top Atmospheric Control Strip: Sanskrit Invocation & Sacred Ambience Soundscape */}
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-8">
             <motion.div
-              variants={itemVariants}
-              className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-foundation-gold/20 border border-foundation-gold/50 text-foundation-goldLight text-xs font-semibold tracking-wide backdrop-blur-md shadow-inner"
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              className="inline-flex items-center space-x-2.5 px-4 py-2 rounded-full glass-specular-gold text-foundation-goldLight text-xs font-semibold tracking-wider shadow-lg"
             >
-              <Sparkles className="w-3.5 h-3.5 text-foundation-gold animate-spin-slow" />
-              <span>Charitable Old Age Home • Society Reg: 332-15-Nag (Est. 2015)</span>
-            </motion.div>
-
-            <motion.h1
-              variants={itemVariants}
-              className="text-3xl sm:text-5xl lg:text-6xl font-display font-bold text-foundation-sandstone leading-[1.15] drop-shadow-md"
-            >
-              A Place of Care, <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-foundation-goldLight via-foundation-gold to-yellow-300">
-                Dignity & Belonging.
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              <span className="font-serif tracking-widest text-amber-200 uppercase font-bold text-[11px] sm:text-xs">
+                ॥ सेवा परमो धर्मः ॥ • Reg. No: 332-15-Nag (Est. 2015)
               </span>
-            </motion.h1>
+            </motion.div>
 
-            <motion.p
-              variants={itemVariants}
-              className="text-base sm:text-lg text-foundation-sageLight leading-relaxed max-w-2xl font-light"
+            {/* Atmosphere Audio Synthesizer Toggle */}
+            <motion.button
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              onClick={toggleAtmosphereAudio}
+              className={`inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full text-xs font-bold transition-all shadow-md cursor-pointer border ${
+                isAudioPlaying
+                  ? 'bg-foundation-gold text-foundation-forestDark border-yellow-300 shadow-[0_0_20px_rgba(212,175,55,0.45)]'
+                  : 'bg-white/10 hover:bg-white/15 text-stone-200 border-white/20 backdrop-blur-md'
+              }`}
+              title="Toggle Serene Tibetan Bell Harmonics"
             >
-              SBBM Social Foundation operates <strong>VYENKATESH ASHRAM</strong> at Anjikar Bagh, Mahuli (Nagpur). A peaceful, non-granted old-age home providing senior citizens with a clean, supportive, and dignified living environment surrounded by nature.
-            </motion.p>
-
-            {/* Hero Interactive CTAs */}
-            <motion.div
-              variants={itemVariants}
-              className="flex flex-wrap items-center gap-3 pt-2"
-            >
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  to="/admission"
-                  className="px-6 py-3.5 rounded-full bg-gradient-to-r from-foundation-gold to-yellow-500 hover:from-yellow-400 hover:to-yellow-500 text-foundation-forestDark font-bold text-sm shadow-xl hover:shadow-2xl transition-all flex items-center space-x-2 border border-yellow-300/60"
-                  id="hero-admission-cta"
-                >
-                  <span>Admission Enquiry</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </motion.div>
-
-              {onReplayIntro && (
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                  <button
-                    onClick={onReplayIntro}
-                    className="px-5 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-foundation-ivory border border-white/20 font-semibold text-sm backdrop-blur-md transition-all flex items-center space-x-2"
-                    id="hero-replay-3d-btn"
-                  >
-                    <Play className="w-4 h-4 text-foundation-gold fill-foundation-gold" />
-                    <span>Experience 3D Entrance</span>
-                  </button>
-                </motion.div>
+              {isAudioPlaying ? (
+                <>
+                  <Volume2 className="w-3.5 h-3.5 text-foundation-forestDark animate-pulse" />
+                  <span>♫ Sacred Ambience Active</span>
+                </>
+              ) : (
+                <>
+                  <VolumeX className="w-3.5 h-3.5 text-stone-400" />
+                  <span>♫ Soundscape: Muted</span>
+                </>
               )}
+            </motion.button>
+          </div>
 
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Link
-                  to="/support"
-                  className="px-5 py-3.5 rounded-full bg-transparent hover:bg-white/10 text-foundation-sandstone border border-foundation-gold/40 font-semibold text-sm transition-all flex items-center space-x-2 backdrop-blur-sm"
-                >
-                  <Heart className="w-4 h-4 text-red-400 fill-red-400" />
-                  <span>Support the Ashram</span>
-                </Link>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+            {/* Left Column: Monumental Kinetic Headline, Narrative & CTAs */}
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="lg:col-span-7 space-y-7"
+            >
+              {/* Monumental Kinetic Headline */}
+              <motion.div variants={itemVariants} className="space-y-1">
+                <p className="text-xs sm:text-sm font-semibold tracking-[0.28em] text-emerald-400 uppercase">
+                  CHARITABLE ELDERCARE SANCTUARY
+                </p>
+                <h1 className="text-4xl sm:text-6xl lg:text-7xl xl:text-8xl font-display font-black tracking-tight leading-[1.04] text-white">
+                  Where Aging Becomes <br />
+                  <span className="font-cinzel-decorative gold-foil-text text-glow inline-block">
+                    Sacred & Dignified.
+                  </span>
+                </h1>
+              </motion.div>
+
+              {/* Editorial Narrative */}
+              <motion.p
+                variants={itemVariants}
+                className="text-base sm:text-lg lg:text-xl text-foundation-sandstone/90 font-light leading-relaxed max-w-2xl"
+              >
+                Nestled within the peaceful groves of Mahuli, Nagpur — <strong>VYENKATESH ASHRAM</strong> is an architectural haven founded by SBBM Social Foundation Society. Dedicated to 24/7 medical vigilance, fresh organic nutrition, daily Go-Seva, and reverent elder care surrounded by pristine nature.
+              </motion.p>
+
+              {/* Telemetry Capsules (Real Foundation Highlights) */}
+              <motion.div
+                variants={itemVariants}
+                className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1"
+              >
+                {[
+                  { value: '10+ Yrs', label: 'Unbroken Seva', icon: Sparkles },
+                  { value: '100%', label: 'Non-Granted', icon: Heart },
+                  { value: '24/7', label: 'Attendant Care', icon: Shield },
+                  { value: 'Gaushala', label: 'A2 Cow Milk', icon: Star },
+                ].map((cap, i) => {
+                  const CapIcon = cap.icon;
+                  return (
+                    <div
+                      key={i}
+                      className="p-3 rounded-2xl glass-specular border border-foundation-gold/30 text-center space-y-0.5 shadow-sm"
+                    >
+                      <CapIcon className="w-3.5 h-3.5 text-foundation-gold mx-auto" />
+                      <p className="font-display font-bold text-sm text-white">{cap.value}</p>
+                      <p className="text-[10px] text-foundation-sageLight/90 truncate">{cap.label}</p>
+                    </div>
+                  );
+                })}
+              </motion.div>
+
+              {/* Action Buttons: Admission, 3D Tour, & Support */}
+              <motion.div
+                variants={itemVariants}
+                className="flex flex-wrap items-center gap-3.5 pt-2"
+              >
+                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                  <Link
+                    to="/admission"
+                    className="px-7 py-4 rounded-full bg-gradient-to-r from-foundation-gold via-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-foundation-gold text-foundation-forestDark font-bold text-sm sm:text-base shadow-[0_10px_35px_rgba(212,175,55,0.45)] hover:shadow-[0_15px_45px_rgba(212,175,55,0.65)] transition-all flex items-center space-x-2.5 border border-yellow-200"
+                    id="hero-admission-cta"
+                  >
+                    <span>Admission Enquiry</span>
+                    <ArrowRight className="w-4 h-4 text-foundation-forestDark" />
+                  </Link>
+                </motion.div>
+
+                {onReplayIntro && (
+                  <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                    <button
+                      onClick={onReplayIntro}
+                      className="px-6 py-4 rounded-full glass-specular hover:bg-white/15 text-white border border-foundation-gold/50 font-semibold text-sm backdrop-blur-xl transition-all flex items-center space-x-2.5 cursor-pointer shadow-lg"
+                      id="hero-replay-3d-btn"
+                    >
+                      <Play className="w-4 h-4 text-foundation-gold fill-foundation-gold" />
+                      <span>3D Virtual Entrance</span>
+                    </button>
+                  </motion.div>
+                )}
+
+                <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
+                  <Link
+                    to="/support"
+                    className="px-5 py-4 rounded-full bg-transparent hover:bg-white/10 text-foundation-sandstone border border-foundation-gold/40 font-semibold text-sm transition-all flex items-center space-x-2 backdrop-blur-sm"
+                  >
+                    <Heart className="w-4 h-4 text-red-400 fill-red-400" />
+                    <span>Support / Seva</span>
+                  </Link>
+                </motion.div>
+              </motion.div>
+
+              {/* Verified Helpline Quick Strip */}
+              <motion.div
+                variants={itemVariants}
+                className="pt-3 flex flex-wrap items-center gap-3 text-xs text-foundation-sandstone/90 border-t border-white/15"
+              >
+                <div className="flex items-center space-x-2 bg-black/40 px-3 py-1.5 rounded-full border border-foundation-gold/30">
+                  <Phone className="w-3.5 h-3.5 text-foundation-gold" />
+                  <span>Direct Hotline: <a href="tel:+919890898081" className="font-bold underline text-white hover:text-foundation-gold">+91 98908 98081</a></span>
+                </div>
+                <span className="hidden sm:inline text-stone-500">•</span>
+                <span className="text-stone-300">Anjikar Bagh, Mansar Mahuli Rd, Nagpur</span>
               </motion.div>
             </motion.div>
 
-            {/* Helpline quick strip */}
+            {/* Right Column: Interactive 3D Sanctuary Portal Matrix */}
             <motion.div
-              variants={itemVariants}
-              className="pt-4 flex flex-wrap items-center gap-2 sm:gap-3 text-xs text-foundation-sandstone/90 border-t border-white/15"
+              initial={{ opacity: 0, scale: 0.94, y: 30 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5"
             >
-              <Phone className="w-4 h-4 text-foundation-gold" />
-              <span>Official Helpline: <a href="tel:+919890898081" className="font-bold underline text-white hover:text-foundation-gold">+91 98908 98081</a></span>
-              <span className="text-stone-400">•</span>
-              <span>Village Mahuli, Tehsil Parseoni, Nagpur</span>
+              <SanctuaryPortalMatrix onExploreWalkthrough={onReplayIntro} />
             </motion.div>
-          </motion.div>
-
-          {/* Right Column: Interactive 3D Parallax Building Card */}
-          <div className="lg:col-span-5">
-            <Card3D maxRotate={12} scaleOnHover={1.03}>
-              <div className="relative group rounded-3xl overflow-hidden border-2 border-foundation-gold/60 shadow-2xl bg-foundation-forestDark/80">
-                <img
-                  src="/assets/images/ashram_building.jpg"
-                  alt="Vyenkatesh Ashram Architectural Building in Mahuli Nagpur"
-                  className="w-full h-80 sm:h-96 object-cover group-hover:scale-108 transition-transform duration-700"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
-
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-foundation-ivory space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs uppercase tracking-widest text-foundation-gold font-bold flex items-center space-x-1.5">
-                      <Star className="w-3.5 h-3.5 fill-foundation-gold text-foundation-gold" />
-                      <span>Vyenkatesh Ashram Residence</span>
-                    </span>
-                    <span className="bg-emerald-600/90 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full flex items-center space-x-1 shadow-sm border border-emerald-400/40">
-                      <Shield className="w-3 h-3" />
-                      <span>Verified Facility</span>
-                    </span>
-                  </div>
-                  <h3 className="text-xl font-display font-bold text-foundation-sandstone">
-                    Anjikar Bagh, Mansar Mahuli Road
-                  </h3>
-                  <p className="text-xs text-stone-300 leading-relaxed">
-                    Two-story home with comfortable rooms, shaded verandas, separate clean restrooms, and peaceful gardens.
-                  </p>
-                  <div className="pt-2 flex items-center space-x-2 text-xs">
-                    <Link
-                      to="/old-age-home"
-                      className="text-foundation-gold font-bold hover:underline flex items-center space-x-1"
-                    >
-                      <span>Explore Facilities & Daily Life</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </Card3D>
           </div>
+
+          {/* Floating "Scroll to Discover" Indicator */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1.2, duration: 0.8 }}
+            className="pt-8 flex flex-col items-center justify-center text-center space-y-2 pointer-events-none"
+          >
+            <span className="text-[10px] uppercase tracking-[0.28em] text-foundation-gold font-bold">
+              Scroll To Discover Sanctuary
+            </span>
+            <div className="w-5 h-9 rounded-full border-2 border-foundation-gold/60 p-1 flex justify-center">
+              <motion.div
+                animate={{ y: [0, 14, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                className="w-1.5 h-1.5 rounded-full bg-foundation-gold shadow-[0_0_6px_#D4AF37]"
+              />
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* 2. 3D Institutional Highlights Strip */}
-      <section className="bg-gradient-to-r from-foundation-sandstone/20 via-foundation-warmGray to-foundation-sandstone/20 border-b border-foundation-borderMuted py-10 relative">
-        <div className="max-w-7xl mx-auto px-4 md:px-8 grid grid-cols-2 md:grid-cols-4 gap-6">
+      {/* 2. 3D Institutional Highlights Strip - Floating Dimensional Overlap Bridge */}
+      <section className="relative z-30 -mt-10 md:-mt-14 max-w-7xl mx-auto px-4 md:px-8 mb-8 sm:mb-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
           <StatCard3D
             value="2015"
             label="Established Year"
