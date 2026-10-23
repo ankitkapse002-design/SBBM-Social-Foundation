@@ -255,14 +255,9 @@ export const VyenkyChatbot: React.FC = () => {
                   <SSBMBotAvatar size={48} showGreetingBadge={false} interactiveHover={false} />
                 </div>
                 <div>
-                  <div className="flex items-center space-x-2">
-                    <h3 className="font-display font-bold text-base text-foundation-sandstone">
-                      Vyenky Assistant
-                    </h3>
-                    <span className="text-[10px] bg-foundation-gold/20 text-foundation-gold px-1.5 py-0.5 rounded-full font-semibold">
-                      3D AI
-                    </span>
-                  </div>
+                  <h3 className="font-display font-bold text-base text-foundation-sandstone">
+                    Vyenky Assistant
+                  </h3>
                   <p className="text-xs text-foundation-sageLight">
                     Grounded in Verified Ashram Information
                   </p>
