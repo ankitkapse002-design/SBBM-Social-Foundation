@@ -3,15 +3,28 @@
     {
       "id": "usr_admin_bootstrap_01",
       "email": "ashwin.anjikar@ssbmfoundation.org",
-      "username": "Ashvin",
+      "username": "ashvin",
       "fullName": "Mr. Ashwin Vyenkatrao Anjikar",
       "mobile": "+919890898081",
-      "passwordHash": "$2a$10$9z7gzHjPJY3BoYsFbeQSu.ECrsiuYlBEDXPQQaADd7zSnYuBfHMeG",
+      "passwordHash": "$2a$10$xJdGHF.YPrf.XwE3V24s0.4kVdibUbu3eJFD1r727t6vcOD8XaaR2",
       "role": "admin",
       "isVerified": true,
       "mustChangePassword": true,
       "createdAt": "2026-10-16T08:20:07.291Z",
-      "updatedAt": "2026-10-16T08:20:07.291Z"
+      "updatedAt": "2026-10-23T14:28:00.000Z"
+    },
+    {
+      "id": "usr_1792170154729_ossps",
+      "email": "rd@gmail.com",
+      "username": "rd@gmail.com",
+      "fullName": "Ramesh Deshmukh",
+      "mobile": "7485961425",
+      "passwordHash": "$2a$10$3NQhPqoFOoQzRXMo733kcudDvxnrDVh.IZcx3sKyKdpvXDbj6yDIe",
+      "role": "member",
+      "isVerified": true,
+      "mustChangePassword": false,
+      "createdAt": "2026-10-16T17:02:34.729Z",
+      "updatedAt": "2026-10-16T17:02:34.729Z"
     }
   ],
   "member_profiles": [
@@ -24,6 +37,15 @@
       "status": "active",
       "notes": "Founder & President",
       "joinedAt": "2015-08-15T00:00:00.000Z"
+    },
+    {
+      "id": "mp_1792170154967",
+      "userId": "usr_1792170154729_ossps",
+      "memberId": "SSBM-2026-2525",
+      "address": "Not specified",
+      "emergencyContact": "7485961425",
+      "status": "active",
+      "joinedAt": "2026-10-16T17:02:34.729Z"
     }
   ],
   "membership_requests": [],
@@ -39,9 +61,10 @@
       "relationWithResident": "Daughter",
       "mobilityStatus": "Needs stick",
       "medicalNotes": "None reported",
-      "status": "new",
+      "status": "contacted",
       "createdAt": "2026-10-16T08:53:26.606Z",
-      "updatedAt": "2026-10-16T08:53:26.606Z"
+      "updatedAt": "2026-10-16T17:04:41.522Z",
+      "notes": ""
     },
     {
       "id": "adm_demo_01",
@@ -54,10 +77,10 @@
       "relationWithResident": "Son",
       "mobilityStatus": "Walks with stick, independent for daily routine",
       "medicalNotes": "Mild hypertension, taking regular prescribed medication.",
-      "status": "new",
+      "status": "verified",
       "notes": "Called regarding admission availability for next month.",
       "createdAt": "2026-10-14T08:20:07.292Z",
-      "updatedAt": "2026-10-14T08:20:07.292Z"
+      "updatedAt": "2026-10-16T17:04:46.265Z"
     }
   ],
   "volunteer_enquiries": [
@@ -338,6 +361,86 @@
   ],
   "audit_logs": [
     {
+      "id": "log_1792766107302_c20u1",
+      "actorId": "anonymous",
+      "actorName": "ashvin",
+      "action": "ADMIN_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for admin username: ashvin",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-23T14:35:07.302Z"
+    },
+    {
+      "id": "log_1792765892806_9fnrl",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-23T14:31:32.806Z"
+    },
+    {
+      "id": "log_1792170286271_wilzd",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to verified for Ramchandra Patil (adm_demo_01)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-16T17:04:46.271Z"
+    },
+    {
+      "id": "log_1792170281528_794fx",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to contacted for Janaki Joshi (adm_1792140806606_19p4)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-16T17:04:41.528Z"
+    },
+    {
+      "id": "log_1792170263191_kj8zj",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-16T17:04:23.191Z"
+    },
+    {
+      "id": "log_1792170216631_l18sd",
+      "actorId": "usr_1792170154729_ossps",
+      "actorName": "Ramesh Deshmukh",
+      "action": "MEMBER_LOGIN",
+      "entity": "User",
+      "details": "User logged in",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-16T17:03:36.631Z"
+    },
+    {
+      "id": "log_1792170155001_trs8b",
+      "actorId": "usr_1792170154729_ossps",
+      "actorName": "Ramesh Deshmukh",
+      "action": "MEMBER_REGISTER",
+      "entity": "User",
+      "details": "Registered new member account with ID SSBM-2026-2525",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-16T17:02:35.001Z"
+    },
+    {
+      "id": "log_1792141113342_fpxek",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-16T08:58:33.342Z"
+    },
+    {
       "id": "log_1792140806606_ucnrz",
       "actorId": "public",
       "actorName": "Prakash Joshi",
@@ -369,7 +472,7 @@
   ],
   "meta": {
     "version": "1.0.0",
-    "lastSaved": "2026-10-16T08:53:26.606Z",
+    "lastSaved": "2026-10-23T14:35:07.302Z",
     "initializedAt": "2026-10-16T08:20:07.291Z"
   }
 }

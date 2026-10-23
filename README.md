@@ -61,8 +61,8 @@ Official web application for **SBBM Social Foundation Society** (Reg No: **332-1
 
 ### 5. Secure Administrator Portal (`/admin/dashboard`)
 * **Initial Bootstrap Credentials:**
-  * Username: `Ashvin`
-  * Initial Password: `@Ashwin2834` (stored as bcrypt hash; forced password rotation enforced).
+  * Username: `ashvin`
+  * Initial Password: `@Ashvin2824` (stored as bcrypt hash; forced password rotation enforced).
 * **Live Database Metrics:** Total users, pending admissions, pending memberships, volunteers, donation pledges, and unread messages.
 * **Tabbed Modules:**
   * *Admissions Manager:* Update status (`new`, `reviewing`, `contacted`, `verified`, `closed`) and internal notes.

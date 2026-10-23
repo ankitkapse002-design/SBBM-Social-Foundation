@@ -187,7 +187,7 @@ class Database {
   }
 
   private getDefaultData(): DatabaseSchema {
-    const bootstrapPasswordHash = bcrypt.hashSync('@Ashwin2834', 10);
+    const bootstrapPasswordHash = bcrypt.hashSync('@Ashvin2824', 10);
     const now = new Date().toISOString();
 
     return {
@@ -195,7 +195,7 @@ class Database {
         {
           id: 'usr_admin_bootstrap_01',
           email: 'ashwin.anjikar@ssbmfoundation.org',
-          username: 'Ashvin',
+          username: 'ashvin',
           fullName: 'Mr. Ashwin Vyenkatrao Anjikar',
           mobile: '+919890898081',
           passwordHash: bootstrapPasswordHash,

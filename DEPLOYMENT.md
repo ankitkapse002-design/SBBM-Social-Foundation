@@ -67,7 +67,7 @@ app.get('*', (req, res) => {
 
 ## 5. Security Checklist Before Going Live
 
-1. Log in to `/admin-login` with initial bootstrap credentials (`Ashvin` / `@Ashwin2834`).
+1. Log in to `/admin-login` with initial bootstrap credentials (`ashvin` / `@Ashvin2824`).
 2. Rotate the superadmin password immediately in the Account Security tab.
 3. Configure HTTPS / SSL certificates.
 4. Verify contact phone number (`+91 98908 98081`) and official email forwarders.
