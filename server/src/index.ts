@@ -8,6 +8,7 @@ import { publicRouter } from './routes/public';
 import { memberRouter } from './routes/member';
 import { adminRouter } from './routes/admin';
 import { chatRouter } from './routes/chat';
+import { portalRouter } from './routes/portal';
 
 dotenv.config();
 
@@ -31,6 +32,7 @@ app.use((req, res, next) => {
 
 // Mount API routes
 app.use('/api/auth', authRouter);
+app.use('/api/portal', portalRouter);
 app.use('/api/enquiries', enquiriesRouter);
 app.use('/api/public', publicRouter);
 app.use('/api/member', memberRouter);

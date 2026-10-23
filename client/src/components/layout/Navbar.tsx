@@ -9,8 +9,9 @@ import { getAuthToken, clearAuthToken, apiRequest } from '../../api';
 interface UserState {
   id: string;
   fullName: string;
-  role: 'admin' | 'member';
+  role: 'admin' | 'member' | 'seva_member' | 'volunteer';
   email: string;
+  portalId?: string;
 }
 
 export const Navbar: React.FC = () => {
@@ -21,6 +22,20 @@ export const Navbar: React.FC = () => {
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [user, setUser] = useState<UserState | null>(null);
+
+  const getDashboardLink = (role?: string) => {
+    switch (role) {
+      case 'admin':
+        return '/admin/dashboard';
+      case 'seva_member':
+        return '/seva-member/dashboard';
+      case 'volunteer':
+        return '/volunteer/dashboard';
+      case 'member':
+      default:
+        return '/membership/dashboard';
+    }
+  };
 
   const accountDropdownRef = useRef<HTMLDivElement>(null);
   const mobileAccountDropdownRef = useRef<HTMLDivElement>(null);
@@ -105,7 +120,7 @@ export const Navbar: React.FC = () => {
       </div>
 
       {/* Main Navigation Bar */}
-      <nav className="bg-foundation-ivory/95 backdrop-blur-md border-b border-foundation-borderMuted px-4 md:px-6 xl:px-8 py-2.5 transition-all">
+      <nav className="bg-foundation-ivory border-b border-foundation-borderMuted px-4 md:px-6 xl:px-8 py-2.5 transition-all">
         <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3 xl:gap-4">
           {/* Logo & Foundation Name */}
           <Link to="/" className="flex items-center space-x-2.5 md:space-x-3 group shrink-0">
@@ -289,9 +304,8 @@ export const Navbar: React.FC = () => {
             {/* 1. Admission CTA Button */}
             <Link
               to="/admission"
-              className="whitespace-nowrap h-9 px-4.5 bg-gradient-to-r from-foundation-forest to-foundation-forestLight hover:from-foundation-forestLight hover:to-foundation-forest text-foundation-ivory font-bold rounded-full text-xs shadow-sm hover:shadow-md transition-all inline-flex items-center space-x-1.5 shrink-0 border border-foundation-gold/40"
+              className="whitespace-nowrap h-9 px-4 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold rounded-full text-xs shadow-sm hover:shadow transition-all inline-flex items-center justify-center shrink-0"
             >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
               <span>Admission Enquiry</span>
             </Link>
 
@@ -329,20 +343,20 @@ export const Navbar: React.FC = () => {
 
               {/* Account / Portals Dropdown Card */}
               {isAccountDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 bg-white rounded-2xl shadow-2xl border border-foundation-borderMuted p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="absolute right-0 top-full mt-2 w-88 sm:w-96 bg-white rounded-3xl shadow-2xl border border-foundation-borderMuted p-3.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
                   {user ? (
                     // Logged In State
                     <div className="space-y-3">
-                      <div className="bg-foundation-warmGray p-3 rounded-xl border border-foundation-borderMuted/60">
-                        <div className="flex items-center space-x-2.5">
-                          <div className="w-10 h-10 rounded-full bg-foundation-forest text-foundation-gold flex items-center justify-center font-bold text-sm">
+                      <div className="bg-foundation-warmGray p-3.5 rounded-2xl border border-foundation-borderMuted/60">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 rounded-full bg-foundation-forest text-foundation-gold flex items-center justify-center font-bold text-sm shadow-sm">
                             {user.fullName.charAt(0).toUpperCase()}
                           </div>
-                          <div className="overflow-hidden">
+                          <div className="overflow-hidden flex-1 min-w-0">
                             <p className="text-xs font-bold text-foundation-charcoal truncate">{user.fullName}</p>
-                            <p className="text-[11px] text-stone-500 truncate">{user.email}</p>
-                            <span className="inline-block mt-1 px-2 py-0.5 bg-foundation-forest/10 text-foundation-forest text-[10px] font-bold rounded-full uppercase">
-                              {user.role} Account
+                            <p className="text-[11px] text-stone-500 truncate">{user.portalId || user.email}</p>
+                            <span className="inline-block mt-1 px-2.5 py-0.5 bg-foundation-forest/10 text-foundation-forest text-[10px] font-bold rounded-full uppercase tracking-wider">
+                              {user.role.replace('_', ' ')} Account
                             </span>
                           </div>
                         </div>
@@ -350,20 +364,12 @@ export const Navbar: React.FC = () => {
 
                       <div className="space-y-1">
                         <Link
-                          to={user.role === 'admin' ? '/admin/dashboard' : '/member/dashboard'}
+                          to={getDashboardLink(user.role)}
                           onClick={() => setIsAccountDropdownOpen(false)}
-                          className="flex items-center space-x-2.5 px-3 py-2.5 rounded-xl hover:bg-foundation-warmGray text-xs font-bold text-foundation-forest transition-colors"
+                          className="flex items-center space-x-2.5 px-3.5 py-2.5 rounded-xl hover:bg-foundation-forest/10 text-xs font-bold text-foundation-forest transition-colors"
                         >
                           <ShieldCheck className="w-4 h-4 text-foundation-gold" />
                           <span>Go to Dashboard</span>
-                        </Link>
-                        <Link
-                          to={user.role === 'admin' ? '/admin/dashboard' : '/member/profile'}
-                          onClick={() => setIsAccountDropdownOpen(false)}
-                          className="flex items-center space-x-2.5 px-3 py-2.5 rounded-xl hover:bg-foundation-warmGray text-xs font-medium text-stone-700 transition-colors"
-                        >
-                          <User className="w-4 h-4 text-stone-500" />
-                          <span>Profile & Details</span>
                         </Link>
                       </div>
 
@@ -378,92 +384,92 @@ export const Navbar: React.FC = () => {
                       </div>
                     </div>
                   ) : (
-                    // Logged Out State - Consolidated Portals (Volunteer, Seva Member, Admin)
+                    // Logged Out State - Consolidated 4 Portals
                     <div className="space-y-2">
-                      <div className="px-2 py-1.5 border-b border-stone-100">
+                      <div className="px-2.5 py-1.5 border-b border-stone-100">
                         <p className="text-xs font-bold text-foundation-forest uppercase tracking-wider flex items-center space-x-1.5">
                           <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
                           <span>Portals & Community</span>
                         </p>
-                        <p className="text-[11px] text-stone-500">
+                        <p className="text-[11px] text-stone-500 mt-0.5">
                           Select your required portal to proceed
                         </p>
                       </div>
 
-                      {/* 1. Member / Seva Member Login */}
+                      {/* 1. Seva Member Login */}
                       <Link
-                        to="/login"
+                        to="/seva-member/login"
                         onClick={() => setIsAccountDropdownOpen(false)}
-                        className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                        className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-emerald-50/70 border border-transparent hover:border-emerald-200/60 transition-all duration-200"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-foundation-forest/10 flex items-center justify-center text-foundation-forest shrink-0 group-hover:bg-foundation-forest group-hover:text-white transition-colors">
+                        <div className="w-9 h-9 rounded-xl bg-foundation-forest/10 flex items-center justify-center text-foundation-forest shrink-0 group-hover:bg-foundation-forest group-hover:text-white shadow-sm transition-all">
                           <UserCheck className="w-4 h-4" />
                         </div>
-                        <div>
+                        <div className="flex-1 min-w-0">
                           <p className="text-xs font-bold text-foundation-charcoal group-hover:text-foundation-forest transition-colors">
                             Seva Member Login
                           </p>
-                          <p className="text-[11px] text-stone-500 leading-tight">
-                            Access member dashboard, receipts & seva records
+                          <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
+                            Access to the Seva member dashboard, receipts, Seva records, and assigned tasks.
                           </p>
                         </div>
                       </Link>
 
-                      {/* 2. Become a Seva Member */}
+                      {/* 2. Membership Login */}
                       <Link
-                        to="/membership"
+                        to="/membership/login"
                         onClick={() => setIsAccountDropdownOpen(false)}
-                        className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                        className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-amber-50/70 border border-transparent hover:border-amber-200/60 transition-all duration-200"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600 shrink-0 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                        <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-700 shrink-0 group-hover:bg-amber-600 group-hover:text-white shadow-sm transition-all">
                           <Award className="w-4 h-4" />
                         </div>
-                        <div>
-                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-amber-700 transition-colors">
-                            Become a Seva Member
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-amber-800 transition-colors">
+                            Membership Login
                           </p>
-                          <p className="text-[11px] text-stone-500 leading-tight">
-                            Join as Life Member, Patron or Executive Member
+                          <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
+                            Access to membership details, assigned projects, application status, and related activities.
                           </p>
                         </div>
                       </Link>
 
-                      {/* 3. Volunteer Seva Application */}
+                      {/* 3. Volunteer Login */}
                       <Link
-                        to="/volunteer"
+                        to="/volunteer/login"
                         onClick={() => setIsAccountDropdownOpen(false)}
-                        className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                        className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-teal-50/70 border border-transparent hover:border-teal-200/60 transition-all duration-200"
                       >
-                        <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-600 shrink-0 group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                        <div className="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-700 shrink-0 group-hover:bg-emerald-600 group-hover:text-white shadow-sm transition-all">
                           <HeartHandshake className="w-4 h-4" />
                         </div>
-                        <div>
-                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-emerald-700 transition-colors">
-                            Volunteer Seva
+                        <div className="flex-1 min-w-0">
+                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-emerald-800 transition-colors">
+                            Volunteer Login
                           </p>
-                          <p className="text-[11px] text-stone-500 leading-tight">
-                            Join volunteer activities in elder care & ashram seva
+                          <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
+                            Access to volunteer activities, assigned tasks, participation history, and Seva activities.
                           </p>
                         </div>
                       </Link>
 
-                      {/* 4. Admin Governance Login */}
-                      <div className="pt-1 border-t border-stone-100">
+                      {/* 4. Admin Login */}
+                      <div className="pt-1.5 border-t border-stone-100">
                         <Link
                           to="/admin-login"
                           onClick={() => setIsAccountDropdownOpen(false)}
-                          className="group flex items-start space-x-3 p-2.5 rounded-xl hover:bg-foundation-warmGray transition-colors"
+                          className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-stone-100/80 border border-transparent hover:border-stone-200 transition-all duration-200"
                         >
-                          <div className="w-8 h-8 rounded-lg bg-foundation-forestDark/10 flex items-center justify-center text-foundation-forestDark shrink-0 group-hover:bg-foundation-forestDark group-hover:text-foundation-gold transition-colors">
+                          <div className="w-9 h-9 rounded-xl bg-foundation-forestDark/10 flex items-center justify-center text-foundation-forestDark shrink-0 group-hover:bg-foundation-forestDark group-hover:text-foundation-gold shadow-sm transition-all">
                             <ShieldCheck className="w-4 h-4" />
                           </div>
-                          <div>
-                            <p className="text-xs font-bold text-foundation-forestDark flex items-center space-x-1">
-                              <span>Admin Governance Login</span>
+                          <div className="flex-1 min-w-0">
+                            <p className="text-xs font-bold text-foundation-forestDark flex items-center space-x-1.5">
+                              <span>Admin Login</span>
                               <Lock className="w-3 h-3 text-foundation-gold" />
                             </p>
-                            <p className="text-[11px] text-stone-500 leading-tight">
-                              Trustees & administrative staff portal
+                            <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
+                              Access to the complete administration panel for managing all three user categories.
                             </p>
                           </div>
                         </Link>
@@ -675,11 +681,11 @@ export const Navbar: React.FC = () => {
                 <div className="flex items-center justify-between bg-stone-100 p-2.5 rounded-xl">
                   <div>
                     <p className="text-xs font-bold text-foundation-forest">{user.fullName}</p>
-                    <p className="text-[11px] text-stone-500 capitalize">{user.role} Account</p>
+                    <p className="text-[11px] text-stone-500 capitalize">{user.role.replace('_', ' ')} Account</p>
                   </div>
                   <div className="flex space-x-2">
                     <Link
-                      to={user.role === 'admin' ? '/admin/dashboard' : '/member/dashboard'}
+                      to={getDashboardLink(user.role)}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="px-3 py-1 bg-foundation-forest text-white text-xs rounded-lg font-bold"
                     >
@@ -696,36 +702,36 @@ export const Navbar: React.FC = () => {
               ) : (
                 <div className="grid grid-cols-2 gap-2">
                   <Link
-                    to="/login"
+                    to="/seva-member/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
+                    className="p-2.5 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
                   >
-                    <UserCheck className="w-3.5 h-3.5 text-foundation-forest" />
-                    <span>Member Login</span>
-                  </Link>
-                  <Link
-                    to="/membership"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
-                  >
-                    <Award className="w-3.5 h-3.5 text-amber-600" />
+                    <UserCheck className="w-4 h-4 text-foundation-forest" />
                     <span>Seva Member</span>
                   </Link>
                   <Link
-                    to="/volunteer"
+                    to="/membership/login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
+                    className="p-2.5 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
                   >
-                    <HeartHandshake className="w-3.5 h-3.5 text-emerald-600" />
+                    <Award className="w-4 h-4 text-amber-600" />
+                    <span>Membership</span>
+                  </Link>
+                  <Link
+                    to="/volunteer/login"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="p-2.5 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
+                  >
+                    <HeartHandshake className="w-4 h-4 text-emerald-600" />
                     <span>Volunteer</span>
                   </Link>
                   <Link
                     to="/admin-login"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2 bg-foundation-forest text-foundation-ivory rounded-xl text-xs font-bold text-center flex items-center justify-center space-x-1"
+                    className="p-2.5 bg-foundation-forest text-foundation-ivory rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
                   >
-                    <ShieldCheck className="w-3.5 h-3.5 text-foundation-gold" />
-                    <span>Admin Portal</span>
+                    <ShieldCheck className="w-4 h-4 text-foundation-gold" />
+                    <span>Admin Login</span>
                   </Link>
                 </div>
               )}

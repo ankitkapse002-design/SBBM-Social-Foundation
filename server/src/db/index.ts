@@ -5,6 +5,12 @@ import bcrypt from 'bcryptjs';
 const DB_FILE = path.join(__dirname, '../../data/db.json');
 const DB_TMP_FILE = path.join(__dirname, '../../data/db.tmp.json');
 
+export type PortalRole = 'admin' | 'member' | 'seva_member' | 'volunteer';
+export type ApplicationStatus = 'pending_approval' | 'under_review' | 'approved' | 'rejected' | 'changes_requested';
+export type AccountStatus = 'active' | 'suspended' | 'deactivated' | 'pending';
+export type TaskStatus = 'not_started' | 'in_progress' | 'submitted' | 'completed' | 'rejected_for_revision' | 'cancelled';
+export type PriorityLevel = 'low' | 'medium' | 'high' | 'urgent';
+
 export interface User {
   id: string;
   email: string;
@@ -12,11 +18,186 @@ export interface User {
   fullName: string;
   mobile: string;
   passwordHash: string;
-  role: 'admin' | 'member';
+  role: PortalRole;
+  portalId?: string;
+  accountStatus?: AccountStatus;
   isVerified: boolean;
   mustChangePassword: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export function generatePortalId(prefix: 'SM' | 'MEM' | 'VOL'): string {
+  const year = new Date().getFullYear();
+  const randomNum = Math.floor(1000 + Math.random() * 9000);
+  return `SSBM-${prefix}-${year}-${randomNum}`;
+}
+
+export function generateInitialPassword(fullName: string, dobString?: string): string {
+  let year = '2000';
+  if (dobString) {
+    const match = dobString.match(/(\d{4})/);
+    if (match) year = match[1];
+  }
+  const cleanName = fullName.replace(/[^a-zA-Z]/g, '').toUpperCase();
+  let prefix = cleanName.substring(0, 4);
+  if (prefix.length < 4) {
+    prefix = prefix.padEnd(4, 'X');
+  }
+  return `${prefix}${year}`;
+}
+
+export interface SevaMemberProfile {
+  id: string;
+  userId: string;
+  memberId: string;
+  fullName: string;
+  dob: string;
+  mobile: string;
+  email: string;
+  address: string;
+  profilePhotoUrl?: string;
+  sevaPreferences: string[];
+  emergencyContact: string;
+  bloodGroup?: string;
+  notes?: string;
+  applicationStatus: ApplicationStatus;
+  rejectionReason?: string;
+  adminNotes?: string;
+  joinedAt: string;
+  reviewedAt?: string;
+  reviewedBy?: string;
+}
+
+export interface SocietyMemberProfile {
+  id: string;
+  userId: string;
+  membershipId: string;
+  fullName: string;
+  dob: string;
+  mobile: string;
+  email: string;
+  address: string;
+  qualifications: string;
+  skills: string[];
+  areasOfInterest: string[];
+  availability: string;
+  occupation?: string;
+  membershipTier?: 'Life Member' | 'Patron' | 'Executive Member' | 'Active Member';
+  applicationStatus: ApplicationStatus;
+  rejectionReason?: string;
+  adminNotes?: string;
+  joinedAt: string;
+  reviewedAt?: string;
+  reviewedBy?: string;
+}
+
+export interface VolunteerProfile {
+  id: string;
+  userId: string;
+  volunteerId: string;
+  fullName: string;
+  dob: string;
+  mobile: string;
+  email: string;
+  address: string;
+  skills: string[];
+  preferredActivities: string[];
+  availability: string;
+  experience?: string;
+  applicationStatus: ApplicationStatus;
+  rejectionReason?: string;
+  adminNotes?: string;
+  joinedAt: string;
+  reviewedAt?: string;
+  reviewedBy?: string;
+}
+
+export interface ProjectMilestone {
+  id: string;
+  title: string;
+  completed: boolean;
+  dueDate?: string;
+}
+
+export interface ProjectDocument {
+  id: string;
+  name: string;
+  url: string;
+  uploadedAt: string;
+}
+
+export interface ProjectItem {
+  id: string;
+  title: string;
+  description: string;
+  objectives: string[];
+  leadMemberId?: string;
+  leadMemberName?: string;
+  teamMemberIds: string[];
+  priority: PriorityLevel;
+  startDate: string;
+  deadline: string;
+  status: 'planning' | 'active' | 'on_hold' | 'completed' | 'cancelled';
+  milestones: ProjectMilestone[];
+  documents?: ProjectDocument[];
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface TaskProgressUpdate {
+  id: string;
+  date: string;
+  notes: string;
+  progressPercent: number;
+}
+
+export interface PortalTask {
+  id: string;
+  title: string;
+  description: string;
+  category: 'seva_member' | 'member' | 'volunteer';
+  assignedToId: string;
+  assignedToName: string;
+  assignedToRole: string;
+  projectId?: string;
+  projectTitle?: string;
+  priority: PriorityLevel;
+  startDate: string;
+  deadline: string;
+  status: TaskStatus;
+  instructions: string;
+  attachments?: string[];
+  progressUpdates: TaskProgressUpdate[];
+  completionEvidence?: string;
+  adminComments?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PortalNotification {
+  id: string;
+  userId: string;
+  title: string;
+  message: string;
+  type: 'info' | 'success' | 'warning' | 'action';
+  link?: string;
+  isRead: boolean;
+  createdAt: string;
+}
+
+export interface SevaRecordItem {
+  id: string;
+  memberId: string;
+  userId: string;
+  title: string;
+  date: string;
+  hoursSpent: number;
+  location: string;
+  supervisorName?: string;
+  receiptNumber?: string;
+  description: string;
+  createdAt: string;
 }
 
 export interface MemberProfile {
@@ -171,6 +352,13 @@ export interface DatabaseSchema {
   services: ServiceItem[];
   faqs: FAQItem[];
   audit_logs: AuditLog[];
+  seva_members: SevaMemberProfile[];
+  society_members: SocietyMemberProfile[];
+  volunteers: VolunteerProfile[];
+  projects: ProjectItem[];
+  portal_tasks: PortalTask[];
+  portal_notifications: PortalNotification[];
+  seva_records: SevaRecordItem[];
   meta: {
     version: string;
     lastSaved: string;
@@ -520,6 +708,13 @@ class Database {
           createdAt: now,
         }
       ],
+      seva_members: [],
+      society_members: [],
+      volunteers: [],
+      projects: [],
+      portal_tasks: [],
+      portal_notifications: [],
+      seva_records: [],
       meta: {
         version: '1.0.0',
         lastSaved: now,
@@ -532,7 +727,15 @@ class Database {
     try {
       if (fs.existsSync(DB_FILE)) {
         const raw = fs.readFileSync(DB_FILE, 'utf-8');
-        return JSON.parse(raw);
+        const parsed = JSON.parse(raw);
+        if (!parsed.seva_members) parsed.seva_members = [];
+        if (!parsed.society_members) parsed.society_members = [];
+        if (!parsed.volunteers) parsed.volunteers = [];
+        if (!parsed.projects) parsed.projects = [];
+        if (!parsed.portal_tasks) parsed.portal_tasks = [];
+        if (!parsed.portal_notifications) parsed.portal_notifications = [];
+        if (!parsed.seva_records) parsed.seva_records = [];
+        return parsed;
       }
     } catch (err) {
       console.error('Error loading db.json, generating default data:', err);

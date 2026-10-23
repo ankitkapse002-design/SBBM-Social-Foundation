@@ -23,6 +23,12 @@ import { Register } from './pages/Register';
 import { AdminLogin } from './pages/AdminLogin';
 import { MemberDashboard } from './pages/member/MemberDashboard';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
+import { SevaMemberPortal } from './pages/portal/SevaMemberPortal';
+import { MembershipPortal } from './pages/portal/MembershipPortal';
+import { VolunteerPortal } from './pages/portal/VolunteerPortal';
+import { SevaMemberDashboard } from './pages/portal/SevaMemberDashboard';
+import { MembershipDashboard } from './pages/portal/MembershipDashboard';
+import { VolunteerDashboard } from './pages/portal/VolunteerDashboard';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -34,8 +40,8 @@ function ScrollToTop() {
 }
 
 export function App() {
-  // Visitors open directly into the cinematic immersive Hero; 3D walk-through available on demand
-  const [show3DIntro, setShow3DIntro] = useState<boolean>(false);
+  // Always start with the 3D opening scene on fresh visit or reload
+  const [show3DIntro, setShow3DIntro] = useState<boolean>(true);
 
   const handleReplayIntro = () => {
     setShow3DIntro(true);
@@ -78,6 +84,17 @@ export function App() {
             <Route path="/support" element={<Support />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
+
+            {/* Portal Routes (Seva Member, Membership, Volunteer) */}
+            <Route path="/seva-member/login" element={<SevaMemberPortal />} />
+            <Route path="/seva-member/register" element={<SevaMemberPortal />} />
+            <Route path="/seva-member/dashboard" element={<SevaMemberDashboard />} />
+
+            <Route path="/membership/login" element={<MembershipPortal />} />
+            <Route path="/membership/dashboard" element={<MembershipDashboard />} />
+
+            <Route path="/volunteer/login" element={<VolunteerPortal />} />
+            <Route path="/volunteer/dashboard" element={<VolunteerDashboard />} />
 
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />

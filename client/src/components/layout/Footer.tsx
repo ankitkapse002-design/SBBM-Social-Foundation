@@ -77,7 +77,6 @@ export const Footer: React.FC = () => {
             Quick Navigation
           </h4>
           <ul className="text-xs space-y-1.5 text-stone-300">
-            <li><Link to="/demo" className="text-foundation-gold hover:underline font-semibold flex items-center gap-1">✨ Owner Demo Presentation (Hindi/English)</Link></li>
             <li><Link to="/old-age-home" className="hover:text-foundation-gold transition-colors">Vyenkatesh Ashram Facilities</Link></li>
             <li><Link to="/admission" className="hover:text-foundation-gold transition-colors font-semibold text-foundation-gold">Admission Enquiry</Link></li>
             <li><Link to="/services/goseva-kendra" className="hover:text-foundation-gold transition-colors">Go-Seva Kendra (Cow Sanctuary)</Link></li>

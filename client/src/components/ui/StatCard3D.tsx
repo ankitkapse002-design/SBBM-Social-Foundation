@@ -24,7 +24,7 @@ export const StatCard3D: React.FC<StatCard3DProps> = ({
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] as const }}
       whileHover={{ y: -6, scale: 1.04 }}
-      className="relative group p-6 bg-white/95 hover:bg-white rounded-3xl shadow-[0_15px_35px_rgba(7,25,15,0.12)] hover:shadow-[0_20px_50px_rgba(212,175,55,0.25)] border border-foundation-gold/35 hover:border-foundation-gold backdrop-blur-xl transition-all duration-300 text-center overflow-hidden flex flex-col items-center justify-center"
+      className="relative group p-5 bg-white/85 hover:bg-white rounded-3xl shadow-soft hover:shadow-2xl border border-foundation-borderMuted hover:border-foundation-gold/60 backdrop-blur-md transition-all duration-300 text-center overflow-hidden flex flex-col items-center justify-center"
     >
       {/* Ambient gradient flare on hover */}
       <div className="absolute -top-12 -right-12 w-28 h-28 bg-foundation-gold/15 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-500 pointer-events-none" />
