@@ -96,30 +96,118 @@ adminRouter.put('/members/:id', (req: AuthRequest, res: Response) => {
 
 // Admission Enquiries
 adminRouter.get('/admissions', (req: AuthRequest, res: Response) => {
-  const list = db.get('admission_enquiries');
+  const { status, search } = req.query;
+  let list = db.get('admission_enquiries');
+
+  if (status && status !== 'all') {
+    list = list.filter(a => a.status === status);
+  }
+
+  if (search && typeof search === 'string') {
+    const q = search.trim().toLowerCase();
+    list = list.filter(a =>
+      (a.applicantName && a.applicantName.toLowerCase().includes(q)) ||
+      (a.registrationId && a.registrationId.toLowerCase().includes(q)) ||
+      (a.guardianFirstName && a.guardianFirstName.toLowerCase().includes(q)) ||
+      (a.guardianPhone && a.guardianPhone.includes(q)) ||
+      (a.residentName && a.residentName.toLowerCase().includes(q)) ||
+      (a.id && a.id.toLowerCase().includes(q))
+    );
+  }
+
   res.json({ success: true, data: list });
+});
+
+adminRouter.get('/admissions/:id', (req: AuthRequest, res: Response) => {
+  const { id } = req.params;
+  const list = db.get('admission_enquiries');
+  const item = list.find(a => a.id === id || a.registrationId === id);
+
+  if (!item) {
+    res.status(404).json({ success: false, message: 'Admission enquiry not found.' });
+    return;
+  }
+
+  res.json({ success: true, data: item });
 });
 
 adminRouter.put('/admissions/:id', (req: AuthRequest, res: Response) => {
   const { id } = req.params;
-  const { status, notes } = req.body;
+  const { status, notes, adminNotes, rejectionReason, requestedInfoNotes } = req.body;
   const admin = req.user!;
 
   const list = db.get('admission_enquiries');
-  const item = list.find(a => a.id === id);
+  const item = list.find(a => a.id === id || a.registrationId === id);
   if (!item) {
     res.status(404).json({ success: false, message: 'Admission enquiry not found' });
     return;
   }
 
+  const newStatus = status || item.status;
+  if (newStatus === 'rejected' && (!rejectionReason || !rejectionReason.trim())) {
+    res.status(400).json({
+      success: false,
+      message: 'A rejection reason is mandatory when rejecting an admission enquiry.'
+    });
+    return;
+  }
+
+  const prevStatus = item.status;
+  const now = new Date().toISOString();
+
   if (status) item.status = status;
-  if (notes !== undefined) item.notes = notes;
-  item.updatedAt = new Date().toISOString();
+  const effectiveNotes = adminNotes !== undefined ? adminNotes : notes;
+  if (effectiveNotes !== undefined) item.adminNotes = effectiveNotes.trim();
+  if (rejectionReason !== undefined) item.rejectionReason = rejectionReason.trim();
+  if (requestedInfoNotes !== undefined) item.requestedInfoNotes = requestedInfoNotes.trim();
+  item.updatedAt = now;
+
+  if (!Array.isArray(item.statusHistory)) {
+    item.statusHistory = [];
+  }
+
+  const statusNote = rejectionReason?.trim() || requestedInfoNotes?.trim() || effectiveNotes?.trim() || `Status updated from ${prevStatus} to ${newStatus}`;
+
+  item.statusHistory.push({
+    id: `hist_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+    status: newStatus,
+    date: now,
+    updatedBy: admin.fullName,
+    notes: statusNote
+  });
+
+  // Notify applicant
+  const applicantTargetId = item.registrationId || item.id;
+  let notifMessage = '';
+  let notifType: 'info' | 'success' | 'warning' | 'error' = 'info';
+
+  if (newStatus === 'approved') {
+    notifType = 'success';
+    notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by Vyenkatesh Ashram administration.`;
+  } else if (newStatus === 'rejected') {
+    notifType = 'error';
+    notifMessage = `Your admission enquiry (${applicantTargetId}) for ${item.applicantName} was reviewed and could not be approved at this time. Reason: ${rejectionReason}`;
+  } else if (newStatus === 'more_info_required') {
+    notifType = 'warning';
+    notifMessage = `Action Required for your admission enquiry (${applicantTargetId}): Administration requested additional details or documents. Instructions: ${requestedInfoNotes || effectiveNotes || 'Please check remarks in your dashboard.'}`;
+  } else {
+    notifMessage = `Your admission enquiry status has been marked as ${newStatus.replace('_', ' ').toUpperCase()}.`;
+  }
+
+  db.get('portal_notifications').push({
+    id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+    userId: applicantTargetId,
+    title: `Admission Status: ${newStatus.replace('_', ' ').toUpperCase()}`,
+    message: notifMessage,
+    type: notifType,
+    isRead: false,
+    createdAt: now,
+  });
 
   db.save();
-  db.logAudit(admin.id, admin.fullName, 'ADMISSION_UPDATE', 'AdmissionEnquiry', `Updated status to ${status} for ${item.residentName} (${id})`, req.ip);
+  db.logAudit(admin.id, admin.fullName, 'ADMISSION_UPDATE', 'AdmissionEnquiry', `Updated status to ${newStatus} for ${item.applicantName || item.residentName} (${id})`, req.ip);
 
-  res.json({ success: true, message: 'Admission enquiry updated', data: item });
+  res.json({ success: true, message: 'Admission enquiry updated successfully', data: item });
 });
 
 // Membership Applications

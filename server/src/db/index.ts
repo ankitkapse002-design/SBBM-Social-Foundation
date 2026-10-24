@@ -5,11 +5,20 @@ import bcrypt from 'bcryptjs';
 const DB_FILE = path.join(__dirname, '../../data/db.json');
 const DB_TMP_FILE = path.join(__dirname, '../../data/db.tmp.json');
 
-export type PortalRole = 'admin' | 'member' | 'seva_member' | 'volunteer';
+export type PortalRole = 'admin' | 'member' | 'seva_member' | 'volunteer' | 'admission_applicant';
 export type ApplicationStatus = 'pending_approval' | 'under_review' | 'approved' | 'rejected' | 'changes_requested';
 export type AccountStatus = 'active' | 'suspended' | 'deactivated' | 'pending';
 export type TaskStatus = 'not_started' | 'in_progress' | 'submitted' | 'completed' | 'rejected_for_revision' | 'cancelled';
 export type PriorityLevel = 'low' | 'medium' | 'high' | 'urgent';
+export type AdmissionStatus = 'pending_review' | 'approved' | 'rejected' | 'more_info_required';
+
+export interface AdmissionStatusHistoryItem {
+  id: string;
+  status: AdmissionStatus;
+  date: string;
+  updatedBy: string;
+  notes?: string;
+}
 
 export interface User {
   id: string;
@@ -27,10 +36,22 @@ export interface User {
   updatedAt: string;
 }
 
-export function generatePortalId(prefix: 'SM' | 'MEM' | 'VOL'): string {
+export function generatePortalId(prefix: 'SM' | 'MEM' | 'VOL' | 'ADM'): string {
   const year = new Date().getFullYear();
   const randomNum = Math.floor(1000 + Math.random() * 9000);
   return `SSBM-${prefix}-${year}-${randomNum}`;
+}
+
+export function generateAdmissionPassword(guardianFirstName: string, dobOrYear?: string): string {
+  let year = '1985';
+  if (dobOrYear) {
+    const match = dobOrYear.match(/(\d{4})/);
+    if (match) year = match[1];
+    else if (!isNaN(Number(dobOrYear))) year = dobOrYear.trim();
+  }
+  const cleanName = guardianFirstName.trim().replace(/[^a-zA-Z]/g, '');
+  const formattedName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
+  return `${formattedName || 'Guardian'}${year}`;
 }
 
 export function generateInitialPassword(fullName: string, dobString?: string): string {
@@ -229,17 +250,24 @@ export interface MembershipRequest {
 
 export interface AdmissionEnquiry {
   id: string;
+  registrationId: string;
   applicantName: string;
-  applicantPhone: string;
+  guardianFirstName: string;
+  guardianPhone: string;
   applicantEmail: string;
-  residentName: string;
-  residentAge: number;
+  dobOrYear: string;
+  address: string;
+  admissionCategory: string;
   residentGender: string;
   relationWithResident: string;
   mobilityStatus: string;
   medicalNotes: string;
-  status: 'new' | 'reviewing' | 'contacted' | 'verified' | 'closed';
-  notes?: string;
+  additionalMessage: string;
+  status: AdmissionStatus;
+  adminNotes?: string;
+  rejectionReason?: string;
+  requestedInfoNotes?: string;
+  statusHistory: AdmissionStatusHistoryItem[];
   createdAt: string;
   updatedAt: string;
 }
@@ -735,6 +763,50 @@ class Database {
         if (!parsed.portal_tasks) parsed.portal_tasks = [];
         if (!parsed.portal_notifications) parsed.portal_notifications = [];
         if (!parsed.seva_records) parsed.seva_records = [];
+        if (!parsed.admission_enquiries) parsed.admission_enquiries = [];
+
+        // Backfill and migrate admission enquiries
+        parsed.admission_enquiries.forEach((adm: any) => {
+          if (!adm.registrationId) {
+            adm.registrationId = generatePortalId('ADM');
+          }
+          if (!adm.applicantName && adm.residentName) {
+            adm.applicantName = adm.residentName;
+          }
+          if (!adm.guardianPhone && adm.applicantPhone) {
+            adm.guardianPhone = adm.applicantPhone;
+          }
+          if (!adm.guardianFirstName) {
+            adm.guardianFirstName = adm.applicantName ? adm.applicantName.split(' ')[0] : 'Guardian';
+          }
+          if (!adm.dobOrYear) {
+            adm.dobOrYear = adm.residentAge ? String(new Date().getFullYear() - Number(adm.residentAge)) : '1950';
+          }
+          if (!adm.address) {
+            adm.address = 'Nagpur, Maharashtra';
+          }
+          if (!adm.admissionCategory) {
+            adm.admissionCategory = 'Elder Care Sanctuary';
+          }
+          if (!adm.additionalMessage && adm.medicalNotes) {
+            adm.additionalMessage = adm.medicalNotes;
+          }
+          if (!['pending_review', 'approved', 'rejected', 'more_info_required'].includes(adm.status)) {
+            adm.status = 'pending_review';
+          }
+          if (!adm.statusHistory || !Array.isArray(adm.statusHistory)) {
+            adm.statusHistory = [
+              {
+                id: `hist_${Date.now()}_init`,
+                status: adm.status || 'pending_review',
+                date: adm.createdAt || new Date().toISOString(),
+                updatedBy: 'System',
+                notes: 'Enquiry submitted initially.'
+              }
+            ];
+          }
+        });
+
         return parsed;
       }
     } catch (err) {

@@ -2,14 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Menu, X, ChevronDown, Phone, Heart, User, UserCheck, ShieldCheck,
-  HeartHandshake, Award, LogOut, MapPin, Lock, Sparkles
+  HeartHandshake, Award, LogOut, MapPin, Lock, Sparkles, FileText
 } from 'lucide-react';
 import { getAuthToken, clearAuthToken, apiRequest } from '../../api';
 
 interface UserState {
   id: string;
   fullName: string;
-  role: 'admin' | 'member' | 'seva_member' | 'volunteer';
+  role: 'admin' | 'member' | 'seva_member' | 'volunteer' | 'admission_applicant';
   email: string;
   portalId?: string;
 }
@@ -31,6 +31,8 @@ export const Navbar: React.FC = () => {
         return '/seva-member/dashboard';
       case 'volunteer':
         return '/volunteer/dashboard';
+      case 'admission_applicant':
+        return '/admission-dashboard';
       case 'member':
       default:
         return '/membership/dashboard';
@@ -472,6 +474,18 @@ export const Navbar: React.FC = () => {
                               Access to the complete administration panel for managing all three user categories.
                             </p>
                           </div>
+                        </Link>
+                      </div>
+
+                      {/* Track Admission Status */}
+                      <div className="pt-2 border-t border-stone-100 px-2 text-center">
+                        <Link
+                          to="/admission-login"
+                          onClick={() => setIsAccountDropdownOpen(false)}
+                          className="inline-flex items-center space-x-1.5 text-[11px] font-bold text-foundation-forest hover:text-foundation-forestLight transition-colors"
+                        >
+                          <FileText className="w-3 h-3 text-rose-600" />
+                          <span>Submitted an Admission Enquiry? Track Status</span>
                         </Link>
                       </div>
                     </div>

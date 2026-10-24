@@ -5,7 +5,8 @@ import {
   MessageSquare, FileText, LogOut, CheckCircle2,
   AlertCircle, Plus, Trash2, Edit, Save, Clock, Search, X,
   UserCheck, Award, HeartHandshake, Briefcase, CheckSquare,
-  AlertTriangle, Filter, ChevronRight, Eye, Send, Check, ArrowRight
+  AlertTriangle, Filter, ChevronRight, Eye, Send, Check, ArrowRight,
+  Shield, RefreshCw
 } from 'lucide-react';
 import { apiRequest, clearAuthToken } from '../../api';
 import { PasswordField } from '../../components/ui/PasswordField';
@@ -128,6 +129,18 @@ export const AdminDashboard: React.FC = () => {
     mediaUrl: '/assets/images/ashram_building.jpg',
   });
 
+  // Admission Review & Management State
+  const [selectedAdmission, setSelectedAdmission] = useState<any>(null);
+  const [admissionSearch, setAdmissionSearch] = useState('');
+  const [admissionFilter, setAdmissionFilter] = useState<string>('all');
+  const [admissionAdminNotes, setAdmissionAdminNotes] = useState('');
+  const [admissionRejectionReason, setAdmissionRejectionReason] = useState('');
+  const [admissionRequestedInfo, setAdmissionRequestedInfo] = useState('');
+  const [isUpdatingAdmission, setIsUpdatingAdmission] = useState(false);
+  const [showRejectConfirm, setShowRejectConfirm] = useState(false);
+  const [admissionActionError, setAdmissionActionError] = useState('');
+  const [admissionActionSuccess, setAdmissionActionSuccess] = useState('');
+
   useEffect(() => {
     checkAuthAndLoad();
   }, []);
@@ -235,6 +248,68 @@ export const AdminDashboard: React.FC = () => {
       await Promise.all([loadPortalMetrics(), loadAllCollections()]);
     } catch (err: any) {
       alert('Failed to update status: ' + err.message);
+    }
+  };
+
+  // Admission Action Handlers
+  const handleOpenAdmissionModal = (adm: any) => {
+    setSelectedAdmission(adm);
+    setAdmissionAdminNotes(adm.adminNotes || '');
+    setAdmissionRejectionReason(adm.rejectionReason || '');
+    setAdmissionRequestedInfo(adm.requestedInfoNotes || '');
+    setAdmissionActionError('');
+    setAdmissionActionSuccess('');
+    setShowRejectConfirm(false);
+  };
+
+  const handleUpdateAdmissionStatus = async (enquiryId: string, actionStatus: string) => {
+    if (actionStatus === 'rejected' && !admissionRejectionReason.trim()) {
+      setAdmissionActionError('Please provide a mandatory rejection reason before rejecting an enquiry.');
+      return;
+    }
+
+    setIsUpdatingAdmission(true);
+    setAdmissionActionError('');
+    setAdmissionActionSuccess('');
+
+    try {
+      const res = await apiRequest<{ success: boolean; message: string; data: any }>(
+        `/admin/admissions/${enquiryId}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({
+            status: actionStatus,
+            adminNotes: admissionAdminNotes.trim(),
+            rejectionReason: admissionRejectionReason.trim(),
+            requestedInfoNotes: admissionRequestedInfo.trim(),
+          }),
+        }
+      );
+
+      if (res.success) {
+        setAdmissionActionSuccess(res.message || `Admission enquiry status updated to ${actionStatus.replace('_', ' ')}.`);
+        setSelectedAdmission(res.data);
+        setShowRejectConfirm(false);
+        await Promise.all([loadPortalMetrics(), loadLegacyMetrics(), loadAllCollections()]);
+      }
+    } catch (err: any) {
+      setAdmissionActionError(err.message || 'Failed to update admission status.');
+    } finally {
+      setIsUpdatingAdmission(false);
+    }
+  };
+
+  const handleAdminResetAdmissionPassword = async (enquiry: any) => {
+    try {
+      const res = await apiRequest<{ success: boolean; message: string }>(
+        `/portal/admin/users/${enquiry.registrationId || enquiry.id}/reset-password`,
+        { method: 'POST' }
+      );
+      if (res.success) {
+        alert(res.message);
+      }
+    } catch (err: any) {
+      alert(err.message || 'Failed to reset admission applicant password.');
     }
   };
 
@@ -1259,36 +1334,466 @@ export const AdminDashboard: React.FC = () => {
         )}
 
         {/* =========================================================================
-            TAB 6: ADMISSION ENQUIRIES (PRESERVED)
+            TAB 6: ADMISSION ENQUIRIES & ADMIN APPROVAL MANAGEMENT
            ========================================================================= */}
         {activeTab === 'admissions' && (
-          <div className="bg-white rounded-3xl p-6 md:p-8 border border-foundation-borderMuted shadow-soft space-y-6">
-            <h2 className="text-xl font-display font-bold text-foundation-charcoal border-b pb-3">
-              Admission Enquiries Management
-            </h2>
+          <div className="space-y-6">
+            {/* Header & Metrics */}
+            <div className="bg-white rounded-3xl p-6 md:p-8 border border-foundation-borderMuted shadow-soft space-y-6">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b pb-4">
+                <div>
+                  <h2 className="text-xl md:text-2xl font-display font-bold text-foundation-charcoal">
+                    Admission Enquiry & Evaluation Management
+                  </h2>
+                  <p className="text-xs text-stone-500 mt-0.5">
+                    Review prospective senior resident evaluations, approve/reject admissions, and manage onboarding credentials.
+                  </p>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-200">
+                    {admissions.filter(a => a.status === 'pending_review' || a.status === 'new').length} Pending Action
+                  </span>
+                </div>
+              </div>
 
-            {admissions.length === 0 ? (
-              <p className="text-xs text-stone-500 italic">No admission records found.</p>
-            ) : (
-              <div className="space-y-4">
-                {admissions.map(adm => (
-                  <div key={adm.id} className="p-5 bg-foundation-warmGray rounded-2xl border border-foundation-borderMuted space-y-3 text-xs">
-                    <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-2">
-                      <span className="font-bold text-sm text-foundation-forest">
-                        Resident: {adm.residentName} (Age: {adm.residentAge}, {adm.residentGender})
-                      </span>
-                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase bg-stone-200">
-                        {adm.status}
-                      </span>
+              {/* Admission Statistics Cards */}
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs">
+                <div className="p-4 bg-foundation-warmGray rounded-2xl border border-foundation-borderMuted">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-stone-500">Total Enquiries</span>
+                  <p className="text-xl font-display font-bold text-foundation-charcoal mt-1">{admissions.length}</p>
+                </div>
+                <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-800">Pending Review</span>
+                  <p className="text-xl font-display font-bold text-amber-900 mt-1">
+                    {admissions.filter(a => a.status === 'pending_review' || a.status === 'new').length}
+                  </p>
+                </div>
+                <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-800">Approved</span>
+                  <p className="text-xl font-display font-bold text-emerald-900 mt-1">
+                    {admissions.filter(a => a.status === 'approved').length}
+                  </p>
+                </div>
+                <div className="p-4 bg-blue-50 rounded-2xl border border-blue-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-blue-800">More Info Req.</span>
+                  <p className="text-xl font-display font-bold text-blue-900 mt-1">
+                    {admissions.filter(a => a.status === 'more_info_required').length}
+                  </p>
+                </div>
+                <div className="p-4 bg-rose-50 rounded-2xl border border-rose-200">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-rose-800">Not Approved</span>
+                  <p className="text-xl font-display font-bold text-rose-900 mt-1">
+                    {admissions.filter(a => a.status === 'rejected').length}
+                  </p>
+                </div>
+              </div>
+
+              {/* Search & Filters Bar */}
+              <div className="flex flex-col md:flex-row items-center justify-between gap-3 pt-2">
+                <div className="relative w-full md:w-80">
+                  <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    value={admissionSearch}
+                    onChange={(e) => setAdmissionSearch(e.target.value)}
+                    placeholder="Search by Resident, Reg ID, Guardian Phone..."
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl pl-9 pr-4 py-2 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    id="admission-search-input"
+                  />
+                  {admissionSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setAdmissionSearch('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex items-center space-x-1.5 overflow-x-auto w-full md:w-auto pb-1 md:pb-0 text-xs">
+                  {[
+                    { id: 'all', label: 'All' },
+                    { id: 'pending_review', label: 'Pending' },
+                    { id: 'approved', label: 'Approved' },
+                    { id: 'more_info_required', label: 'More Info' },
+                    { id: 'rejected', label: 'Rejected' },
+                  ].map(tab => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setAdmissionFilter(tab.id)}
+                      className={`px-3 py-1.5 rounded-xl font-bold whitespace-nowrap transition-all ${
+                        admissionFilter === tab.id
+                          ? 'bg-foundation-forest text-foundation-ivory shadow-xs'
+                          : 'bg-foundation-warmGray text-stone-600 hover:bg-stone-200'
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Admission Enquiries List */}
+            <div className="bg-white rounded-3xl p-6 md:p-8 border border-foundation-borderMuted shadow-soft space-y-4">
+              {(() => {
+                const filtered = admissions.filter(adm => {
+                  // Status filter
+                  if (admissionFilter !== 'all') {
+                    if (admissionFilter === 'pending_review') {
+                      if (adm.status !== 'pending_review' && adm.status !== 'new' && adm.status !== 'reviewing') return false;
+                    } else if (adm.status !== admissionFilter) {
+                      return false;
+                    }
+                  }
+                  // Search query
+                  if (admissionSearch.trim()) {
+                    const q = admissionSearch.trim().toLowerCase();
+                    const name = (adm.applicantName || adm.residentName || '').toLowerCase();
+                    const guardian = (adm.guardianFirstName || '').toLowerCase();
+                    const phone = (adm.guardianPhone || adm.applicantPhone || '');
+                    const regId = (adm.registrationId || adm.id || '').toLowerCase();
+                    return name.includes(q) || guardian.includes(q) || phone.includes(q) || regId.includes(q);
+                  }
+                  return true;
+                });
+
+                if (filtered.length === 0) {
+                  return (
+                    <div className="text-center py-12 text-stone-500 text-xs space-y-2">
+                      <Heart className="w-8 h-8 text-stone-300 mx-auto" />
+                      <p className="font-semibold">No admission records found matching the criteria.</p>
+                      <p className="text-[11px] text-stone-400">Try adjusting your search query or status filter.</p>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-stone-600">
-                      <p>Applicant: <strong>{adm.applicantName}</strong> ({adm.relationWithResident})</p>
-                      <p>Contact: <strong>{adm.applicantPhone}</strong> | {adm.applicantEmail}</p>
-                      <p>Mobility: {adm.mobilityStatus}</p>
-                      <p>Medical: {adm.medicalNotes || 'None'}</p>
+                  );
+                }
+
+                return (
+                  <div className="space-y-3.5">
+                    {filtered.map(adm => {
+                      const admStatus = adm.status === 'new' ? 'pending_review' : adm.status;
+                      return (
+                        <div
+                          key={adm.id}
+                          className="p-5 bg-foundation-warmGray hover:bg-stone-50/80 rounded-2xl border border-foundation-borderMuted transition-all text-xs space-y-3"
+                        >
+                          <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-2.5">
+                            <div className="flex items-center space-x-2.5">
+                              <span className="font-mono font-bold text-foundation-forest px-2.5 py-0.5 bg-emerald-50 rounded-lg border border-emerald-200">
+                                {adm.registrationId || adm.id}
+                              </span>
+                              <h3 className="font-bold text-sm text-foundation-charcoal">
+                                {adm.applicantName || adm.residentName}
+                              </h3>
+                              {adm.dobOrYear && (
+                                <span className="text-[11px] text-stone-500">
+                                  (DOB/Year: {adm.dobOrYear})
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${
+                                admStatus === 'approved'
+                                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
+                                  : admStatus === 'rejected'
+                                  ? 'bg-rose-100 text-rose-800 border border-rose-200'
+                                  : admStatus === 'more_info_required'
+                                  ? 'bg-blue-100 text-blue-800 border border-blue-200'
+                                  : 'bg-amber-100 text-amber-800 border border-amber-200'
+                              }`}>
+                                {admStatus.replace('_', ' ')}
+                              </span>
+                              <span className="text-[10px] text-stone-400">
+                                {new Date(adm.createdAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' })}
+                              </span>
+                            </div>
+                          </div>
+
+                          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-stone-600 text-[11px]">
+                            <div>
+                              <p>Guardian: <strong className="text-stone-800">{adm.guardianFirstName || 'N/A'}</strong> ({adm.relationWithResident || 'Guardian'})</p>
+                              <p>Contact: <strong className="text-stone-800">{adm.guardianPhone || adm.applicantPhone || 'N/A'}</strong></p>
+                            </div>
+                            <div>
+                              <p>Category: <span className="text-stone-800 font-medium">{adm.admissionCategory || 'Elder Care Sanctuary'}</span></p>
+                              <p>Mobility: {adm.mobilityStatus || 'Independent'}</p>
+                            </div>
+                            <div>
+                              <p>Medical: <span className="text-stone-700 italic">{adm.medicalNotes ? adm.medicalNotes.substring(0, 50) + '...' : 'None'}</span></p>
+                              {adm.rejectionReason && (
+                                <p className="text-rose-700 font-semibold truncate">Reason: {adm.rejectionReason}</p>
+                              )}
+                            </div>
+                          </div>
+
+                          <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-stone-200/60">
+                            <div className="flex items-center space-x-2 text-[11px] text-stone-400">
+                              <span>History: {adm.statusHistory?.length || 1} update(s)</span>
+                              {adm.adminNotes && (
+                                <>
+                                  <span>•</span>
+                                  <span className="text-stone-600 truncate max-w-xs">Note: {adm.adminNotes}</span>
+                                </>
+                              )}
+                            </div>
+
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={() => handleAdminResetAdmissionPassword(adm)}
+                                className="px-2.5 py-1 text-[11px] font-semibold text-stone-600 hover:text-foundation-forest border border-stone-300 hover:bg-stone-100 rounded-lg transition-colors"
+                                title="Reset applicant password to GuardianName+BirthYear formula"
+                              >
+                                Reset Pwd
+                              </button>
+                              <button
+                                onClick={() => handleOpenAdmissionModal(adm)}
+                                className="px-4 py-1.5 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold text-xs rounded-xl shadow-xs transition-colors flex items-center space-x-1"
+                                id={`review-admission-${adm.registrationId || adm.id}`}
+                              >
+                                <Eye className="w-3.5 h-3.5" />
+                                <span>Review & Decide</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+            </div>
+
+            {/* Admission Review & Decision Modal */}
+            {selectedAdmission && (
+              <div className="fixed inset-0 bg-stone-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+                <div className="bg-white rounded-3xl max-w-3xl w-full p-6 md:p-8 space-y-6 shadow-2xl border border-stone-200 my-8 animate-in fade-in zoom-in-95 duration-150 max-h-[90vh] overflow-y-auto">
+                  {/* Modal Header */}
+                  <div className="flex items-center justify-between border-b pb-3">
+                    <div className="space-y-0.5">
+                      <div className="flex items-center space-x-2">
+                        <Heart className="w-5 h-5 text-rose-600" />
+                        <h3 className="font-display font-bold text-lg text-foundation-charcoal">
+                          Review Admission: {selectedAdmission.applicantName || selectedAdmission.residentName}
+                        </h3>
+                      </div>
+                      <p className="text-xs text-stone-500 font-mono">
+                        Registration ID: <strong>{selectedAdmission.registrationId || selectedAdmission.id}</strong> • Status: <span className="uppercase font-bold text-foundation-forest">{selectedAdmission.status}</span>
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setSelectedAdmission(null)}
+                      className="text-stone-400 hover:text-stone-600 text-lg font-bold p-1"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  {/* Feedback Messages */}
+                  {admissionActionError && (
+                    <div className="p-3 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 flex items-center space-x-2">
+                      <AlertCircle className="w-4 h-4 text-rose-600 flex-shrink-0" />
+                      <span>{admissionActionError}</span>
+                    </div>
+                  )}
+                  {admissionActionSuccess && (
+                    <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-800 flex items-center space-x-2">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                      <span>{admissionActionSuccess}</span>
+                    </div>
+                  )}
+
+                  {/* Details Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div className="p-4 bg-foundation-warmGray rounded-2xl border space-y-2">
+                      <h4 className="font-bold text-foundation-forest border-b pb-1">Senior Resident Details</h4>
+                      <p><strong>Full Name:</strong> {selectedAdmission.applicantName || selectedAdmission.residentName}</p>
+                      <p><strong>DOB / Birth Year:</strong> {selectedAdmission.dobOrYear || selectedAdmission.residentAge || 'N/A'}</p>
+                      <p><strong>Gender:</strong> {selectedAdmission.residentGender || 'Not specified'}</p>
+                      <p><strong>Category:</strong> {selectedAdmission.admissionCategory || 'Elder Care Sanctuary'}</p>
+                      <p><strong>Mobility:</strong> {selectedAdmission.mobilityStatus || 'Independent'}</p>
+                      <p><strong>Medical Background:</strong> {selectedAdmission.medicalNotes || 'None'}</p>
+                    </div>
+
+                    <div className="p-4 bg-foundation-warmGray rounded-2xl border space-y-2">
+                      <h4 className="font-bold text-foundation-forest border-b pb-1">Guardian & Contact Information</h4>
+                      <p><strong>Guardian First Name:</strong> {selectedAdmission.guardianFirstName || 'N/A'}</p>
+                      <p><strong>Relation:</strong> {selectedAdmission.relationWithResident || 'Guardian'}</p>
+                      <p><strong>Contact Phone:</strong> {selectedAdmission.guardianPhone || selectedAdmission.applicantPhone || 'N/A'}</p>
+                      <p><strong>Email:</strong> {selectedAdmission.applicantEmail || 'None'}</p>
+                      <p><strong>Residential Address:</strong> {selectedAdmission.address || 'N/A'}</p>
+                      <p><strong>Submitted On:</strong> {new Date(selectedAdmission.createdAt).toLocaleString('en-IN')}</p>
                     </div>
                   </div>
-                ))}
+
+                  {selectedAdmission.additionalMessage && (
+                    <div className="p-3.5 bg-stone-50 rounded-2xl border text-xs space-y-1">
+                      <span className="font-bold text-stone-700">Enquiry Notes / Communication:</span>
+                      <p className="text-stone-600 whitespace-pre-wrap">{selectedAdmission.additionalMessage}</p>
+                    </div>
+                  )}
+
+                  {/* Status History Timeline */}
+                  <div className="space-y-2 text-xs">
+                    <h4 className="font-bold text-stone-800 flex items-center space-x-1.5">
+                      <Clock className="w-3.5 h-3.5 text-foundation-forest" />
+                      <span>Status Change History</span>
+                    </h4>
+                    <div className="max-h-36 overflow-y-auto space-y-2 pr-1">
+                      {selectedAdmission.statusHistory && selectedAdmission.statusHistory.length > 0 ? (
+                        selectedAdmission.statusHistory.map((item: any, idx: number) => (
+                          <div key={item.id || idx} className="p-2.5 bg-foundation-warmGray rounded-xl border text-[11px] space-y-0.5">
+                            <div className="flex items-center justify-between text-stone-500">
+                              <span className="font-bold text-foundation-forest uppercase">{item.status.replace('_', ' ')}</span>
+                              <span>{new Date(item.date).toLocaleString('en-IN', { dateStyle: 'short', timeStyle: 'short' })}</span>
+                            </div>
+                            <p className="text-stone-700">{item.notes}</p>
+                            <p className="text-[10px] text-stone-400">By: {item.updatedBy}</p>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-stone-400 italic">No history recorded.</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Decision Formulation Box */}
+                  <div className="p-5 bg-stone-50 rounded-3xl border border-stone-200 space-y-4 text-xs">
+                    <h4 className="font-bold text-sm text-foundation-charcoal flex items-center space-x-2">
+                      <Shield className="w-4 h-4 text-foundation-forest" />
+                      <span>Administrative Decision & Action</span>
+                    </h4>
+
+                    <div>
+                      <label className="block font-bold text-stone-700 mb-1">
+                        Internal Notes / Onboarding Instructions (visible to applicant):
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={admissionAdminNotes}
+                        onChange={(e) => setAdmissionAdminNotes(e.target.value)}
+                        placeholder="Add internal remarks, approved room allotment details, or arrival dates..."
+                        className="w-full bg-white border border-foundation-borderMuted rounded-xl p-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-blue-900 mb-1">
+                        Instructions / Documents to Request (if requesting more information):
+                      </label>
+                      <input
+                        type="text"
+                        value={admissionRequestedInfo}
+                        onChange={(e) => setAdmissionRequestedInfo(e.target.value)}
+                        placeholder="e.g. Please provide recent physician summary and Aadhaar card copies."
+                        className="w-full bg-white border border-blue-200 rounded-xl px-3 py-2 text-xs text-foundation-charcoal focus:ring-2 focus:ring-blue-600 focus:outline-none"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-rose-900 mb-1">
+                        Rejection Reason (mandatory if rejecting):
+                      </label>
+                      <input
+                        type="text"
+                        value={admissionRejectionReason}
+                        onChange={(e) => setAdmissionRejectionReason(e.target.value)}
+                        placeholder="e.g. Currently at 100% capacity in assisted living wing; referred to Hingna elder sanctuary."
+                        className="w-full bg-white border border-rose-200 rounded-xl px-3 py-2 text-xs text-foundation-charcoal focus:ring-2 focus:ring-rose-600 focus:outline-none"
+                      />
+                    </div>
+
+                    {/* Rejection Confirmation Step */}
+                    {showRejectConfirm && (
+                      <div className="p-3 bg-rose-100 border border-rose-300 rounded-2xl text-xs text-rose-950 space-y-2">
+                        <div className="flex items-center space-x-2 font-bold text-rose-900">
+                          <AlertTriangle className="w-4 h-4 text-rose-700" />
+                          <span>Confirmation Required Before Rejection:</span>
+                        </div>
+                        <p>
+                          Are you sure you want to mark this admission enquiry as <strong>Rejected</strong>? The applicant will be notified with the reason provided: "<em>{admissionRejectionReason || 'No reason specified'}</em>".
+                        </p>
+                        <div className="flex space-x-2 pt-1">
+                          <button
+                            type="button"
+                            onClick={() => setShowRejectConfirm(false)}
+                            className="px-3 py-1 bg-white border rounded-lg text-stone-700 font-semibold"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="button"
+                            disabled={isUpdatingAdmission}
+                            onClick={() => handleUpdateAdmissionStatus(selectedAdmission.id, 'rejected')}
+                            className="px-4 py-1 bg-rose-700 text-white rounded-lg font-bold hover:bg-rose-800"
+                          >
+                            Yes, Finalize Rejection
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap items-center justify-end gap-2.5 pt-2">
+                      <button
+                        type="button"
+                        onClick={() => setSelectedAdmission(null)}
+                        className="px-4 py-2 border rounded-full text-stone-600 font-semibold hover:bg-white"
+                      >
+                        Close
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isUpdatingAdmission}
+                        onClick={() => handleUpdateAdmissionStatus(selectedAdmission.id, 'pending_review')}
+                        className="px-4 py-2 bg-stone-200 hover:bg-stone-300 text-stone-700 font-bold rounded-full transition-colors"
+                      >
+                        Set Pending
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isUpdatingAdmission}
+                        onClick={() => handleUpdateAdmissionStatus(selectedAdmission.id, 'more_info_required')}
+                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-full shadow-xs transition-colors"
+                      >
+                        Request More Info
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isUpdatingAdmission}
+                        onClick={() => {
+                          if (!admissionRejectionReason.trim()) {
+                            setAdmissionActionError('Please enter a rejection reason before rejecting.');
+                            return;
+                          }
+                          setShowRejectConfirm(true);
+                        }}
+                        className="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-full shadow-xs transition-colors"
+                      >
+                        Reject Enquiry
+                      </button>
+
+                      <button
+                        type="button"
+                        disabled={isUpdatingAdmission}
+                        onClick={() => handleUpdateAdmissionStatus(selectedAdmission.id, 'approved')}
+                        className="px-6 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-full shadow transition-colors flex items-center space-x-1.5"
+                      >
+                        {isUpdatingAdmission ? (
+                          <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        ) : (
+                          <Check className="w-3.5 h-3.5" />
+                        )}
+                        <span>Approve Admission</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>

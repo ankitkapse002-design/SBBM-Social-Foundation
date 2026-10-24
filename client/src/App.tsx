@@ -29,6 +29,8 @@ import { VolunteerPortal } from './pages/portal/VolunteerPortal';
 import { SevaMemberDashboard } from './pages/portal/SevaMemberDashboard';
 import { MembershipDashboard } from './pages/portal/MembershipDashboard';
 import { VolunteerDashboard } from './pages/portal/VolunteerDashboard';
+import { AdmissionPortal } from './pages/portal/AdmissionPortal';
+import { AdmissionDashboard } from './pages/portal/AdmissionDashboard';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -95,6 +97,12 @@ export function App() {
 
             <Route path="/volunteer/login" element={<VolunteerPortal />} />
             <Route path="/volunteer/dashboard" element={<VolunteerDashboard />} />
+
+            {/* Admission Tracking & Portal Routes */}
+            <Route path="/admission/login" element={<AdmissionPortal />} />
+            <Route path="/admission-login" element={<AdmissionPortal />} />
+            <Route path="/admission/dashboard" element={<AdmissionDashboard />} />
+            <Route path="/admission-dashboard" element={<AdmissionDashboard />} />
 
             {/* Auth Routes */}
             <Route path="/login" element={<Login />} />

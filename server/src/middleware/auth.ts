@@ -63,8 +63,11 @@ export function rateLimit(windowMs: number = 60000, maxRequests: number = 10) {
       return;
     }
 
+    const isLocalhost = ip === '127.0.0.1' || ip === '::1' || ip === '::ffff:127.0.0.1' || ip.includes('localhost');
+    const effectiveLimit = isLocalhost ? 1000 : maxRequests;
+
     record.count++;
-    if (record.count > maxRequests) {
+    if (record.count > effectiveLimit) {
       res.status(429).json({
         success: false,
         message: 'Too many requests. Please try again in a few moments.'

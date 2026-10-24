@@ -1,67 +1,152 @@
 import { Router, Request, Response } from 'express';
-import { db, AdmissionEnquiry, VolunteerEnquiry, DonationEnquiry, ContactMessage, MembershipRequest } from '../db';
+import bcrypt from 'bcryptjs';
+import {
+  db, AdmissionEnquiry, VolunteerEnquiry, DonationEnquiry,
+  ContactMessage, MembershipRequest, User, generatePortalId,
+  generateAdmissionPassword
+} from '../db';
 import { rateLimit } from '../middleware/auth';
 
 export const enquiriesRouter = Router();
 
-// 1. Admission Enquiry
-enquiriesRouter.post('/admission', rateLimit(60000, 10), (req: Request, res: Response) => {
+// 1. Admission Enquiry Registration & Account Creation
+enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Response) => {
   try {
     const {
       applicantName,
+      guardianFirstName,
+      guardianPhone,
       applicantPhone,
       applicantEmail,
-      residentName,
+      dobOrYear,
       residentAge,
+      address,
+      admissionCategory,
       residentGender,
       relationWithResident,
       mobilityStatus,
       medicalNotes,
+      additionalMessage,
     } = req.body;
 
-    if (!applicantName || !applicantPhone || !residentName || !residentAge) {
+    const resolvedApplicantName = (applicantName || req.body.residentName || '').trim();
+    const resolvedGuardianPhone = (guardianPhone || applicantPhone || '').trim();
+    const resolvedGuardianFirstName = (guardianFirstName || (req.body.applicantName ? req.body.applicantName.split(' ')[0] : 'Guardian')).trim();
+    const resolvedDobOrYear = (dobOrYear || (residentAge ? String(new Date().getFullYear() - Number(residentAge)) : '1950')).trim();
+    const resolvedAddress = (address || 'Nagpur, Maharashtra').trim();
+    const resolvedCategory = (admissionCategory || 'Elder Care Sanctuary').trim();
+
+    if (!resolvedApplicantName || !resolvedGuardianFirstName || !resolvedGuardianPhone || !resolvedDobOrYear || !resolvedAddress) {
       res.status(400).json({
         success: false,
-        message: 'Applicant name, contact number, resident name, and age are mandatory.'
+        message: 'Applicant name, guardian first name, guardian mobile number, birth year/DOB, and address are required.',
+      });
+      return;
+    }
+
+    const cleanPhone = resolvedGuardianPhone.replace(/\D/g, '');
+    const cleanApplicantLower = resolvedApplicantName.toLowerCase();
+    const existing = db.get('admission_enquiries').find(e => {
+      const ePhone = (e.guardianPhone || '').replace(/\D/g, '');
+      const eName = (e.applicantName || '').toLowerCase();
+      return ePhone === cleanPhone && eName === cleanApplicantLower;
+    });
+
+    if (existing) {
+      res.status(400).json({
+        success: false,
+        message: `An admission enquiry for ${resolvedApplicantName} with guardian phone ${resolvedGuardianPhone} is already registered under Registration ID: ${existing.registrationId || existing.id}. Please sign in to your Admission Dashboard to view current status.`,
+        existingRegistrationId: existing.registrationId || existing.id,
       });
       return;
     }
 
     const now = new Date().toISOString();
-    const id = `adm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const registrationId = generatePortalId('ADM');
+    const enquiryId = `adm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
+    const initialPlainPassword = generateAdmissionPassword(resolvedGuardianFirstName, resolvedDobOrYear);
+    const passwordHash = bcrypt.hashSync(initialPlainPassword, 10);
 
-    const enquiry: AdmissionEnquiry = {
-      id,
-      applicantName: applicantName.trim(),
-      applicantPhone: applicantPhone.trim(),
-      applicantEmail: applicantEmail?.trim() || '',
-      residentName: residentName.trim(),
-      residentAge: Number(residentAge),
-      residentGender: residentGender || 'Not specified',
-      relationWithResident: relationWithResident || 'Family / Relative',
-      mobilityStatus: mobilityStatus || 'Independent',
-      medicalNotes: medicalNotes?.trim() || 'None reported',
-      status: 'new',
+    const newUser: User = {
+      id: userId,
+      email: (applicantEmail || `${registrationId.toLowerCase()}@ssbmfoundation.org`).trim().toLowerCase(),
+      username: registrationId,
+      portalId: registrationId,
+      fullName: `${resolvedApplicantName} (Guardian: ${resolvedGuardianFirstName})`,
+      mobile: resolvedGuardianPhone,
+      passwordHash,
+      role: 'admission_applicant',
+      accountStatus: 'active',
+      isVerified: true,
+      mustChangePassword: true,
       createdAt: now,
       updatedAt: now,
     };
 
+    const enquiry: AdmissionEnquiry = {
+      id: enquiryId,
+      registrationId,
+      applicantName: resolvedApplicantName,
+      guardianFirstName: resolvedGuardianFirstName,
+      guardianPhone: resolvedGuardianPhone,
+      applicantEmail: (applicantEmail || '').trim(),
+      dobOrYear: resolvedDobOrYear,
+      address: resolvedAddress,
+      admissionCategory: resolvedCategory,
+      residentGender: residentGender || 'Not specified',
+      relationWithResident: relationWithResident || 'Guardian / Family',
+      mobilityStatus: mobilityStatus || 'Independent with daily routine',
+      medicalNotes: medicalNotes?.trim() || 'None reported',
+      additionalMessage: additionalMessage?.trim() || '',
+      status: 'pending_review',
+      statusHistory: [
+        {
+          id: `hist_${Date.now()}_init`,
+          status: 'pending_review',
+          date: now,
+          updatedBy: 'Guardian / Applicant',
+          notes: 'Enquiry submitted online. Initial account created and pending administrative review.'
+        }
+      ],
+      createdAt: now,
+      updatedAt: now,
+    };
+
+    db.get('users').push(newUser);
     db.get('admission_enquiries').unshift(enquiry);
+
+    db.get('portal_notifications').push({
+      id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      userId: registrationId,
+      title: 'Admission Enquiry Received',
+      message: `Your admission enquiry (${registrationId}) for ${resolvedApplicantName} has been submitted. Status: Pending Review.`,
+      type: 'info',
+      isRead: false,
+      createdAt: now,
+    });
+
     db.save();
 
     db.logAudit(
       'public',
-      enquiry.applicantName,
+      enquiry.guardianFirstName,
       'ADMISSION_ENQUIRY_SUBMITTED',
       'AdmissionEnquiry',
-      `Admission enquiry registered for resident ${residentName} (Ref: ${id})`,
+      `Admission enquiry registered for resident ${resolvedApplicantName} (Reg ID: ${registrationId})`,
       req.ip
     );
 
     res.status(201).json({
       success: true,
-      referenceId: id,
-      message: 'Admission enquiry submitted successfully. Our team will contact you shortly to review accommodation availability.',
+      registrationId,
+      referenceId: registrationId,
+      status: 'pending_review',
+      applicantName: resolvedApplicantName,
+      guardianFirstName: resolvedGuardianFirstName,
+      dobOrYear: resolvedDobOrYear,
+      initialPasswordFormat: `${resolvedGuardianFirstName}+${resolvedDobOrYear.match(/(\d{4})/)?.[1] || 'YYYY'}`,
+      message: `Admission enquiry submitted successfully! Your unique Admission Registration ID is ${registrationId}. Initial status: Pending Review.`,
       contactNotice: 'For urgent admission queries, you may also reach management directly at +91 98908 98081.'
     });
   } catch (err: any) {

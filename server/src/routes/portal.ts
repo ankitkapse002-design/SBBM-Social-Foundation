@@ -3,7 +3,8 @@ import bcrypt from 'bcryptjs';
 import {
   db, User, SevaMemberProfile, SocietyMemberProfile, VolunteerProfile,
   ProjectItem, PortalTask, PortalNotification, SevaRecordItem,
-  generatePortalId, generateInitialPassword, ApplicationStatus, AccountStatus, TaskStatus
+  AdmissionEnquiry, AdmissionStatus,
+  generatePortalId, generateInitialPassword, generateAdmissionPassword, ApplicationStatus, AccountStatus, TaskStatus
 } from '../db';
 import { authMiddleware, adminOnly, generateToken, rateLimit, AuthRequest } from '../middleware/auth';
 
@@ -413,8 +414,8 @@ portalRouter.post('/login', rateLimit(60000, 15), (req: Request, res: Response) 
       }
     }
 
-    // Application Status Enforcement
-    if (user.role !== 'admin') {
+    // Application Status Enforcement (Admission applicants can log in to view their status & remarks)
+    if (user.role !== 'admin' && user.role !== 'admission_applicant') {
       if (appStatus === 'pending_approval' || appStatus === 'under_review') {
         res.status(403).json({
           success: false,
@@ -438,6 +439,15 @@ portalRouter.post('/login', rateLimit(60000, 15), (req: Request, res: Response) 
           success: false,
           code: 'ACCOUNT_SUSPENDED',
           message: 'Your portal account is currently suspended. Please contact the administrative office.',
+        });
+        return;
+      }
+    } else if (user.role === 'admission_applicant') {
+      if (user.accountStatus === 'suspended' || user.accountStatus === 'deactivated') {
+        res.status(403).json({
+          success: false,
+          code: 'ACCOUNT_SUSPENDED',
+          message: 'Your admission portal account is currently suspended. Please contact the ashram office.',
         });
         return;
       }
@@ -495,19 +505,31 @@ portalRouter.post('/reset-password', rateLimit(60000, 30), (req: Request, res: R
       return;
     }
 
-    let dob = '2000-01-01';
-    if (user.role === 'seva_member') {
-      const prof = db.get('seva_members').find(p => p.userId === user.id || p.memberId === user.portalId);
-      if (prof) dob = prof.dob;
-    } else if (user.role === 'member') {
-      const prof = db.get('society_members').find(p => p.userId === user.id || p.membershipId === user.portalId);
-      if (prof) dob = prof.dob;
-    } else if (user.role === 'volunteer') {
-      const prof = db.get('volunteers').find(p => p.userId === user.id || p.volunteerId === user.portalId);
-      if (prof) dob = prof.dob;
+    let tempPassword = '';
+    if (user.role === 'admission_applicant') {
+      const enq = db.get('admission_enquiries').find(e =>
+        e.registrationId === user.portalId ||
+        e.id === user.portalId ||
+        e.applicantName.toLowerCase() === user.fullName.toLowerCase()
+      );
+      const guardianFirst = enq?.guardianFirstName || (user.fullName.split(' ')[0]) || 'Guardian';
+      const year = enq?.dobOrYear || '1985';
+      tempPassword = generateAdmissionPassword(guardianFirst, year);
+    } else {
+      let dob = '2000-01-01';
+      if (user.role === 'seva_member') {
+        const prof = db.get('seva_members').find(p => p.userId === user.id || p.memberId === user.portalId);
+        if (prof) dob = prof.dob;
+      } else if (user.role === 'member') {
+        const prof = db.get('society_members').find(p => p.userId === user.id || p.membershipId === user.portalId);
+        if (prof) dob = prof.dob;
+      } else if (user.role === 'volunteer') {
+        const prof = db.get('volunteers').find(p => p.userId === user.id || p.volunteerId === user.portalId);
+        if (prof) dob = prof.dob;
+      }
+      tempPassword = generateInitialPassword(user.fullName, dob);
     }
 
-    const tempPassword = generateInitialPassword(user.fullName, dob);
     user.passwordHash = bcrypt.hashSync(tempPassword, 10);
     user.mustChangePassword = true;
     user.updatedAt = new Date().toISOString();
@@ -546,6 +568,8 @@ portalRouter.get('/dashboard-data', authMiddleware, (req: AuthRequest, res: Resp
     let projectsData: ProjectItem[] = [];
     let sevaRecordsData: SevaRecordItem[] = [];
 
+    let admissionEnquiryData: any = null;
+
     if (user.role === 'seva_member') {
       profileData = db.get('seva_members').find(sm => sm.userId === user.id || sm.memberId === portalId);
       sevaRecordsData = db.get('seva_records').filter(r => r.userId === user.id || r.memberId === portalId);
@@ -561,6 +585,15 @@ portalRouter.get('/dashboard-data', authMiddleware, (req: AuthRequest, res: Resp
     } else if (user.role === 'volunteer') {
       profileData = db.get('volunteers').find(v => v.userId === user.id || v.volunteerId === portalId);
       sevaRecordsData = db.get('seva_records').filter(r => r.userId === user.id || r.memberId === portalId);
+    } else if (user.role === 'admission_applicant') {
+      const cleanMob = (user.mobile || '').replace(/\D/g, '');
+      admissionEnquiryData = db.get('admission_enquiries').find(e =>
+        e.registrationId === portalId ||
+        e.id === portalId ||
+        e.registrationId === user.portalId ||
+        (cleanMob && (e.guardianPhone || '').replace(/\D/g, '') === cleanMob)
+      );
+      profileData = admissionEnquiryData;
     }
 
     res.json({
@@ -576,6 +609,7 @@ portalRouter.get('/dashboard-data', authMiddleware, (req: AuthRequest, res: Resp
         accountStatus: user.accountStatus,
       },
       profile: profileData,
+      admissionEnquiry: admissionEnquiryData,
       tasks: myTasks,
       projects: projectsData,
       sevaRecords: sevaRecordsData,
@@ -693,7 +727,16 @@ portalRouter.get('/admin/metrics', (req: AuthRequest, res: Response) => {
 
     const now = new Date();
 
+    const admissions = db.get('admission_enquiries');
+
     const metrics = {
+      admissions: {
+        total: admissions.length,
+        pending: admissions.filter(a => a.status === 'pending_review').length,
+        approved: admissions.filter(a => a.status === 'approved').length,
+        rejected: admissions.filter(a => a.status === 'rejected').length,
+        moreInfo: admissions.filter(a => a.status === 'more_info_required').length,
+      },
       sevaMembers: {
         total: sevaMembers.length,
         pending: sevaMembers.filter(s => s.applicationStatus === 'pending_approval' || s.applicationStatus === 'under_review').length,
@@ -1223,19 +1266,31 @@ portalRouter.post('/admin/users/:userId/reset-password', (req: AuthRequest, res:
       return;
     }
 
-    let dob = '2000-01-01';
-    if (user.role === 'seva_member') {
-      const prof = db.get('seva_members').find(p => p.userId === user.id || p.memberId === user.portalId);
-      if (prof) dob = prof.dob;
-    } else if (user.role === 'member') {
-      const prof = db.get('society_members').find(p => p.userId === user.id || p.membershipId === user.portalId);
-      if (prof) dob = prof.dob;
-    } else if (user.role === 'volunteer') {
-      const prof = db.get('volunteers').find(p => p.userId === user.id || p.volunteerId === user.portalId);
-      if (prof) dob = prof.dob;
+    let tempPassword = '';
+    if (user.role === 'admission_applicant') {
+      const enq = db.get('admission_enquiries').find(e =>
+        e.registrationId === user.portalId ||
+        e.id === user.portalId ||
+        e.applicantName.toLowerCase() === user.fullName.toLowerCase()
+      );
+      const guardianFirst = enq?.guardianFirstName || (user.fullName.split(' ')[0]) || 'Guardian';
+      const year = enq?.dobOrYear || '1985';
+      tempPassword = generateAdmissionPassword(guardianFirst, year);
+    } else {
+      let dob = '2000-01-01';
+      if (user.role === 'seva_member') {
+        const prof = db.get('seva_members').find(p => p.userId === user.id || p.memberId === user.portalId);
+        if (prof) dob = prof.dob;
+      } else if (user.role === 'member') {
+        const prof = db.get('society_members').find(p => p.userId === user.id || p.membershipId === user.portalId);
+        if (prof) dob = prof.dob;
+      } else if (user.role === 'volunteer') {
+        const prof = db.get('volunteers').find(p => p.userId === user.id || p.volunteerId === user.portalId);
+        if (prof) dob = prof.dob;
+      }
+      tempPassword = generateInitialPassword(user.fullName, dob);
     }
 
-    const tempPassword = generateInitialPassword(user.fullName, dob);
     user.passwordHash = bcrypt.hashSync(tempPassword, 10);
     user.mustChangePassword = true;
     user.updatedAt = new Date().toISOString();
@@ -1249,5 +1304,221 @@ portalRouter.post('/admin/users/:userId/reset-password', (req: AuthRequest, res:
     });
   } catch (err: any) {
     res.status(500).json({ success: false, message: 'Failed to reset password: ' + err.message });
+  }
+});
+
+/**
+ * 4.10 Admin Admission Enquiries Management
+ */
+portalRouter.get('/admin/admissions', (req: AuthRequest, res: Response) => {
+  try {
+    const { status, search } = req.query;
+    let list = db.get('admission_enquiries');
+
+    if (status && status !== 'all') {
+      list = list.filter(a => a.status === status);
+    }
+
+    if (search && typeof search === 'string') {
+      const q = search.trim().toLowerCase();
+      list = list.filter(a =>
+        (a.applicantName && a.applicantName.toLowerCase().includes(q)) ||
+        (a.registrationId && a.registrationId.toLowerCase().includes(q)) ||
+        (a.guardianFirstName && a.guardianFirstName.toLowerCase().includes(q)) ||
+        (a.guardianPhone && a.guardianPhone.includes(q)) ||
+        (a.residentName && a.residentName.toLowerCase().includes(q)) ||
+        (a.id && a.id.toLowerCase().includes(q))
+      );
+    }
+
+    res.json({ success: true, data: list });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to fetch admission enquiries: ' + err.message });
+  }
+});
+
+portalRouter.get('/admin/admissions/:id', (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const list = db.get('admission_enquiries');
+    const item = list.find(a => a.id === id || a.registrationId === id);
+
+    if (!item) {
+      res.status(404).json({ success: false, message: 'Admission enquiry not found.' });
+      return;
+    }
+
+    res.json({ success: true, data: item });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to fetch admission enquiry: ' + err.message });
+  }
+});
+
+portalRouter.put('/admin/admissions/:id/status', (req: AuthRequest, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { status, adminNotes, rejectionReason, requestedInfoNotes } = req.body;
+    const admin = req.user!;
+
+    const allowedStatuses: AdmissionStatus[] = ['pending_review', 'approved', 'rejected', 'more_info_required'];
+    if (!status || !allowedStatuses.includes(status)) {
+      res.status(400).json({
+        success: false,
+        message: `Invalid admission status. Must be one of: ${allowedStatuses.join(', ')}`
+      });
+      return;
+    }
+
+    if (status === 'rejected' && (!rejectionReason || !rejectionReason.trim())) {
+      res.status(400).json({
+        success: false,
+        message: 'A rejection reason is mandatory when rejecting an admission enquiry.'
+      });
+      return;
+    }
+
+    const list = db.get('admission_enquiries');
+    const item = list.find(a => a.id === id || a.registrationId === id);
+
+    if (!item) {
+      res.status(404).json({ success: false, message: 'Admission enquiry not found' });
+      return;
+    }
+
+    const prevStatus = item.status;
+    const now = new Date().toISOString();
+
+    item.status = status;
+    if (adminNotes !== undefined) item.adminNotes = adminNotes.trim();
+    if (rejectionReason !== undefined) item.rejectionReason = rejectionReason.trim();
+    if (requestedInfoNotes !== undefined) item.requestedInfoNotes = requestedInfoNotes.trim();
+    item.updatedAt = now;
+
+    if (!Array.isArray(item.statusHistory)) {
+      item.statusHistory = [];
+    }
+
+    const statusNote = rejectionReason?.trim() || requestedInfoNotes?.trim() || adminNotes?.trim() || `Status updated from ${prevStatus} to ${status}`;
+
+    item.statusHistory.push({
+      id: `hist_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      status,
+      date: now,
+      updatedBy: admin.fullName,
+      notes: statusNote
+    });
+
+    // Notify applicant account
+    const applicantTargetId = item.registrationId || item.id;
+    let notifMessage = '';
+    let notifType: 'info' | 'success' | 'warning' | 'error' = 'info';
+
+    if (status === 'approved') {
+      notifType = 'success';
+      notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by Vyenkatesh Ashram administration. ${adminNotes ? `Admin Notes: ${adminNotes}` : 'Our team will contact you for resident onboarding formalities.'}`;
+    } else if (status === 'rejected') {
+      notifType = 'error';
+      notifMessage = `Your admission enquiry (${applicantTargetId}) for ${item.applicantName} was reviewed and could not be approved at this time. Reason: ${rejectionReason}`;
+    } else if (status === 'more_info_required') {
+      notifType = 'warning';
+      notifMessage = `Action Required for your admission enquiry (${applicantTargetId}): Administration requested additional details or documents. Instructions: ${requestedInfoNotes || adminNotes || 'Please check remarks in your dashboard.'}`;
+    } else {
+      notifMessage = `Your admission enquiry status has been marked as ${status.replace('_', ' ').toUpperCase()}.`;
+    }
+
+    db.get('portal_notifications').push({
+      id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      userId: applicantTargetId,
+      title: `Admission Status: ${status.replace('_', ' ').toUpperCase()}`,
+      message: notifMessage,
+      type: notifType,
+      isRead: false,
+      createdAt: now,
+    });
+
+    db.save();
+    db.logAudit(
+      admin.id,
+      admin.fullName,
+      'ADMISSION_STATUS_CHANGE',
+      'AdmissionEnquiry',
+      `Updated admission enquiry ${item.registrationId || item.id} (${item.applicantName}) to ${status}`,
+      req.ip
+    );
+
+    res.json({
+      success: true,
+      message: `Admission enquiry status updated to ${status.replace('_', ' ').toUpperCase()}`,
+      data: item
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to update admission status: ' + err.message });
+  }
+});
+
+/**
+ * 4.11 Applicant Response to More Info Request
+ */
+portalRouter.post('/admission/respond-info', authMiddleware, (req: AuthRequest, res: Response) => {
+  try {
+    const user = req.user!;
+    if (user.role !== 'admission_applicant' && user.role !== 'admin') {
+      res.status(403).json({ success: false, message: 'Only admission applicants can respond to information requests.' });
+      return;
+    }
+
+    const { additionalDetails } = req.body;
+    if (!additionalDetails || !additionalDetails.trim()) {
+      res.status(400).json({ success: false, message: 'Please provide the requested details or explanations.' });
+      return;
+    }
+
+    const portalId = user.portalId || user.username;
+    const cleanMob = (user.mobile || '').replace(/\D/g, '');
+    const enquiry = db.get('admission_enquiries').find(e =>
+      e.registrationId === portalId ||
+      e.id === portalId ||
+      (cleanMob && (e.guardianPhone || '').replace(/\D/g, '') === cleanMob)
+    );
+
+    if (!enquiry) {
+      res.status(404).json({ success: false, message: 'Admission enquiry record not found.' });
+      return;
+    }
+
+    const now = new Date().toISOString();
+    enquiry.status = 'pending_review';
+    enquiry.additionalMessage = `${enquiry.additionalMessage ? enquiry.additionalMessage + '\n\n' : ''}[Applicant Info Update ${now.split('T')[0]}]: ${additionalDetails.trim()}`;
+    enquiry.updatedAt = now;
+
+    if (!Array.isArray(enquiry.statusHistory)) {
+      enquiry.statusHistory = [];
+    }
+
+    enquiry.statusHistory.push({
+      id: `hist_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
+      status: 'pending_review',
+      date: now,
+      updatedBy: user.fullName,
+      notes: `Applicant provided requested details: "${additionalDetails.trim().substring(0, 120)}..."`
+    });
+
+    db.save();
+    db.logAudit(
+      user.id,
+      user.fullName,
+      'ADMISSION_APPLICANT_RESPONSE',
+      'AdmissionEnquiry',
+      `Applicant submitted requested info for enquiry ${enquiry.registrationId}`,
+      req.ip
+    );
+
+    res.json({
+      success: true,
+      message: 'Your additional details have been recorded and your enquiry is back under Pending Review by the admin team.',
+      data: enquiry
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to submit additional information: ' + err.message });
   }
 });
