@@ -188,9 +188,9 @@ export const Admission: React.FC = () => {
 
               <div className="space-y-1.5 font-mono text-[11px]">
                 <p>• <strong>Admission ID:</strong> <span className="text-foundation-forest font-bold">{successData.registrationId}</span></p>
-                <p>• <strong>Initial Password:</strong> <span className="text-stone-900 font-bold">{successData.initialPasswordFormat || `${successData.guardianFirstName}+Year`}</span></p>
+                <p>• <strong>Initial Password:</strong> <span className="text-stone-900 font-bold">{successData.initialPasswordFormat || 'Rahu1985'}</span></p>
                 <p className="font-sans text-[11px] text-stone-500 italic">
-                  (Rule: Guardian's First Name + Birth Year, e.g. <span className="font-mono font-bold text-stone-700">{successData.guardianFirstName}{successData.dobOrYear.match(/(\d{4})/)?.[1] || '1952'}</span>)
+                  (Rule: First four letters of Senior Resident's first name + Birth Year, e.g. <span className="font-mono font-bold text-stone-700">Rahu1985</span>)
                 </p>
               </div>
 
@@ -268,6 +268,7 @@ export const Admission: React.FC = () => {
                     placeholder="e.g. Anand Gopal Deshmukh"
                     className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
+                  <p className="text-[10px] text-stone-500 mt-0.5">First 4 letters are used with birth year to create default admission password.</p>
                 </div>
 
                 <div>
@@ -356,7 +357,6 @@ export const Admission: React.FC = () => {
                     placeholder="e.g. Rahul"
                     className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
-                  <p className="text-[10px] text-stone-500 mt-0.5">Used with birth year to create your initial login password.</p>
                 </div>
 
                 <div>

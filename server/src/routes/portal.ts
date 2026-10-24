@@ -512,9 +512,9 @@ portalRouter.post('/reset-password', rateLimit(60000, 30), (req: Request, res: R
         e.id === user.portalId ||
         e.applicantName.toLowerCase() === user.fullName.toLowerCase()
       );
-      const guardianFirst = enq?.guardianFirstName || (user.fullName.split(' ')[0]) || 'Guardian';
+      const residentName = enq?.applicantName || user.fullName.replace(/\s*\(Guardian:.*\)$/i, '') || 'Resident';
       const year = enq?.dobOrYear || '1985';
-      tempPassword = generateAdmissionPassword(guardianFirst, year);
+      tempPassword = generateAdmissionPassword(residentName, year);
     } else {
       let dob = '2000-01-01';
       if (user.role === 'seva_member') {
@@ -1273,9 +1273,9 @@ portalRouter.post('/admin/users/:userId/reset-password', (req: AuthRequest, res:
         e.id === user.portalId ||
         e.applicantName.toLowerCase() === user.fullName.toLowerCase()
       );
-      const guardianFirst = enq?.guardianFirstName || (user.fullName.split(' ')[0]) || 'Guardian';
+      const residentName = enq?.applicantName || user.fullName.replace(/\s*\(Guardian:.*\)$/i, '') || 'Resident';
       const year = enq?.dobOrYear || '1985';
-      tempPassword = generateAdmissionPassword(guardianFirst, year);
+      tempPassword = generateAdmissionPassword(residentName, year);
     } else {
       let dob = '2000-01-01';
       if (user.role === 'seva_member') {

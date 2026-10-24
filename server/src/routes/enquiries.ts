@@ -65,7 +65,7 @@ enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Res
     const registrationId = generatePortalId('ADM');
     const enquiryId = `adm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
     const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    const initialPlainPassword = generateAdmissionPassword(resolvedGuardianFirstName, resolvedDobOrYear);
+    const initialPlainPassword = generateAdmissionPassword(resolvedApplicantName, resolvedDobOrYear);
     const passwordHash = bcrypt.hashSync(initialPlainPassword, 10);
 
     const newUser: User = {
@@ -145,7 +145,7 @@ enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Res
       applicantName: resolvedApplicantName,
       guardianFirstName: resolvedGuardianFirstName,
       dobOrYear: resolvedDobOrYear,
-      initialPasswordFormat: `${resolvedGuardianFirstName}+${resolvedDobOrYear.match(/(\d{4})/)?.[1] || 'YYYY'}`,
+      initialPasswordFormat: `${((resolvedApplicantName || '').trim().split(/\s+/)[0].replace(/[^a-zA-Z]/g, '').substring(0, 4) || 'Resi').replace(/^./, c => c.toUpperCase())}${resolvedDobOrYear.match(/(\d{4})/)?.[1] || 'YYYY'}`,
       message: `Admission enquiry submitted successfully! Your unique Admission Registration ID is ${registrationId}. Initial status: Pending Review.`,
       contactNotice: 'For urgent admission queries, you may also reach management directly at +91 98908 98081.'
     });

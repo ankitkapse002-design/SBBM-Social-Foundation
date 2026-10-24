@@ -42,16 +42,25 @@ export function generatePortalId(prefix: 'SM' | 'MEM' | 'VOL' | 'ADM'): string {
   return `SSBM-${prefix}-${year}-${randomNum}`;
 }
 
-export function generateAdmissionPassword(guardianFirstName: string, dobOrYear?: string): string {
+export function generateAdmissionPassword(residentName: string, dobOrYear?: string): string {
   let year = '1985';
   if (dobOrYear) {
     const match = dobOrYear.match(/(\d{4})/);
     if (match) year = match[1];
     else if (!isNaN(Number(dobOrYear))) year = dobOrYear.trim();
   }
-  const cleanName = guardianFirstName.trim().replace(/[^a-zA-Z]/g, '');
-  const formattedName = cleanName.charAt(0).toUpperCase() + cleanName.slice(1);
-  return `${formattedName || 'Guardian'}${year}`;
+  const rawFirstName = (residentName || '').trim().split(/\s+/)[0];
+  const cleanFirstName = rawFirstName.replace(/[^a-zA-Z]/g, '');
+  let fourLetters = cleanFirstName.substring(0, 4);
+  if (fourLetters.length > 0) {
+    fourLetters = fourLetters.charAt(0).toUpperCase() + fourLetters.slice(1).toLowerCase();
+    if (fourLetters.length < 4) {
+      fourLetters = fourLetters.padEnd(4, 'X');
+    }
+  } else {
+    fourLetters = 'Resi';
+  }
+  return `${fourLetters}${year}`;
 }
 
 export function generateInitialPassword(fullName: string, dobString?: string): string {

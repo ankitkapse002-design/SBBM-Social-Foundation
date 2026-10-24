@@ -96,7 +96,7 @@ export const AdmissionPortal: React.FC = () => {
       if (res.success) {
         setResetMessage({
           type: 'success',
-          text: res.message || 'Password reset successfully to initial default credential format (Guardian Name + Birth Year).'
+          text: res.message || 'Password reset successfully to initial default credential format (Resident Name + Birth Year).'
         });
       }
     } catch (err: any) {
@@ -131,14 +131,14 @@ export const AdmissionPortal: React.FC = () => {
             <span>Initial Credential Format:</span>
           </div>
           <p className="text-stone-700 leading-relaxed">
-            Your login credential was automatically created when you submitted your admission enquiry:
+            Your login credential was automatically created when you submitted your admission enquiry.
           </p>
           <div className="bg-white/80 rounded-xl p-3 border border-emerald-100 font-mono text-[11px] space-y-1">
-            <p><strong>Login ID:</strong> Registration ID (e.g. <span className="text-emerald-800 font-bold">SSBM-ADM-2026-XXXX</span>)</p>
-            <p><strong>Default Password:</strong> Guardian's First Name + Birth Year (e.g. <span className="text-emerald-800 font-bold">Rahul1985</span>)</p>
+            <p><strong>Login ID:</strong> Registration ID (e.g., <span className="text-emerald-800 font-bold">SSBM-ADM-2026-XXXX</span>)</p>
+            <p><strong>Default Password:</strong> First four letters of the Senior Resident's first name + Birth Year (e.g., <span className="text-emerald-800 font-bold">Rahu1985</span>).</p>
           </div>
           <p className="text-[11px] text-stone-500 italic">
-            * You will be encouraged to customize your password upon initial login.
+            You will be encouraged to customize your password upon initial login.
           </p>
         </div>
 
@@ -198,7 +198,7 @@ export const AdmissionPortal: React.FC = () => {
               id="admission-password-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="e.g. Rahul1985 (Guardian Name + Birth Year)"
+              placeholder="e.g. Rahu1985 (Resident Name + Birth Year)"
               required
             />
 
@@ -271,7 +271,7 @@ export const AdmissionPortal: React.FC = () => {
               </div>
 
               <p className="text-xs text-stone-600 leading-relaxed">
-                Enter your Admission Registration ID and registered guardian phone number. The system will reset your password to your initial credential formula (<strong>Guardian's First Name + Birth Year</strong>).
+                Enter your Admission Registration ID and registered guardian phone number. The system will reset your password to your initial credential formula (<strong>First four letters of Senior Resident's Name + Birth Year</strong>).
               </p>
 
               {resetMessage && (
