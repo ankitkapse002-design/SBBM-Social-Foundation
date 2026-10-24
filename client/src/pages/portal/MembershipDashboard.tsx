@@ -6,6 +6,7 @@ import {
   TrendingUp, X
 } from 'lucide-react';
 import { apiRequest, clearAuthToken } from '../../api';
+import { PasswordField } from '../../components/ui/PasswordField';
 
 export const MembershipDashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -549,38 +550,33 @@ export const MembershipDashboard: React.FC = () => {
             )}
 
             <form onSubmit={handleChangePassword} className="space-y-4 text-xs">
-              <div>
-                <label className="block font-bold text-stone-700 mb-1">Current Password *</label>
-                <input
-                  type="password"
-                  required
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 focus:ring-2 focus:ring-amber-600 focus:outline-none"
-                />
-              </div>
+              <PasswordField
+                accentColor="amber"
+                label="Current Password *"
+                required
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                placeholder="Enter current password"
+              />
 
-              <div>
-                <label className="block font-bold text-stone-700 mb-1">New Password * (Min 8 characters)</label>
-                <input
-                  type="password"
-                  required
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 focus:ring-2 focus:ring-amber-600 focus:outline-none"
-                />
-              </div>
+              <PasswordField
+                accentColor="amber"
+                label="New Password *"
+                sublabel="Min 8 characters"
+                required
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                placeholder="Enter new strong password"
+              />
 
-              <div>
-                <label className="block font-bold text-stone-700 mb-1">Confirm New Password *</label>
-                <input
-                  type="password"
-                  required
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 focus:ring-2 focus:ring-amber-600 focus:outline-none"
-                />
-              </div>
+              <PasswordField
+                accentColor="amber"
+                label="Confirm New Password *"
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                placeholder="Confirm new password"
+              />
 
               <button
                 type="submit"
@@ -716,41 +712,33 @@ export const MembershipDashboard: React.FC = () => {
               )}
 
               <form onSubmit={handleChangePassword} className="space-y-4 text-xs">
-                <div>
-                  <label className="block font-bold text-stone-700 mb-1">Current Initial Password *</label>
-                  <input
-                    type="password"
-                    required
-                    value={currentPassword}
-                    onChange={(e) => setCurrentPassword(e.target.value)}
-                    placeholder="e.g. RAHU2003"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 focus:ring-2 focus:ring-amber-600 focus:outline-none"
-                  />
-                </div>
+                <PasswordField
+                  accentColor="amber"
+                  label="Current Initial Password *"
+                  required
+                  value={currentPassword}
+                  onChange={(e) => setCurrentPassword(e.target.value)}
+                  placeholder="e.g. RAHU2003"
+                />
 
-                <div>
-                  <label className="block font-bold text-stone-700 mb-1">New Confidential Password * (Min 8 chars)</label>
-                  <input
-                    type="password"
-                    required
-                    value={newPassword}
-                    onChange={(e) => setNewPassword(e.target.value)}
-                    placeholder="Enter new strong password"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 focus:ring-2 focus:ring-amber-600 focus:outline-none"
-                  />
-                </div>
+                <PasswordField
+                  accentColor="amber"
+                  label="New Confidential Password *"
+                  sublabel="Min 8 characters"
+                  required
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  placeholder="Enter new strong password"
+                />
 
-                <div>
-                  <label className="block font-bold text-stone-700 mb-1">Confirm New Password *</label>
-                  <input
-                    type="password"
-                    required
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Confirm new password"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 focus:ring-2 focus:ring-amber-600 focus:outline-none"
-                  />
-                </div>
+                <PasswordField
+                  accentColor="amber"
+                  label="Confirm New Password *"
+                  required
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Confirm new password"
+                />
 
                 <button
                   type="submit"

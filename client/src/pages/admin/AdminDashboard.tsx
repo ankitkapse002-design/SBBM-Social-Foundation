@@ -8,6 +8,7 @@ import {
   AlertTriangle, Filter, ChevronRight, Eye, Send, Check, ArrowRight
 } from 'lucide-react';
 import { apiRequest, clearAuthToken } from '../../api';
+import { PasswordField } from '../../components/ui/PasswordField';
 
 interface PortalMetricsData {
   sevaMembers: { total: number; pending: number; approved: number; rejected: number };
@@ -357,6 +358,22 @@ export const AdminDashboard: React.FC = () => {
       alert('Official Seva record issued successfully!');
     } catch (err: any) {
       alert('Failed to issue record: ' + err.message);
+    }
+  };
+
+  // Admin Reset User Password Handler
+  const handleResetUserPassword = async (userId: string, userName: string) => {
+    if (!window.confirm(`Reset password for ${userName} (${userId})? This will restore their temporary credential format and require them to set a new password on their next login.`)) {
+      return;
+    }
+    try {
+      const res = await apiRequest<{ success: boolean; message: string }>(`/portal/admin/users/${userId}/reset-password`, {
+        method: 'POST',
+      });
+      alert(res.message);
+      await loadAllCollections();
+    } catch (err: any) {
+      alert('Failed to reset password: ' + err.message);
     }
   };
 
@@ -823,6 +840,13 @@ export const AdminDashboard: React.FC = () => {
                           >
                             Review / Change Status
                           </button>
+                          <button
+                            onClick={() => handleResetUserPassword(m.memberId || m.userId, m.fullName)}
+                            className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold rounded-lg text-xs cursor-pointer border border-amber-200"
+                            title="Reset to temporary initial credentials"
+                          >
+                            Reset Password
+                          </button>
                         </td>
                       </tr>
                     ))}
@@ -938,6 +962,13 @@ export const AdminDashboard: React.FC = () => {
                             className="px-3 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold rounded-lg text-xs cursor-pointer"
                           >
                             Review Application
+                          </button>
+                          <button
+                            onClick={() => handleResetUserPassword(m.membershipId || m.userId, m.fullName)}
+                            className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold rounded-lg text-xs cursor-pointer border border-amber-200"
+                            title="Reset to temporary initial credentials"
+                          >
+                            Reset Password
                           </button>
                         </td>
                       </tr>
@@ -1059,6 +1090,13 @@ export const AdminDashboard: React.FC = () => {
                             className="px-3 py-1 bg-stone-100 hover:bg-stone-200 text-stone-700 font-bold rounded-lg text-xs cursor-pointer"
                           >
                             Review / Change Status
+                          </button>
+                          <button
+                            onClick={() => handleResetUserPassword(v.volunteerId || v.userId, v.fullName)}
+                            className="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-800 font-bold rounded-lg text-xs cursor-pointer border border-amber-200"
+                            title="Reset to temporary initial credentials"
+                          >
+                            Reset Password
                           </button>
                         </td>
                       </tr>
@@ -1411,29 +1449,22 @@ export const AdminDashboard: React.FC = () => {
               </div>
             )}
 
-            <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1">Current Password *</label>
-              <input
-                type="password"
-                required
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                placeholder="Current password"
-                className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 text-xs focus:ring-2 focus:ring-foundation-forest focus:outline-none"
-              />
-            </div>
+            <PasswordField
+              label="Current Password *"
+              required
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Current password"
+            />
 
-            <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1">New Confidential Password *</label>
-              <input
-                type="password"
-                required
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                placeholder="New password (min 8 characters)"
-                className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 text-xs focus:ring-2 focus:ring-foundation-forest focus:outline-none"
-              />
-            </div>
+            <PasswordField
+              label="New Confidential Password *"
+              sublabel="Min 8 characters"
+              required
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="New password (min 8 characters)"
+            />
 
             <button
               type="submit"

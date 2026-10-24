@@ -5,6 +5,7 @@ import {
   FileText, Clock, Heart, CheckCircle2, AlertCircle, LogOut, Save
 } from 'lucide-react';
 import { apiRequest, clearAuthToken } from '../../api';
+import { PasswordField } from '../../components/ui/PasswordField';
 
 interface UserData {
   id: string;
@@ -400,27 +401,22 @@ export const MemberDashboard: React.FC = () => {
               </div>
             )}
 
-            <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1">Current Password *</label>
-              <input
-                type="password"
-                required
-                value={currentPassword}
-                onChange={(e) => setCurrentPassword(e.target.value)}
-                className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 text-xs focus:ring-2 focus:ring-foundation-forest focus:outline-none"
-              />
-            </div>
+            <PasswordField
+              label="Current Password *"
+              required
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              placeholder="Enter current password"
+            />
 
-            <div>
-              <label className="block text-xs font-bold text-stone-700 mb-1">New Password * (Min 8 characters)</label>
-              <input
-                type="password"
-                required
-                value={newPassword}
-                onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2 text-xs focus:ring-2 focus:ring-foundation-forest focus:outline-none"
-              />
-            </div>
+            <PasswordField
+              label="New Password *"
+              sublabel="Min 8 characters"
+              required
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              placeholder="Enter new strong password"
+            />
 
             <button
               type="submit"

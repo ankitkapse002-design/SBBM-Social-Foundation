@@ -5,6 +5,7 @@ import {
   AlertCircle, CheckCircle2, User
 } from 'lucide-react';
 import { apiRequest, setAuthToken } from '../api';
+import { PasswordField } from '../components/ui/PasswordField';
 
 export const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -98,29 +99,13 @@ export const Login: React.FC = () => {
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-bold text-stone-700 mb-1">
-              Password
-            </label>
-            <div className="relative">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none pr-10"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2.5 text-stone-400 hover:text-stone-600"
-                tabIndex={-1}
-              >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
+          <PasswordField
+            label="Password"
+            required
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••"
+          />
 
           <button
             type="submit"

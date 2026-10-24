@@ -234,6 +234,11 @@ authRouter.post('/change-password', authMiddleware, (req: AuthRequest, res: Resp
       return;
     }
 
+    if (currentPassword === newPassword) {
+      res.status(400).json({ success: false, message: 'New password must be different from your current password' });
+      return;
+    }
+
     const users = db.get('users');
     const target = users.find(u => u.id === user.id);
     if (target) {

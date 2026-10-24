@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { apiRequest, setAuthToken } from '../../api';
+import { PasswordField } from '../../components/ui/PasswordField';
 
 export const SevaMemberPortal: React.FC = () => {
   const navigate = useNavigate();
@@ -241,33 +242,14 @@ export const SevaMemberPortal: React.FC = () => {
                 />
               </div>
 
-              <div>
-                <div className="flex items-center justify-between mb-1">
-                  <label className="text-xs font-bold text-stone-700">
-                    Password *
-                  </label>
-                  <span className="text-[10px] text-stone-400">
-                    Initial format: Name (4 letters) + Birth Year
-                  </span>
-                </div>
-                <div className="relative">
-                  <input
-                    type={showPassword ? 'text' : 'password'}
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none pr-10"
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600 cursor-pointer"
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
-                </div>
-              </div>
+              <PasswordField
+                label="Password *"
+                sublabel="Initial format: Name (4 letters) + Birth Year"
+                required
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter password"
+              />
 
               <button
                 type="submit"

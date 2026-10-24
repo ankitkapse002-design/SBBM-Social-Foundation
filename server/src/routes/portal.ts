@@ -467,6 +467,63 @@ portalRouter.post('/login', rateLimit(60000, 15), (req: Request, res: Response) 
   }
 });
 
+/**
+ * 2.2 Secure Self-Service Password Reset Request
+ */
+portalRouter.post('/reset-password', rateLimit(60000, 30), (req: Request, res: Response) => {
+  try {
+    const { loginId, mobile } = req.body;
+    if (!loginId || !mobile) {
+      res.status(400).json({ success: false, message: 'Portal ID / Email and registered mobile number are required.' });
+      return;
+    }
+
+    const cleanInput = loginId.trim().toLowerCase();
+    const cleanDigits = mobile.replace(/\D/g, '');
+
+    const users = db.get('users');
+    const user = users.find(u => {
+      const matchPortalId = u.portalId && u.portalId.toLowerCase() === cleanInput;
+      const matchUsername = u.username.toLowerCase() === cleanInput;
+      const matchEmail = u.email.toLowerCase() === cleanInput;
+      const matchMobile = cleanDigits && u.mobile.replace(/\D/g, '') === cleanDigits;
+      return (matchPortalId || matchUsername || matchEmail) && matchMobile;
+    });
+
+    if (!user) {
+      res.status(400).json({ success: false, message: 'Account details could not be verified. Please ensure the Member ID and registered mobile number are correct.' });
+      return;
+    }
+
+    let dob = '2000-01-01';
+    if (user.role === 'seva_member') {
+      const prof = db.get('seva_members').find(p => p.userId === user.id || p.memberId === user.portalId);
+      if (prof) dob = prof.dob;
+    } else if (user.role === 'member') {
+      const prof = db.get('society_members').find(p => p.userId === user.id || p.membershipId === user.portalId);
+      if (prof) dob = prof.dob;
+    } else if (user.role === 'volunteer') {
+      const prof = db.get('volunteers').find(p => p.userId === user.id || p.volunteerId === user.portalId);
+      if (prof) dob = prof.dob;
+    }
+
+    const tempPassword = generateInitialPassword(user.fullName, dob);
+    user.passwordHash = bcrypt.hashSync(tempPassword, 10);
+    user.mustChangePassword = true;
+    user.updatedAt = new Date().toISOString();
+    db.save();
+
+    db.logAudit(user.id, user.fullName, 'PORTAL_PASSWORD_RESET', 'Security', `Password reset performed for ${user.portalId || user.username}`, req.ip);
+
+    res.json({
+      success: true,
+      message: `Password has been reset to your default temporary credential format (${tempPassword.substring(0, 4)}••••). You will be required to change it immediately upon login.`,
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Password reset failed: ' + err.message });
+  }
+});
+
 // =========================================================================
 // 3. MEMBER PORTAL DATA & PROGRESS SUBMISSION
 // =========================================================================
@@ -593,12 +650,23 @@ portalRouter.post('/tasks/:taskId/progress', authMiddleware, (req: AuthRequest, 
 portalRouter.put('/notifications/:id/read', authMiddleware, (req: AuthRequest, res: Response) => {
   try {
     const { id } = req.params;
+    const user = req.user!;
+    const portalId = user.portalId || user.username;
     const notifs = db.get('portal_notifications');
     const notif = notifs.find(n => n.id === id);
-    if (notif) {
-      notif.isRead = true;
-      db.save();
+    if (!notif) {
+      res.status(404).json({ success: false, message: 'Notification not found' });
+      return;
     }
+
+    // Verify ownership to prevent IDOR
+    if (notif.userId !== user.id && notif.userId !== portalId && user.role !== 'admin') {
+      res.status(403).json({ success: false, message: 'Unauthorized to modify this notification' });
+      return;
+    }
+
+    notif.isRead = true;
+    db.save();
     res.json({ success: true, message: 'Notification marked as read' });
   } catch (err: any) {
     res.status(500).json({ success: false, message: 'Failed to update notification' });
@@ -1023,7 +1091,7 @@ portalRouter.post('/admin/tasks', (req: AuthRequest, res: Response) => {
     db.save();
     db.logAudit(req.user!.id, req.user!.fullName, 'TASK_CREATE', 'PortalTask', `Assigned task "${newTask.title}" to ${newTask.assignedToName} (${newTask.assignedToId})`, req.ip);
 
-    res.status(201).json({ success: true, message: 'Task assigned successfully', data: newTask });
+    res.status(201).json({ success: true, message: 'Task assigned successfully', task: newTask, data: newTask });
   } catch (err: any) {
     res.status(500).json({ success: false, message: 'Failed to assign task: ' + err.message });
   }
@@ -1138,5 +1206,48 @@ portalRouter.post('/admin/seva-records', (req: AuthRequest, res: Response) => {
     res.status(201).json({ success: true, message: 'Seva record issued successfully', data: record });
   } catch (err: any) {
     res.status(500).json({ success: false, message: 'Failed to issue seva record: ' + err.message });
+  }
+});
+
+/**
+ * 4.9 Admin Reset User Password
+ */
+portalRouter.post('/admin/users/:userId/reset-password', (req: AuthRequest, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const users = db.get('users');
+    const user = users.find(u => u.id === userId || u.portalId === userId || u.username === userId);
+
+    if (!user) {
+      res.status(404).json({ success: false, message: 'User account not found' });
+      return;
+    }
+
+    let dob = '2000-01-01';
+    if (user.role === 'seva_member') {
+      const prof = db.get('seva_members').find(p => p.userId === user.id || p.memberId === user.portalId);
+      if (prof) dob = prof.dob;
+    } else if (user.role === 'member') {
+      const prof = db.get('society_members').find(p => p.userId === user.id || p.membershipId === user.portalId);
+      if (prof) dob = prof.dob;
+    } else if (user.role === 'volunteer') {
+      const prof = db.get('volunteers').find(p => p.userId === user.id || p.volunteerId === user.portalId);
+      if (prof) dob = prof.dob;
+    }
+
+    const tempPassword = generateInitialPassword(user.fullName, dob);
+    user.passwordHash = bcrypt.hashSync(tempPassword, 10);
+    user.mustChangePassword = true;
+    user.updatedAt = new Date().toISOString();
+    db.save();
+
+    db.logAudit(req.user!.id, req.user!.fullName, 'ADMIN_RESET_PASSWORD', 'User', `Reset password for user ${user.portalId || user.username}`, req.ip);
+
+    res.json({
+      success: true,
+      message: `Password reset successfully for ${user.fullName} (${user.portalId || user.username}). Temporary initial credential restored. User must change password upon next login.`,
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to reset password: ' + err.message });
   }
 });
