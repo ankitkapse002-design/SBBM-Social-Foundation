@@ -39,6 +39,7 @@ export const SevaMemberPortal: React.FC = () => {
   const [registeredMember, setRegisteredMember] = useState<{
     memberId: string;
     fullName: string;
+    dob?: string;
     message: string;
   } | null>(null);
   const [hasCopiedId, setHasCopiedId] = useState(false);
@@ -138,6 +139,7 @@ export const SevaMemberPortal: React.FC = () => {
         setRegisteredMember({
           memberId: res.memberId,
           fullName: res.fullName,
+          dob: formData.dob,
           message: res.message,
         });
       }
@@ -244,11 +246,11 @@ export const SevaMemberPortal: React.FC = () => {
 
               <PasswordField
                 label="Password *"
-                sublabel="Initial format: Name (4 letters) + Birth Year"
+                sublabel="Initial format: Name + Birth Year (e.g. HARR2000 or Harry2000)"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder="e.g. HARR2000 or your custom password"
               />
 
               <button
@@ -493,6 +495,10 @@ export const SevaMemberPortal: React.FC = () => {
               <div className="space-y-2 text-xs text-stone-600 bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200/60 leading-relaxed">
                 <p>
                   <strong>Application Status:</strong> <span className="inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">PENDING APPROVAL</span>
+                </p>
+                <p>
+                  <strong>Initial Password:</strong> <code className="font-mono font-bold text-stone-900 bg-white px-2 py-0.5 rounded border border-emerald-200">{(registeredMember.fullName.trim().split(' ')[0].substring(0, 4) || 'SEVA').toUpperCase()}{registeredMember.dob?.match(/(\d{4})/)?.[1] || '2000'}</code>
+                  <span className="text-[10px] text-stone-500 block mt-0.5">(Rule: Name + Birth Year, e.g. {registeredMember.fullName.trim().split(' ')[0]}2000)</span>
                 </p>
                 <p>
                   Your profile has been forwarded to the Ashram administrator. Once approved, you can sign in using this <strong>Member ID</strong> and your initial password.

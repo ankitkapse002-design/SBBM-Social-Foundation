@@ -872,3 +872,70 @@ class Database {
 }
 
 export const db = new Database();
+
+export function getInitialPasswordCandidates(user: User): string[] {
+  const candidates = new Set<string>();
+  if (!user) return [];
+
+  let fullName = user.fullName || '';
+  let dob = '2000-01-01';
+
+  if (user.role === 'seva_member') {
+    const sm = db.get('seva_members').find(x => x.userId === user.id || x.memberId === user.portalId || x.memberId === user.username);
+    if (sm) {
+      if (sm.fullName) fullName = sm.fullName;
+      if (sm.dob) dob = sm.dob;
+    }
+  } else if (user.role === 'volunteer') {
+    const vol = db.get('volunteers').find(x => x.userId === user.id || x.volunteerId === user.portalId || x.volunteerId === user.username);
+    if (vol) {
+      if (vol.fullName) fullName = vol.fullName;
+      if (vol.dob) dob = vol.dob;
+    }
+  } else if (user.role === 'member') {
+    const mem = db.get('society_members').find(x => x.userId === user.id || x.membershipId === user.portalId || x.membershipId === user.username);
+    if (mem) {
+      if (mem.fullName) fullName = mem.fullName;
+      if (mem.dob) dob = mem.dob;
+    }
+  } else if (user.role === 'admission_applicant') {
+    const adm = db.get('admission_enquiries').find(x => x.registrationId === user.portalId || x.registrationId === user.username || x.id === user.portalId);
+    if (adm) {
+      if (adm.applicantName) fullName = adm.applicantName;
+      if (adm.dobOrYear) dob = adm.dobOrYear;
+    }
+  }
+
+  // Extract year
+  const matchYear = (dob || '').match(/(\d{4})/);
+  const year = matchYear ? matchYear[1] : '2000';
+
+  // Clean first name (ignoring any guardian annotations like "(Guardian: ...)")
+  const cleanedName = fullName.replace(/\s*\(Guardian:.*\)$/i, '').trim();
+  const rawFirst = cleanedName.split(/\s+/)[0] || '';
+  const cleanFirst = rawFirst.replace(/[^a-zA-Z]/g, '');
+
+  if (cleanFirst.length > 0) {
+    const four = cleanFirst.substring(0, 4).padEnd(4, 'X');
+
+    // 4-letter variants
+    candidates.add(`${four.toUpperCase()}${year}`);                                              // e.g. HARR2000
+    candidates.add(`${four.charAt(0).toUpperCase() + four.slice(1).toLowerCase()}${year}`);       // e.g. Harr2000
+    candidates.add(`${four.toLowerCase()}${year}`);                                              // e.g. harr2000
+
+    // Full first name variants (e.g. "Harry", "Rahul", "Ananya")
+    candidates.add(`${cleanFirst.toUpperCase()}${year}`);                                        // e.g. HARRY2000
+    candidates.add(`${cleanFirst.charAt(0).toUpperCase() + cleanFirst.slice(1).toLowerCase()}${year}`); // e.g. Harry2000
+    candidates.add(`${cleanFirst.toLowerCase()}${year}`);                                        // e.g. harry2000
+
+    // Full name without spaces (e.g. if single word name)
+    const allLetters = cleanedName.replace(/[^a-zA-Z]/g, '');
+    if (allLetters.length > 0 && allLetters.length <= 10) {
+      candidates.add(`${allLetters.toUpperCase()}${year}`);
+      candidates.add(`${allLetters.charAt(0).toUpperCase() + allLetters.slice(1).toLowerCase()}${year}`);
+      candidates.add(`${allLetters.toLowerCase()}${year}`);
+    }
+  }
+
+  return Array.from(candidates);
+}

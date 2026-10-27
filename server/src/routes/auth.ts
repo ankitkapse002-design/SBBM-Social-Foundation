@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
-import { db, User, MemberProfile } from '../db';
+import { db, User, MemberProfile, getInitialPasswordCandidates } from '../db';
 import { authMiddleware, generateToken, rateLimit, AuthRequest } from '../middleware/auth';
 
 export const authRouter = Router();
@@ -100,10 +100,12 @@ authRouter.post('/login', rateLimit(60000, 15), (req: Request, res: Response) =>
 
     const users = db.get('users');
     const cleanId = loginId.trim().toLowerCase();
+    const cleanDigits = cleanId.replace(/\D/g, '');
     const user = users.find(u => 
       u.email.toLowerCase() === cleanId || 
       u.username.toLowerCase() === cleanId ||
-      u.mobile.replace(/\D/g, '') === cleanId.replace(/\D/g, '')
+      (u.portalId && u.portalId.toLowerCase() === cleanId) ||
+      (cleanDigits && u.mobile.replace(/\D/g, '') === cleanDigits)
     );
 
     if (!user) {
@@ -111,7 +113,15 @@ authRouter.post('/login', rateLimit(60000, 15), (req: Request, res: Response) =>
       return;
     }
 
-    const isMatch = bcrypt.compareSync(password, user.passwordHash);
+    const cleanPassword = (password || '').trim();
+    let isMatch = bcrypt.compareSync(password, user.passwordHash) || bcrypt.compareSync(cleanPassword, user.passwordHash);
+    if (!isMatch && user.mustChangePassword) {
+      const candidates = getInitialPasswordCandidates(user);
+      if (candidates.some(c => c.toLowerCase() === cleanPassword.toLowerCase())) {
+        isMatch = true;
+      }
+    }
+
     if (!isMatch) {
       res.status(401).json({ success: false, message: 'Invalid credentials' });
       return;
@@ -228,7 +238,15 @@ authRouter.post('/change-password', authMiddleware, (req: AuthRequest, res: Resp
       return;
     }
 
-    const isMatch = bcrypt.compareSync(currentPassword, user.passwordHash);
+    const cleanCurrent = (currentPassword || '').trim();
+    let isMatch = bcrypt.compareSync(currentPassword, user.passwordHash) || bcrypt.compareSync(cleanCurrent, user.passwordHash);
+    if (!isMatch && user.mustChangePassword) {
+      const candidates = getInitialPasswordCandidates(user);
+      if (candidates.some(c => c.toLowerCase() === cleanCurrent.toLowerCase())) {
+        isMatch = true;
+      }
+    }
+
     if (!isMatch) {
       res.status(400).json({ success: false, message: 'Current password does not match' });
       return;

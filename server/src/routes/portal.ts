@@ -4,7 +4,8 @@ import {
   db, User, SevaMemberProfile, SocietyMemberProfile, VolunteerProfile,
   ProjectItem, PortalTask, PortalNotification, SevaRecordItem,
   AdmissionEnquiry, AdmissionStatus,
-  generatePortalId, generateInitialPassword, generateAdmissionPassword, ApplicationStatus, AccountStatus, TaskStatus
+  generatePortalId, generateInitialPassword, generateAdmissionPassword, ApplicationStatus, AccountStatus, TaskStatus,
+  getInitialPasswordCandidates
 } from '../db';
 import { authMiddleware, adminOnly, generateToken, rateLimit, AuthRequest } from '../middleware/auth';
 
@@ -380,12 +381,27 @@ portalRouter.post('/login', rateLimit(60000, 15), (req: Request, res: Response) 
       return;
     }
 
-    const isMatch = bcrypt.compareSync(password, user.passwordHash);
+    const cleanPassword = (password || '').trim();
+    let isMatch = bcrypt.compareSync(password, user.passwordHash) || bcrypt.compareSync(cleanPassword, user.passwordHash);
+
+    // If direct compare fails, check if user is on initial temporary credentials (mustChangePassword === true)
+    // and entered a natural case or full-name variant of their initial password
+    if (!isMatch && user.mustChangePassword) {
+      const candidates = getInitialPasswordCandidates(user);
+      const cleanInputPwd = cleanPassword.toLowerCase();
+      if (candidates.some(c => c.toLowerCase() === cleanInputPwd)) {
+        isMatch = true;
+      }
+    }
+
     if (!isMatch) {
       db.logAudit('anonymous', cleanInput, 'PORTAL_LOGIN_FAIL', 'Security', `Failed login attempt for ID: ${cleanInput}`, req.ip);
+      const initialHint = user.mustChangePassword
+        ? ' If this is your first time signing in, your initial default password is your Name + Birth Year (e.g. HARR2000 or Harry2000).'
+        : '';
       res.status(401).json({
         success: false,
-        message: 'Invalid password. Please try again.',
+        message: `Invalid password. Please try again.${initialHint}`,
       });
       return;
     }

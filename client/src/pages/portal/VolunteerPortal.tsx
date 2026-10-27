@@ -39,6 +39,7 @@ export const VolunteerPortal: React.FC = () => {
   const [registeredVolunteer, setRegisteredVolunteer] = useState<{
     volunteerId: string;
     fullName: string;
+    dob?: string;
     message: string;
   } | null>(null);
   const [hasCopiedId, setHasCopiedId] = useState(false);
@@ -142,6 +143,7 @@ export const VolunteerPortal: React.FC = () => {
         setRegisteredVolunteer({
           volunteerId: res.volunteerId,
           fullName: res.fullName,
+          dob: formData.dob,
           message: res.message,
         });
       }
@@ -249,11 +251,11 @@ export const VolunteerPortal: React.FC = () => {
               <PasswordField
                 accentColor="emerald"
                 label="Password *"
-                sublabel="Initial format: Name (4 letters) + Birth Year"
+                sublabel="Initial format: Name + Birth Year (e.g. VIKR1998 or Vikram1998)"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder="e.g. VIKR1998 or your custom password"
               />
 
               <button
@@ -502,6 +504,10 @@ export const VolunteerPortal: React.FC = () => {
               <div className="space-y-2 text-xs text-stone-600 bg-emerald-50/70 p-3.5 rounded-xl border border-emerald-200/60 leading-relaxed">
                 <p>
                   <strong>Application Status:</strong> <span className="inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">PENDING APPROVAL</span>
+                </p>
+                <p>
+                  <strong>Initial Password:</strong> <code className="font-mono font-bold text-stone-900 bg-white px-2 py-0.5 rounded border border-emerald-200">{(registeredVolunteer.fullName.trim().split(' ')[0].substring(0, 4) || 'VOL').toUpperCase()}{registeredVolunteer.dob?.match(/(\d{4})/)?.[1] || '2000'}</code>
+                  <span className="text-[10px] text-stone-500 block mt-0.5">(Rule: Name + Birth Year, e.g. {registeredVolunteer.fullName.trim().split(' ')[0]}1998)</span>
                 </p>
                 <p>
                   Our volunteer coordinator will review your preferences and assign you to upcoming seva sessions. You can log in using your <strong>Volunteer ID</strong> once approved.

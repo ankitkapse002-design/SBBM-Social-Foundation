@@ -41,6 +41,7 @@ export const MembershipPortal: React.FC = () => {
   const [registeredMember, setRegisteredMember] = useState<{
     membershipId: string;
     fullName: string;
+    dob?: string;
     message: string;
   } | null>(null);
   const [hasCopiedId, setHasCopiedId] = useState(false);
@@ -143,6 +144,7 @@ export const MembershipPortal: React.FC = () => {
         setRegisteredMember({
           membershipId: res.membershipId,
           fullName: res.fullName,
+          dob: formData.dob,
           message: res.message,
         });
       }
@@ -250,11 +252,11 @@ export const MembershipPortal: React.FC = () => {
               <PasswordField
                 accentColor="amber"
                 label="Password *"
-                sublabel="Initial format: Name (4 letters) + Birth Year"
+                sublabel="Initial format: Name + Birth Year (e.g. RAHU2000 or Rahul2000)"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter password"
+                placeholder="e.g. RAHU2000 or your custom password"
               />
 
               <button
@@ -516,6 +518,10 @@ export const MembershipPortal: React.FC = () => {
               <div className="space-y-2 text-xs text-stone-600 bg-amber-50/70 p-3.5 rounded-xl border border-amber-200/60 leading-relaxed">
                 <p>
                   <strong>Application Status:</strong> <span className="inline-block px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">PENDING APPROVAL</span>
+                </p>
+                <p>
+                  <strong>Initial Password:</strong> <code className="font-mono font-bold text-stone-900 bg-white px-2 py-0.5 rounded border border-amber-200">{(registeredMember.fullName.trim().split(' ')[0].substring(0, 4) || 'MEM').toUpperCase()}{registeredMember.dob?.match(/(\d{4})/)?.[1] || '2000'}</code>
+                  <span className="text-[10px] text-stone-500 block mt-0.5">(Rule: Name + Birth Year, e.g. {registeredMember.fullName.trim().split(' ')[0]}2000)</span>
                 </p>
                 <p>
                   Your application will be verified and assigned to specific projects by the administrator. Once approved, you can log in to view project milestones and assignments.

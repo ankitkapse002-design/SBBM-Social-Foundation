@@ -698,6 +698,36 @@
       "mustChangePassword": true,
       "createdAt": "2026-10-24T17:58:14.484Z",
       "updatedAt": "2026-10-24T17:58:14.484Z"
+    },
+    {
+      "id": "usr_1793105614295_wtldc",
+      "email": "ssbm-adm-2026-9107@ssbmfoundation.org",
+      "username": "SSBM-ADM-2026-9107",
+      "portalId": "SSBM-ADM-2026-9107",
+      "fullName": "Harry (Guardian: Maxx)",
+      "mobile": "14253636",
+      "passwordHash": "$2a$10$A4bW9V3gPHzJFjXIU1/51uVD4e17HpnB/HEPgpMRh46VZoWJOx7US",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T12:53:34.295Z",
+      "updatedAt": "2026-10-27T12:58:01.855Z"
+    },
+    {
+      "id": "usr_1793105989903_mwkn2",
+      "email": "ssbm-sm-2026-8351@ssbmfoundation.org",
+      "username": "SSBM-SM-2026-8351",
+      "fullName": "Harry",
+      "mobile": "1425363687",
+      "passwordHash": "$2a$10$mJNVe4ErN3FSXdM0vOIPe.AV5OLdMbq/sdu7.rXKbgBW9P5Ig.jpC",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-8351",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T12:59:49.903Z",
+      "updatedAt": "2026-10-27T13:00:41.902Z"
     }
   ],
   "member_profiles": [
@@ -732,6 +762,44 @@
   ],
   "membership_requests": [],
   "admission_enquiries": [
+    {
+      "id": "adm_1793105614295_w7q4",
+      "registrationId": "SSBM-ADM-2026-9107",
+      "applicantName": "Harry",
+      "guardianFirstName": "Maxx",
+      "guardianPhone": "14253636",
+      "applicantEmail": "",
+      "dobOrYear": "1962",
+      "address": "Nagpur",
+      "admissionCategory": "Elder Care Sanctuary (Permanent Old Age Home)",
+      "residentGender": "Male",
+      "relationWithResident": "Son / Daughter",
+      "mobilityStatus": "Independent with daily routine",
+      "medicalNotes": "None reported",
+      "additionalMessage": "None reported",
+      "status": "approved",
+      "statusHistory": [
+        {
+          "id": "hist_1793105614501_init",
+          "status": "pending_review",
+          "date": "2026-10-27T12:53:34.295Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        },
+        {
+          "id": "hist_1793105733011_e8vs",
+          "status": "approved",
+          "date": "2026-10-27T12:55:33.011Z",
+          "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
+          "notes": "Status updated from pending_review to approved"
+        }
+      ],
+      "createdAt": "2026-10-27T12:53:34.295Z",
+      "updatedAt": "2026-10-27T12:55:33.011Z",
+      "adminNotes": "",
+      "rejectionReason": "",
+      "requestedInfoNotes": ""
+    },
     {
       "id": "adm_1792864694484_sgcr",
       "registrationId": "SSBM-ADM-2026-9048",
@@ -1697,6 +1765,326 @@
     }
   ],
   "audit_logs": [
+    {
+      "id": "log_1793107508683_8s2p9",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:25:08.683Z"
+    },
+    {
+      "id": "log_1793107508614_wdtbd",
+      "actorId": "usr_1793105614295_wtldc",
+      "actorName": "Harry (Guardian: Maxx)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:25:08.614Z"
+    },
+    {
+      "id": "log_1793107508480_xmako",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-8351",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:25:08.480Z"
+    },
+    {
+      "id": "log_1793107508346_dyfh1",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:25:08.346Z"
+    },
+    {
+      "id": "log_1793107508214_capmb",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:25:08.214Z"
+    },
+    {
+      "id": "log_1793107508017_4aqry",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:25:08.017Z"
+    },
+    {
+      "id": "log_1793107507945_qbn1c",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:25:07.945Z"
+    },
+    {
+      "id": "log_1793107004444_gfsb5",
+      "actorId": "usr_1793105614295_wtldc",
+      "actorName": "Harry (Guardian: Maxx)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:16:44.444Z"
+    },
+    {
+      "id": "log_1793106987536_41v2y",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-9107",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:16:27.536Z"
+    },
+    {
+      "id": "log_1793106976160_ye9qv",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-8351",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:16:16.160Z"
+    },
+    {
+      "id": "log_1793106963754_655iz",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:16:03.754Z"
+    },
+    {
+      "id": "log_1793106944844_lnddd",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:15:44.844Z"
+    },
+    {
+      "id": "log_1793106929299_2bwss",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:15:29.299Z"
+    },
+    {
+      "id": "log_1793106914850_8tsuk",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:15:14.850Z"
+    },
+    {
+      "id": "log_1793106067320_lk14o",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-8351",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:01:07.320Z"
+    },
+    {
+      "id": "log_1793106041909_kus4i",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "SEVA_MEMBER_STATUS_UPDATE",
+      "entity": "SevaMemberProfile",
+      "details": "Updated Harry (SSBM-SM-2026-8351) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:00:41.909Z"
+    },
+    {
+      "id": "log_1793106022149_e2jyb",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-8351",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:00:22.149Z"
+    },
+    {
+      "id": "log_1793106012671_n5m3f",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-8351",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:00:12.671Z"
+    },
+    {
+      "id": "log_1793105990080_ny9ry",
+      "actorId": "public",
+      "actorName": "Harry ",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:59:50.080Z"
+    },
+    {
+      "id": "log_1793105929565_nkw09",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:58:49.565Z"
+    },
+    {
+      "id": "log_1793105881862_l4pxi",
+      "actorId": "usr_1793105614295_wtldc",
+      "actorName": "Harry (Guardian: Maxx)",
+      "action": "PORTAL_PASSWORD_RESET",
+      "entity": "Security",
+      "details": "Password reset performed for SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:58:01.862Z"
+    },
+    {
+      "id": "log_1793105855700_2hq0c",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-9107",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:57:35.700Z"
+    },
+    {
+      "id": "log_1793105785502_9ysya",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-9107",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:56:25.502Z"
+    },
+    {
+      "id": "log_1793105769811_q1egl",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-9107",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:56:09.811Z"
+    },
+    {
+      "id": "log_1793105733020_wwpb4",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to approved for Harry (adm_1793105614295_w7q4)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:55:33.020Z"
+    },
+    {
+      "id": "log_1793105700702_2b74x",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:55:00.702Z"
+    },
+    {
+      "id": "log_1793105685542_s4gcw",
+      "actorId": "anonymous",
+      "actorName": "ashvin",
+      "action": "ADMIN_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for admin username: ashvin",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:54:45.542Z"
+    },
+    {
+      "id": "log_1793105678196_dbgsu",
+      "actorId": "anonymous",
+      "actorName": "ashvin",
+      "action": "ADMIN_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for admin username: ashvin",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:54:38.196Z"
+    },
+    {
+      "id": "log_1793105656910_hxypi",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-9107",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:54:16.910Z"
+    },
+    {
+      "id": "log_1793105649374_si3q2",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-9107",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:54:09.374Z"
+    },
+    {
+      "id": "log_1793105643557_svvya",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-9107",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:54:03.557Z"
+    },
+    {
+      "id": "log_1793105614508_v1c0p",
+      "actorId": "public",
+      "actorName": "Maxx",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Harry (Reg ID: SSBM-ADM-2026-9107)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T12:53:34.508Z"
+    },
     {
       "id": "log_1792864694621_devjx",
       "actorId": "usr_1792864694484_4jr6d",
@@ -4669,7 +5057,7 @@
   ],
   "meta": {
     "version": "1.0.0",
-    "lastSaved": "2026-10-24T17:58:14.621Z",
+    "lastSaved": "2026-10-27T13:25:08.683Z",
     "initializedAt": "2026-10-16T08:20:07.291Z"
   },
   "seva_members": [
@@ -4930,6 +5318,27 @@
       "joinedAt": "2026-10-24T17:35:28.554Z",
       "adminNotes": "Verified documents and identity",
       "reviewedAt": "2026-10-24T17:35:28.670Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "sm_1793105990074_k9j0",
+      "userId": "usr_1793105989903_mwkn2",
+      "memberId": "SSBM-SM-2026-8351",
+      "fullName": "Harry",
+      "dob": "2000-01-01",
+      "mobile": "1425363687",
+      "email": "",
+      "address": "Nagpur",
+      "sevaPreferences": [
+        "Elder Care Seva"
+      ],
+      "emergencyContact": "1425363687",
+      "bloodGroup": "",
+      "notes": "",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T12:59:49.903Z",
+      "adminNotes": "",
+      "reviewedAt": "2026-10-27T13:00:41.902Z",
       "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
     }
   ],
@@ -6963,6 +7372,42 @@
       "type": "info",
       "isRead": false,
       "createdAt": "2026-10-24T17:58:14.484Z"
+    },
+    {
+      "id": "notif_1793105614501_bmxb",
+      "userId": "SSBM-ADM-2026-9107",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-9107) for Harry has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T12:53:34.295Z"
+    },
+    {
+      "id": "notif_1793105733011_lq4d",
+      "userId": "SSBM-ADM-2026-9107",
+      "title": "Admission Status: APPROVED",
+      "message": "Congratulations! Your admission enquiry (SSBM-ADM-2026-9107) for Harry has been APPROVED by Vyenkatesh Ashram administration.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T12:55:33.011Z"
+    },
+    {
+      "id": "notif_1793105990074_ijin",
+      "userId": "SSBM-SM-2026-8351",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-8351) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T12:59:49.903Z"
+    },
+    {
+      "id": "notif_1793106041902_oeah",
+      "userId": "SSBM-SM-2026-8351",
+      "title": "Application Status: APPROVED",
+      "message": "Congratulations! Your Seva Member application (SSBM-SM-2026-8351) has been approved. You can now access your dashboard.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:00:41.902Z"
     }
   ],
   "seva_records": []

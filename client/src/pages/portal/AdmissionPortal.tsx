@@ -195,10 +195,11 @@ export const AdmissionPortal: React.FC = () => {
 
             <PasswordField
               label="Password *"
+              sublabel="Initial format: Resident Name + Birth Year (e.g. Rahu1985 or Rahul1985)"
               id="admission-password-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="e.g. Rahu1985 (Resident Name + Birth Year)"
+              placeholder="e.g. Rahu1985 or your custom password"
               required
             />
 
