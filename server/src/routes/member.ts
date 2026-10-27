@@ -68,7 +68,7 @@ memberRouter.get('/my-enquiries', (req: AuthRequest, res: Response) => {
 
   const admissions = db.get('admission_enquiries').filter(a => 
     (a.applicantEmail && a.applicantEmail.toLowerCase() === userEmail) ||
-    a.applicantPhone.replace(/\D/g, '') === userPhone
+    ((a.guardianPhone || a.applicantPhone || '').replace(/\D/g, '') === userPhone)
   );
 
   const volunteers = db.get('volunteer_enquiries').filter(v =>

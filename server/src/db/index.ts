@@ -279,6 +279,10 @@ export interface AdmissionEnquiry {
   statusHistory: AdmissionStatusHistoryItem[];
   createdAt: string;
   updatedAt: string;
+  residentName?: string;
+  residentAge?: number;
+  applicantPhone?: string;
+  notes?: string;
 }
 
 export interface VolunteerEnquiry {
@@ -447,17 +451,32 @@ class Database {
       admission_enquiries: [
         {
           id: 'adm_demo_01',
-          applicantName: 'Suresh Patil',
-          applicantPhone: '+91 94221 12345',
+          registrationId: 'SSBM-ADM-2026-1001',
+          applicantName: 'Ramchandra Patil',
+          guardianFirstName: 'Suresh',
+          guardianPhone: '+91 94221 12345',
           applicantEmail: 'suresh.patil@example.com',
+          dobOrYear: '1948',
+          address: 'Mahuli, Nagpur',
+          admissionCategory: 'Elder Care Sanctuary',
           residentName: 'Ramchandra Patil',
           residentAge: 76,
           residentGender: 'Male',
           relationWithResident: 'Son',
           mobilityStatus: 'Walks with stick, independent for daily routine',
           medicalNotes: 'Mild hypertension, taking regular prescribed medication.',
-          status: 'new',
+          additionalMessage: 'Called regarding admission availability for next month.',
+          status: 'pending_review',
           notes: 'Called regarding admission availability for next month.',
+          statusHistory: [
+            {
+              id: 'hist_demo_01',
+              status: 'pending_review',
+              date: new Date(Date.now() - 86400000 * 2).toISOString(),
+              updatedBy: 'Guardian',
+              notes: 'Initial registration received online.'
+            }
+          ],
           createdAt: new Date(Date.now() - 86400000 * 2).toISOString(),
           updatedAt: new Date(Date.now() - 86400000 * 2).toISOString(),
         }

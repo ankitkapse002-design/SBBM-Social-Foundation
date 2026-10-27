@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import path from 'path';
+import fs from 'fs';
 import { authRouter } from './routes/auth';
 import { enquiriesRouter } from './routes/enquiries';
 import { publicRouter } from './routes/public';
@@ -47,6 +48,46 @@ app.get('/api/health', (req, res) => {
     institution: 'VYENKATESH ASHRAM',
     contact: '+91 98908 98081',
     serverTime: new Date().toISOString(),
+  });
+});
+
+// Production Unified Static Asset & SPA Serving
+const possibleDistPaths = [
+  path.resolve(process.cwd(), 'client/dist'),
+  path.resolve(__dirname, '../../client/dist'),
+  path.resolve(__dirname, '../client/dist'),
+];
+
+let clientDistPath: string | null = null;
+for (const p of possibleDistPaths) {
+  if (fs.existsSync(p) && fs.existsSync(path.join(p, 'index.html'))) {
+    clientDistPath = p;
+    break;
+  }
+}
+
+if (clientDistPath) {
+  console.log(`[Production] Serving static client build from: ${clientDistPath}`);
+  app.use(express.static(clientDistPath));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api')) {
+      return next();
+    }
+    res.sendFile(path.join(clientDistPath!, 'index.html'));
+  });
+}
+
+// Global 404 for unhandled API endpoints
+app.all('/api/*', (req, res) => {
+  res.status(404).json({ success: false, message: `API endpoint ${req.method} ${req.path} not found` });
+});
+
+// Centralized error handling middleware
+app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('[Unhandled Error]', err);
+  res.status(err.status || 500).json({
+    success: false,
+    message: process.env.NODE_ENV === 'production' ? 'An unexpected server error occurred.' : (err.message || 'Internal server error'),
   });
 });
 

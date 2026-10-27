@@ -1427,13 +1427,13 @@ portalRouter.put('/admin/admissions/:id/status', (req: AuthRequest, res: Respons
     // Notify applicant account
     const applicantTargetId = item.registrationId || item.id;
     let notifMessage = '';
-    let notifType: 'info' | 'success' | 'warning' | 'error' = 'info';
+    let notifType: 'info' | 'success' | 'warning' | 'action' = 'info';
 
     if (status === 'approved') {
       notifType = 'success';
       notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by Vyenkatesh Ashram administration. ${adminNotes ? `Admin Notes: ${adminNotes}` : 'Our team will contact you for resident onboarding formalities.'}`;
     } else if (status === 'rejected') {
-      notifType = 'error';
+      notifType = 'warning';
       notifMessage = `Your admission enquiry (${applicantTargetId}) for ${item.applicantName} was reviewed and could not be approved at this time. Reason: ${rejectionReason}`;
     } else if (status === 'more_info_required') {
       notifType = 'warning';

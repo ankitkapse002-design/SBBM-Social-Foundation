@@ -706,13 +706,13 @@
       "portalId": "SSBM-ADM-2026-9107",
       "fullName": "Harry (Guardian: Maxx)",
       "mobile": "14253636",
-      "passwordHash": "$2a$10$A4bW9V3gPHzJFjXIU1/51uVD4e17HpnB/HEPgpMRh46VZoWJOx7US",
+      "passwordHash": "$2a$10$dbHBv/jZypgjAQ3X0AHF9er.mBTzmrockcjcz/z7I6.9qPCKhSaXu",
       "role": "admission_applicant",
       "accountStatus": "active",
       "isVerified": true,
-      "mustChangePassword": true,
+      "mustChangePassword": false,
       "createdAt": "2026-10-27T12:53:34.295Z",
-      "updatedAt": "2026-10-27T12:58:01.855Z"
+      "updatedAt": "2026-10-27T13:28:05.437Z"
     },
     {
       "id": "usr_1793105989903_mwkn2",
@@ -720,14 +720,314 @@
       "username": "SSBM-SM-2026-8351",
       "fullName": "Harry",
       "mobile": "1425363687",
-      "passwordHash": "$2a$10$mJNVe4ErN3FSXdM0vOIPe.AV5OLdMbq/sdu7.rXKbgBW9P5Ig.jpC",
+      "passwordHash": "$2a$10$f3ufTt6BAfZEFJEBWTBf0O.h8ZJDhOVaBWELr8NsNOIbQo4qIZGQ.",
       "role": "seva_member",
       "portalId": "SSBM-SM-2026-8351",
       "accountStatus": "active",
       "isVerified": true,
-      "mustChangePassword": true,
+      "mustChangePassword": false,
       "createdAt": "2026-10-27T12:59:49.903Z",
-      "updatedAt": "2026-10-27T13:00:41.902Z"
+      "updatedAt": "2026-10-27T13:30:31.088Z"
+    },
+    {
+      "id": "usr_1793109222513_cx12c",
+      "email": "gopal.7306@example.com",
+      "username": "SSBM-SM-2026-9355",
+      "fullName": "Gopal Sharma",
+      "mobile": "9822007306",
+      "passwordHash": "$2a$10$pjHnOdX09bV7T0LopfFu0uCdKjD/CS/TNeQEmnb5/Za76qR2BYMOO",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-9355",
+      "accountStatus": "pending",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:53:42.513Z",
+      "updatedAt": "2026-10-27T13:53:42.513Z"
+    },
+    {
+      "id": "usr_1793109243349_1l7xo",
+      "email": "gopal.8707@example.com",
+      "username": "SSBM-SM-2026-2272",
+      "fullName": "Gopal Sharma",
+      "mobile": "9822008707",
+      "passwordHash": "$2a$10$FQccxOwzrYWsqFZqj1TXP.1IFgzpmeXILOiiZUFg9Blvk6j80gmK6",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-2272",
+      "accountStatus": "pending",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:54:03.349Z",
+      "updatedAt": "2026-10-27T13:54:03.349Z"
+    },
+    {
+      "id": "usr_1793109284985_z7pml",
+      "email": "gopal.5989@example.com",
+      "username": "SSBM-SM-2026-9075",
+      "fullName": "Gopal Sharma",
+      "mobile": "9822005989",
+      "passwordHash": "$2a$10$ihnc6iKFP/HIdz/hejPkHO.sitR14BhhemapCJmWAitA4i6EgpYpS",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-9075",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:54:44.985Z",
+      "updatedAt": "2026-10-27T13:54:45.104Z"
+    },
+    {
+      "id": "usr_1793109309982_vqlqw",
+      "email": "rahul.sharma.5608@example.com",
+      "username": "SSBM-ADM-2026-6807",
+      "portalId": "SSBM-ADM-2026-6807",
+      "fullName": "Rahul Sharma (Guardian: Amitabh)",
+      "mobile": "9822560844",
+      "passwordHash": "$2a$10$eCmVjwDqyEMp4Y.PSk7bb.7p4rb7OW8AO2smYziUSqghvtsnBIO7a",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:55:09.982Z",
+      "updatedAt": "2026-10-27T13:55:10.273Z"
+    },
+    {
+      "id": "usr_1793109310337_iq1h2",
+      "email": "uma.3500@example.com",
+      "username": "SSBM-ADM-2026-8649",
+      "portalId": "SSBM-ADM-2026-8649",
+      "fullName": "Uma Devi (Guardian: Ramesh)",
+      "mobile": "9823350011",
+      "passwordHash": "$2a$10$XO0iTFHn2JVcsPF5kX7GeefB9tLDMornoki/awaGHqxKPN0FtBDxK",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:55:10.337Z",
+      "updatedAt": "2026-10-27T13:55:10.337Z"
+    },
+    {
+      "id": "usr_1793109315476_upry3",
+      "email": "rohan.joshi@example.com",
+      "username": "SSBM-ADM-2026-3404",
+      "portalId": "SSBM-ADM-2026-3404",
+      "fullName": "Dattatray Keshav Joshi (Guardian: Rohan)",
+      "mobile": "9822019611",
+      "passwordHash": "$2a$10$gK8wQHDiutH0kJKwNzxfm.R/vCebvMCeFbseJlhqET0cVvdny/5i6",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:55:15.476Z",
+      "updatedAt": "2026-10-27T13:55:15.476Z"
+    },
+    {
+      "id": "usr_1793109543528_eiwuz",
+      "email": "gopal.3817@example.com",
+      "username": "SSBM-SM-2026-9287",
+      "fullName": "Gopal Sharma",
+      "mobile": "9822003817",
+      "passwordHash": "$2a$10$b38rNV7iTMbzfoxNI1HllePy5eMu4SMLCnuNoefRYUwB3uPOKrtzm",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-9287",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:03.528Z",
+      "updatedAt": "2026-10-27T13:59:03.648Z"
+    },
+    {
+      "id": "usr_1793109553405_9n40x",
+      "email": "rahul.sharma.4432@example.com",
+      "username": "SSBM-ADM-2026-1439",
+      "portalId": "SSBM-ADM-2026-1439",
+      "fullName": "Rahul Sharma (Guardian: Amitabh)",
+      "mobile": "9822443244",
+      "passwordHash": "$2a$10$RvdLZq6UD5qpaUqW9U8o1OZ1aZOTOfK49I.DfZcBSNw.uLQSPvZES",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:13.405Z",
+      "updatedAt": "2026-10-27T13:59:13.695Z"
+    },
+    {
+      "id": "usr_1793109553760_j5s39",
+      "email": "uma.9910@example.com",
+      "username": "SSBM-ADM-2026-8980",
+      "portalId": "SSBM-ADM-2026-8980",
+      "fullName": "Uma Devi (Guardian: Ramesh)",
+      "mobile": "9823991011",
+      "passwordHash": "$2a$10$EA6EH9fcqfY/jQ23L320C.Tll/3kmiSC/fVqBl5WlS0tJHlH76HVW",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:13.760Z",
+      "updatedAt": "2026-10-27T13:59:13.760Z"
+    },
+    {
+      "id": "usr_1793109557694_5o12y",
+      "email": "rohan.joshi@example.com",
+      "username": "SSBM-ADM-2026-4097",
+      "portalId": "SSBM-ADM-2026-4097",
+      "fullName": "Dattatray Keshav Joshi (Guardian: Rohan)",
+      "mobile": "9822011593",
+      "passwordHash": "$2a$10$hxw.DcVMkuIg3dtfYzGPh.aq1RfedUeTKqmoApNJSL5vyBjjiYLn.",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:17.694Z",
+      "updatedAt": "2026-10-27T13:59:17.694Z"
+    },
+    {
+      "id": "usr_1793109558015_au6np",
+      "email": "pramod.kulkarni@example.com",
+      "username": "SSBM-ADM-2026-4199",
+      "portalId": "SSBM-ADM-2026-4199",
+      "fullName": "Savitri Narayan Kulkarni (Guardian: Pramod)",
+      "mobile": "9822016857",
+      "passwordHash": "$2a$10$dxAoCutLLRUnxjovwDXyFOfGAsSk3VJFMwrJDQKoqkIbRrhEhw0XS",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:18.015Z",
+      "updatedAt": "2026-10-27T13:59:18.483Z"
+    },
+    {
+      "id": "usr_1793109564657_dbdjc",
+      "email": "ananya.verma.4731@example.com",
+      "username": "SSBM-SM-2026-4279",
+      "fullName": "Ananya Verma",
+      "mobile": "982204731",
+      "passwordHash": "$2a$10$fdDdhXoqnU2pjzvXM0u0cufiwu9CaHRItp8ggyWB0C2ZKvBnjYjTy",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-4279",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:24.657Z",
+      "updatedAt": "2026-10-27T13:59:25.409Z"
+    },
+    {
+      "id": "usr_1793109565095_f3m5v",
+      "email": "rohan.joshi.6560@example.com",
+      "username": "SSBM-VOL-2026-3397",
+      "fullName": "Rohan Joshi",
+      "mobile": "976546560",
+      "passwordHash": "$2a$10$kdlNmC7OMWr782DAfAWx7uqGN5grmymgo3ZY.F/q/nlemvkuu1vI2",
+      "role": "volunteer",
+      "portalId": "SSBM-VOL-2026-3397",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:25.095Z",
+      "updatedAt": "2026-10-27T13:59:25.470Z"
+    },
+    {
+      "id": "usr_1793109565221_ma7ft",
+      "email": "dr.rajesh.5540@example.com",
+      "username": "SSBM-MEM-2026-3499",
+      "fullName": "Rajesh Gupta",
+      "mobile": "989015540",
+      "passwordHash": "$2a$10$vxyedY6qYNfx3y1AgadxquQBdvTfuEyYgImjsWQS4Ueu4h1lTiodO",
+      "role": "member",
+      "portalId": "SSBM-MEM-2026-3499",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:25.221Z",
+      "updatedAt": "2026-10-27T13:59:25.281Z"
+    },
+    {
+      "id": "usr_1793109569831_q5ke0",
+      "email": "ananya.verma.9234@example.com",
+      "username": "SSBM-SM-2026-2541",
+      "fullName": "Ananya Verma",
+      "mobile": "982209234",
+      "passwordHash": "$2a$10$92t.Tv.uei1y6iN2td/WkOK1K/X2AUKO3hIlOvWGhrx/v6AxOHSnS",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-2541",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": false,
+      "createdAt": "2026-10-27T13:59:29.831Z",
+      "updatedAt": "2026-10-27T13:59:30.806Z"
+    },
+    {
+      "id": "usr_1793109569951_vb9mm",
+      "email": "bhavesh.patil.9234@example.com",
+      "username": "SSBM-SM-2026-6121",
+      "fullName": "Bhavesh Patil",
+      "mobile": "982219234",
+      "passwordHash": "$2a$10$.1fX1NenegXECwjswF6dQu2O8J7WjFyf1qiNLyZJf6zuvKpidAwDO",
+      "role": "seva_member",
+      "portalId": "SSBM-SM-2026-6121",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:29.951Z",
+      "updatedAt": "2026-10-27T13:59:30.018Z"
+    },
+    {
+      "id": "usr_1793109570174_bkz1y",
+      "email": "vikram.rathi.9234@example.com",
+      "username": "SSBM-VOL-2026-3014",
+      "fullName": "Vikram Rathi",
+      "mobile": "982229234",
+      "passwordHash": "$2a$10$a2y2nkq41X49hMo7ed.4Ielyfzkctka6937C53fWF673iMzyQec.q",
+      "role": "volunteer",
+      "portalId": "SSBM-VOL-2026-3014",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:30.174Z",
+      "updatedAt": "2026-10-27T13:59:30.296Z"
+    },
+    {
+      "id": "usr_1793109570235_hc9sc",
+      "email": "neha.deshpande.9234@example.com",
+      "username": "SSBM-VOL-2026-7745",
+      "fullName": "Neha Deshpande",
+      "mobile": "982239234",
+      "passwordHash": "$2a$10$95It0A/6fKWklWzQ3UIIcu7r65Eo.rYKY6LG1bP1de9.ybbHA4fmG",
+      "role": "volunteer",
+      "portalId": "SSBM-VOL-2026-7745",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:30.235Z",
+      "updatedAt": "2026-10-27T13:59:30.302Z"
+    },
+    {
+      "id": "usr_1793109570437_q0rns",
+      "email": "rahul.sharma.9234@example.com",
+      "username": "SSBM-ADM-2026-3002",
+      "portalId": "SSBM-ADM-2026-3002",
+      "fullName": "Aarav Sharma (Guardian: Rahul)",
+      "mobile": "982249234",
+      "passwordHash": "$2a$10$qQyoBwUCHE7b.K2ao6wzV.4NtnMplZl5qOfWmY4zY.nCEA786C9QW",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:30.437Z",
+      "updatedAt": "2026-10-27T13:59:30.437Z"
+    },
+    {
+      "id": "usr_1793109570497_oxyq9",
+      "email": "suresh.deshmukh.9234@example.com",
+      "username": "SSBM-ADM-2026-5292",
+      "portalId": "SSBM-ADM-2026-5292",
+      "fullName": "Kavita Deshmukh (Guardian: Suresh)",
+      "mobile": "982259234",
+      "passwordHash": "$2a$10$8A58/o1U6CNIZ.HYEAZ/HubsGf5TqtAtx4jY2x4UpSlLV4A1DcqKK",
+      "role": "admission_applicant",
+      "accountStatus": "active",
+      "isVerified": true,
+      "mustChangePassword": true,
+      "createdAt": "2026-10-27T13:59:30.497Z",
+      "updatedAt": "2026-10-27T13:59:30.497Z"
     }
   ],
   "member_profiles": [
@@ -763,6 +1063,307 @@
   "membership_requests": [],
   "admission_enquiries": [
     {
+      "id": "adm_1793109570497_k9g2",
+      "registrationId": "SSBM-ADM-2026-5292",
+      "applicantName": "Kavita Deshmukh",
+      "guardianFirstName": "Suresh",
+      "guardianPhone": "982259234",
+      "applicantEmail": "suresh.deshmukh.9234@example.com",
+      "dobOrYear": "1958",
+      "address": "Plot 10, Somalwada, Wardha Road, Nagpur",
+      "admissionCategory": "Assisted Living & Personal Care",
+      "residentGender": "Female",
+      "relationWithResident": "Son / Daughter",
+      "mobilityStatus": "Wheelchair bound / needs special support",
+      "medicalNotes": "Advanced neurological condition requiring continuous ICU-level care.",
+      "additionalMessage": "Requires round-the-clock dedicated personal attendant.",
+      "status": "rejected",
+      "statusHistory": [
+        {
+          "id": "hist_1793109570553_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:59:30.497Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        },
+        {
+          "id": "hist_1793109570624_iwxs",
+          "status": "rejected",
+          "date": "2026-10-27T13:59:30.624Z",
+          "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
+          "notes": "Ashram does not possess 24-hour ventilator / ICU infrastructure required for advanced neurological nursing care."
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:30.497Z",
+      "updatedAt": "2026-10-27T13:59:30.624Z",
+      "adminNotes": "Referred to Nagpur District Government Medical College Senior Care Wing.",
+      "rejectionReason": "Ashram does not possess 24-hour ventilator / ICU infrastructure required for advanced neurological nursing care."
+    },
+    {
+      "id": "adm_1793109570437_yq53",
+      "registrationId": "SSBM-ADM-2026-3002",
+      "applicantName": "Aarav Sharma",
+      "guardianFirstName": "Rahul",
+      "guardianPhone": "982249234",
+      "applicantEmail": "rahul.sharma.9234@example.com",
+      "dobOrYear": "1985",
+      "address": "Quarter 14, Laxmi Nagar, Nagpur",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Male",
+      "relationWithResident": "Son / Daughter",
+      "mobilityStatus": "Independent with daily routine",
+      "medicalNotes": "Routine blood pressure management with daily medication.",
+      "additionalMessage": "Seeking comfortable ashram stay with peaceful daily Satsang.",
+      "status": "approved",
+      "statusHistory": [
+        {
+          "id": "hist_1793109570492_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:59:30.437Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        },
+        {
+          "id": "hist_1793109570618_t9s0",
+          "status": "approved",
+          "date": "2026-10-27T13:59:30.618Z",
+          "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
+          "notes": "Welcome to Vyenkatesh Ashram! Room 108 (Ground Floor, East Wing) reserved. Onboarding on 1st of next month."
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:30.437Z",
+      "updatedAt": "2026-10-27T13:59:30.618Z",
+      "adminNotes": "Welcome to Vyenkatesh Ashram! Room 108 (Ground Floor, East Wing) reserved. Onboarding on 1st of next month."
+    },
+    {
+      "id": "adm_1793109558015_t2mo",
+      "registrationId": "SSBM-ADM-2026-4199",
+      "applicantName": "Savitri Narayan Kulkarni",
+      "guardianFirstName": "Pramod",
+      "guardianPhone": "9822016857",
+      "applicantEmail": "pramod.kulkarni@example.com",
+      "dobOrYear": "1954",
+      "address": "Dhantoli, Nagpur",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Female",
+      "relationWithResident": "Son / Daughter",
+      "mobilityStatus": "Independent with daily routine",
+      "medicalNotes": "No chronic illness, requires sattvic vegetarian diet and morning walk companionship.",
+      "additionalMessage": "",
+      "status": "approved",
+      "statusHistory": [
+        {
+          "id": "hist_1793109558070_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:59:18.015Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        },
+        {
+          "id": "hist_1793109558076_nnm5",
+          "status": "approved",
+          "date": "2026-10-27T13:59:18.076Z",
+          "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
+          "notes": "Approved for Room 208, West Sanctuary Wing. Please visit ashram office on Monday for onboarding."
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:18.015Z",
+      "updatedAt": "2026-10-27T13:59:18.076Z",
+      "adminNotes": "Approved for Room 208, West Sanctuary Wing. Please visit ashram office on Monday for onboarding."
+    },
+    {
+      "id": "adm_1793109557694_x1mj",
+      "registrationId": "SSBM-ADM-2026-4097",
+      "applicantName": "Dattatray Keshav Joshi",
+      "guardianFirstName": "Rohan",
+      "guardianPhone": "9822011593",
+      "applicantEmail": "rohan.joshi@example.com",
+      "dobOrYear": "1948",
+      "address": "Flat 204, Ramdas Peth, Nagpur",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Male",
+      "relationWithResident": "Son / Daughter",
+      "mobilityStatus": "Independent with daily routine",
+      "medicalNotes": "Mild hypertension controlled with daily Amlodipine 5mg.",
+      "additionalMessage": "Seeking a peaceful spiritual environment with Go-Seva and daily prayer routines.\n\n[Applicant Info Update 2026-10-27]: Dr. Deshmukh certified fitness attached; BP stable. Aadhaar reference 2345-6789-0123 provided.",
+      "status": "rejected",
+      "statusHistory": [
+        {
+          "id": "hist_1793109557749_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:59:17.694Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        },
+        {
+          "id": "hist_1793109557992_me3a",
+          "status": "more_info_required",
+          "date": "2026-10-27T13:59:17.992Z",
+          "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
+          "notes": "Please provide certified medical fitness certificate and senior Aadhaar card copy."
+        },
+        {
+          "id": "hist_1793109557999_aeoi",
+          "status": "pending_review",
+          "date": "2026-10-27T13:59:17.999Z",
+          "updatedBy": "Dattatray Keshav Joshi (Guardian: Rohan)",
+          "notes": "Applicant provided requested details: \"Dr. Deshmukh certified fitness attached; BP stable. Aadhaar reference 2345-6789-0123 provided....\""
+        },
+        {
+          "id": "hist_1793109558008_q0b5",
+          "status": "rejected",
+          "date": "2026-10-27T13:59:18.008Z",
+          "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
+          "notes": "Assisted care ward is currently operating at maximum safe capacity for high-dependency residents."
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:17.694Z",
+      "updatedAt": "2026-10-27T13:59:18.008Z",
+      "adminNotes": "Referred to Hingna senior citizen care network.",
+      "requestedInfoNotes": "Please provide certified medical fitness certificate and senior Aadhaar card copy.",
+      "rejectionReason": "Assisted care ward is currently operating at maximum safe capacity for high-dependency residents."
+    },
+    {
+      "id": "adm_1793109553760_feuk",
+      "registrationId": "SSBM-ADM-2026-8980",
+      "applicantName": "Uma Devi",
+      "guardianFirstName": "Ramesh",
+      "guardianPhone": "9823991011",
+      "applicantEmail": "uma.9910@example.com",
+      "dobOrYear": "1952",
+      "address": "Sitabuldi, Nagpur",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Female",
+      "relationWithResident": "Daughter",
+      "mobilityStatus": "Independent",
+      "medicalNotes": "None",
+      "additionalMessage": "Edge case padding test",
+      "status": "pending_review",
+      "statusHistory": [
+        {
+          "id": "hist_1793109553815_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:59:13.760Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:13.760Z",
+      "updatedAt": "2026-10-27T13:59:13.760Z"
+    },
+    {
+      "id": "adm_1793109553405_wgk8",
+      "registrationId": "SSBM-ADM-2026-1439",
+      "applicantName": "Rahul Sharma",
+      "guardianFirstName": "Amitabh",
+      "guardianPhone": "9822443244",
+      "applicantEmail": "rahul.sharma.4432@example.com",
+      "dobOrYear": "1985",
+      "address": "Dharampeth, Nagpur, Maharashtra",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Male",
+      "relationWithResident": "Son",
+      "mobilityStatus": "Assisted walker",
+      "medicalNotes": "Mild hypertension",
+      "additionalMessage": "Targeted verification test for Rahu1985 format.",
+      "status": "pending_review",
+      "statusHistory": [
+        {
+          "id": "hist_1793109553461_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:59:13.405Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:13.405Z",
+      "updatedAt": "2026-10-27T13:59:13.405Z"
+    },
+    {
+      "id": "adm_1793109315476_bttc",
+      "registrationId": "SSBM-ADM-2026-3404",
+      "applicantName": "Dattatray Keshav Joshi",
+      "guardianFirstName": "Rohan",
+      "guardianPhone": "9822019611",
+      "applicantEmail": "rohan.joshi@example.com",
+      "dobOrYear": "1948",
+      "address": "Flat 204, Ramdas Peth, Nagpur",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Male",
+      "relationWithResident": "Son / Daughter",
+      "mobilityStatus": "Independent with daily routine",
+      "medicalNotes": "Mild hypertension controlled with daily Amlodipine 5mg.",
+      "additionalMessage": "Seeking a peaceful spiritual environment with Go-Seva and daily prayer routines.",
+      "status": "pending_review",
+      "statusHistory": [
+        {
+          "id": "hist_1793109315532_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:55:15.476Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        }
+      ],
+      "createdAt": "2026-10-27T13:55:15.476Z",
+      "updatedAt": "2026-10-27T13:55:15.476Z"
+    },
+    {
+      "id": "adm_1793109310337_ctrq",
+      "registrationId": "SSBM-ADM-2026-8649",
+      "applicantName": "Uma Devi",
+      "guardianFirstName": "Ramesh",
+      "guardianPhone": "9823350011",
+      "applicantEmail": "uma.3500@example.com",
+      "dobOrYear": "1952",
+      "address": "Sitabuldi, Nagpur",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Female",
+      "relationWithResident": "Daughter",
+      "mobilityStatus": "Independent",
+      "medicalNotes": "None",
+      "additionalMessage": "Edge case padding test",
+      "status": "pending_review",
+      "statusHistory": [
+        {
+          "id": "hist_1793109310391_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:55:10.337Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        }
+      ],
+      "createdAt": "2026-10-27T13:55:10.337Z",
+      "updatedAt": "2026-10-27T13:55:10.337Z"
+    },
+    {
+      "id": "adm_1793109309982_v171",
+      "registrationId": "SSBM-ADM-2026-6807",
+      "applicantName": "Rahul Sharma",
+      "guardianFirstName": "Amitabh",
+      "guardianPhone": "9822560844",
+      "applicantEmail": "rahul.sharma.5608@example.com",
+      "dobOrYear": "1985",
+      "address": "Dharampeth, Nagpur, Maharashtra",
+      "admissionCategory": "Elder Care Sanctuary",
+      "residentGender": "Male",
+      "relationWithResident": "Son",
+      "mobilityStatus": "Assisted walker",
+      "medicalNotes": "Mild hypertension",
+      "additionalMessage": "Targeted verification test for Rahu1985 format.",
+      "status": "pending_review",
+      "statusHistory": [
+        {
+          "id": "hist_1793109310036_init",
+          "status": "pending_review",
+          "date": "2026-10-27T13:55:09.982Z",
+          "updatedBy": "Guardian / Applicant",
+          "notes": "Enquiry submitted online. Initial account created and pending administrative review."
+        }
+      ],
+      "createdAt": "2026-10-27T13:55:09.982Z",
+      "updatedAt": "2026-10-27T13:55:09.982Z"
+    },
+    {
       "id": "adm_1793105614295_w7q4",
       "registrationId": "SSBM-ADM-2026-9107",
       "applicantName": "Harry",
@@ -792,10 +1393,17 @@
           "date": "2026-10-27T12:55:33.011Z",
           "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
           "notes": "Status updated from pending_review to approved"
+        },
+        {
+          "id": "hist_1793107594222_i0ij",
+          "status": "approved",
+          "date": "2026-10-27T13:26:34.222Z",
+          "updatedBy": "Mr. Ashwin Vyenkatrao Anjikar",
+          "notes": "Status updated from approved to approved"
         }
       ],
       "createdAt": "2026-10-27T12:53:34.295Z",
-      "updatedAt": "2026-10-27T12:55:33.011Z",
+      "updatedAt": "2026-10-27T13:26:34.222Z",
       "adminNotes": "",
       "rejectionReason": "",
       "requestedInfoNotes": ""
@@ -1765,6 +2373,1176 @@
     }
   ],
   "audit_logs": [
+    {
+      "id": "log_1793109570984_cv3z2",
+      "actorId": "usr_1793109569831_q5ke0",
+      "actorName": "Ananya Verma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-2541",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.984Z"
+    },
+    {
+      "id": "log_1793109570925_nt2m8",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-2541",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-2541",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.925Z"
+    },
+    {
+      "id": "log_1793109570809_fme98",
+      "actorId": "usr_1793109569831_q5ke0",
+      "actorName": "Ananya Verma",
+      "action": "PASSWORD_CHANGE",
+      "entity": "User",
+      "details": "User changed account password",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.809Z"
+    },
+    {
+      "id": "log_1793109570685_yjxhw",
+      "actorId": "usr_1793109570497_oxyq9",
+      "actorName": "Kavita Deshmukh (Guardian: Suresh)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-5292",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.685Z"
+    },
+    {
+      "id": "log_1793109570627_hrka5",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to rejected for Kavita Deshmukh (SSBM-ADM-2026-5292)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.627Z"
+    },
+    {
+      "id": "log_1793109570620_qwicp",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to approved for Aarav Sharma (SSBM-ADM-2026-3002)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.620Z"
+    },
+    {
+      "id": "log_1793109570613_ko58x",
+      "actorId": "usr_1793109570437_q0rns",
+      "actorName": "Aarav Sharma (Guardian: Rahul)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-3002",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.613Z"
+    },
+    {
+      "id": "log_1793109570555_380pc",
+      "actorId": "public",
+      "actorName": "Suresh",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Kavita Deshmukh (Reg ID: SSBM-ADM-2026-5292)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.555Z"
+    },
+    {
+      "id": "log_1793109570494_m235w",
+      "actorId": "public",
+      "actorName": "Rahul",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Aarav Sharma (Reg ID: SSBM-ADM-2026-3002)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.494Z"
+    },
+    {
+      "id": "log_1793109570432_yhcv0",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "TASK_CREATE",
+      "entity": "PortalTask",
+      "details": "Assigned task \"Sunday Bhajan & Sangeet Seva Coordination - 9234\" to Neha Deshpande (SSBM-VOL-2026-7745)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.432Z"
+    },
+    {
+      "id": "log_1793109570426_q1e5n",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "TASK_CREATE",
+      "entity": "PortalTask",
+      "details": "Assigned task \"Free Eye Checkup Camp Escort Duty - 9234\" to Vikram Rathi (SSBM-VOL-2026-3014)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.426Z"
+    },
+    {
+      "id": "log_1793109570420_t6vu3",
+      "actorId": "usr_1793109570235_hc9sc",
+      "actorName": "Neha Deshpande",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into volunteer portal with ID SSBM-VOL-2026-7745",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.420Z"
+    },
+    {
+      "id": "log_1793109570362_mdtk5",
+      "actorId": "usr_1793109570174_bkz1y",
+      "actorName": "Vikram Rathi",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into volunteer portal with ID SSBM-VOL-2026-3014",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.362Z"
+    },
+    {
+      "id": "log_1793109570304_q82vo",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "VOLUNTEER_STATUS_UPDATE",
+      "entity": "VolunteerProfile",
+      "details": "Updated Neha Deshpande (SSBM-VOL-2026-7745) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.304Z"
+    },
+    {
+      "id": "log_1793109570298_nvnb2",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "VOLUNTEER_STATUS_UPDATE",
+      "entity": "VolunteerProfile",
+      "details": "Updated Vikram Rathi (SSBM-VOL-2026-3014) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.298Z"
+    },
+    {
+      "id": "log_1793109570292_4u7i6",
+      "actorId": "public",
+      "actorName": "Neha Deshpande",
+      "action": "VOLUNTEER_REGISTER",
+      "entity": "VolunteerProfile",
+      "details": "New Volunteer registration with ID SSBM-VOL-2026-7745",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.292Z"
+    },
+    {
+      "id": "log_1793109570231_ux4fq",
+      "actorId": "public",
+      "actorName": "Vikram Rathi",
+      "action": "VOLUNTEER_REGISTER",
+      "entity": "VolunteerProfile",
+      "details": "New Volunteer registration with ID SSBM-VOL-2026-3014",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.231Z"
+    },
+    {
+      "id": "log_1793109570170_5ywxj",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "TASK_UPDATE",
+      "entity": "PortalTask",
+      "details": "Updated task \"Morning Companion Seva for Ward A - 9234\" to status completed",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.170Z"
+    },
+    {
+      "id": "log_1793109570162_mha5k",
+      "actorId": "usr_1793109569831_q5ke0",
+      "actorName": "Ananya Verma",
+      "action": "TASK_PROGRESS_SUBMIT",
+      "entity": "PortalTask",
+      "details": "Updated progress for task \"Morning Companion Seva for Ward A - 9234\" (status: submitted)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.163Z"
+    },
+    {
+      "id": "log_1793109570154_jpex5",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "TASK_CREATE",
+      "entity": "PortalTask",
+      "details": "Assigned task \"Annadanam Kitchen Ration Stocking - 9234\" to Bhavesh Patil (SSBM-SM-2026-6121)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.154Z"
+    },
+    {
+      "id": "log_1793109570148_384z6",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "TASK_CREATE",
+      "entity": "PortalTask",
+      "details": "Assigned task \"Morning Companion Seva for Ward A - 9234\" to Ananya Verma (SSBM-SM-2026-2541)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.148Z"
+    },
+    {
+      "id": "log_1793109570141_vrw8w",
+      "actorId": "usr_1793109569951_vb9mm",
+      "actorName": "Bhavesh Patil",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-6121",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.141Z"
+    },
+    {
+      "id": "log_1793109570083_m2lp1",
+      "actorId": "usr_1793109569831_q5ke0",
+      "actorName": "Ananya Verma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-2541",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.083Z"
+    },
+    {
+      "id": "log_1793109570020_chj0w",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "SEVA_MEMBER_STATUS_UPDATE",
+      "entity": "SevaMemberProfile",
+      "details": "Updated Bhavesh Patil (SSBM-SM-2026-6121) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.020Z"
+    },
+    {
+      "id": "log_1793109570014_8r9uv",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "SEVA_MEMBER_STATUS_UPDATE",
+      "entity": "SevaMemberProfile",
+      "details": "Updated Ananya Verma (SSBM-SM-2026-2541) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.014Z"
+    },
+    {
+      "id": "log_1793109570008_6jnds",
+      "actorId": "public",
+      "actorName": "Bhavesh Patil",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-6121",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:30.008Z"
+    },
+    {
+      "id": "log_1793109569890_04gp3",
+      "actorId": "public",
+      "actorName": "Ananya Verma",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-2541",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:29.890Z"
+    },
+    {
+      "id": "log_1793109569825_x7y18",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "MEMBER_LOGIN",
+      "entity": "User",
+      "details": "User logged in",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:29.826Z"
+    },
+    {
+      "id": "log_1793109565473_prjuh",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_RESET_PASSWORD",
+      "entity": "User",
+      "details": "Reset password for user SSBM-VOL-2026-3397",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.473Z"
+    },
+    {
+      "id": "log_1793109565411_unrzz",
+      "actorId": "usr_1793109564657_dbdjc",
+      "actorName": "Ananya Verma",
+      "action": "PORTAL_PASSWORD_RESET",
+      "entity": "Security",
+      "details": "Password reset performed for SSBM-SM-2026-4279",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.411Z"
+    },
+    {
+      "id": "log_1793109565349_c1gi2",
+      "actorId": "usr_1793109565221_ma7ft",
+      "actorName": "Rajesh Gupta",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into member portal with ID SSBM-MEM-2026-3499",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.349Z"
+    },
+    {
+      "id": "log_1793109565291_6wuht",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "PROJECT_CREATE",
+      "entity": "ProjectItem",
+      "details": "Created project \"Senior Health & Preventive Clinic 2026\"",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.291Z"
+    },
+    {
+      "id": "log_1793109565284_ru8ue",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "MEMBERSHIP_STATUS_UPDATE",
+      "entity": "SocietyMemberProfile",
+      "details": "Updated Rajesh Gupta (SSBM-MEM-2026-3499) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.284Z"
+    },
+    {
+      "id": "log_1793109565278_6669n",
+      "actorId": "public",
+      "actorName": "Rajesh Gupta",
+      "action": "MEMBERSHIP_REGISTER",
+      "entity": "SocietyMemberProfile",
+      "details": "New Membership application with ID SSBM-MEM-2026-3499",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.278Z"
+    },
+    {
+      "id": "log_1793109565217_5h18f",
+      "actorId": "usr_1793109565095_f3m5v",
+      "actorName": "Rohan Joshi",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into volunteer portal with ID SSBM-VOL-2026-3397",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.217Z"
+    },
+    {
+      "id": "log_1793109565159_tnzjw",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "VOLUNTEER_STATUS_UPDATE",
+      "entity": "VolunteerProfile",
+      "details": "Updated Rohan Joshi (SSBM-VOL-2026-3397) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.159Z"
+    },
+    {
+      "id": "log_1793109565152_tyv3v",
+      "actorId": "public",
+      "actorName": "Rohan Joshi",
+      "action": "VOLUNTEER_REGISTER",
+      "entity": "VolunteerProfile",
+      "details": "New Volunteer registration with ID SSBM-VOL-2026-3397",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.152Z"
+    },
+    {
+      "id": "log_1793109565091_2skrd",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "TASK_UPDATE",
+      "entity": "PortalTask",
+      "details": "Updated task \"Senior Citizen Dining Care & Wellness Support\" to status completed",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.091Z"
+    },
+    {
+      "id": "log_1793109565084_b5wvw",
+      "actorId": "usr_1793109564657_dbdjc",
+      "actorName": "Ananya Verma",
+      "action": "TASK_PROGRESS_SUBMIT",
+      "entity": "PortalTask",
+      "details": "Updated progress for task \"Senior Citizen Dining Care & Wellness Support\" (status: submitted)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.084Z"
+    },
+    {
+      "id": "log_1793109565077_tbuu8",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "TASK_CREATE",
+      "entity": "PortalTask",
+      "details": "Assigned task \"Senior Citizen Dining Care & Wellness Support\" to Ananya Verma (SSBM-SM-2026-4279)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.077Z"
+    },
+    {
+      "id": "log_1793109565071_zxcae",
+      "actorId": "usr_1793109564657_dbdjc",
+      "actorName": "Ananya Verma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-4279",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.071Z"
+    },
+    {
+      "id": "log_1793109565012_6x797",
+      "actorId": "usr_1793109564657_dbdjc",
+      "actorName": "Ananya Verma",
+      "action": "PASSWORD_CHANGE",
+      "entity": "User",
+      "details": "User changed account password",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:25.012Z"
+    },
+    {
+      "id": "log_1793109564840_piqi8",
+      "actorId": "usr_1793109564657_dbdjc",
+      "actorName": "Ananya Verma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-4279",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:24.840Z"
+    },
+    {
+      "id": "log_1793109564779_8i0qi",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "SEVA_MEMBER_STATUS_UPDATE",
+      "entity": "SevaMemberProfile",
+      "details": "Updated Ananya Verma (SSBM-SM-2026-4279) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:24.779Z"
+    },
+    {
+      "id": "log_1793109564715_ss4p2",
+      "actorId": "public",
+      "actorName": "Ananya Verma",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-4279",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:24.715Z"
+    },
+    {
+      "id": "log_1793109564652_41f4a",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "MEMBER_LOGIN",
+      "entity": "User",
+      "details": "User logged in",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:24.652Z"
+    },
+    {
+      "id": "log_1793109558545_enmxd",
+      "actorId": "usr_1793109558015_au6np",
+      "actorName": "Savitri Narayan Kulkarni (Guardian: Pramod)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-4199",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.545Z"
+    },
+    {
+      "id": "log_1793109558486_vstf7",
+      "actorId": "usr_1793109558015_au6np",
+      "actorName": "Savitri Narayan Kulkarni (Guardian: Pramod)",
+      "action": "PORTAL_PASSWORD_RESET",
+      "entity": "Security",
+      "details": "Password reset performed for SSBM-ADM-2026-4199",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.486Z"
+    },
+    {
+      "id": "log_1793109558425_1ns1z",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-4199",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-4199",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.425Z"
+    },
+    {
+      "id": "log_1793109558312_vthsj",
+      "actorId": "usr_1793109558015_au6np",
+      "actorName": "Savitri Narayan Kulkarni (Guardian: Pramod)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-4199",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.312Z"
+    },
+    {
+      "id": "log_1793109558253_wts6b",
+      "actorId": "usr_1793109558015_au6np",
+      "actorName": "Savitri Narayan Kulkarni (Guardian: Pramod)",
+      "action": "PASSWORD_CHANGE",
+      "entity": "User",
+      "details": "User changed account password",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.254Z"
+    },
+    {
+      "id": "log_1793109558136_pclzz",
+      "actorId": "usr_1793109558015_au6np",
+      "actorName": "Savitri Narayan Kulkarni (Guardian: Pramod)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-4199",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.136Z"
+    },
+    {
+      "id": "log_1793109558078_7ffb3",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to approved for Savitri Narayan Kulkarni (SSBM-ADM-2026-4199)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.078Z"
+    },
+    {
+      "id": "log_1793109558072_uciuw",
+      "actorId": "public",
+      "actorName": "Pramod",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Savitri Narayan Kulkarni (Reg ID: SSBM-ADM-2026-4199)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.072Z"
+    },
+    {
+      "id": "log_1793109558011_h221x",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to rejected for Dattatray Keshav Joshi (SSBM-ADM-2026-4097)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.011Z"
+    },
+    {
+      "id": "log_1793109558003_7disz",
+      "actorId": "usr_1793109557694_5o12y",
+      "actorName": "Dattatray Keshav Joshi (Guardian: Rohan)",
+      "action": "ADMISSION_APPLICANT_RESPONSE",
+      "entity": "AdmissionEnquiry",
+      "details": "Applicant submitted requested info for enquiry SSBM-ADM-2026-4097",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:18.003Z"
+    },
+    {
+      "id": "log_1793109557995_534mp",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to more_info_required for Dattatray Keshav Joshi (SSBM-ADM-2026-4097)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:17.995Z"
+    },
+    {
+      "id": "log_1793109557985_2ut7p",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-4097",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-4097",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:17.985Z"
+    },
+    {
+      "id": "log_1793109557872_banit",
+      "actorId": "usr_1793109557694_5o12y",
+      "actorName": "Dattatray Keshav Joshi (Guardian: Rohan)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-4097",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:17.872Z"
+    },
+    {
+      "id": "log_1793109557813_ff3do",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "MEMBER_LOGIN",
+      "entity": "User",
+      "details": "User logged in",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:17.813Z"
+    },
+    {
+      "id": "log_1793109557752_rcte6",
+      "actorId": "public",
+      "actorName": "Rohan",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Dattatray Keshav Joshi (Reg ID: SSBM-ADM-2026-4097)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:17.752Z"
+    },
+    {
+      "id": "log_1793109553875_hwded",
+      "actorId": "usr_1793109553760_j5s39",
+      "actorName": "Uma Devi (Guardian: Ramesh)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-8980",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:13.875Z"
+    },
+    {
+      "id": "log_1793109553817_171gm",
+      "actorId": "public",
+      "actorName": "Ramesh",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Uma Devi (Reg ID: SSBM-ADM-2026-8980)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:13.817Z"
+    },
+    {
+      "id": "log_1793109553756_v57gt",
+      "actorId": "usr_1793109553405_9n40x",
+      "actorName": "Rahul Sharma (Guardian: Amitabh)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-1439",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:13.756Z"
+    },
+    {
+      "id": "log_1793109553698_kh0us",
+      "actorId": "usr_1793109553405_9n40x",
+      "actorName": "Rahul Sharma (Guardian: Amitabh)",
+      "action": "PORTAL_PASSWORD_RESET",
+      "entity": "Security",
+      "details": "Password reset performed for SSBM-ADM-2026-1439",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:13.698Z"
+    },
+    {
+      "id": "log_1793109553637_tkl65",
+      "actorId": "usr_1793109553405_9n40x",
+      "actorName": "Rahul Sharma (Guardian: Amitabh)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-1439",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:13.637Z"
+    },
+    {
+      "id": "log_1793109553578_05nwk",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-1439",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-1439",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:13.578Z"
+    },
+    {
+      "id": "log_1793109553463_spyis",
+      "actorId": "public",
+      "actorName": "Amitabh",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Rahul Sharma (Reg ID: SSBM-ADM-2026-1439)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:13.463Z"
+    },
+    {
+      "id": "log_1793109544286_3m1zt",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:04.286Z"
+    },
+    {
+      "id": "log_1793109544227_b7kvl",
+      "actorId": "usr_1793105614295_wtldc",
+      "actorName": "Harry (Guardian: Maxx)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:04.227Z"
+    },
+    {
+      "id": "log_1793109544167_tz8l0",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-9287",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-9287",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:04.167Z"
+    },
+    {
+      "id": "log_1793109544053_za0l4",
+      "actorId": "usr_1793109543528_eiwuz",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9287",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:04.053Z"
+    },
+    {
+      "id": "log_1793109543939_en6u6",
+      "actorId": "usr_1793109543528_eiwuz",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9287",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:03.939Z"
+    },
+    {
+      "id": "log_1793109543823_xlbe0",
+      "actorId": "usr_1793109543528_eiwuz",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9287",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:03.823Z"
+    },
+    {
+      "id": "log_1793109543763_w1uoh",
+      "actorId": "usr_1793109543528_eiwuz",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9287",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:03.763Z"
+    },
+    {
+      "id": "log_1793109543651_ap6te",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "SEVA_MEMBER_STATUS_UPDATE",
+      "entity": "SevaMemberProfile",
+      "details": "Updated Gopal Sharma (SSBM-SM-2026-9287) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:03.651Z"
+    },
+    {
+      "id": "log_1793109543644_beftt",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:03.644Z"
+    },
+    {
+      "id": "log_1793109543586_s2e6c",
+      "actorId": "public",
+      "actorName": "Gopal Sharma",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-9287",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:03.586Z"
+    },
+    {
+      "id": "log_1793109543523_pwev1",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:59:03.523Z"
+    },
+    {
+      "id": "log_1793109315709_t5hg6",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-3404",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-3404",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:15.709Z"
+    },
+    {
+      "id": "log_1793109315594_z51zm",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "MEMBER_LOGIN",
+      "entity": "User",
+      "details": "User logged in",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:15.594Z"
+    },
+    {
+      "id": "log_1793109315534_kjewx",
+      "actorId": "public",
+      "actorName": "Rohan",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Dattatray Keshav Joshi (Reg ID: SSBM-ADM-2026-3404)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:15.534Z"
+    },
+    {
+      "id": "log_1793109310453_4cobz",
+      "actorId": "usr_1793109310337_iq1h2",
+      "actorName": "Uma Devi (Guardian: Ramesh)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-8649",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:10.453Z"
+    },
+    {
+      "id": "log_1793109310394_a4szc",
+      "actorId": "public",
+      "actorName": "Ramesh",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Uma Devi (Reg ID: SSBM-ADM-2026-8649)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:10.394Z"
+    },
+    {
+      "id": "log_1793109310333_dwgzc",
+      "actorId": "usr_1793109309982_vqlqw",
+      "actorName": "Rahul Sharma (Guardian: Amitabh)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-6807",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:10.333Z"
+    },
+    {
+      "id": "log_1793109310275_xnl1i",
+      "actorId": "usr_1793109309982_vqlqw",
+      "actorName": "Rahul Sharma (Guardian: Amitabh)",
+      "action": "PORTAL_PASSWORD_RESET",
+      "entity": "Security",
+      "details": "Password reset performed for SSBM-ADM-2026-6807",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:10.275Z"
+    },
+    {
+      "id": "log_1793109310214_f0z4n",
+      "actorId": "usr_1793109309982_vqlqw",
+      "actorName": "Rahul Sharma (Guardian: Amitabh)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-6807",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:10.214Z"
+    },
+    {
+      "id": "log_1793109310154_y59ij",
+      "actorId": "anonymous",
+      "actorName": "SSBM-ADM-2026-6807",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-ADM-2026-6807",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:10.154Z"
+    },
+    {
+      "id": "log_1793109310039_4g30h",
+      "actorId": "public",
+      "actorName": "Amitabh",
+      "action": "ADMISSION_ENQUIRY_SUBMITTED",
+      "entity": "AdmissionEnquiry",
+      "details": "Admission enquiry registered for resident Rahul Sharma (Reg ID: SSBM-ADM-2026-6807)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:55:10.039Z"
+    },
+    {
+      "id": "log_1793109285734_8lbmm",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.734Z"
+    },
+    {
+      "id": "log_1793109285675_0chjt",
+      "actorId": "usr_1793105614295_wtldc",
+      "actorName": "Harry (Guardian: Maxx)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.675Z"
+    },
+    {
+      "id": "log_1793109285617_f2386",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-9075",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-9075",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.617Z"
+    },
+    {
+      "id": "log_1793109285504_jtof3",
+      "actorId": "usr_1793109284985_z7pml",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9075",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.504Z"
+    },
+    {
+      "id": "log_1793109285390_vwz3w",
+      "actorId": "usr_1793109284985_z7pml",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9075",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.390Z"
+    },
+    {
+      "id": "log_1793109285278_2m0r4",
+      "actorId": "usr_1793109284985_z7pml",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9075",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.278Z"
+    },
+    {
+      "id": "log_1793109285219_w1p8k",
+      "actorId": "usr_1793109284985_z7pml",
+      "actorName": "Gopal Sharma",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-9075",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.219Z"
+    },
+    {
+      "id": "log_1793109285106_ia30r",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "SEVA_MEMBER_STATUS_UPDATE",
+      "entity": "SevaMemberProfile",
+      "details": "Updated Gopal Sharma (SSBM-SM-2026-9075) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.106Z"
+    },
+    {
+      "id": "log_1793109285100_3ladl",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.100Z"
+    },
+    {
+      "id": "log_1793109285042_mgrpv",
+      "actorId": "public",
+      "actorName": "Gopal Sharma",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-9075",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:45.042Z"
+    },
+    {
+      "id": "log_1793109284980_ub48i",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:44.980Z"
+    },
+    {
+      "id": "log_1793109243466_mhcad",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:03.466Z"
+    },
+    {
+      "id": "log_1793109243407_ayvnd",
+      "actorId": "public",
+      "actorName": "Gopal Sharma",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-2272",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:03.407Z"
+    },
+    {
+      "id": "log_1793109243343_413ia",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:54:03.343Z"
+    },
+    {
+      "id": "log_1793109222629_513yw",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:53:42.629Z"
+    },
+    {
+      "id": "log_1793109222571_ti7j2",
+      "actorId": "public",
+      "actorName": "Gopal Sharma",
+      "action": "SEVA_MEMBER_REGISTER",
+      "entity": "SevaMemberProfile",
+      "details": "New Seva Member registered with ID SSBM-SM-2026-9355",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:53:42.571Z"
+    },
+    {
+      "id": "log_1793109222504_pnt3s",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:53:42.504Z"
+    },
+    {
+      "id": "log_1793108668032_gcs10",
+      "actorId": "anonymous",
+      "actorName": "SSBM-SM-2026-8351",
+      "action": "PORTAL_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for ID: SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:44:28.032Z"
+    },
+    {
+      "id": "log_1793108667909_zuukn",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:44:27.909Z"
+    },
+    {
+      "id": "log_1793107831094_mpuhu",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PASSWORD_CHANGE",
+      "entity": "User",
+      "details": "User changed account password",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:30:31.094Z"
+    },
+    {
+      "id": "log_1793107806464_8jyd6",
+      "actorId": "usr_1793105989903_mwkn2",
+      "actorName": "Harry",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into seva_member portal with ID SSBM-SM-2026-8351",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:30:06.464Z"
+    },
+    {
+      "id": "log_1793107772892_hnotu",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "SEVA_MEMBER_STATUS_UPDATE",
+      "entity": "SevaMemberProfile",
+      "details": "Updated Harry (SSBM-SM-2026-8351) status to approved",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:29:32.892Z"
+    },
+    {
+      "id": "log_1793107748563_5cfaz",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Admin authenticated",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:29:08.563Z"
+    },
+    {
+      "id": "log_1793107739855_r6w0l",
+      "actorId": "anonymous",
+      "actorName": "ashvin",
+      "action": "ADMIN_LOGIN_FAIL",
+      "entity": "Security",
+      "details": "Failed login attempt for admin username: ashvin",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:28:59.855Z"
+    },
+    {
+      "id": "log_1793107685444_es7j3",
+      "actorId": "usr_1793105614295_wtldc",
+      "actorName": "Harry (Guardian: Maxx)",
+      "action": "PASSWORD_CHANGE",
+      "entity": "User",
+      "details": "User changed account password",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:28:05.444Z"
+    },
+    {
+      "id": "log_1793107629130_1spya",
+      "actorId": "usr_1793105614295_wtldc",
+      "actorName": "Harry (Guardian: Maxx)",
+      "action": "PORTAL_LOGIN_SUCCESS",
+      "entity": "Security",
+      "details": "Logged into admission_applicant portal with ID SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:27:09.130Z"
+    },
+    {
+      "id": "log_1793107594235_t991r",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMISSION_UPDATE",
+      "entity": "AdmissionEnquiry",
+      "details": "Updated status to approved for Harry (adm_1793105614295_w7q4)",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:26:34.235Z"
+    },
+    {
+      "id": "log_1793107587051_31wsf",
+      "actorId": "usr_admin_bootstrap_01",
+      "actorName": "Mr. Ashwin Vyenkatrao Anjikar",
+      "action": "ADMIN_RESET_PASSWORD",
+      "entity": "User",
+      "details": "Reset password for user SSBM-ADM-2026-9107",
+      "ipAddress": "::1",
+      "createdAt": "2026-10-27T13:26:27.051Z"
+    },
     {
       "id": "log_1793107508683_8s2p9",
       "actorId": "usr_admin_bootstrap_01",
@@ -5057,7 +6835,7 @@
   ],
   "meta": {
     "version": "1.0.0",
-    "lastSaved": "2026-10-27T13:25:08.683Z",
+    "lastSaved": "2026-10-27T13:59:30.984Z",
     "initializedAt": "2026-10-16T08:20:07.291Z"
   },
   "seva_members": [
@@ -5338,7 +7116,134 @@
       "applicationStatus": "approved",
       "joinedAt": "2026-10-27T12:59:49.903Z",
       "adminNotes": "",
-      "reviewedAt": "2026-10-27T13:00:41.902Z",
+      "reviewedAt": "2026-10-27T13:29:32.885Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "sm_1793109222568_wl6a",
+      "userId": "usr_1793109222513_cx12c",
+      "memberId": "SSBM-SM-2026-9355",
+      "fullName": "Gopal Sharma",
+      "dob": "1994-06-15",
+      "mobile": "9822007306",
+      "email": "gopal.7306@example.com",
+      "address": "Mahuli, Nagpur",
+      "sevaPreferences": [
+        "Elder Care Seva"
+      ],
+      "emergencyContact": "9822007306",
+      "applicationStatus": "pending_approval",
+      "joinedAt": "2026-10-27T13:53:42.513Z"
+    },
+    {
+      "id": "sm_1793109243404_uqrr",
+      "userId": "usr_1793109243349_1l7xo",
+      "memberId": "SSBM-SM-2026-2272",
+      "fullName": "Gopal Sharma",
+      "dob": "1994-06-15",
+      "mobile": "9822008707",
+      "email": "gopal.8707@example.com",
+      "address": "Mahuli, Nagpur",
+      "sevaPreferences": [
+        "Elder Care Seva"
+      ],
+      "emergencyContact": "9822008707",
+      "applicationStatus": "pending_approval",
+      "joinedAt": "2026-10-27T13:54:03.349Z"
+    },
+    {
+      "id": "sm_1793109285040_ecds",
+      "userId": "usr_1793109284985_z7pml",
+      "memberId": "SSBM-SM-2026-9075",
+      "fullName": "Gopal Sharma",
+      "dob": "1994-06-15",
+      "mobile": "9822005989",
+      "email": "gopal.5989@example.com",
+      "address": "Mahuli, Nagpur",
+      "sevaPreferences": [
+        "Elder Care Seva"
+      ],
+      "emergencyContact": "9822005989",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:54:44.985Z",
+      "reviewedAt": "2026-10-27T13:54:45.104Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "sm_1793109543583_8ksk",
+      "userId": "usr_1793109543528_eiwuz",
+      "memberId": "SSBM-SM-2026-9287",
+      "fullName": "Gopal Sharma",
+      "dob": "1994-06-15",
+      "mobile": "9822003817",
+      "email": "gopal.3817@example.com",
+      "address": "Mahuli, Nagpur",
+      "sevaPreferences": [
+        "Elder Care Seva"
+      ],
+      "emergencyContact": "9822003817",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:03.528Z",
+      "reviewedAt": "2026-10-27T13:59:03.648Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "sm_1793109564713_d5rj",
+      "userId": "usr_1793109564657_dbdjc",
+      "memberId": "SSBM-SM-2026-4279",
+      "fullName": "Ananya Verma",
+      "dob": "1995-04-12",
+      "mobile": "982204731",
+      "email": "ananya.verma.4731@example.com",
+      "address": "Plot 44, Ram Nagar, Nagpur",
+      "sevaPreferences": [
+        "Elder Care Seva",
+        "Gaushala Seva"
+      ],
+      "emergencyContact": "982204731",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:24.657Z",
+      "adminNotes": "Verified documents and identity",
+      "reviewedAt": "2026-10-27T13:59:24.777Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "sm_1793109569887_zz35",
+      "userId": "usr_1793109569831_q5ke0",
+      "memberId": "SSBM-SM-2026-2541",
+      "fullName": "Ananya Verma",
+      "dob": "1995-04-12",
+      "mobile": "982209234",
+      "email": "ananya.verma.9234@example.com",
+      "address": "Plot 44, Ram Nagar, Nagpur",
+      "sevaPreferences": [
+        "Elder Care Seva",
+        "Gaushala Seva"
+      ],
+      "emergencyContact": "982209234",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:29.831Z",
+      "adminNotes": "Verified and approved for Elder Care wing",
+      "reviewedAt": "2026-10-27T13:59:30.012Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "sm_1793109570006_ospv",
+      "userId": "usr_1793109569951_vb9mm",
+      "memberId": "SSBM-SM-2026-6121",
+      "fullName": "Bhavesh Patil",
+      "dob": "1992-08-20",
+      "mobile": "982219234",
+      "email": "bhavesh.patil.9234@example.com",
+      "address": "Near Gandhi Sagar, Mahal, Nagpur",
+      "sevaPreferences": [
+        "Annadanam & Kitchen Seva"
+      ],
+      "emergencyContact": "982219234",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:29.951Z",
+      "adminNotes": "Approved for Kitchen Seva",
+      "reviewedAt": "2026-10-27T13:59:30.018Z",
       "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
     }
   ],
@@ -5492,6 +7397,31 @@
       "applicationStatus": "approved",
       "joinedAt": "2026-10-24T17:35:29.103Z",
       "reviewedAt": "2026-10-24T17:35:29.162Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "mem_1793109565276_rznz",
+      "userId": "usr_1793109565221_ma7ft",
+      "membershipId": "SSBM-MEM-2026-3499",
+      "fullName": "Rajesh Gupta",
+      "dob": "1980-02-15",
+      "mobile": "989015540",
+      "email": "dr.rajesh.5540@example.com",
+      "address": "Wardha Road, Nagpur",
+      "qualifications": "General",
+      "skills": [
+        "Medical Consulting",
+        "Healthcare Operations"
+      ],
+      "areasOfInterest": [
+        "Health Infrastructure",
+        "Elder Wellness Programs"
+      ],
+      "availability": "Sundays",
+      "membershipTier": "Active Member",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:25.221Z",
+      "reviewedAt": "2026-10-27T13:59:25.281Z",
       "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
     }
   ],
@@ -5726,6 +7656,75 @@
       "joinedAt": "2026-10-24T17:35:28.981Z",
       "reviewedAt": "2026-10-24T17:35:29.041Z",
       "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "vol_1793109565149_1o8x",
+      "userId": "usr_1793109565095_f3m5v",
+      "volunteerId": "SSBM-VOL-2026-3397",
+      "fullName": "Rohan Joshi",
+      "dob": "1998-08-25",
+      "mobile": "976546560",
+      "email": "rohan.joshi.6560@example.com",
+      "address": "Dharampeth, Nagpur",
+      "skills": [
+        "First Aid",
+        "Patient Care"
+      ],
+      "preferredActivities": [
+        "Health Camps",
+        "Elder Care"
+      ],
+      "availability": "Weekends",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:25.095Z",
+      "reviewedAt": "2026-10-27T13:59:25.156Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "vol_1793109570229_izy2",
+      "userId": "usr_1793109570174_bkz1y",
+      "volunteerId": "SSBM-VOL-2026-3014",
+      "fullName": "Vikram Rathi",
+      "dob": "1998-11-05",
+      "mobile": "982229234",
+      "email": "vikram.rathi.9234@example.com",
+      "address": "Civil Lines, Nagpur",
+      "skills": [
+        "Medical First Aid",
+        "Elder Mobility Escort"
+      ],
+      "preferredActivities": [
+        "Health Checkup Camps"
+      ],
+      "availability": "Weekends",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:30.174Z",
+      "adminNotes": "Approved for Health Camp Support",
+      "reviewedAt": "2026-10-27T13:59:30.296Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
+    },
+    {
+      "id": "vol_1793109570289_lp3s",
+      "userId": "usr_1793109570235_hc9sc",
+      "volunteerId": "SSBM-VOL-2026-7745",
+      "fullName": "Neha Deshpande",
+      "dob": "1996-03-15",
+      "mobile": "982239234",
+      "email": "neha.deshpande.9234@example.com",
+      "address": "Dharampeth, Nagpur",
+      "skills": [
+        "Cultural Programs",
+        "Library & Reading"
+      ],
+      "preferredActivities": [
+        "Senior Storytelling & Reading"
+      ],
+      "availability": "Weekends",
+      "applicationStatus": "approved",
+      "joinedAt": "2026-10-27T13:59:30.235Z",
+      "adminNotes": "Approved for Ashram Library Support",
+      "reviewedAt": "2026-10-27T13:59:30.302Z",
+      "reviewedBy": "Mr. Ashwin Vyenkatrao Anjikar"
     }
   ],
   "projects": [
@@ -5854,6 +7853,26 @@
       "documents": [],
       "createdAt": "2026-10-24T17:35:29.167Z",
       "updatedAt": "2026-10-24T17:35:29.167Z"
+    },
+    {
+      "id": "proj_1793109565288_a1kx",
+      "title": "Senior Health & Preventive Clinic 2026",
+      "description": "Weekly clinical health screenings and routine geriatric medical checkups.",
+      "objectives": [
+        "Screen 100 seniors monthly",
+        "Establish regular vitals tracking"
+      ],
+      "leadMemberId": "SSBM-MEM-2026-3499",
+      "leadMemberName": "Dr. Rajesh Gupta",
+      "teamMemberIds": [],
+      "priority": "high",
+      "startDate": "2026-10-27",
+      "deadline": "2026-12-31",
+      "status": "active",
+      "milestones": [],
+      "documents": [],
+      "createdAt": "2026-10-27T13:59:25.288Z",
+      "updatedAt": "2026-10-27T13:59:25.288Z"
     }
   ],
   "portal_tasks": [
@@ -6236,6 +8255,114 @@
       "updatedAt": "2026-10-24T17:35:28.976Z",
       "completionEvidence": "https://ssbmfoundation.org/evidence/dining-care-batch1.jpg",
       "adminComments": "Outstanding service and timely care verified by supervisor."
+    },
+    {
+      "id": "task_1793109565075_f629",
+      "title": "Senior Citizen Dining Care & Wellness Support",
+      "description": "Assist ashram dining staff with midday nutritious meal service and conduct wellness check-in.",
+      "category": "seva_member",
+      "assignedToId": "SSBM-SM-2026-4279",
+      "assignedToName": "Ananya Verma",
+      "assignedToRole": "seva_member",
+      "priority": "high",
+      "startDate": "2026-10-27",
+      "deadline": "2026-10-30",
+      "status": "completed",
+      "instructions": "Wear seva aprons and sanitize hands before entering dining hall.",
+      "attachments": [],
+      "progressUpdates": [
+        {
+          "id": "prog_1793109565081_jsc",
+          "date": "2026-10-27T13:59:25.081Z",
+          "notes": "Completed meal serving for 45 residents and assisted elder medical intake.",
+          "progressPercent": 100
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:25.075Z",
+      "updatedAt": "2026-10-27T13:59:25.088Z",
+      "completionEvidence": "https://ssbmfoundation.org/evidence/dining-care-batch1.jpg",
+      "adminComments": "Outstanding service and timely care verified by supervisor."
+    },
+    {
+      "id": "task_1793109570145_48d0",
+      "title": "Morning Companion Seva for Ward A - 9234",
+      "description": "Assist senior residents with morning reading and companion walks",
+      "category": "seva_member",
+      "assignedToId": "SSBM-SM-2026-2541",
+      "assignedToName": "Ananya Verma",
+      "assignedToRole": "seva_member",
+      "priority": "high",
+      "startDate": "2026-10-27",
+      "deadline": "2026-11-01",
+      "status": "completed",
+      "instructions": "Report to Sister Saroj at 7:30 AM",
+      "attachments": [],
+      "progressUpdates": [
+        {
+          "id": "prog_1793109570160_7ph",
+          "date": "2026-10-27T13:59:30.160Z",
+          "notes": "Morning walks completed with 8 senior residents. Vital check reports submitted to ashram dispensary.",
+          "progressPercent": 100
+        }
+      ],
+      "createdAt": "2026-10-27T13:59:30.145Z",
+      "updatedAt": "2026-10-27T13:59:30.168Z",
+      "completionEvidence": "Completed companion log verified by duty nurse.",
+      "adminComments": "Verified and approved with thanks for compassionate seva."
+    },
+    {
+      "id": "task_1793109570151_5bxj",
+      "title": "Annadanam Kitchen Ration Stocking - 9234",
+      "description": "Verify wheat and pulse sacks inventory for ashram dining hall",
+      "category": "seva_member",
+      "assignedToId": "SSBM-SM-2026-6121",
+      "assignedToName": "Bhavesh Patil",
+      "assignedToRole": "seva_member",
+      "priority": "medium",
+      "startDate": "2026-10-27",
+      "deadline": "2026-11-02",
+      "status": "not_started",
+      "instructions": "Check storage moisture seals",
+      "attachments": [],
+      "progressUpdates": [],
+      "createdAt": "2026-10-27T13:59:30.151Z",
+      "updatedAt": "2026-10-27T13:59:30.151Z"
+    },
+    {
+      "id": "task_1793109570424_x4ql",
+      "title": "Free Eye Checkup Camp Escort Duty - 9234",
+      "description": "Assist ophthalmologist team in guiding senior citizens during vision test",
+      "category": "volunteer",
+      "assignedToId": "SSBM-VOL-2026-3014",
+      "assignedToName": "Vikram Rathi",
+      "assignedToRole": "volunteer",
+      "priority": "high",
+      "startDate": "2026-10-27",
+      "deadline": "2026-11-05",
+      "status": "not_started",
+      "instructions": "Camp takes place in Hall 2 from 9 AM to 1 PM",
+      "attachments": [],
+      "progressUpdates": [],
+      "createdAt": "2026-10-27T13:59:30.424Z",
+      "updatedAt": "2026-10-27T13:59:30.424Z"
+    },
+    {
+      "id": "task_1793109570429_p4x1",
+      "title": "Sunday Bhajan & Sangeet Seva Coordination - 9234",
+      "description": "Coordinate devotional singing evening with residents",
+      "category": "volunteer",
+      "assignedToId": "SSBM-VOL-2026-7745",
+      "assignedToName": "Neha Deshpande",
+      "assignedToRole": "volunteer",
+      "priority": "medium",
+      "startDate": "2026-10-27",
+      "deadline": "2026-11-08",
+      "status": "not_started",
+      "instructions": "Mandir hall from 5 PM to 6:30 PM",
+      "attachments": [],
+      "progressUpdates": [],
+      "createdAt": "2026-10-27T13:59:30.429Z",
+      "updatedAt": "2026-10-27T13:59:30.429Z"
     }
   ],
   "portal_notifications": [
@@ -7408,6 +9535,402 @@
       "type": "success",
       "isRead": false,
       "createdAt": "2026-10-27T13:00:41.902Z"
+    },
+    {
+      "id": "notif_1793107594222_ns1v",
+      "userId": "SSBM-ADM-2026-9107",
+      "title": "Admission Status: APPROVED",
+      "message": "Congratulations! Your admission enquiry (SSBM-ADM-2026-9107) for Harry has been APPROVED by Vyenkatesh Ashram administration.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:26:34.222Z"
+    },
+    {
+      "id": "notif_1793107772885_foi0",
+      "userId": "SSBM-SM-2026-8351",
+      "title": "Application Status: APPROVED",
+      "message": "Congratulations! Your Seva Member application (SSBM-SM-2026-8351) has been approved. You can now access your dashboard.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:29:32.885Z"
+    },
+    {
+      "id": "notif_1793109222568_6jd0",
+      "userId": "SSBM-SM-2026-9355",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-9355) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:53:42.513Z"
+    },
+    {
+      "id": "notif_1793109243404_gqr7",
+      "userId": "SSBM-SM-2026-2272",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-2272) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:54:03.349Z"
+    },
+    {
+      "id": "notif_1793109285040_lgbt",
+      "userId": "SSBM-SM-2026-9075",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-9075) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:54:44.985Z"
+    },
+    {
+      "id": "notif_1793109285104_pqxs",
+      "userId": "SSBM-SM-2026-9075",
+      "title": "Application Status: APPROVED",
+      "message": "Congratulations! Your Seva Member application (SSBM-SM-2026-9075) has been approved. You can now access your dashboard.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:54:45.104Z"
+    },
+    {
+      "id": "notif_1793109310036_ky16",
+      "userId": "SSBM-ADM-2026-6807",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-6807) for Rahul Sharma has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:55:09.982Z"
+    },
+    {
+      "id": "notif_1793109310391_pt00",
+      "userId": "SSBM-ADM-2026-8649",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-8649) for Uma Devi has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:55:10.337Z"
+    },
+    {
+      "id": "notif_1793109315532_797v",
+      "userId": "SSBM-ADM-2026-3404",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-3404) for Dattatray Keshav Joshi has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:55:15.476Z"
+    },
+    {
+      "id": "notif_1793109543583_v7p7",
+      "userId": "SSBM-SM-2026-9287",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-9287) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:03.528Z"
+    },
+    {
+      "id": "notif_1793109543648_sj7b",
+      "userId": "SSBM-SM-2026-9287",
+      "title": "Application Status: APPROVED",
+      "message": "Congratulations! Your Seva Member application (SSBM-SM-2026-9287) has been approved. You can now access your dashboard.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:03.648Z"
+    },
+    {
+      "id": "notif_1793109553461_n1y6",
+      "userId": "SSBM-ADM-2026-1439",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-1439) for Rahul Sharma has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:13.405Z"
+    },
+    {
+      "id": "notif_1793109553815_4eu7",
+      "userId": "SSBM-ADM-2026-8980",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-8980) for Uma Devi has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:13.760Z"
+    },
+    {
+      "id": "notif_1793109557749_ue00",
+      "userId": "SSBM-ADM-2026-4097",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-4097) for Dattatray Keshav Joshi has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:17.694Z"
+    },
+    {
+      "id": "notif_1793109557992_mwhs",
+      "userId": "SSBM-ADM-2026-4097",
+      "title": "Admission Status: MORE INFO_REQUIRED",
+      "message": "Action Required for your admission enquiry (SSBM-ADM-2026-4097): Administration requested additional details or documents. Instructions: Please provide certified medical fitness certificate and senior Aadhaar card copy.",
+      "type": "warning",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:17.992Z"
+    },
+    {
+      "id": "notif_1793109558008_fw9p",
+      "userId": "SSBM-ADM-2026-4097",
+      "title": "Admission Status: REJECTED",
+      "message": "Your admission enquiry (SSBM-ADM-2026-4097) for Dattatray Keshav Joshi was reviewed and could not be approved at this time. Reason: Assisted care ward is currently operating at maximum safe capacity for high-dependency residents.",
+      "type": "warning",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:18.008Z"
+    },
+    {
+      "id": "notif_1793109558070_0k1z",
+      "userId": "SSBM-ADM-2026-4199",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-4199) for Savitri Narayan Kulkarni has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:18.015Z"
+    },
+    {
+      "id": "notif_1793109558076_frm3",
+      "userId": "SSBM-ADM-2026-4199",
+      "title": "Admission Status: APPROVED",
+      "message": "Congratulations! Your admission enquiry (SSBM-ADM-2026-4199) for Savitri Narayan Kulkarni has been APPROVED by Vyenkatesh Ashram administration.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:18.076Z"
+    },
+    {
+      "id": "notif_1793109564713_0k85",
+      "userId": "SSBM-SM-2026-4279",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-4279) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:24.657Z"
+    },
+    {
+      "id": "notif_1793109564777_xzeh",
+      "userId": "SSBM-SM-2026-4279",
+      "title": "Application Status: APPROVED",
+      "message": "Congratulations! Your Seva Member application (SSBM-SM-2026-4279) has been approved. You can now access your dashboard.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:24.777Z"
+    },
+    {
+      "id": "notif_1793109565075_eet0",
+      "userId": "SSBM-SM-2026-4279",
+      "title": "New Seva Task Assigned",
+      "message": "You have been assigned a new task: \"Senior Citizen Dining Care & Wellness Support\". Deadline: 2026-10-30.",
+      "type": "action",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:25.075Z"
+    },
+    {
+      "id": "notif_1793109565088_m4um",
+      "userId": "SSBM-SM-2026-4279",
+      "title": "Task Review: \"Senior Citizen Dining Care & Wellness Support\"",
+      "message": "Great job! Your submission for task \"Senior Citizen Dining Care & Wellness Support\" was verified and approved by the administration.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:25.088Z"
+    },
+    {
+      "id": "notif_1793109565149_ksd4",
+      "userId": "SSBM-VOL-2026-3397",
+      "title": "Volunteer Application Received",
+      "message": "Your Volunteer registration (SSBM-VOL-2026-3397) was received. Our ashram seva coordinator will review your profile shortly.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:25.095Z"
+    },
+    {
+      "id": "notif_1793109565157_xl75",
+      "userId": "SSBM-VOL-2026-3397",
+      "title": "Volunteer Status: APPROVED",
+      "message": "Namaste! Your Volunteer registration (SSBM-VOL-2026-3397) is approved. You can now view your assigned seva activities.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:25.157Z"
+    },
+    {
+      "id": "notif_1793109565276_i19b",
+      "userId": "SSBM-MEM-2026-3499",
+      "title": "Membership Application Submitted",
+      "message": "Your Foundation Membership application (SSBM-MEM-2026-3499) is under review by the Executive Board.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:25.221Z"
+    },
+    {
+      "id": "notif_1793109565281_0jbh",
+      "userId": "SSBM-MEM-2026-3499",
+      "title": "Membership Status: APPROVED",
+      "message": "Welcome! Your Foundation Membership (SSBM-MEM-2026-3499) has been approved by the board.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:25.281Z"
+    },
+    {
+      "id": "notif_1793109565288_6gb9",
+      "userId": "SSBM-MEM-2026-3499",
+      "title": "New Project Assignment",
+      "message": "You have been assigned to project: \"Senior Health & Preventive Clinic 2026\". Deadline: 2026-12-31",
+      "type": "action",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:25.288Z"
+    },
+    {
+      "id": "notif_1793109569887_5pq9",
+      "userId": "SSBM-SM-2026-2541",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-2541) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:29.831Z"
+    },
+    {
+      "id": "notif_1793109570006_065x",
+      "userId": "SSBM-SM-2026-6121",
+      "title": "Seva Member Application Submitted",
+      "message": "Your Seva Member application (SSBM-SM-2026-6121) was submitted successfully and is awaiting administrative approval.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:29.951Z"
+    },
+    {
+      "id": "notif_1793109570012_0s9w",
+      "userId": "SSBM-SM-2026-2541",
+      "title": "Application Status: APPROVED",
+      "message": "Congratulations! Your Seva Member application (SSBM-SM-2026-2541) has been approved. You can now access your dashboard.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.012Z"
+    },
+    {
+      "id": "notif_1793109570018_h9zk",
+      "userId": "SSBM-SM-2026-6121",
+      "title": "Application Status: APPROVED",
+      "message": "Congratulations! Your Seva Member application (SSBM-SM-2026-6121) has been approved. You can now access your dashboard.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.018Z"
+    },
+    {
+      "id": "notif_1793109570145_491n",
+      "userId": "SSBM-SM-2026-2541",
+      "title": "New Seva Task Assigned",
+      "message": "You have been assigned a new task: \"Morning Companion Seva for Ward A - 9234\". Deadline: 2026-11-01.",
+      "type": "action",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.145Z"
+    },
+    {
+      "id": "notif_1793109570151_cz4v",
+      "userId": "SSBM-SM-2026-6121",
+      "title": "New Seva Task Assigned",
+      "message": "You have been assigned a new task: \"Annadanam Kitchen Ration Stocking - 9234\". Deadline: 2026-11-02.",
+      "type": "action",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.151Z"
+    },
+    {
+      "id": "notif_1793109570168_pvdc",
+      "userId": "SSBM-SM-2026-2541",
+      "title": "Task Review: \"Morning Companion Seva for Ward A - 9234\"",
+      "message": "Great job! Your submission for task \"Morning Companion Seva for Ward A - 9234\" was verified and approved by the administration.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.168Z"
+    },
+    {
+      "id": "notif_1793109570229_e434",
+      "userId": "SSBM-VOL-2026-3014",
+      "title": "Volunteer Application Received",
+      "message": "Your Volunteer registration (SSBM-VOL-2026-3014) was received. Our ashram seva coordinator will review your profile shortly.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.174Z"
+    },
+    {
+      "id": "notif_1793109570290_4h9k",
+      "userId": "SSBM-VOL-2026-7745",
+      "title": "Volunteer Application Received",
+      "message": "Your Volunteer registration (SSBM-VOL-2026-7745) was received. Our ashram seva coordinator will review your profile shortly.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.235Z"
+    },
+    {
+      "id": "notif_1793109570296_byqt",
+      "userId": "SSBM-VOL-2026-3014",
+      "title": "Volunteer Status: APPROVED",
+      "message": "Namaste! Your Volunteer registration (SSBM-VOL-2026-3014) is approved. You can now view your assigned seva activities.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.296Z"
+    },
+    {
+      "id": "notif_1793109570302_ezsa",
+      "userId": "SSBM-VOL-2026-7745",
+      "title": "Volunteer Status: APPROVED",
+      "message": "Namaste! Your Volunteer registration (SSBM-VOL-2026-7745) is approved. You can now view your assigned seva activities.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.302Z"
+    },
+    {
+      "id": "notif_1793109570424_hrml",
+      "userId": "SSBM-VOL-2026-3014",
+      "title": "New Seva Task Assigned",
+      "message": "You have been assigned a new task: \"Free Eye Checkup Camp Escort Duty - 9234\". Deadline: 2026-11-05.",
+      "type": "action",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.424Z"
+    },
+    {
+      "id": "notif_1793109570429_7jvr",
+      "userId": "SSBM-VOL-2026-7745",
+      "title": "New Seva Task Assigned",
+      "message": "You have been assigned a new task: \"Sunday Bhajan & Sangeet Seva Coordination - 9234\". Deadline: 2026-11-08.",
+      "type": "action",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.429Z"
+    },
+    {
+      "id": "notif_1793109570492_z9uy",
+      "userId": "SSBM-ADM-2026-3002",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-3002) for Aarav Sharma has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.437Z"
+    },
+    {
+      "id": "notif_1793109570553_eqxy",
+      "userId": "SSBM-ADM-2026-5292",
+      "title": "Admission Enquiry Received",
+      "message": "Your admission enquiry (SSBM-ADM-2026-5292) for Kavita Deshmukh has been submitted. Status: Pending Review.",
+      "type": "info",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.497Z"
+    },
+    {
+      "id": "notif_1793109570618_fm5p",
+      "userId": "SSBM-ADM-2026-3002",
+      "title": "Admission Status: APPROVED",
+      "message": "Congratulations! Your admission enquiry (SSBM-ADM-2026-3002) for Aarav Sharma has been APPROVED by Vyenkatesh Ashram administration.",
+      "type": "success",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.618Z"
+    },
+    {
+      "id": "notif_1793109570624_lp88",
+      "userId": "SSBM-ADM-2026-5292",
+      "title": "Admission Status: REJECTED",
+      "message": "Your admission enquiry (SSBM-ADM-2026-5292) for Kavita Deshmukh was reviewed and could not be approved at this time. Reason: Ashram does not possess 24-hour ventilator / ICU infrastructure required for advanced neurological nursing care.",
+      "type": "warning",
+      "isRead": false,
+      "createdAt": "2026-10-27T13:59:30.624Z"
     }
   ],
   "seva_records": []

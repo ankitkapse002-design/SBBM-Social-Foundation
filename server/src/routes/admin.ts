@@ -18,7 +18,7 @@ adminRouter.get('/metrics', (req: AuthRequest, res: Response) => {
   const membershipRequests = db.get('membership_requests');
   const events = db.get('events');
 
-  const pendingAdmissions = admissions.filter(a => a.status === 'new' || a.status === 'reviewing').length;
+  const pendingAdmissions = admissions.filter(a => a.status === 'pending_review' || (a.status as string) === 'new' || (a.status as string) === 'reviewing').length;
   const unreadMessages = messages.filter(m => m.status === 'unread').length;
   const pendingMembership = membershipRequests.filter(m => m.status === 'pending').length;
   const pendingDonations = donations.filter(d => d.status === 'pending').length;
@@ -179,13 +179,13 @@ adminRouter.put('/admissions/:id', (req: AuthRequest, res: Response) => {
   // Notify applicant
   const applicantTargetId = item.registrationId || item.id;
   let notifMessage = '';
-  let notifType: 'info' | 'success' | 'warning' | 'error' = 'info';
+  let notifType: 'info' | 'success' | 'warning' | 'action' = 'info';
 
   if (newStatus === 'approved') {
     notifType = 'success';
     notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by Vyenkatesh Ashram administration.`;
   } else if (newStatus === 'rejected') {
-    notifType = 'error';
+    notifType = 'warning';
     notifMessage = `Your admission enquiry (${applicantTargetId}) for ${item.applicantName} was reviewed and could not be approved at this time. Reason: ${rejectionReason}`;
   } else if (newStatus === 'more_info_required') {
     notifType = 'warning';

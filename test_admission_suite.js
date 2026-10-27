@@ -155,10 +155,10 @@ async function runAdmissionTests() {
 
     // ----------------------------------------------------
     // TEST 6: Applicant Login with Formula Credentials
-    // Formula: GuardianFirstName + BirthYear -> "Rohan" + "1948" = "Rohan1948"
+    // Formula: ResidentFirstName (4 letters) + BirthYear -> "Datt" + "1948" = "Datt1948"
     // ----------------------------------------------------
-    console.log('\n>>> 6. Testing Applicant Login with GuardianFirstName + BirthYear Credential...');
-    const expectedPassword = 'Rohan1948';
+    console.log('\n>>> 6. Testing Applicant Login with ResidentFirstName(4) + BirthYear Credential...');
+    const expectedPassword = 'Datt1948';
     const applicantLogin = await apiCall({
       hostname: 'localhost',
       port: 5000,
@@ -370,7 +370,7 @@ async function runAdmissionTests() {
 
     assert(subRes2.status === 201, 'Second enquiry created successfully');
     const regId2 = subRes2.data.registrationId;
-    const expectedPassword2 = 'Pramod1954';
+    const expectedPassword2 = 'Savi1954';
 
     // Admin approves enquiry 2
     const approveRes = await apiCall({

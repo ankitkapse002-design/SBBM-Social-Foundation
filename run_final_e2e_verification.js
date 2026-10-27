@@ -579,7 +579,7 @@ async function runFinalE2EVerification() {
     );
     const admBRegId = admEnqBRes.data.registrationId;
 
-    // 4.3 Applicant A logs in with generated formula password (Rahul1985)
+    // 4.3 Applicant A logs in with generated formula password (Aara1985)
     const admALoginRes = await apiCall({
       hostname: 'localhost',
       port: 5000,
@@ -588,14 +588,14 @@ async function runFinalE2EVerification() {
       headers: { 'Content-Type': 'application/json' }
     }, {
       loginId: admARegId,
-      password: 'Rahul1985',
+      password: 'Aara1985',
       expectedRole: 'admission_applicant'
     });
 
     record(
       admALoginRes.status === 200 && admALoginRes.data.token,
       'ADM_LOGIN_01',
-      'Applicant A logs in via Admission Login using Registration ID and initial credential formula (Rahul1985)'
+      'Applicant A logs in via Admission Login using Registration ID and initial credential formula (Aara1985)'
     );
     const admAToken = admALoginRes.data.token;
 
@@ -662,7 +662,7 @@ async function runFinalE2EVerification() {
     });
     record(adminRejectAdmBRes.status === 200, 'ADM_REJECT_01', 'Admin rejects Admission Enquiry B with mandatory rejection reason');
 
-    // 4.8 Applicant B logs in with formula credential (Suresh1958) and verifies rejection reason
+    // 4.8 Applicant B logs in with formula credential (Kavi1958) and verifies rejection reason
     const admBLoginRes = await apiCall({
       hostname: 'localhost',
       port: 5000,
@@ -671,10 +671,10 @@ async function runFinalE2EVerification() {
       headers: { 'Content-Type': 'application/json' }
     }, {
       loginId: admBRegId,
-      password: 'Suresh1958',
+      password: 'Kavi1958',
       expectedRole: 'admission_applicant'
     });
-    record(admBLoginRes.status === 200 && admBLoginRes.data.token, 'ADM_LOGIN_02', 'Applicant B logs in with initial formula password (Suresh1958)');
+    record(admBLoginRes.status === 200 && admBLoginRes.data.token, 'ADM_LOGIN_02', 'Applicant B logs in with initial formula password (Kavi1958)');
     const admBToken = admBLoginRes.data.token;
 
     const admBDashRes = await apiCall({

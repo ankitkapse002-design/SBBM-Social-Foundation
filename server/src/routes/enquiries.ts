@@ -145,7 +145,7 @@ enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Res
       applicantName: resolvedApplicantName,
       guardianFirstName: resolvedGuardianFirstName,
       dobOrYear: resolvedDobOrYear,
-      initialPasswordFormat: `${((resolvedApplicantName || '').trim().split(/\s+/)[0].replace(/[^a-zA-Z]/g, '').substring(0, 4) || 'Resi').replace(/^./, c => c.toUpperCase())}${resolvedDobOrYear.match(/(\d{4})/)?.[1] || 'YYYY'}`,
+      initialPasswordFormat: `${((resolvedApplicantName || '').trim().split(/\s+/)[0].replace(/[^a-zA-Z]/g, '').substring(0, 4) || 'Resi').replace(/^./, (c: string) => c.toUpperCase())}${resolvedDobOrYear.match(/(\d{4})/)?.[1] || 'YYYY'}`,
       message: `Admission enquiry submitted successfully! Your unique Admission Registration ID is ${registrationId}. Initial status: Pending Review.`,
       contactNotice: 'For urgent admission queries, you may also reach management directly at +91 98908 98081.'
     });
