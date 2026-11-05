@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { apiRequest } from '../api';
+import { SEO } from '../components/common/SEO';
 
 export const Admission: React.FC = () => {
   const navigate = useNavigate();
@@ -99,39 +100,39 @@ export const Admission: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+      <SEO
+        title="Senior Resident Admission Process | Vyenkatesh Ashram"
+        description="Official senior admission enquiry for Vyenkatesh Ashram Mahuli. Safe, loving residential sanctuary for destitute and solitary senior citizens in Nagpur District."
+        canonicalPath="/admission"
+      />
       <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-10">
 
         {/* Header */}
         <div className="text-center space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs font-semibold">
             <Heart className="w-3.5 h-3.5 text-rose-600" />
-            <span>Vyenkatesh Ashram • Senior Living Evaluation & Admissions</span>
+            <span>SBBM Senior Care Sanctuary • Senior Living Evaluation & Admissions</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-foundation-charcoal">
             Apply for Admission
           </h1>
           <p className="text-xs md:text-sm text-stone-600 max-w-2xl mx-auto leading-relaxed">
-            Please provide accurate details regarding the prospective resident and guardian. Submitting this enquiry registers your application and creates your tracking account.
+            Please provide accurate details regarding the prospective resident and guardian. Submitting this enquiry registers your application for administrative evaluation.
           </p>
         </div>
 
-        {/* Top Options Bar (Apply vs Track Existing Admission) */}
-        <div className="bg-white rounded-2xl p-2 border border-foundation-borderMuted shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-          <div className="flex items-center space-x-2 px-3">
+        {/* Admission Status Strip */}
+        <div className="bg-white rounded-2xl py-3 px-4 border border-foundation-borderMuted shadow-xs flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+          <div className="flex items-center space-x-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-bold text-stone-700">Admission Portal Status:</span>
-            <span className="text-stone-500">Admissions Evaluation Open</span>
+            <span className="font-bold text-stone-700">Admission Enquiries Status:</span>
+            <span className="text-emerald-700 font-medium">Currently Accepting Applications for Vyenkatesh Ashram</span>
           </div>
-          <div className="flex items-center space-x-2 w-full sm:w-auto">
-            <Link
-              to="/admission-login"
-              className="w-full sm:w-auto px-4 py-2 bg-stone-100 hover:bg-foundation-forest hover:text-white rounded-xl text-stone-700 font-bold transition-all flex items-center justify-center space-x-1.5"
-              id="track-admission-top-btn"
-            >
-              <KeyRound className="w-3.5 h-3.5" />
-              <span>Track Existing Admission Login</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </Link>
+          <div className="text-stone-500 flex items-center space-x-2">
+            <span>Direct Office Helpline:</span>
+            <a href="tel:+919890898081" className="font-bold text-[#8B1D24] hover:underline">
+              +91 98908 98081
+            </a>
           </div>
         </div>
 
@@ -141,7 +142,7 @@ export const Admission: React.FC = () => {
           <div className="space-y-1">
             <p className="font-bold">Important Notice Regarding Admission:</p>
             <p>
-              Vyenkatesh Ashram operates as a charitable, non-granted senior citizen sanctuary with fixed capacity. Accommodation availability, medical suitability, and admission formalities must be reviewed by the administration. Submitting this enquiry sets initial status to <strong>Pending Review</strong> and does not constitute automatic approval.
+              SBBM Social Foundation operates its Senior Care Sanctuary as a charitable, non-granted senior citizen initiative with fixed capacity. Accommodation availability, medical suitability, and admission formalities must be reviewed by the administration. Submitting this enquiry sets initial status to <strong>Pending Review</strong> and does not constitute automatic approval.
             </p>
             <p className="font-semibold text-amber-900 pt-1">
               For urgent queries or office visits, call directly at: <a href="tel:+919890898081" className="underline font-bold">+91 98908 98081</a>.
@@ -172,45 +173,46 @@ export const Admission: React.FC = () => {
               </div>
             </div>
 
-            {/* Credential Format Details */}
+            {/* Enquiry Reference & Contact Notice */}
             <div className="p-5 bg-foundation-warmGray rounded-2xl border border-foundation-borderMuted text-xs text-stone-700 max-w-lg mx-auto space-y-3 text-left">
               <div className="flex items-center justify-between border-b pb-2">
-                <span className="font-bold text-stone-900">Account Access & Tracking Credentials:</span>
+                <span className="font-bold text-stone-900">Application Reference Record:</span>
                 <button
                   type="button"
                   onClick={() => handleCopyId(successData.registrationId)}
-                  className="px-2.5 py-1 bg-white border rounded-lg text-[11px] font-semibold text-stone-700 flex items-center space-x-1 hover:bg-stone-50"
+                  className="px-2.5 py-1 bg-white border rounded-lg text-[11px] font-semibold text-stone-700 flex items-center space-x-1 hover:bg-stone-50 cursor-pointer"
                 >
                   {hasCopiedId ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                  <span>{hasCopiedId ? 'Copied ID' : 'Copy ID'}</span>
+                  <span>{hasCopiedId ? 'Copied ID' : 'Copy Reference ID'}</span>
                 </button>
               </div>
 
-              <div className="space-y-1.5 font-mono text-[11px]">
-                <p>• <strong>Admission ID:</strong> <span className="text-foundation-forest font-bold">{successData.registrationId}</span></p>
-                <p>• <strong>Initial Password:</strong> <span className="text-stone-900 font-bold">{successData.initialPasswordFormat || 'Rahu1985'}</span></p>
-                <p className="font-sans text-[11px] text-stone-500 italic">
-                  (Rule: First four letters of Senior Resident's first name + Birth Year, e.g. <span className="font-mono font-bold text-stone-700">Rahu1985</span>)
-                </p>
+              <div className="space-y-1.5 text-[11px]">
+                <p>• <strong>Admission Reference ID:</strong> <span className="text-[#8B1D24] font-mono font-bold">{successData.registrationId}</span></p>
+                <p>• <strong>Senior Resident Name:</strong> {successData.applicantName}</p>
+                <p>• <strong>Guardian / Contact:</strong> {successData.guardianFirstName}</p>
+                <p>• <strong>Evaluation Status:</strong> <span className="font-semibold text-amber-800">Pending Administrative Review</span></p>
               </div>
 
-              <div className="pt-2 border-t text-[11px] text-stone-600 space-y-1">
-                <p>• <strong>Resident:</strong> {successData.applicantName}</p>
-                <p>• <strong>Guardian:</strong> {successData.guardianFirstName}</p>
-                <p>• <strong>Next Step:</strong> Log in to your Admission Dashboard to follow evaluation status and administrative remarks.</p>
+              <div className="pt-2 border-t text-[11px] text-stone-600 space-y-1.5">
+                <p>
+                  Our administrative committee reviews living requirements and accommodation capacity at Vyenkatesh Ashram. We will contact the guardian directly via phone or WhatsApp to schedule a personal visit.
+                </p>
+                <p className="font-medium text-stone-800">
+                  For urgent admission assistance, call: <a href="tel:+919890898081" className="underline text-[#8B1D24] font-bold">+91 98908 98081</a> / <a href="tel:+919326172824" className="underline text-[#8B1D24] font-bold">+91 93261 72824</a>.
+                </p>
               </div>
             </div>
 
             <div className="pt-4 flex flex-col sm:flex-row justify-center gap-3">
               <Link
-                to={`/admission-login?regId=${successData.registrationId}`}
-                className="px-8 py-3 bg-foundation-forest text-foundation-ivory text-xs font-bold rounded-full shadow-lg hover:bg-foundation-forestLight flex items-center justify-center space-x-2"
-                id="go-to-admission-login-btn"
+                to="/"
+                className="px-8 py-3 bg-[#8B1D24] hover:bg-[#6E1419] text-white text-xs font-bold rounded-xl shadow-md transition-colors text-center"
               >
-                <span>Go to Admission Dashboard</span>
-                <ArrowRight className="w-4 h-4" />
+                Return to Homepage
               </Link>
               <button
+                type="button"
                 onClick={() => {
                   setSuccessData(null);
                   setFormData({
@@ -228,7 +230,7 @@ export const Admission: React.FC = () => {
                     additionalMessage: '',
                   });
                 }}
-                className="px-6 py-3 border border-stone-300 text-stone-700 text-xs font-semibold rounded-full hover:bg-stone-50"
+                className="px-6 py-3 border border-stone-300 bg-white hover:bg-stone-50 text-stone-700 text-xs font-bold rounded-xl transition-colors cursor-pointer"
               >
                 Submit Another Enquiry
               </button>
@@ -463,7 +465,7 @@ export const Admission: React.FC = () => {
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full sm:w-auto px-8 py-3 bg-foundation-forest hover:bg-foundation-forestLight disabled:opacity-50 text-foundation-ivory font-bold text-xs rounded-full shadow-lg transition-all flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-8 py-3 bg-foundation-crimson hover:bg-foundation-crimsonDark disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transition-all flex items-center justify-center space-x-2"
                 id="submit-admission-enquiry-btn"
               >
                 {isLoading ? (

@@ -1,7 +1,7 @@
-# SBBM SOCIAL FOUNDATION & VYENKATESH ASHRAM
+# SBBM SOCIAL FOUNDATION
 ### Immersive 3D Full-Stack Application | Member Portal | Admin Dashboard | Multilingual AI Assistant
 
-Official web application for **SBBM Social Foundation Society** (Reg No: **332-15-Nag**, Est. 2015), operating **VYENKATESH ASHRAM** — a charitable, non-granted old-age home at Anjikar Bagh, Mahuli, Parseoni (Nagpur District, Maharashtra).
+Official web application for **SBBM Social Foundation Society** (Reg No: **332-15-Nag**, Est. 2015), dedicated to charitable elder care, community welfare, Go-Seva, volunteer mobilization, and social impact at Anjikar Bagh, Mahuli, Parseoni (Nagpur District, Maharashtra).
 
 ---
 
@@ -10,8 +10,8 @@ Official web application for **SBBM Social Foundation Society** (Reg No: **332-1
 * **Society Name:** SBBM Social Foundation Society
 * **Registration / Reference:** 332-15-Nag (Registered under Societies Registration Act, 2015)
 * **Management & Leadership:** Mr. Ashwin Vyenkatrao Anjikar (Founder & President) & Mrs. Tina Anjikar
-* **Official Ashram Helpline:** `+91 98908 98081`
-* **Institution Facility (Old Age Home):**
+* **Official Foundation Helpline:** `+91 98908 98081`
+* **Mahuli Centre Facility (Senior Care Sanctuary):**
   * *434, Anjikar Bagh, Mansar Mahuli Road, Village/Post Mahuli, Tehsil Parseoni, District Nagpur, Maharashtra – 441105*
 * **Foundation Head Office:**
   * *C/o Ashvin V. Anjikar (Anjikar House), Panchpaoli, Timki Chimabai Peth, Nagpur, Maharashtra – 440018*
@@ -22,12 +22,12 @@ Official web application for **SBBM Social Foundation Society** (Reg No: **332-1
 
 ### 1. 3D Cinematic Entrance Sequence (`CinematicIntro3D.tsx`)
 * **Scene 1 — Atmospheric Reveal:** Soft dawn morning mist, peaceful lighting, floating clouds, and the SSBM Foundation Gold Crest medallion.
-* **Scene 2 — Grand Double Gate:** Wrought iron entrance gates anchored by stone pillars with carved ashram plaques, swinging realistically outward.
+* **Scene 2 — Grand Double Gate:** Wrought iron entrance gates anchored by stone pillars with carved foundation plaques, swinging realistically outward.
 * **Scene 3 — Pathway Glide:** Camera travels along the stone-paved driveway flanked by orchard trees (mango & neem groves) and flowering marigold beds.
-* **Scene 4 — Ashram Architectural Reveal:** Reconstructed two-story Vyenkatesh Ashram building featuring terracotta pitched roof, shaded veranda with stone pillars, second-floor balconies, windows, and authentic entrance facade.
+* **Scene 4 — Main Centre Reveal:** Reconstructed two-story SBBM Social Foundation main building featuring terracotta pitched roof, shaded veranda with stone pillars, second-floor balconies, windows, and authentic entrance facade.
 * **Scene 5 — Seamless Transition:** Glides smoothly into the homepage. Includes immediate **Skip Intro** control, session persistence, and graceful fallback.
 
-### 2. Vyenky — 3D Multilingual Assistant (`VyenkyChatbot.tsx`)
+### 2. SBBM Assistant — 3D Multilingual Assistant (`VyenkyChatbot.tsx`)
 * **3D Animated Avatar:** Mini interactive 3D head rendered via Three.js with natural blinking, subtle breathing, head movements, cream kurta, and sage green scarf.
 * **Trilingual Grounded Engine:** Switch between **English**, **हिंदी (Hindi)**, and **मराठी (Marathi)** with persistent state.
 * **Knowledge Base:** Grounded in verified foundation facts, admission process, address verification, Go-Seva, naturopathy routines, and donation guidance.
@@ -38,7 +38,7 @@ Official web application for **SBBM Social Foundation Society** (Reg No: **332-1
 * **Home (`/`):** Hero with 3D walkthrough trigger, verified facility highlights, service cards, daily routine, gallery preview, and FAQ accordions.
 * **About Us (`/about`):** Who We Are, Founder's Message from Mr. Ashwin V. Anjikar, Governance & Committees, Vision & Mission, History Timeline (2015–Present), and Registration Documents.
 * **Services Directory (`/services`):**
-  1. *Vyenkatesh Ashram (Old Age Home)*
+  1. *Elder Care Sanctuary (Residential Care)*
   2. *Go-Seva Kendra (Cow Sanctuary & Care)*
   3. *Naturopathy & Holistic Wellness Garden*
   4. *Rural Education & Student Welfare*
@@ -51,13 +51,13 @@ Official web application for **SBBM Social Foundation Society** (Reg No: **332-1
 * **Membership (`/membership`):** Distinction between website accounts and official society membership.
 * **Volunteer Seva (`/volunteer`):** Application for companionship, Gaushala care, and cultural seva.
 * **Support / Donate (`/support`):** In-kind provisions checklist (groceries, cow fodder, medicines) and official receipt transparency.
-* **Contact Us (`/contact`):** Dual-location cards (Head Office vs Ashram Facility), click-to-call, interactive contact form, and Google Maps links.
+* **Contact Us (`/contact`):** Dual-location cards (Head Office vs Mahuli Centre Facility), click-to-call, interactive contact form, and Google Maps links.
 
-### 4. Member Portal (`/member/dashboard`)
-* View assigned unique Member ID (`SSBM-2026-XXXX`).
-* Profile management (address, emergency contact phone, blood group).
-* Live tracking of submitted admission inquiries, volunteer forms, and donation pledges.
-* Password change and account security.
+### 4. Public Civic Engagement & Enquiry Management
+* Direct civic inquiry submissions without friction (no mandatory account creation needed for the public).
+* Instant generation of verified reference tracking codes (e.g. `SSBM-ADM-2026-XXXX`).
+* Instant administrative notification and centralized database sync.
+* Public verification for 80G tax receipts and official donation bank account details.
 
 ### 5. Secure Administrator Portal (`/admin/dashboard`)
 * **Initial Bootstrap Credentials:**

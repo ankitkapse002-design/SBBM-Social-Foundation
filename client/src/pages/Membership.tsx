@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { apiRequest } from '../api';
+import { SEO } from '../components/common/SEO';
 
 export const Membership: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -53,6 +54,11 @@ export const Membership: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+      <SEO
+        title="Institutional Membership & Association"
+        description="Become an institutional member or patron of SBBM Social Foundation Society. Support registered public welfare activities across Nagpur District."
+        canonicalPath="/membership"
+      />
       <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-12">
         <div className="text-center space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs font-semibold">
@@ -67,40 +73,17 @@ export const Membership: React.FC = () => {
           </p>
         </div>
 
-        {/* Clear Distinction Banner: Account vs Society Member */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-white p-6 rounded-3xl border border-foundation-borderMuted shadow-soft space-y-3">
-            <div className="flex items-center space-x-2 text-foundation-forest">
-              <Lock className="w-5 h-5 text-foundation-forest" />
-              <h3 className="font-display font-bold text-base">Website Member Account</h3>
-            </div>
-            <p className="text-xs text-stone-600 leading-relaxed">
-              Instantly create a website account to track submitted admission enquiries, volunteer applications, and receive foundation announcements.
-            </p>
-            <div className="pt-2">
-              <Link
-                to="/register"
-                className="inline-flex items-center space-x-1.5 text-xs font-bold text-foundation-forest hover:underline"
-              >
-                <span>Create Free Website Account</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
-            </div>
+        {/* Society Membership Overview Banner */}
+        <div className="bg-white p-6 md:p-8 rounded-3xl border border-foundation-borderMuted shadow-soft space-y-3">
+          <div className="flex items-center space-x-2 text-[#8B1D24]">
+            <Shield className="w-5 h-5 text-[#8B1D24]" />
+            <h3 className="font-display font-bold text-lg text-foundation-charcoal">Official Society Registered Membership</h3>
           </div>
-
-          <div className="bg-foundation-warmGray p-6 rounded-3xl border border-foundation-borderMuted shadow-soft space-y-3">
-            <div className="flex items-center space-x-2 text-foundation-forest">
-              <Shield className="w-5 h-5 text-foundation-forest" />
-              <h3 className="font-display font-bold text-base">Society Registered Membership</h3>
-            </div>
-            <p className="text-xs text-stone-600 leading-relaxed">
-              Official membership under the Societies Registration Act (Reg: 332-15-Nag). Reviewed and approved by the foundation executive board.
-            </p>
-            <div className="pt-2">
-              <span className="text-xs text-stone-500 font-medium">
-                Submit formal application below ↓
-              </span>
-            </div>
+          <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">
+            Registered membership of <strong>SBBM Social Foundation</strong> is governed under the Societies Registration Act, 1860 (Reg No: MAH/332/15/NAG) and Bombay Public Trusts Act, 1950 (Reg No: MAH/F-33193/NAG). Members participate in the annual general assembly, contribute to strategic welfare planning, and guide community initiatives across Nagpur District.
+          </p>
+          <div className="pt-2 text-xs text-stone-500 font-medium">
+            Please fill out the formal application form below for review by the executive committee.
           </div>
         </div>
 

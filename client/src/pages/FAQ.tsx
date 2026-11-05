@@ -5,6 +5,7 @@ import {
   Phone, ArrowRight, ShieldCheck
 } from 'lucide-react';
 import { apiRequest } from '../api';
+import { SEO } from '../components/common/SEO';
 
 interface FAQItem {
   id: string;
@@ -37,8 +38,27 @@ export const FAQ: React.FC = () => {
     return matchCat && matchQuery;
   });
 
+  const faqJsonLd = faqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': faqs.map((f) => ({
+      '@type': 'Question',
+      'name': f.question,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': f.answer,
+      },
+    })),
+  } : undefined;
+
   return (
     <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+      <SEO
+        title="Frequently Asked Questions (FAQ) | Verified Answers"
+        description="Clear, honest answers about SBBM Social Foundation, elder resident admissions at Vyenkatesh Ashram, daily Annadaan meals, Go-Seva, visiting hours, and 80G tax benefits."
+        canonicalPath="/faq"
+        jsonLd={faqJsonLd}
+      />
       <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-12">
         <div className="text-center space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs font-semibold">
@@ -49,7 +69,7 @@ export const FAQ: React.FC = () => {
             Frequently Asked Questions
           </h1>
           <p className="text-xs md:text-sm text-stone-600 max-w-2xl mx-auto leading-relaxed">
-            Find verified information regarding admissions, ashram facilities, visiting hours, Go-Seva, and donations.
+            Find verified information regarding admissions, foundation facilities, visiting hours, Go-Seva, and donations.
           </p>
         </div>
 
@@ -70,7 +90,7 @@ export const FAQ: React.FC = () => {
             {[
               { id: 'all', label: 'All FAQs' },
               { id: 'admission', label: 'Admission & Eligibility' },
-              { id: 'ashram_life', label: 'Ashram Life & Visiting' },
+              { id: 'ashram_life', label: 'Facility Life & Visiting' },
               { id: 'donations', label: 'Donations & Seva' },
               { id: 'membership', label: 'Membership' },
             ].map((cat) => (
@@ -137,7 +157,7 @@ export const FAQ: React.FC = () => {
               Still have questions?
             </h3>
             <p className="text-xs text-stone-300">
-              Speak directly with our ashram coordinator or schedule a visit.
+              Speak directly with our coordinator or schedule a visit.
             </p>
           </div>
           <div className="flex items-center space-x-3">

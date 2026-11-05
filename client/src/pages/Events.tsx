@@ -5,6 +5,7 @@ import {
   Sparkles, CheckCircle2
 } from 'lucide-react';
 import { apiRequest } from '../api';
+import { SEO } from '../components/common/SEO';
 
 interface EventItem {
   id: string;
@@ -39,6 +40,11 @@ export const Events: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+      <SEO
+        title="Community Events & Seva Camps"
+        description="Upcoming and completed welfare events, healthcare checkup camps, and community festivals organized by SBBM Social Foundation across Nagpur."
+        canonicalPath="/events"
+      />
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs font-semibold">
@@ -49,7 +55,7 @@ export const Events: React.FC = () => {
             Events & Seva Camps
           </h1>
           <p className="text-xs md:text-sm text-stone-600 leading-relaxed">
-            Stay updated with upcoming health checkup camps, Gopashtami celebrations, and cultural festivals hosted at Vyenkatesh Ashram.
+            Stay updated with upcoming health checkup camps, Gopashtami celebrations, and cultural festivals hosted by SBBM Social Foundation.
           </p>
         </div>
 

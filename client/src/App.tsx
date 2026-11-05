@@ -4,6 +4,7 @@ import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
 import { CinematicIntro3D } from './components/3d/CinematicIntro3D';
 import { VyenkyChatbot } from './components/3d/VyenkyChatbot';
+import { ScrollProgress } from './components/motion/ScrollProgress';
 
 // Pages
 import { Home } from './pages/Home';
@@ -18,19 +19,8 @@ import { Volunteer } from './pages/Volunteer';
 import { Support } from './pages/Support';
 import { FAQ } from './pages/FAQ';
 import { Contact } from './pages/Contact';
-import { Login } from './pages/Login';
-import { Register } from './pages/Register';
 import { AdminLogin } from './pages/AdminLogin';
-import { MemberDashboard } from './pages/member/MemberDashboard';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
-import { SevaMemberPortal } from './pages/portal/SevaMemberPortal';
-import { MembershipPortal } from './pages/portal/MembershipPortal';
-import { VolunteerPortal } from './pages/portal/VolunteerPortal';
-import { SevaMemberDashboard } from './pages/portal/SevaMemberDashboard';
-import { MembershipDashboard } from './pages/portal/MembershipDashboard';
-import { VolunteerDashboard } from './pages/portal/VolunteerDashboard';
-import { AdmissionPortal } from './pages/portal/AdmissionPortal';
-import { AdmissionDashboard } from './pages/portal/AdmissionDashboard';
 
 // Scroll to top on route change
 function ScrollToTop() {
@@ -42,8 +32,8 @@ function ScrollToTop() {
 }
 
 export function App() {
-  // Always start with the 3D opening scene on fresh visit or reload
-  const [show3DIntro, setShow3DIntro] = useState<boolean>(true);
+  // 3D Cinematic Entrance Overlay (triggerable on-demand or replay)
+  const [show3DIntro, setShow3DIntro] = useState<boolean>(false);
 
   const handleReplayIntro = () => {
     setShow3DIntro(true);
@@ -56,6 +46,7 @@ export function App() {
   return (
     <Router>
       <ScrollToTop />
+      <ScrollProgress />
 
       {/* 3D Cinematic Entrance Overlay */}
       {show3DIntro && (
@@ -63,12 +54,12 @@ export function App() {
       )}
 
       <div className="flex flex-col min-h-screen">
-        <Navbar />
+        <Navbar onReplayIntro={handleReplayIntro} />
 
         <main className="flex-grow">
           <Routes>
             {/* Public Routes */}
-            <Route path="/" element={<Home onReplayIntro={handleReplayIntro} />} />
+            <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/about/:sub" element={<About />} />
             <Route path="/services" element={<Services />} />
@@ -84,41 +75,32 @@ export function App() {
             <Route path="/membership/register" element={<Membership />} />
             <Route path="/volunteer" element={<Volunteer />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/partnership" element={<Navigate to="/support" replace />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />
 
-            {/* Portal Routes (Seva Member, Membership, Volunteer) */}
-            <Route path="/seva-member/login" element={<SevaMemberPortal />} />
-            <Route path="/seva-member/register" element={<SevaMemberPortal />} />
-            <Route path="/seva-member/dashboard" element={<SevaMemberDashboard />} />
-
-            <Route path="/membership/login" element={<MembershipPortal />} />
-            <Route path="/membership/dashboard" element={<MembershipDashboard />} />
-
-            <Route path="/volunteer/login" element={<VolunteerPortal />} />
-            <Route path="/volunteer/dashboard" element={<VolunteerDashboard />} />
-
-            {/* Admission Tracking & Portal Routes */}
-            <Route path="/admission/login" element={<AdmissionPortal />} />
-            <Route path="/admission-login" element={<AdmissionPortal />} />
-            <Route path="/admission/dashboard" element={<AdmissionDashboard />} />
-            <Route path="/admission-dashboard" element={<AdmissionDashboard />} />
-
-            {/* Auth Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/member-login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+            {/* Auth Routes: Only Admin Login is retained */}
             <Route path="/admin-login" element={<AdminLogin />} />
 
-            {/* Member Portal */}
-            <Route path="/member/dashboard" element={<MemberDashboard />} />
-            <Route path="/member/profile" element={<MemberDashboard />} />
-            <Route path="/member/enquiries" element={<MemberDashboard />} />
-            <Route path="/member/security" element={<MemberDashboard />} />
-
-            {/* Admin Portal */}
+            {/* Admin Management Panel */}
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="/admin/*" element={<AdminDashboard />} />
+
+            {/* Non-Admin Login & Portal Safe Redirects */}
+            <Route path="/login" element={<Navigate to="/admin-login" replace />} />
+            <Route path="/member-login" element={<Navigate to="/admin-login" replace />} />
+            <Route path="/register" element={<Navigate to="/membership" replace />} />
+            <Route path="/seva-member/*" element={<Navigate to="/admin-login" replace />} />
+            <Route path="/membership/login" element={<Navigate to="/admin-login" replace />} />
+            <Route path="/membership/register" element={<Navigate to="/membership" replace />} />
+            <Route path="/membership/dashboard" element={<Navigate to="/" replace />} />
+            <Route path="/volunteer/login" element={<Navigate to="/admin-login" replace />} />
+            <Route path="/volunteer/dashboard" element={<Navigate to="/" replace />} />
+            <Route path="/admission/login" element={<Navigate to="/admin-login" replace />} />
+            <Route path="/admission-login" element={<Navigate to="/admin-login" replace />} />
+            <Route path="/admission/dashboard" element={<Navigate to="/" replace />} />
+            <Route path="/admission-dashboard" element={<Navigate to="/" replace />} />
+            <Route path="/member/*" element={<Navigate to="/" replace />} />
 
             {/* Fallback */}
             <Route path="*" element={<Navigate to="/" replace />} />

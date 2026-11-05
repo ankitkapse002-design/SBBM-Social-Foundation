@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import {
-  Image, Video, Sparkles, X, ChevronRight,
+  Image, Video, Sparkles, X, ChevronRight, ChevronLeft,
   Maximize2, Eye, Shield
 } from 'lucide-react';
 import { apiRequest } from '../api';
+import { SEO } from '../components/common/SEO';
 
 interface GalleryAsset {
   id: string;
@@ -36,13 +37,52 @@ export const Gallery: React.FC = () => {
     return matchCat && matchType;
   });
 
+  const currentIndex = activeAsset ? filteredAssets.findIndex(a => a.id === activeAsset.id) : -1;
+
+  const handleNext = useCallback(() => {
+    if (currentIndex >= 0 && currentIndex < filteredAssets.length - 1) {
+      setActiveAsset(filteredAssets[currentIndex + 1]);
+    } else if (currentIndex === filteredAssets.length - 1) {
+      setActiveAsset(filteredAssets[0]);
+    }
+  }, [currentIndex, filteredAssets]);
+
+  const handlePrev = useCallback(() => {
+    if (currentIndex > 0) {
+      setActiveAsset(filteredAssets[currentIndex - 1]);
+    } else if (currentIndex === 0) {
+      setActiveAsset(filteredAssets[filteredAssets.length - 1]);
+    }
+  }, [currentIndex, filteredAssets]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!activeAsset) return;
+      if (e.key === 'Escape') {
+        setActiveAsset(null);
+      } else if (e.key === 'ArrowRight') {
+        handleNext();
+      } else if (e.key === 'ArrowLeft') {
+        handlePrev();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeAsset, handleNext, handlePrev]);
+
   return (
     <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+      <SEO
+        title="Verified Photography & Media Gallery"
+        description="Authentic photographic gallery of Vyenkatesh Ashram senior care, daily Annadaan distribution, health camps, Go-Seva, and campus life at Mahuli, Parseoni."
+        canonicalPath="/gallery"
+      />
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
         <div className="text-center max-w-3xl mx-auto space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs font-semibold">
             <Image className="w-3.5 h-3.5" />
-            <span>Visual Archives of Vyenkatesh Ashram</span>
+            <span>Visual Archives • SBBM Social Foundation</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-foundation-charcoal">
             Photo & Media Gallery
@@ -57,11 +97,12 @@ export const Gallery: React.FC = () => {
           {/* Category Filters */}
           <div className="flex flex-wrap items-center gap-2">
             {[
-              { id: 'all', label: 'All Media' },
-              { id: 'ashram', label: 'Ashram & Premises' },
-              { id: 'goseva', label: 'Go-Seva Kendra' },
-              { id: 'naturopathy', label: 'Naturopathy & Yoga' },
-              { id: 'events', label: 'Camps & Gatherings' },
+              { id: 'all', label: 'All Photographs' },
+              { id: 'ashram', label: 'Ashram Facility & Campus' },
+              { id: 'elders', label: 'Resident Elders ("Aai-Baba")' },
+              { id: 'healthcare', label: 'Health Camps & Naturopathy' },
+              { id: 'events', label: 'Camps & Community Seva' },
+              { id: 'leadership', label: 'Founders & Leadership' },
             ].map((cat) => (
               <button
                 key={cat.id}
@@ -151,37 +192,70 @@ export const Gallery: React.FC = () => {
           </div>
         )}
 
-        {/* Lightbox Modal */}
+        {/* Lightbox Modal with Keyboard & Prev/Next Navigation */}
         {activeAsset && (
           <div
-            className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in"
             onClick={() => setActiveAsset(null)}
           >
             <div
-              className="relative max-w-4xl w-full bg-foundation-forestDark rounded-3xl overflow-hidden border border-foundation-gold/40 shadow-2xl text-foundation-ivory"
+              className="relative max-w-4xl w-full bg-stone-900 rounded-3xl overflow-hidden border border-stone-700 shadow-2xl text-stone-100"
               onClick={(e) => e.stopPropagation()}
             >
+              {/* Close Button */}
               <button
                 onClick={() => setActiveAsset(null)}
-                className="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black/80 text-white p-2 rounded-full transition-all"
-                aria-label="Close Preview"
+                className="absolute top-4 right-4 z-20 bg-black/60 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer"
+                aria-label="Close Preview (Esc)"
+                title="Close (Esc)"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
+              {/* Prev Button */}
+              {filteredAssets.length > 1 && (
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer"
+                  aria-label="Previous Image"
+                  title="Previous (Left Arrow)"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+              )}
+
+              {/* Next Button */}
+              {filteredAssets.length > 1 && (
+                <button
+                  onClick={handleNext}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer"
+                  aria-label="Next Image"
+                  title="Next (Right Arrow)"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+              )}
+
+              <div className="max-h-[70vh] bg-black flex items-center justify-center overflow-hidden relative">
                 <img
                   src={activeAsset.mediaUrl}
                   alt={activeAsset.title}
-                  className="max-h-[70vh] w-auto object-contain"
+                  className="max-h-[70vh] w-auto object-contain transition-all"
                 />
               </div>
 
-              <div className="p-6 space-y-2">
-                <span className="text-xs uppercase text-foundation-gold font-bold">
-                  {activeAsset.category} • Vyenkatesh Ashram
-                </span>
-                <h2 className="text-xl font-display font-bold text-foundation-sandstone">
+              <div className="p-6 space-y-2 bg-stone-900 border-t border-stone-800">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs uppercase text-amber-400 font-bold tracking-wider">
+                    {activeAsset.category} • SBBM Social Foundation Archives
+                  </span>
+                  {currentIndex >= 0 && (
+                    <span className="text-[11px] font-mono text-stone-400 font-semibold">
+                      {currentIndex + 1} of {filteredAssets.length}
+                    </span>
+                  )}
+                </div>
+                <h2 className="text-xl font-bold text-white">
                   {activeAsset.title}
                 </h2>
                 <p className="text-xs text-stone-300 leading-relaxed">

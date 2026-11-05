@@ -1,55 +1,38 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
-  Menu, X, ChevronDown, Phone, Heart, User, UserCheck, ShieldCheck,
-  HeartHandshake, Award, LogOut, MapPin, Lock, Sparkles, FileText
+  Menu, X, ChevronDown, Phone, Heart, User, ShieldCheck,
+  Award, LogOut, Lock, Mail, ExternalLink, ArrowRight
 } from 'lucide-react';
 import { getAuthToken, clearAuthToken, apiRequest } from '../../api';
 
 interface UserState {
   id: string;
   fullName: string;
-  role: 'admin' | 'member' | 'seva_member' | 'volunteer' | 'admission_applicant';
+  role: string;
   email: string;
-  portalId?: string;
 }
 
-export const Navbar: React.FC = () => {
+interface NavbarProps {
+  onReplayIntro?: () => void;
+}
+
+export const Navbar: React.FC<NavbarProps> = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAboutDropdownOpen, setIsAboutDropdownOpen] = useState(false);
-  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [isWhatWeDoDropdownOpen, setIsWhatWeDoDropdownOpen] = useState(false);
   const [isAccountDropdownOpen, setIsAccountDropdownOpen] = useState(false);
   const [user, setUser] = useState<UserState | null>(null);
 
-  const getDashboardLink = (role?: string) => {
-    switch (role) {
-      case 'admin':
-        return '/admin/dashboard';
-      case 'seva_member':
-        return '/seva-member/dashboard';
-      case 'volunteer':
-        return '/volunteer/dashboard';
-      case 'admission_applicant':
-        return '/admission-dashboard';
-      case 'member':
-      default:
-        return '/membership/dashboard';
-    }
-  };
-
   const accountDropdownRef = useRef<HTMLDivElement>(null);
-  const mobileAccountDropdownRef = useRef<HTMLDivElement>(null);
 
-  // Close account dropdown on outside click
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
         accountDropdownRef.current &&
-        !accountDropdownRef.current.contains(event.target as Node) &&
-        mobileAccountDropdownRef.current &&
-        !mobileAccountDropdownRef.current.contains(event.target as Node)
+        !accountDropdownRef.current.contains(event.target as Node)
       ) {
         setIsAccountDropdownOpen(false);
       }
@@ -61,7 +44,6 @@ export const Navbar: React.FC = () => {
     };
   }, []);
 
-  // Fetch logged in user profile
   useEffect(() => {
     const token = getAuthToken();
     if (token) {
@@ -93,71 +75,137 @@ export const Navbar: React.FC = () => {
     return location.pathname.startsWith(path);
   };
 
-  return (
-    <header className="sticky top-0 z-40 w-full shadow-md">
-      {/* Top Notification Bar - Streamlined, clean, without scattered portal links */}
-      <div className="bg-foundation-forestDark text-foundation-sandstone text-xs py-1.5 px-4 md:px-8 border-b border-foundation-gold/20 flex flex-wrap items-center justify-between">
-        <div className="flex items-center space-x-4">
-          <span className="flex items-center space-x-1.5 text-foundation-ivory">
-            <Phone className="w-3.5 h-3.5 text-foundation-gold" />
-            <span>Ashram Helpline: <a href="tel:+919890898081" className="font-bold hover:text-foundation-gold">+91 98908 98081</a></span>
-          </span>
-          <span className="hidden lg:inline text-foundation-sageLight/70">•</span>
-          <span className="hidden lg:flex items-center space-x-1 text-foundation-sandstone/90">
-            <MapPin className="w-3.5 h-3.5 text-foundation-gold" />
-            <span>Anjikar Bagh, Mansar Mahuli Rd, Mahuli, Nagpur – 441105</span>
-          </span>
-          <span className="hidden xl:inline text-foundation-sageLight/70">•</span>
-          <span className="hidden xl:inline text-foundation-gold/90 font-medium">
-            Reg. No: 332-15-Nag (Est. 2015)
-          </span>
-        </div>
+  // Genuine, verified announcements for the continuous ticker
+  const announcements = [
+    { prefix: 'Statutory Certification', text: 'Regd: MAH/332/15/NAG • F-33193 • Section 12A & 80G Certified Non-Profit • NITI Aayog: MH/2016/' },
+    { prefix: '24/7 Helplines', text: '+91 98908 98081 / +91 93261 72824 • Verified Office Email: sbbmsocialfoundation@gmail.com' },
+    { prefix: 'Vyenkatesh Ashram', text: 'Loving residential senior care & daily Annadaan meals at Mahuli, Parseoni • Senior Resident Admissions Open' },
+    { prefix: 'Aarogyam Kendra', text: 'Free weekend natural therapy & wellness consultations every Saturday & Sunday at Anjikar Bagh' },
+    { prefix: 'CSR Collaboration', text: 'Corporate partnerships under Schedule VII of the Companies Act, 2013 • 50% Tax Exemption under Sec 80G' },
+    { prefix: 'Shri Go-Seva', text: 'Compassionate lifetime shelter, nutritious green fodder & care for indigenous cows at Anjikar Bagh' },
+  ];
 
-        <div className="flex items-center space-x-4 text-xs">
-          <Link to="/support" className="flex items-center space-x-1.5 text-foundation-gold hover:underline font-semibold">
-            <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" />
-            <span>Support / Donate</span>
-          </Link>
+  const initiatives = [
+    { num: '5.1', title: 'Elderly Care – Vyenkatesh Ashram', desc: 'Residential elder sanctuary & filial care at Mahuli', route: '/old-age-home' },
+    { num: '5.2', title: 'Social Welfare & Relief Distribution', desc: 'Doorstep grocery kits & blankets across Nagpur', route: '/services' },
+    { num: '5.3', title: 'Education & Computer Literacy', desc: 'Practical digital skilling & student study libraries', route: '/services' },
+    { num: '5.4', title: 'Child Welfare & Personality Growth', desc: 'Annual summer camps & child safety awareness', route: '/services' },
+    { num: '5.5', title: 'Women’s Empowerment & SHGs', desc: 'Self-help groups, vocational tailoring & micro-enterprise', route: '/services' },
+    { num: '5.6', title: 'Healthcare & Public Health Camps', desc: 'Free diagnostic camps, eye checkups & health drives', route: '/services' },
+    { num: '5.7', title: 'Shri Go Seva & Sanvardhan Kendra', desc: 'Compassionate shelter & green fodder for cows', route: '/services' },
+    { num: '5.8', title: 'Aarogyam Prakritik Chikitsa Kendra', desc: 'Free weekend natural therapy & holistic wellness', route: '/services' },
+  ];
+
+  return (
+    <header className="sticky top-0 z-50 w-full bg-white shadow-xs">
+      {/* =========================================================================
+          1. TOP ANNOUNCEMENT TICKER (Continuous moving loop, compact & proportional)
+         ========================================================================= */}
+      <div className="bg-[#F8F9FA] border-b border-[#E5E7EB] text-xs py-2 px-4 md:px-8 overflow-hidden select-none">
+        <div className="max-w-[1400px] mx-auto flex items-center">
+          
+          {/* Left Anchor Badge matching reference image */}
+          <div className="shrink-0 flex items-center space-x-2 pr-3.5 border-r border-stone-200 z-10 bg-[#F8F9FA]">
+            <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse" />
+            <span className="font-bold text-[#8B1D24] text-[11.5px] whitespace-nowrap">
+              SBBM Social Foundation
+            </span>
+            <span className="text-stone-300 hidden sm:inline">|</span>
+          </div>
+
+          {/* Smooth Horizontal Ticker Track with gentle edge fade masks */}
+          <div className="overflow-hidden flex-1 relative flex items-center px-2">
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-[#F8F9FA] to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-6 bg-gradient-to-l from-[#F8F9FA] to-transparent z-10" />
+            <div className="animate-ticker text-[11.5px] text-[#475569] space-x-8">
+              {/* Loop Set 1 */}
+              {announcements.map((item, idx) => (
+                <span key={`t1-${idx}`} className="inline-flex items-center space-x-2 shrink-0">
+                  <span>
+                    {item.prefix && <strong className="font-semibold text-[#0F172A]">{item.prefix}: </strong>}
+                    {item.text}
+                  </span>
+                  <span className="text-stone-300">✦</span>
+                </span>
+              ))}
+
+              {/* Loop Set 2 (Duplicates for 100% gapless continuous scrolling) */}
+              {announcements.map((item, idx) => (
+                <span key={`t2-${idx}`} className="inline-flex items-center space-x-2 shrink-0">
+                  <span>
+                    {item.prefix && <strong className="font-semibold text-[#0F172A]">{item.prefix}: </strong>}
+                    {item.text}
+                  </span>
+                  <span className="text-stone-300">✦</span>
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Quick Contact & 80G Link */}
+          <div className="hidden xl:flex items-center space-x-3 shrink-0 pl-3.5 border-l border-stone-200 z-10 bg-[#F8F9FA] text-[11px]">
+            <a
+              href="tel:+919890898081"
+              className="text-[#334155] font-semibold hover:text-[#8B1D24] flex items-center space-x-1 transition-colors"
+            >
+              <Phone className="w-3 h-3 text-[#8B1D24]" />
+              <span>+91 98908 98081</span>
+            </a>
+            <span className="text-stone-300">•</span>
+            <Link
+              to="/support"
+              className="text-[#8B1D24] font-semibold hover:underline"
+            >
+              80G 50% Tax Exemption
+            </Link>
+          </div>
+
         </div>
       </div>
 
-      {/* Main Navigation Bar */}
-      <nav className="bg-foundation-ivory border-b border-foundation-borderMuted px-4 md:px-6 xl:px-8 py-2.5 transition-all">
-        <div className="max-w-[1440px] mx-auto flex items-center justify-between gap-3 xl:gap-4">
-          {/* Logo & Foundation Name */}
-          <Link to="/" className="flex items-center space-x-2.5 md:space-x-3 group shrink-0">
+      {/* =========================================================================
+          2. MAIN STICKY NAVIGATION (Exact Order: 1. Home, 2. About Us, 3. What We Do,
+             4. Partnership, 5. Contact, 6. Support, 7. Login Icon)
+         ========================================================================= */}
+      <nav className="bg-white/98 backdrop-blur-md border-b border-[#E5E7EB] px-4 md:px-6 xl:px-8 py-3.5 transition-all">
+        <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-4">
+          
+          {/* Logo & Foundation Identity (Balanced Proportions) */}
+          <Link to="/" className="flex items-center space-x-3 group shrink-0">
             <img
               src="/assets/images/logo.jpg"
-              alt="SBBM Social Foundation Society Logo"
-              className="w-11 h-11 md:w-12 md:h-12 rounded-full border-2 border-foundation-gold shadow-md group-hover:scale-105 transition-transform"
+              alt="Official SBBM Social Foundation Logo"
+              className="w-11 h-11 md:w-12 md:h-12 rounded-full border border-stone-200 shadow-xs object-cover"
             />
             <div className="flex flex-col">
-              <span className="text-[11px] tracking-wider uppercase text-foundation-forest font-bold leading-none whitespace-nowrap">
+              <span className="text-[10px] tracking-wider uppercase text-[#8B1D24] font-bold leading-none">
+                ESTD 2015 • REGD. F-33193
+              </span>
+              <span className="text-base sm:text-lg font-bold tracking-tight text-[#0F172A] leading-tight">
                 SBBM Social Foundation
               </span>
-              <span className="text-base md:text-lg font-display font-bold text-foundation-charcoal leading-tight whitespace-nowrap">
-                VYENKATESH ASHRAM
-              </span>
-              <span className="text-[9.5px] text-foundation-sage tracking-wider leading-none whitespace-nowrap">
-                A Place of Care, Dignity & Belonging
+              <span className="text-[10.5px] text-[#64748B] leading-none pt-0.5">
+                Service is Humanity • Education is Development
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links - Single clean horizontal line with whitespace-nowrap */}
-          <div className="hidden xl:flex items-center gap-1 xl:gap-1.5 2xl:gap-3 text-[13px] 2xl:text-sm font-semibold text-foundation-charcoal">
+          {/* Desktop Navigation Links (EXACT ORDER: 1. Home, 2. About Us, 3. What We Do, 4. Partnership, 5. Contact, 6. Support, 7. Login Icon) */}
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 text-[13.5px] font-medium text-[#334155]">
+            
+            {/* 1. Home */}
             <Link
               to="/"
-              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
-                isActive('/') && location.pathname === '/'
-                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
+              className={`py-1.5 transition-colors ${
+                location.pathname === '/'
+                  ? 'text-[#8B1D24] font-semibold'
+                  : 'hover:text-[#8B1D24]'
               }`}
             >
-              Home
+              <span>Home</span>
             </Link>
 
-            {/* About Us Dropdown */}
+            {/* 2. About Us */}
             <div
               className="relative"
               onMouseEnter={() => setIsAboutDropdownOpen(true)}
@@ -165,10 +213,10 @@ export const Navbar: React.FC = () => {
             >
               <Link
                 to="/about"
-                className={`whitespace-nowrap inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg transition-colors ${
+                className={`inline-flex items-center space-x-1 py-1.5 transition-colors ${
                   isActive('/about')
-                    ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                    : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
+                    ? 'text-[#8B1D24] font-semibold'
+                    : 'hover:text-[#8B1D24]'
                 }`}
               >
                 <span>About Us</span>
@@ -176,583 +224,320 @@ export const Navbar: React.FC = () => {
               </Link>
 
               {isAboutDropdownOpen && (
-                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-foundation-borderMuted py-2 z-50">
-                  <Link to="/about" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Who We Are</strong>
-                    <p className="text-[11px] text-stone-500">History, vision & foundation profile</p>
+                <div className="absolute top-full left-0 w-72 bg-white rounded-xl shadow-card border border-[#E5E7EB] p-2 z-50 animate-in fade-in slide-in-from-top-1">
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0F172A] block font-semibold">Institutional Overview</strong>
+                    <span className="text-[11px] text-[#64748B]">Inception (Dec 2014), history & charter</span>
                   </Link>
-                  <Link to="/about/leadership" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Founder & President's Message</strong>
-                    <p className="text-[11px] text-stone-500">Mr. Ashwin V. Anjikar's message</p>
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0F172A] block font-semibold">Vision, Mission & 10 Objectives</strong>
+                    <span className="text-[11px] text-[#64748B]">Core institutional principles</span>
                   </Link>
-                  <Link to="/about/board" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Board & Committees</strong>
-                    <p className="text-[11px] text-stone-500">Helping hands & grievance committee</p>
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0F172A] block font-semibold">Founder's Message</strong>
+                    <span className="text-[11px] text-[#64748B]">Mr. Ashwin V. Anjikar & Mrs. Tina Anjikar</span>
                   </Link>
-                  <Link to="/about/certificates" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Certificates & Governance</strong>
-                    <p className="text-[11px] text-stone-500">Registration & transparency notes</p>
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0F172A] block font-semibold">Statutory Registrations</strong>
+                    <span className="text-[11px] text-[#64748B]">MAH/332/15/NAG • F-33193 • 12A & 80G</span>
                   </Link>
                 </div>
               )}
             </div>
 
-            {/* Services Dropdown */}
+            {/* 2. What We Do */}
             <div
               className="relative"
-              onMouseEnter={() => setIsServicesDropdownOpen(true)}
-              onMouseLeave={() => setIsServicesDropdownOpen(false)}
+              onMouseEnter={() => setIsWhatWeDoDropdownOpen(true)}
+              onMouseLeave={() => setIsWhatWeDoDropdownOpen(false)}
             >
               <Link
                 to="/services"
-                className={`whitespace-nowrap inline-flex items-center space-x-1 px-2.5 py-1.5 rounded-lg transition-colors ${
-                  isActive('/services')
-                    ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                    : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
+                className={`inline-flex items-center space-x-1 py-1.5 transition-colors ${
+                  isActive('/services') || isActive('/old-age-home')
+                    ? 'text-[#8B1D24] font-semibold'
+                    : 'hover:text-[#8B1D24]'
                 }`}
               >
-                <span>Services</span>
-                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${isServicesDropdownOpen ? 'rotate-180' : ''}`} />
+                <span>What We Do</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-150 ${isWhatWeDoDropdownOpen ? 'rotate-180' : ''}`} />
               </Link>
 
-              {isServicesDropdownOpen && (
-                <div className="absolute top-full left-0 w-64 bg-white rounded-xl shadow-xl border border-foundation-borderMuted py-2 z-50">
-                  <Link to="/services/old-age-home" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Vyenkatesh Ashram</strong>
-                    <p className="text-[11px] text-stone-500">Senior residential care & shelter</p>
-                  </Link>
-                  <Link to="/services/goseva-kendra" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Go-Seva Kendra</strong>
-                    <p className="text-[11px] text-stone-500">Cow sanctuary & nourishment</p>
-                  </Link>
-                  <Link to="/services/naturopathy" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Naturopathy & Yoga</strong>
-                    <p className="text-[11px] text-stone-500">Holistic senior health routines</p>
-                  </Link>
-                  <Link to="/services/education" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Rural Education</strong>
-                    <p className="text-[11px] text-stone-500">Student welfare & book drives</p>
-                  </Link>
-                  <Link to="/services/daily-activities" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Daily Activities</strong>
-                    <p className="text-[11px] text-stone-500">Satsang, bhajan, games & walks</p>
-                  </Link>
-                  <Link to="/services/medical-care" className="block px-4 py-2 hover:bg-foundation-warmGray text-xs">
-                    <strong>Healthcare Monitoring</strong>
-                    <p className="text-[11px] text-stone-500">Routine vitals & medicine assistance</p>
-                  </Link>
+              {isWhatWeDoDropdownOpen && (
+                <div className="absolute top-full left-0 w-[420px] bg-white rounded-xl shadow-card border border-[#E5E7EB] p-3 z-50 animate-in fade-in slide-in-from-top-1">
+                  <div className="px-3 py-1.5 border-b border-stone-100 flex items-center justify-between text-[11px] font-semibold text-[#8B1D24] uppercase tracking-wider">
+                    <span>The 8 Core Initiatives (2015–2026)</span>
+                    <Link to="/services" className="text-[11px] text-[#64748B] hover:text-[#8B1D24] normal-case font-normal">
+                      Directory →
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-1 gap-1 pt-1.5">
+                    {initiatives.map((init) => (
+                      <Link
+                        key={init.num}
+                        to={init.route}
+                        className="p-2 hover:bg-stone-50 rounded-lg flex items-start space-x-2.5 transition-colors group"
+                      >
+                        <span className="px-1.5 py-0.5 bg-stone-100 group-hover:bg-[#8B1D24] group-hover:text-white text-[#8B1D24] font-mono font-semibold text-[10px] rounded transition-colors mt-0.5">
+                          {init.num}
+                        </span>
+                        <div>
+                          <strong className="text-[#0F172A] group-hover:text-[#8B1D24] text-xs block leading-tight font-semibold transition-colors">
+                            {init.title}
+                          </strong>
+                          <span className="text-[11px] text-[#64748B] block leading-tight pt-0.5">
+                            {init.desc}
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
 
+            {/* 3. Partnership */}
             <Link
-              to="/old-age-home"
-              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
-                isActive('/old-age-home')
-                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
+              to="/support#csr"
+              className={`py-1.5 transition-colors ${
+                location.pathname === '/partnership' || (location.pathname === '/support' && location.hash === '#csr')
+                  ? 'text-[#8B1D24] font-semibold'
+                  : 'hover:text-[#8B1D24]'
               }`}
             >
-              Old Age Home
+              <span>Partnership</span>
             </Link>
 
-            <Link
-              to="/events"
-              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
-                isActive('/events')
-                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
-              }`}
-            >
-              Events
-            </Link>
-
-            <Link
-              to="/gallery"
-              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
-                isActive('/gallery')
-                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
-              }`}
-            >
-              Gallery
-            </Link>
-
-            <Link
-              to="/faq"
-              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
-                isActive('/faq')
-                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
-              }`}
-            >
-              FAQs
-            </Link>
-
+            {/* 5. Contact */}
             <Link
               to="/contact"
-              className={`whitespace-nowrap px-2.5 py-1.5 rounded-lg transition-colors ${
+              className={`py-1.5 transition-colors ${
                 isActive('/contact')
-                  ? 'text-foundation-forest bg-foundation-forest/10 font-bold'
-                  : 'text-stone-700 hover:text-foundation-forest hover:bg-stone-100/70'
+                  ? 'text-[#8B1D24] font-semibold'
+                  : 'hover:text-[#8B1D24]'
+              }`}
+            >
+              <span>Contact</span>
+            </Link>
+
+            {/* 5. Support (Visually distinguishable CTA button) */}
+            <Link
+              to="/support"
+              className={`inline-flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-semibold shadow-xs transition-all ${
+                isActive('/support') && location.hash !== '#csr'
+                  ? 'bg-[#6E1419] text-white ring-2 ring-[#8B1D24]/20'
+                  : 'bg-[#8B1D24] hover:bg-[#6E1419] text-white'
+              }`}
+            >
+              <Heart className="w-3.5 h-3.5 fill-white" />
+              <span>Support</span>
+            </Link>
+
+            {/* 7. Admin Login Icon (Clickable admin authentication) */}
+            <div className="relative shrink-0" ref={accountDropdownRef}>
+              {user && user.role === 'admin' ? (
+                <button
+                  type="button"
+                  onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
+                  className="w-9 h-9 rounded-full bg-[#8B1D24] hover:bg-[#6E1419] text-white font-bold text-xs flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+                  title="Administrator - Open Admin Menu"
+                  aria-label="Admin Account Menu"
+                >
+                  {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
+                </button>
+              ) : (
+                <Link
+                  to="/admin-login"
+                  className="w-9 h-9 rounded-full border border-stone-300 hover:border-[#8B1D24] bg-stone-50 hover:bg-white text-[#334155] hover:text-[#8B1D24] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+                  title="Admin Login"
+                  aria-label="Admin Login"
+                  id="nav-admin-login-icon"
+                >
+                  <Lock className="w-4 h-4" />
+                </Link>
+              )}
+
+              {/* Logged in Admin Menu Dropdown */}
+              {user && user.role === 'admin' && isAccountDropdownOpen && (
+                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-elevated border border-[#E5E7EB] p-3 z-50 animate-in fade-in slide-in-from-top-1">
+                  <div className="bg-stone-50 p-3 rounded-lg border border-stone-200">
+                    <p className="text-xs font-bold text-[#0F172A] truncate">{user.fullName}</p>
+                    <p className="text-[11px] text-[#64748B] truncate">{user.email}</p>
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-red-100 text-red-800 text-[10px] font-semibold rounded">
+                      Administrator
+                    </span>
+                  </div>
+
+                  <Link
+                    to="/admin/dashboard"
+                    onClick={() => setIsAccountDropdownOpen(false)}
+                    className="flex items-center space-x-2 px-3 py-2 mt-2 rounded-lg hover:bg-stone-50 text-xs font-semibold text-[#8B1D24] transition-colors"
+                  >
+                    <ShieldCheck className="w-4 h-4" />
+                    <span>Go to Admin Dashboard</span>
+                  </Link>
+
+                  <div className="pt-2 mt-1 border-t border-stone-100">
+                    <button
+                      onClick={handleLogout}
+                      className="w-full flex items-center justify-center space-x-1.5 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 text-xs font-semibold transition-colors cursor-pointer"
+                    >
+                      <LogOut className="w-3.5 h-3.5" />
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+
+          </div>
+
+          {/* Mobile Header Controls: Support CTA + Admin Login Icon + Hamburger Toggle */}
+          <div className="lg:hidden flex items-center space-x-2">
+            <Link
+              to="/support"
+              className="px-3 py-1.5 bg-[#8B1D24] text-white font-semibold rounded-md text-xs shadow-xs"
+            >
+              Support
+            </Link>
+
+            <Link
+              to={user && user.role === 'admin' ? "/admin/dashboard" : "/admin-login"}
+              className="w-8 h-8 rounded-full border border-stone-300 bg-stone-50 flex items-center justify-center text-[#334155]"
+              title="Admin Login"
+              aria-label="Admin Login"
+            >
+              {user && user.role === 'admin' ? (
+                <span className="w-6 h-6 rounded-full bg-[#8B1D24] text-white text-[10px] font-bold flex items-center justify-center">
+                  {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
+                </span>
+              ) : (
+                <Lock className="w-3.5 h-3.5" />
+              )}
+            </Link>
+
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="p-1.5 rounded-lg text-[#334155] hover:bg-stone-100 transition-colors"
+              aria-label="Toggle navigation menu"
+            >
+              {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+            </button>
+          </div>
+
+        </div>
+      </nav>
+
+      {/* =========================================================================
+          3. MOBILE MENU DRAWER (Exact Navigation Order: 1 to 7)
+         ========================================================================= */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden bg-white border-b border-[#E5E7EB] max-h-[85vh] overflow-y-auto p-4 space-y-3 shadow-elevated">
+          <div className="space-y-1">
+            {/* 1. Home */}
+            <Link
+              to="/"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`block px-3 py-2 rounded-lg font-semibold text-xs transition-colors ${
+                location.pathname === '/' ? 'text-[#8B1D24] bg-red-50' : 'text-[#0F172A] hover:bg-stone-50'
+              }`}
+            >
+              Home
+            </Link>
+
+            {/* 2. About Us */}
+            <Link
+              to="/about"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`block px-3 py-2 rounded-lg font-semibold text-xs transition-colors ${
+                isActive('/about') ? 'text-[#8B1D24] bg-red-50' : 'text-[#0F172A] hover:bg-stone-50'
+              }`}
+            >
+              About Us
+            </Link>
+
+            {/* 3. What We Do */}
+            <Link
+              to="/services"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`block px-3 py-2 rounded-lg font-semibold text-xs transition-colors ${
+                isActive('/services') || isActive('/old-age-home') ? 'text-[#8B1D24] bg-red-50' : 'text-[#0F172A] hover:bg-stone-50'
+              }`}
+            >
+              What We Do (The 8 Pillars)
+            </Link>
+
+            {/* 4. Partnership */}
+            <Link
+              to="/support#csr"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`block px-3 py-2 rounded-lg font-semibold text-xs transition-colors ${
+                location.pathname === '/partnership' || (location.pathname === '/support' && location.hash === '#csr')
+                  ? 'text-[#8B1D24] bg-red-50'
+                  : 'text-[#0F172A] hover:bg-stone-50'
+              }`}
+            >
+              Partnership (CSR & Schedule VII)
+            </Link>
+
+            {/* 5. Contact */}
+            <Link
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className={`block px-3 py-2 rounded-lg font-semibold text-xs transition-colors ${
+                isActive('/contact')
+                  ? 'text-[#8B1D24] bg-red-50'
+                  : 'text-[#0F172A] hover:bg-stone-50'
               }`}
             >
               Contact
             </Link>
-          </div>
 
-          {/* Right Action Controls: Admission CTA & Login/Account Icon to its RIGHT */}
-          <div className="hidden xl:flex items-center space-x-2.5 shrink-0">
-            {/* 1. Admission CTA Button */}
-            <Link
-              to="/admission"
-              className="whitespace-nowrap h-9 px-4 bg-foundation-forest hover:bg-foundation-forestLight text-foundation-ivory font-bold rounded-full text-xs shadow-sm hover:shadow transition-all inline-flex items-center justify-center shrink-0"
-            >
-              <span>Admission Enquiry</span>
-            </Link>
-
-            {/* 2. Dedicated Login / Portal Icon Button - Placed to the RIGHT of Admission Enquiry */}
-            <div className="relative shrink-0" ref={accountDropdownRef}>
-              <button
-                onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                className={`whitespace-nowrap h-9 inline-flex items-center space-x-1.5 px-3 rounded-full border transition-all cursor-pointer ${
-                  user
-                    ? 'bg-foundation-forest text-foundation-gold border-foundation-gold shadow-sm'
-                    : isAccountDropdownOpen
-                    ? 'bg-foundation-warmGray text-foundation-forest border-foundation-forest ring-2 ring-foundation-forest/20'
-                    : 'bg-white hover:bg-foundation-warmGray text-foundation-charcoal border-stone-200 hover:border-foundation-gold shadow-sm'
-                }`}
-                id="portal-login-icon-btn"
-                aria-label="Account and Portals"
-                title="Account, Seva Members, Volunteers & Admin Login"
-              >
-                <div className="w-5 h-5 rounded-full bg-foundation-forest/10 flex items-center justify-center text-foundation-forest shrink-0">
-                  {user ? (
-                    <span className="font-bold text-[11px] text-foundation-gold">{user.fullName.charAt(0).toUpperCase()}</span>
-                  ) : (
-                    <User className="w-3.5 h-3.5 text-foundation-forest" />
-                  )}
-                </div>
-                <span className="text-xs font-bold whitespace-nowrap">
-                  {user ? user.fullName.split(' ')[0] : 'Login'}
-                </span>
-                <ChevronDown
-                  className={`w-3.5 h-3.5 text-stone-400 transition-transform duration-200 ${
-                    isAccountDropdownOpen ? 'rotate-180 text-foundation-forest' : ''
-                  }`}
-                />
-              </button>
-
-              {/* Account / Portals Dropdown Card */}
-              {isAccountDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-88 sm:w-96 bg-white rounded-3xl shadow-2xl border border-foundation-borderMuted p-3.5 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  {user ? (
-                    // Logged In State
-                    <div className="space-y-3">
-                      <div className="bg-foundation-warmGray p-3.5 rounded-2xl border border-foundation-borderMuted/60">
-                        <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 rounded-full bg-foundation-forest text-foundation-gold flex items-center justify-center font-bold text-sm shadow-sm">
-                            {user.fullName.charAt(0).toUpperCase()}
-                          </div>
-                          <div className="overflow-hidden flex-1 min-w-0">
-                            <p className="text-xs font-bold text-foundation-charcoal truncate">{user.fullName}</p>
-                            <p className="text-[11px] text-stone-500 truncate">{user.portalId || user.email}</p>
-                            <span className="inline-block mt-1 px-2.5 py-0.5 bg-foundation-forest/10 text-foundation-forest text-[10px] font-bold rounded-full uppercase tracking-wider">
-                              {user.role.replace('_', ' ')} Account
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="space-y-1">
-                        <Link
-                          to={getDashboardLink(user.role)}
-                          onClick={() => setIsAccountDropdownOpen(false)}
-                          className="flex items-center space-x-2.5 px-3.5 py-2.5 rounded-xl hover:bg-foundation-forest/10 text-xs font-bold text-foundation-forest transition-colors"
-                        >
-                          <ShieldCheck className="w-4 h-4 text-foundation-gold" />
-                          <span>Go to Dashboard</span>
-                        </Link>
-                      </div>
-
-                      <div className="pt-2 border-t border-stone-100">
-                        <button
-                          onClick={handleLogout}
-                          className="w-full flex items-center justify-center space-x-2 px-3 py-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold transition-colors cursor-pointer"
-                        >
-                          <LogOut className="w-3.5 h-3.5" />
-                          <span>Logout</span>
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    // Logged Out State - Consolidated 4 Portals
-                    <div className="space-y-2">
-                      <div className="px-2.5 py-1.5 border-b border-stone-100">
-                        <p className="text-xs font-bold text-foundation-forest uppercase tracking-wider flex items-center space-x-1.5">
-                          <Sparkles className="w-3.5 h-3.5 text-foundation-gold" />
-                          <span>Portals & Community</span>
-                        </p>
-                        <p className="text-[11px] text-stone-500 mt-0.5">
-                          Select your required portal to proceed
-                        </p>
-                      </div>
-
-                      {/* 1. Seva Member Login */}
-                      <Link
-                        to="/seva-member/login"
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-emerald-50/70 border border-transparent hover:border-emerald-200/60 transition-all duration-200"
-                      >
-                        <div className="w-9 h-9 rounded-xl bg-foundation-forest/10 flex items-center justify-center text-foundation-forest shrink-0 group-hover:bg-foundation-forest group-hover:text-white shadow-sm transition-all">
-                          <UserCheck className="w-4 h-4" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-foundation-forest transition-colors">
-                            Seva Member Login
-                          </p>
-                          <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
-                            Access to the Seva member dashboard, receipts, Seva records, and assigned tasks.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* 2. Membership Login */}
-                      <Link
-                        to="/membership/login"
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-amber-50/70 border border-transparent hover:border-amber-200/60 transition-all duration-200"
-                      >
-                        <div className="w-9 h-9 rounded-xl bg-amber-500/10 flex items-center justify-center text-amber-700 shrink-0 group-hover:bg-amber-600 group-hover:text-white shadow-sm transition-all">
-                          <Award className="w-4 h-4" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-amber-800 transition-colors">
-                            Membership Login
-                          </p>
-                          <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
-                            Access to membership details, assigned projects, application status, and related activities.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* 3. Volunteer Login */}
-                      <Link
-                        to="/volunteer/login"
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-teal-50/70 border border-transparent hover:border-teal-200/60 transition-all duration-200"
-                      >
-                        <div className="w-9 h-9 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-700 shrink-0 group-hover:bg-emerald-600 group-hover:text-white shadow-sm transition-all">
-                          <HeartHandshake className="w-4 h-4" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-xs font-bold text-foundation-charcoal group-hover:text-emerald-800 transition-colors">
-                            Volunteer Login
-                          </p>
-                          <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
-                            Access to volunteer activities, assigned tasks, participation history, and Seva activities.
-                          </p>
-                        </div>
-                      </Link>
-
-                      {/* 4. Admin Login */}
-                      <div className="pt-1.5 border-t border-stone-100">
-                        <Link
-                          to="/admin-login"
-                          onClick={() => setIsAccountDropdownOpen(false)}
-                          className="group flex items-start space-x-3 p-3 rounded-2xl hover:bg-stone-100/80 border border-transparent hover:border-stone-200 transition-all duration-200"
-                        >
-                          <div className="w-9 h-9 rounded-xl bg-foundation-forestDark/10 flex items-center justify-center text-foundation-forestDark shrink-0 group-hover:bg-foundation-forestDark group-hover:text-foundation-gold shadow-sm transition-all">
-                            <ShieldCheck className="w-4 h-4" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <p className="text-xs font-bold text-foundation-forestDark flex items-center space-x-1.5">
-                              <span>Admin Login</span>
-                              <Lock className="w-3 h-3 text-foundation-gold" />
-                            </p>
-                            <p className="text-[11px] text-stone-500 leading-snug mt-0.5">
-                              Access to the complete administration panel for managing all three user categories.
-                            </p>
-                          </div>
-                        </Link>
-                      </div>
-
-                      {/* Track Admission Status */}
-                      <div className="pt-2 border-t border-stone-100 px-2 text-center">
-                        <Link
-                          to="/admission-login"
-                          onClick={() => setIsAccountDropdownOpen(false)}
-                          className="inline-flex items-center space-x-1.5 text-[11px] font-bold text-foundation-forest hover:text-foundation-forestLight transition-colors"
-                        >
-                          <FileText className="w-3 h-3 text-rose-600" />
-                          <span>Submitted an Admission Enquiry? Track Status</span>
-                        </Link>
-                      </div>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-          </div>
-
-          {/* Mobile Right Controls: Admission CTA + Mobile User Icon to its RIGHT + Hamburger */}
-          <div className="flex xl:hidden items-center space-x-2">
-            <Link
-              to="/admission"
-              className="whitespace-nowrap px-3 py-1.5 bg-foundation-forest text-foundation-ivory font-bold rounded-full text-xs shadow-sm"
-            >
-              Admission
-            </Link>
-
-            {/* Mobile Account Icon Button - Placed RIGHT to Admission */}
-            <div className="relative" ref={mobileAccountDropdownRef}>
-              <button
-                onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                className={`p-2 rounded-full border transition-all cursor-pointer ${
-                  user
-                    ? 'bg-foundation-forest text-foundation-gold border-foundation-gold'
-                    : isAccountDropdownOpen
-                    ? 'bg-foundation-warmGray text-foundation-forest border-foundation-forest'
-                    : 'bg-white text-foundation-charcoal border-stone-200'
-                }`}
-                aria-label="Account Portals"
-                title="Account Portals"
-              >
-                <User className="w-4 h-4" />
-              </button>
-
-              {/* Mobile Account Dropdown Popover */}
-              {isAccountDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-2xl border border-foundation-borderMuted p-3 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-                  {user ? (
-                    <div className="space-y-2">
-                      <div className="p-2.5 bg-foundation-warmGray rounded-xl">
-                        <p className="text-xs font-bold text-foundation-forest">{user.fullName}</p>
-                        <p className="text-[10px] text-stone-500 capitalize">{user.role} Account</p>
-                      </div>
-                      <Link
-                        to={user.role === 'admin' ? '/admin/dashboard' : '/member/dashboard'}
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="block px-3 py-2 bg-foundation-forest text-white rounded-lg text-xs font-bold text-center"
-                      >
-                        Dashboard
-                      </Link>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full px-3 py-2 bg-red-50 text-red-700 rounded-lg text-xs font-bold text-center cursor-pointer"
-                      >
-                        Logout
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="space-y-1.5 text-left">
-                      <p className="text-[10px] font-bold text-foundation-forest uppercase tracking-wider px-1">
-                        Select Portal
-                      </p>
-                      <Link
-                        to="/login"
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-charcoal"
-                      >
-                        <UserCheck className="w-4 h-4 text-foundation-forest" />
-                        <span>Seva Member Login</span>
-                      </Link>
-                      <Link
-                        to="/membership"
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-charcoal"
-                      >
-                        <Award className="w-4 h-4 text-amber-600" />
-                        <span>Become a Seva Member</span>
-                      </Link>
-                      <Link
-                        to="/volunteer"
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-charcoal"
-                      >
-                        <HeartHandshake className="w-4 h-4 text-emerald-600" />
-                        <span>Volunteer Seva</span>
-                      </Link>
-                      <Link
-                        to="/admin-login"
-                        onClick={() => setIsAccountDropdownOpen(false)}
-                        className="flex items-center space-x-2 p-2 rounded-lg hover:bg-foundation-warmGray text-xs font-bold text-foundation-forestDark border-t border-stone-100"
-                      >
-                        <ShieldCheck className="w-4 h-4 text-foundation-gold" />
-                        <span>Admin Login</span>
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-lg text-foundation-charcoal hover:bg-foundation-warmGray"
-              aria-label="Toggle Navigation"
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
-        </div>
-
-        {/* Mobile Dropdown Navigation Drawer */}
-        {isMobileMenuOpen && (
-          <div className="xl:hidden mt-3 pt-3 border-t border-foundation-borderMuted bg-white rounded-2xl p-4 shadow-xl space-y-3">
-            <Link
-              to="/"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
-            >
-              Home
-            </Link>
-            <Link
-              to="/about"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
-            >
-              About Us (Foundation & Leadership)
-            </Link>
-            <Link
-              to="/services"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
-            >
-              All Services
-            </Link>
-            <Link
-              to="/old-age-home"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-forest py-2 border-b border-stone-100"
-            >
-              Vyenkatesh Ashram Old Age Home
-            </Link>
-            <Link
-              to="/services/goseva-kendra"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-sm text-stone-600 py-1 pl-4"
-            >
-              • Go-Seva Kendra
-            </Link>
-            <Link
-              to="/services/naturopathy"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-sm text-stone-600 py-1 pl-4"
-            >
-              • Naturopathy & Yoga
-            </Link>
-            <Link
-              to="/services/education"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-sm text-stone-600 py-1 pl-4"
-            >
-              • Rural Education Support
-            </Link>
-            <Link
-              to="/events"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
-            >
-              Events
-            </Link>
-            <Link
-              to="/gallery"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
-            >
-              Gallery
-            </Link>
+            {/* 6. Support */}
             <Link
               to="/support"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-gold py-2 border-b border-stone-100"
+              className={`block px-3 py-2 rounded-lg font-semibold text-xs transition-colors ${
+                isActive('/support') && location.hash !== '#csr' ? 'text-[#8B1D24] bg-red-50' : 'text-[#0F172A] hover:bg-stone-50'
+              }`}
             >
-              Support / Donate
+              Support Our Work (80G Tax Exemption)
             </Link>
-            <Link
-              to="/faq"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2 border-b border-stone-100"
-            >
-              FAQs
-            </Link>
-            <Link
-              to="/contact"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block font-bold text-foundation-charcoal py-2"
-            >
-              Contact Us
-            </Link>
-
-            {/* Mobile Drawer Portals & Account Section */}
-            <div className="pt-2 border-t border-stone-200">
-              <p className="text-[11px] font-bold text-foundation-forest uppercase tracking-wider mb-2">
-                Portals & Accounts
-              </p>
-              {user ? (
-                <div className="flex items-center justify-between bg-stone-100 p-2.5 rounded-xl">
-                  <div>
-                    <p className="text-xs font-bold text-foundation-forest">{user.fullName}</p>
-                    <p className="text-[11px] text-stone-500 capitalize">{user.role.replace('_', ' ')} Account</p>
-                  </div>
-                  <div className="flex space-x-2">
-                    <Link
-                      to={getDashboardLink(user.role)}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="px-3 py-1 bg-foundation-forest text-white text-xs rounded-lg font-bold"
-                    >
-                      Dashboard
-                    </Link>
-                    <button
-                      onClick={handleLogout}
-                      className="px-2.5 py-1 bg-red-100 text-red-700 text-xs rounded-lg font-bold"
-                    >
-                      Logout
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-2">
-                  <Link
-                    to="/seva-member/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2.5 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
-                  >
-                    <UserCheck className="w-4 h-4 text-foundation-forest" />
-                    <span>Seva Member</span>
-                  </Link>
-                  <Link
-                    to="/membership/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2.5 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
-                  >
-                    <Award className="w-4 h-4 text-amber-600" />
-                    <span>Membership</span>
-                  </Link>
-                  <Link
-                    to="/volunteer/login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2.5 bg-stone-100 hover:bg-stone-200 text-foundation-charcoal rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
-                  >
-                    <HeartHandshake className="w-4 h-4 text-emerald-600" />
-                    <span>Volunteer</span>
-                  </Link>
-                  <Link
-                    to="/admin-login"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="p-2.5 bg-foundation-forest text-foundation-ivory rounded-xl text-xs font-bold text-center flex flex-col items-center justify-center space-y-1"
-                  >
-                    <ShieldCheck className="w-4 h-4 text-foundation-gold" />
-                    <span>Admin Login</span>
-                  </Link>
-                </div>
-              )}
-            </div>
           </div>
-        )}
-      </nav>
+
+          <div className="pt-3 border-t border-[#E5E7EB] space-y-2">
+            {/* 7. Admin Login */}
+            {user && user.role === 'admin' ? (
+              <div className="space-y-2">
+                <Link
+                  to="/admin/dashboard"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full py-2 bg-[#8B1D24] text-white font-semibold rounded-lg text-xs text-center block"
+                >
+                  Go to Admin Dashboard
+                </Link>
+                <button
+                  onClick={handleLogout}
+                  className="w-full py-2 bg-red-50 text-red-700 font-semibold rounded-lg text-xs text-center block cursor-pointer"
+                >
+                  Sign Out
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Link
+                  to="/admin-login"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="w-full py-2 bg-stone-100 hover:bg-stone-200 text-[#0F172A] font-semibold rounded-lg text-xs text-center flex items-center justify-center space-x-2 border border-stone-300"
+                >
+                  <Lock className="w-3.5 h-3.5 text-[#8B1D24]" />
+                  <span>Admin Login</span>
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </header>
   );
 };

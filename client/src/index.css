@@ -4,101 +4,128 @@
 
 @layer base {
   :root {
-    --color-ivory: #FDFBF7;
-    --color-forest: #1B4332;
-    --color-forest-dark: #0D2818;
-    --color-forest-light: #2D6A4F;
-    --color-sage: #52796F;
-    --color-sage-light: #84A98C;
-    --color-sandstone: #E9DCC9;
-    --color-gold: #D4AF37;
-    --color-gold-light: #F3E5AB;
-    --color-charcoal: #1F2421;
-    --color-terracotta: #BC4749;
-    --color-warm-gray: #F4F1EA;
+    --color-primary: #8B1D24;
+    --color-primary-dark: #6E1419;
+    --color-canvas: #FAFAF9;
+    --color-heading: #0F172A;
+    --color-body: #334155;
+    --color-border: #E5E7EB;
   }
 
   html {
     scroll-behavior: smooth;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #334155;
+    background-color: #FAFAF9;
   }
 
   body {
-    background-color: var(--color-ivory);
-    color: var(--color-charcoal);
+    background-color: #FAFAF9;
+    color: #334155;
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  h1, h2, h3, .font-display {
-    font-family: 'Cinzel', 'Playfair Display', Georgia, serif;
-    letter-spacing: -0.01em;
+  h1, h2, h3, h4, h5, h6 {
+    color: #0F172A;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: #8B1D24;
+    color: #FFFFFF;
+  }
+
+  /* Accessible focus indicators */
+  :focus-visible {
+    outline: 2px solid #8B1D24;
+    outline-offset: 2px;
   }
 }
 
-/* Custom Scrollbar */
+/* Custom Clean Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #F4F1EA;
+  background: #F1F1F0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #52796F;
+  background: #CBD5E1;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #1B4332;
+  background: #94A3B8;
 }
 
-/* Glassmorphism & Sacred Glow */
-.glass-panel {
-  background: rgba(253, 251, 247, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(233, 220, 201, 0.6);
+/* Subtle, dignified utility classes */
+.card-clean {
+  background-color: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease-in-out;
 }
 
-.glass-panel-dark {
-  background: rgba(13, 40, 24, 0.85);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(212, 175, 55, 0.2);
+.card-clean:hover {
+  border-color: #D1D5DB;
+  box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.08);
 }
 
-.gold-gradient-text {
-  background: linear-gradient(135deg, #B8860B 0%, #D4AF37 50%, #AA771C 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.btn-primary {
+  background-color: #8B1D24;
+  color: #FFFFFF;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.btn-primary:hover {
+  background-color: #6E1419;
+  box-shadow: 0 2px 4px rgba(139, 29, 36, 0.2);
 }
 
-.forest-gradient-bg {
-  background: linear-gradient(135deg, #0D2818 0%, #1B4332 60%, #2D6A4F 100%);
+.btn-secondary {
+  background-color: #FFFFFF;
+  color: #1F2937;
+  border: 1px solid #D1D5DB;
+  font-weight: 600;
+  border-radius: 8px;
+  transition: all 0.15s ease-in-out;
+}
+.btn-secondary:hover {
+  background-color: #F9FAFB;
+  border-color: #9CA3AF;
+  color: #111827;
 }
 
-.parchment-pattern {
-  background-color: #FDFBF7;
-  background-image: radial-gradient(#84A98C 0.65px, transparent 0.65px), radial-gradient(#84A98C 0.65px, #FDFBF7 0.65px);
-  background-size: 26px 26px;
-  background-position: 0 0, 13px 13px;
-  background-opacity: 0.15;
+/* Announcement Ticker Continuous Loop Animation */
+@keyframes ticker-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
 }
 
-/* Animations */
-@keyframes floatGentle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-8px); }
+.animate-ticker {
+  display: inline-flex;
+  white-space: nowrap;
+  width: max-content;
+  will-change: transform;
+  animation: ticker-scroll 36s linear infinite;
 }
 
-@keyframes pulseSubtle {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.85; transform: scale(1.03); }
+.animate-ticker:hover {
+  animation-play-state: paused;
 }
 
-.animate-float {
-  animation: floatGentle 4s ease-in-out infinite;
-}
-
-.animate-pulse-subtle {
-  animation: pulseSubtle 3s ease-in-out infinite;
+@media (prefers-reduced-motion: reduce) {
+  .animate-ticker {
+    animation: none;
+    width: auto;
+  }
 }

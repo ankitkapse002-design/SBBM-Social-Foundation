@@ -4,727 +4,15 @@ import {
   db, User, SevaMemberProfile, SocietyMemberProfile, VolunteerProfile,
   ProjectItem, PortalTask, PortalNotification, SevaRecordItem,
   AdmissionEnquiry, AdmissionStatus,
-  generatePortalId, generateInitialPassword, generateAdmissionPassword, ApplicationStatus, AccountStatus, TaskStatus,
-  getInitialPasswordCandidates
+  generatePortalId, generateInitialPassword, generateAdmissionPassword, ApplicationStatus, AccountStatus, TaskStatus
 } from '../db';
-import { authMiddleware, adminOnly, generateToken, rateLimit, AuthRequest } from '../middleware/auth';
+import { authMiddleware, adminOnly, AuthRequest } from '../middleware/auth';
 
 export const portalRouter = Router();
 
 // =========================================================================
-// 1. REGISTRATION ENDPOINTS
-// =========================================================================
-
-/**
- * 1.1 Seva Member Registration
- */
-portalRouter.post('/register/seva-member', rateLimit(60000, 10), (req: Request, res: Response) => {
-  try {
-    const {
-      fullName, dob, mobile, email, address,
-      sevaPreferences, emergencyContact, bloodGroup, notes, profilePhotoUrl
-    } = req.body;
-
-    if (!fullName || !dob || !mobile || !address) {
-      res.status(400).json({
-        success: false,
-        message: 'Full name, date of birth, mobile number, and address are required.',
-      });
-      return;
-    }
-
-    const cleanMobile = mobile.replace(/\D/g, '');
-    const cleanEmail = (email || '').trim().toLowerCase();
-    const users = db.get('users');
-    const sevaMembers = db.get('seva_members');
-
-    // Duplicate verification
-    const existingUser = users.find(u => {
-      const uMobile = u.mobile.replace(/\D/g, '');
-      const uEmail = u.email.toLowerCase();
-      return (cleanMobile && uMobile === cleanMobile) || (cleanEmail && uEmail === cleanEmail);
-    });
-
-    if (existingUser) {
-      res.status(400).json({
-        success: false,
-        message: 'An application or account with this mobile number or email already exists.',
-      });
-      return;
-    }
-
-    const now = new Date().toISOString();
-    const memberId = generatePortalId('SM');
-    const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    const initialPlainPassword = generateInitialPassword(fullName, dob);
-    const passwordHash = bcrypt.hashSync(initialPlainPassword, 10);
-
-    const newUser: User = {
-      id: userId,
-      email: cleanEmail || `${memberId.toLowerCase()}@ssbmfoundation.org`,
-      username: memberId,
-      fullName: fullName.trim(),
-      mobile: mobile.trim(),
-      passwordHash,
-      role: 'seva_member',
-      portalId: memberId,
-      accountStatus: 'pending',
-      isVerified: true,
-      mustChangePassword: true,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    const newProfile: SevaMemberProfile = {
-      id: `sm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      userId,
-      memberId,
-      fullName: fullName.trim(),
-      dob: dob.trim(),
-      mobile: mobile.trim(),
-      email: cleanEmail,
-      address: address.trim(),
-      profilePhotoUrl: profilePhotoUrl?.trim(),
-      sevaPreferences: Array.isArray(sevaPreferences) ? sevaPreferences : ['General Seva'],
-      emergencyContact: (emergencyContact || mobile).trim(),
-      bloodGroup: bloodGroup?.trim(),
-      notes: notes?.trim(),
-      applicationStatus: 'pending_approval',
-      joinedAt: now,
-    };
-
-    users.push(newUser);
-    sevaMembers.push(newProfile);
-
-    // Initial system notification for the user
-    db.get('portal_notifications').push({
-      id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      userId: memberId,
-      title: 'Seva Member Application Submitted',
-      message: `Your Seva Member application (${memberId}) was submitted successfully and is awaiting administrative approval.`,
-      type: 'info',
-      isRead: false,
-      createdAt: now,
-    });
-
-    db.save();
-    db.logAudit('public', fullName, 'SEVA_MEMBER_REGISTER', 'SevaMemberProfile', `New Seva Member registered with ID ${memberId}`, req.ip);
-
-    res.status(201).json({
-      success: true,
-      memberId,
-      fullName: newProfile.fullName,
-      status: newProfile.applicationStatus,
-      message: `Seva Member application submitted successfully! Your generated Member ID is ${memberId}. Your application is currently pending administrative review.`,
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Seva member registration failed: ' + err.message });
-  }
-});
-
-/**
- * 1.2 Society Membership Application / Registration
- */
-portalRouter.post('/register/membership', rateLimit(60000, 10), (req: Request, res: Response) => {
-  try {
-    const {
-      fullName, dob, mobile, email, address,
-      qualifications, skills, areasOfInterest, availability, occupation, membershipTier
-    } = req.body;
-
-    if (!fullName || !dob || !mobile || !email || !address) {
-      res.status(400).json({
-        success: false,
-        message: 'Full name, date of birth, mobile number, email, and address are required.',
-      });
-      return;
-    }
-
-    const cleanMobile = mobile.replace(/\D/g, '');
-    const cleanEmail = email.trim().toLowerCase();
-    const users = db.get('users');
-    const societyMembers = db.get('society_members');
-
-    const existingUser = users.find(u => {
-      const uMobile = u.mobile.replace(/\D/g, '');
-      const uEmail = u.email.toLowerCase();
-      return (cleanMobile && uMobile === cleanMobile) || (cleanEmail && uEmail === cleanEmail);
-    });
-
-    if (existingUser) {
-      res.status(400).json({
-        success: false,
-        message: 'An application or account with this mobile number or email already exists.',
-      });
-      return;
-    }
-
-    const now = new Date().toISOString();
-    const membershipId = generatePortalId('MEM');
-    const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    const initialPlainPassword = generateInitialPassword(fullName, dob);
-    const passwordHash = bcrypt.hashSync(initialPlainPassword, 10);
-
-    const newUser: User = {
-      id: userId,
-      email: cleanEmail,
-      username: membershipId,
-      fullName: fullName.trim(),
-      mobile: mobile.trim(),
-      passwordHash,
-      role: 'member',
-      portalId: membershipId,
-      accountStatus: 'pending',
-      isVerified: true,
-      mustChangePassword: true,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    const newProfile: SocietyMemberProfile = {
-      id: `mem_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      userId,
-      membershipId,
-      fullName: fullName.trim(),
-      dob: dob.trim(),
-      mobile: mobile.trim(),
-      email: cleanEmail,
-      address: address.trim(),
-      qualifications: qualifications?.trim() || 'General',
-      skills: Array.isArray(skills) ? skills : (skills ? [skills] : []),
-      areasOfInterest: Array.isArray(areasOfInterest) ? areasOfInterest : (areasOfInterest ? [areasOfInterest] : ['Community Welfare']),
-      availability: availability?.trim() || 'Flexible',
-      occupation: occupation?.trim(),
-      membershipTier: membershipTier || 'Active Member',
-      applicationStatus: 'pending_approval',
-      joinedAt: now,
-    };
-
-    users.push(newUser);
-    societyMembers.push(newProfile);
-
-    db.get('portal_notifications').push({
-      id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      userId: membershipId,
-      title: 'Membership Application Submitted',
-      message: `Your Foundation Membership application (${membershipId}) is under review by the Executive Board.`,
-      type: 'info',
-      isRead: false,
-      createdAt: now,
-    });
-
-    db.save();
-    db.logAudit('public', fullName, 'MEMBERSHIP_REGISTER', 'SocietyMemberProfile', `New Membership application with ID ${membershipId}`, req.ip);
-
-    res.status(201).json({
-      success: true,
-      membershipId,
-      fullName: newProfile.fullName,
-      status: newProfile.applicationStatus,
-      message: `Membership application submitted successfully! Your generated Membership ID is ${membershipId}. Your application is awaiting administrative review.`,
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Membership application failed: ' + err.message });
-  }
-});
-
-/**
- * 1.3 Volunteer Registration
- */
-portalRouter.post('/register/volunteer', rateLimit(60000, 10), (req: Request, res: Response) => {
-  try {
-    const {
-      fullName, dob, mobile, email, address,
-      skills, preferredActivities, availability, experience
-    } = req.body;
-
-    if (!fullName || !dob || !mobile || !address) {
-      res.status(400).json({
-        success: false,
-        message: 'Full name, date of birth, mobile number, and address are required.',
-      });
-      return;
-    }
-
-    const cleanMobile = mobile.replace(/\D/g, '');
-    const cleanEmail = (email || '').trim().toLowerCase();
-    const users = db.get('users');
-    const volunteers = db.get('volunteers');
-
-    const existingUser = users.find(u => {
-      const uMobile = u.mobile.replace(/\D/g, '');
-      const uEmail = u.email.toLowerCase();
-      return (cleanMobile && uMobile === cleanMobile) || (cleanEmail && uEmail === cleanEmail);
-    });
-
-    if (existingUser) {
-      res.status(400).json({
-        success: false,
-        message: 'An application or account with this mobile number or email already exists.',
-      });
-      return;
-    }
-
-    const now = new Date().toISOString();
-    const volunteerId = generatePortalId('VOL');
-    const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    const initialPlainPassword = generateInitialPassword(fullName, dob);
-    const passwordHash = bcrypt.hashSync(initialPlainPassword, 10);
-
-    const newUser: User = {
-      id: userId,
-      email: cleanEmail || `${volunteerId.toLowerCase()}@ssbmfoundation.org`,
-      username: volunteerId,
-      fullName: fullName.trim(),
-      mobile: mobile.trim(),
-      passwordHash,
-      role: 'volunteer',
-      portalId: volunteerId,
-      accountStatus: 'pending',
-      isVerified: true,
-      mustChangePassword: true,
-      createdAt: now,
-      updatedAt: now,
-    };
-
-    const newProfile: VolunteerProfile = {
-      id: `vol_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      userId,
-      volunteerId,
-      fullName: fullName.trim(),
-      dob: dob.trim(),
-      mobile: mobile.trim(),
-      email: cleanEmail,
-      address: address.trim(),
-      skills: Array.isArray(skills) ? skills : (skills ? [skills] : []),
-      preferredActivities: Array.isArray(preferredActivities) ? preferredActivities : ['Elder Care Seva'],
-      availability: availability?.trim() || 'Weekends',
-      experience: experience?.trim(),
-      applicationStatus: 'pending_approval',
-      joinedAt: now,
-    };
-
-    users.push(newUser);
-    volunteers.push(newProfile);
-
-    db.get('portal_notifications').push({
-      id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      userId: volunteerId,
-      title: 'Volunteer Application Received',
-      message: `Your Volunteer registration (${volunteerId}) was received. Our ashram seva coordinator will review your profile shortly.`,
-      type: 'info',
-      isRead: false,
-      createdAt: now,
-    });
-
-    db.save();
-    db.logAudit('public', fullName, 'VOLUNTEER_REGISTER', 'VolunteerProfile', `New Volunteer registration with ID ${volunteerId}`, req.ip);
-
-    res.status(201).json({
-      success: true,
-      volunteerId,
-      fullName: newProfile.fullName,
-      status: newProfile.applicationStatus,
-      message: `Volunteer registration submitted successfully! Your generated Volunteer ID is ${volunteerId}. You will be able to access your dashboard upon approval.`,
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Volunteer registration failed: ' + err.message });
-  }
-});
-
-// =========================================================================
-// 2. UNIFIED PORTAL AUTHENTICATION (LOGIN & FIRST PASSWORD CHANGE)
-// =========================================================================
-
-/**
- * 2.1 Unified Portal Login (supports Member ID / Volunteer ID / Email / Mobile)
- */
-portalRouter.post('/login', rateLimit(60000, 15), (req: Request, res: Response) => {
-  try {
-    const { loginId, password, expectedRole } = req.body;
-
-    if (!loginId || !password) {
-      res.status(400).json({
-        success: false,
-        message: 'Member ID / Email and password are required.',
-      });
-      return;
-    }
-
-    const cleanInput = loginId.trim();
-    const cleanLower = cleanInput.toLowerCase();
-    const cleanDigits = cleanInput.replace(/\D/g, '');
-
-    const users = db.get('users');
-    const user = users.find(u => {
-      const matchPortalId = u.portalId && u.portalId.toLowerCase() === cleanLower;
-      const matchUsername = u.username.toLowerCase() === cleanLower;
-      const matchEmail = u.email.toLowerCase() === cleanLower;
-      const matchMobile = cleanDigits && u.mobile.replace(/\D/g, '') === cleanDigits;
-      return matchPortalId || matchUsername || matchEmail || matchMobile;
-    });
-
-    if (!user) {
-      res.status(401).json({
-        success: false,
-        message: 'Invalid credentials. Please check your Member/Volunteer ID and password.',
-      });
-      return;
-    }
-
-    // Role check if expectedRole specified
-    if (expectedRole && user.role !== expectedRole && user.role !== 'admin') {
-      res.status(403).json({
-        success: false,
-        message: `This account belongs to the ${user.role.replace('_', ' ')} portal. Please use the appropriate portal login.`,
-      });
-      return;
-    }
-
-    const cleanPassword = (password || '').trim();
-    let isMatch = bcrypt.compareSync(password, user.passwordHash) || bcrypt.compareSync(cleanPassword, user.passwordHash);
-
-    // If direct compare fails, check if user is on initial temporary credentials (mustChangePassword === true)
-    // and entered a natural case or full-name variant of their initial password
-    if (!isMatch && user.mustChangePassword) {
-      const candidates = getInitialPasswordCandidates(user);
-      const cleanInputPwd = cleanPassword.toLowerCase();
-      if (candidates.some(c => c.toLowerCase() === cleanInputPwd)) {
-        isMatch = true;
-      }
-    }
-
-    if (!isMatch) {
-      db.logAudit('anonymous', cleanInput, 'PORTAL_LOGIN_FAIL', 'Security', `Failed login attempt for ID: ${cleanInput}`, req.ip);
-      const initialHint = user.mustChangePassword
-        ? ' If this is your first time signing in, your initial default password is your Name + Birth Year (e.g. HARR2000 or Harry2000).'
-        : '';
-      res.status(401).json({
-        success: false,
-        message: `Invalid password. Please try again.${initialHint}`,
-      });
-      return;
-    }
-
-    // Check account status & application status based on role
-    let appStatus: ApplicationStatus = 'approved';
-    let rejectionReason = '';
-
-    if (user.role === 'seva_member') {
-      const profile = db.get('seva_members').find(sm => sm.userId === user.id || sm.memberId === user.portalId);
-      if (profile) {
-        appStatus = profile.applicationStatus;
-        rejectionReason = profile.rejectionReason || '';
-      }
-    } else if (user.role === 'member') {
-      const profile = db.get('society_members').find(m => m.userId === user.id || m.membershipId === user.portalId);
-      if (profile) {
-        appStatus = profile.applicationStatus;
-        rejectionReason = profile.rejectionReason || '';
-      }
-    } else if (user.role === 'volunteer') {
-      const profile = db.get('volunteers').find(v => v.userId === user.id || v.volunteerId === user.portalId);
-      if (profile) {
-        appStatus = profile.applicationStatus;
-        rejectionReason = profile.rejectionReason || '';
-      }
-    }
-
-    // Application Status Enforcement (Admission applicants can log in to view their status & remarks)
-    if (user.role !== 'admin' && user.role !== 'admission_applicant') {
-      if (appStatus === 'pending_approval' || appStatus === 'under_review') {
-        res.status(403).json({
-          success: false,
-          code: 'PENDING_APPROVAL',
-          message: `Your application (${user.portalId || user.username}) is currently ${appStatus.replace('_', ' ').toUpperCase()}. Access will be granted once reviewed and approved by the administration.`,
-        });
-        return;
-      }
-
-      if (appStatus === 'rejected') {
-        res.status(403).json({
-          success: false,
-          code: 'REJECTED',
-          message: `Your application was not approved. ${rejectionReason ? `Reason: ${rejectionReason}` : 'Please contact the ashram office for details.'}`,
-        });
-        return;
-      }
-
-      if (user.accountStatus === 'suspended' || user.accountStatus === 'deactivated') {
-        res.status(403).json({
-          success: false,
-          code: 'ACCOUNT_SUSPENDED',
-          message: 'Your portal account is currently suspended. Please contact the administrative office.',
-        });
-        return;
-      }
-    } else if (user.role === 'admission_applicant') {
-      if (user.accountStatus === 'suspended' || user.accountStatus === 'deactivated') {
-        res.status(403).json({
-          success: false,
-          code: 'ACCOUNT_SUSPENDED',
-          message: 'Your admission portal account is currently suspended. Please contact the ashram office.',
-        });
-        return;
-      }
-    }
-
-    const token = generateToken(user);
-    db.logAudit(user.id, user.fullName, 'PORTAL_LOGIN_SUCCESS', 'Security', `Logged into ${user.role} portal with ID ${user.portalId || user.username}`, req.ip);
-
-    res.json({
-      success: true,
-      message: 'Login successful',
-      token,
-      user: {
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        fullName: user.fullName,
-        mobile: user.mobile,
-        role: user.role,
-        portalId: user.portalId || user.username,
-        mustChangePassword: user.mustChangePassword,
-        accountStatus: user.accountStatus || 'active',
-      },
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Login failed: ' + err.message });
-  }
-});
-
-/**
- * 2.2 Secure Self-Service Password Reset Request
- */
-portalRouter.post('/reset-password', rateLimit(60000, 30), (req: Request, res: Response) => {
-  try {
-    const { loginId, mobile } = req.body;
-    if (!loginId || !mobile) {
-      res.status(400).json({ success: false, message: 'Portal ID / Email and registered mobile number are required.' });
-      return;
-    }
-
-    const cleanInput = loginId.trim().toLowerCase();
-    const cleanDigits = mobile.replace(/\D/g, '');
-
-    const users = db.get('users');
-    const user = users.find(u => {
-      const matchPortalId = u.portalId && u.portalId.toLowerCase() === cleanInput;
-      const matchUsername = u.username.toLowerCase() === cleanInput;
-      const matchEmail = u.email.toLowerCase() === cleanInput;
-      const matchMobile = cleanDigits && u.mobile.replace(/\D/g, '') === cleanDigits;
-      return (matchPortalId || matchUsername || matchEmail) && matchMobile;
-    });
-
-    if (!user) {
-      res.status(400).json({ success: false, message: 'Account details could not be verified. Please ensure the Member ID and registered mobile number are correct.' });
-      return;
-    }
-
-    let tempPassword = '';
-    if (user.role === 'admission_applicant') {
-      const enq = db.get('admission_enquiries').find(e =>
-        e.registrationId === user.portalId ||
-        e.id === user.portalId ||
-        e.applicantName.toLowerCase() === user.fullName.toLowerCase()
-      );
-      const residentName = enq?.applicantName || user.fullName.replace(/\s*\(Guardian:.*\)$/i, '') || 'Resident';
-      const year = enq?.dobOrYear || '1985';
-      tempPassword = generateAdmissionPassword(residentName, year);
-    } else {
-      let dob = '2000-01-01';
-      if (user.role === 'seva_member') {
-        const prof = db.get('seva_members').find(p => p.userId === user.id || p.memberId === user.portalId);
-        if (prof) dob = prof.dob;
-      } else if (user.role === 'member') {
-        const prof = db.get('society_members').find(p => p.userId === user.id || p.membershipId === user.portalId);
-        if (prof) dob = prof.dob;
-      } else if (user.role === 'volunteer') {
-        const prof = db.get('volunteers').find(p => p.userId === user.id || p.volunteerId === user.portalId);
-        if (prof) dob = prof.dob;
-      }
-      tempPassword = generateInitialPassword(user.fullName, dob);
-    }
-
-    user.passwordHash = bcrypt.hashSync(tempPassword, 10);
-    user.mustChangePassword = true;
-    user.updatedAt = new Date().toISOString();
-    db.save();
-
-    db.logAudit(user.id, user.fullName, 'PORTAL_PASSWORD_RESET', 'Security', `Password reset performed for ${user.portalId || user.username}`, req.ip);
-
-    res.json({
-      success: true,
-      message: `Password has been reset to your default temporary credential format (${tempPassword.substring(0, 4)}••••). You will be required to change it immediately upon login.`,
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Password reset failed: ' + err.message });
-  }
-});
-
-// =========================================================================
-// 3. MEMBER PORTAL DATA & PROGRESS SUBMISSION
-// =========================================================================
-
-/**
- * 3.1 Get Dashboard Data for the Logged-in User
- */
-portalRouter.get('/dashboard-data', authMiddleware, (req: AuthRequest, res: Response) => {
-  try {
-    const user = req.user!;
-    const portalId = user.portalId || user.username;
-
-    const allTasks = db.get('portal_tasks');
-    const myTasks = allTasks.filter(t => t.assignedToId === user.id || t.assignedToId === portalId);
-
-    const allNotifs = db.get('portal_notifications');
-    const myNotifs = allNotifs.filter(n => n.userId === user.id || n.userId === portalId);
-
-    let profileData: any = null;
-    let projectsData: ProjectItem[] = [];
-    let sevaRecordsData: SevaRecordItem[] = [];
-
-    let admissionEnquiryData: any = null;
-
-    if (user.role === 'seva_member') {
-      profileData = db.get('seva_members').find(sm => sm.userId === user.id || sm.memberId === portalId);
-      sevaRecordsData = db.get('seva_records').filter(r => r.userId === user.id || r.memberId === portalId);
-    } else if (user.role === 'member') {
-      profileData = db.get('society_members').find(m => m.userId === user.id || m.membershipId === portalId);
-      const allProjects = db.get('projects');
-      projectsData = allProjects.filter(p =>
-        p.leadMemberId === user.id ||
-        p.leadMemberId === portalId ||
-        p.teamMemberIds.includes(user.id) ||
-        p.teamMemberIds.includes(portalId)
-      );
-    } else if (user.role === 'volunteer') {
-      profileData = db.get('volunteers').find(v => v.userId === user.id || v.volunteerId === portalId);
-      sevaRecordsData = db.get('seva_records').filter(r => r.userId === user.id || r.memberId === portalId);
-    } else if (user.role === 'admission_applicant') {
-      const cleanMob = (user.mobile || '').replace(/\D/g, '');
-      admissionEnquiryData = db.get('admission_enquiries').find(e =>
-        e.registrationId === portalId ||
-        e.id === portalId ||
-        e.registrationId === user.portalId ||
-        (cleanMob && (e.guardianPhone || '').replace(/\D/g, '') === cleanMob)
-      );
-      profileData = admissionEnquiryData;
-    }
-
-    res.json({
-      success: true,
-      role: user.role,
-      user: {
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        mobile: user.mobile,
-        portalId,
-        mustChangePassword: user.mustChangePassword,
-        accountStatus: user.accountStatus,
-      },
-      profile: profileData,
-      admissionEnquiry: admissionEnquiryData,
-      tasks: myTasks,
-      projects: projectsData,
-      sevaRecords: sevaRecordsData,
-      notifications: myNotifs,
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Failed to load dashboard data: ' + err.message });
-  }
-});
-
-/**
- * 3.2 Submit Progress / Evidence for an Assigned Task
- */
-portalRouter.post('/tasks/:taskId/progress', authMiddleware, (req: AuthRequest, res: Response) => {
-  try {
-    const { taskId } = req.params;
-    const { notes, progressPercent, status, completionEvidence } = req.body;
-    const user = req.user!;
-    const portalId = user.portalId || user.username;
-
-    const tasks = db.get('portal_tasks');
-    const task = tasks.find(t => t.id === taskId);
-
-    if (!task) {
-      res.status(404).json({ success: false, message: 'Task not found' });
-      return;
-    }
-
-    // Verify ownership
-    if (task.assignedToId !== user.id && task.assignedToId !== portalId && user.role !== 'admin') {
-      res.status(403).json({ success: false, message: 'You are not authorized to update this task.' });
-      return;
-    }
-
-    const now = new Date().toISOString();
-
-    if (notes) {
-      task.progressUpdates.push({
-        id: `prog_${Date.now()}_${Math.random().toString(36).substring(2, 5)}`,
-        date: now,
-        notes: notes.trim(),
-        progressPercent: Number(progressPercent) || 0,
-      });
-    }
-
-    if (status) {
-      task.status = status as TaskStatus;
-    }
-
-    if (completionEvidence !== undefined) {
-      task.completionEvidence = completionEvidence.trim();
-    }
-
-    task.updatedAt = now;
-    db.save();
-
-    db.logAudit(user.id, user.fullName, 'TASK_PROGRESS_SUBMIT', 'PortalTask', `Updated progress for task "${task.title}" (status: ${task.status})`, req.ip);
-
-    res.json({
-      success: true,
-      message: 'Task progress updated successfully',
-      task,
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Failed to update task: ' + err.message });
-  }
-});
-
-/**
- * 3.3 Mark Notification as Read
- */
-portalRouter.put('/notifications/:id/read', authMiddleware, (req: AuthRequest, res: Response) => {
-  try {
-    const { id } = req.params;
-    const user = req.user!;
-    const portalId = user.portalId || user.username;
-    const notifs = db.get('portal_notifications');
-    const notif = notifs.find(n => n.id === id);
-    if (!notif) {
-      res.status(404).json({ success: false, message: 'Notification not found' });
-      return;
-    }
-
-    // Verify ownership to prevent IDOR
-    if (notif.userId !== user.id && notif.userId !== portalId && user.role !== 'admin') {
-      res.status(403).json({ success: false, message: 'Unauthorized to modify this notification' });
-      return;
-    }
-
-    notif.isRead = true;
-    db.save();
-    res.json({ success: true, message: 'Notification marked as read' });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Failed to update notification' });
-  }
-});
-
-// =========================================================================
-// 4. ADMIN PORTAL MANAGEMENT (FULL LIFECYCLE & WORKFLOWS)
+// ADMIN PORTAL MANAGEMENT (FULL LIFECYCLE & WORKFLOWS)
+// All portal administrative routes are strictly protected by authMiddleware & adminOnly
 // =========================================================================
 
 portalRouter.use('/admin', authMiddleware);
@@ -789,6 +77,181 @@ portalRouter.get('/admin/metrics', (req: AuthRequest, res: Response) => {
     res.json({ success: true, data: metrics });
   } catch (err: any) {
     res.status(500).json({ success: false, message: 'Failed to fetch admin portal metrics: ' + err.message });
+  }
+});
+
+/**
+ * 4.1.1 All Users Directory (Unified Across All Roles)
+ */
+portalRouter.get('/admin/all-users', (req: AuthRequest, res: Response) => {
+  try {
+    const users = db.get('users');
+    const sevaMembers = db.get('seva_members');
+    const societyMembers = db.get('society_members');
+    const volunteers = db.get('volunteers');
+    const admissions = db.get('admission_enquiries');
+
+    const enriched = users.map(u => {
+      let category = 'Other';
+      let applicationStatus = 'approved';
+      let portalId = u.portalId || u.username;
+      let notes = '';
+
+      if (u.role === 'admin') {
+        category = 'Administrator';
+      } else if (u.role === 'seva_member') {
+        category = 'Seva Member';
+        const p = sevaMembers.find(s => s.userId === u.id || s.memberId === portalId);
+        if (p) {
+          applicationStatus = p.applicationStatus;
+          notes = p.notes || '';
+        }
+      } else if (u.role === 'member') {
+        category = 'General Member';
+        const p = societyMembers.find(m => m.userId === u.id || m.membershipId === portalId);
+        if (p) {
+          applicationStatus = p.applicationStatus;
+        }
+      } else if (u.role === 'volunteer') {
+        category = 'Volunteer';
+        const p = volunteers.find(v => v.userId === u.id || v.volunteerId === portalId);
+        if (p) {
+          applicationStatus = p.applicationStatus;
+        }
+      } else if (u.role === 'admission_applicant') {
+        category = 'Senior Resident Admission';
+        const a = admissions.find(adm => adm.registrationId === portalId || adm.id === portalId);
+        if (a) {
+          applicationStatus = a.status;
+        }
+      }
+
+      return {
+        id: u.id,
+        email: u.email,
+        username: u.username,
+        fullName: u.fullName,
+        mobile: u.mobile,
+        role: u.role,
+        portalId,
+        category,
+        accountStatus: u.accountStatus || 'active',
+        applicationStatus,
+        isVerified: u.isVerified,
+        mustChangePassword: u.mustChangePassword,
+        notes,
+        createdAt: u.createdAt,
+        updatedAt: u.updatedAt,
+      };
+    });
+
+    res.json({ success: true, data: enriched });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to fetch all users: ' + err.message });
+  }
+});
+
+/**
+ * 4.1.2 Unified Pending Registrations (Actionable Queue)
+ */
+portalRouter.get('/admin/pending-registrations', (req: AuthRequest, res: Response) => {
+  try {
+    const sevaMembers = db.get('seva_members');
+    const societyMembers = db.get('society_members');
+    const volunteers = db.get('volunteers');
+
+    const pendingSeva = sevaMembers
+      .filter(s => s.applicationStatus === 'pending_approval' || s.applicationStatus === 'under_review')
+      .map(s => ({ ...s, category: 'Seva Member', categoryKey: 'seva_member', portalId: s.memberId }));
+
+    const pendingSociety = societyMembers
+      .filter(m => m.applicationStatus === 'pending_approval' || m.applicationStatus === 'under_review')
+      .map(m => ({ ...m, category: 'General Member', categoryKey: 'society_member', portalId: m.membershipId }));
+
+    const pendingVolunteers = volunteers
+      .filter(v => v.applicationStatus === 'pending_approval' || v.applicationStatus === 'under_review')
+      .map(v => ({ ...v, category: 'Volunteer', categoryKey: 'volunteer', portalId: v.volunteerId }));
+
+    const combined = [...pendingSeva, ...pendingSociety, ...pendingVolunteers].sort((a, b) =>
+      new Date(b.joinedAt || 0).getTime() - new Date(a.joinedAt || 0).getTime()
+    );
+
+    res.json({ success: true, data: combined });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to fetch pending registrations: ' + err.message });
+  }
+});
+
+/**
+ * 4.1.3 Update User Account Status & Role
+ */
+portalRouter.put('/admin/users/:userId/status', (req: AuthRequest, res: Response) => {
+  try {
+    const { userId } = req.params;
+    const { accountStatus, role, applicationStatus, rejectionReason } = req.body;
+    const admin = req.user!;
+
+    const users = db.get('users');
+    const user = users.find(u => u.id === userId || u.portalId === userId || u.username === userId);
+
+    if (!user) {
+      res.status(404).json({ success: false, message: 'User not found' });
+      return;
+    }
+
+    if (accountStatus) {
+      user.accountStatus = accountStatus as AccountStatus;
+    }
+    if (role && ['admin', 'member', 'seva_member', 'volunteer', 'admission_applicant'].includes(role)) {
+      user.role = role as any;
+    }
+    user.updatedAt = new Date().toISOString();
+
+    // Synchronize underlying profile if approval/rejection was specified
+    if (applicationStatus) {
+      if (user.role === 'seva_member') {
+        const p = db.get('seva_members').find(s => s.userId === user.id || s.memberId === user.portalId);
+        if (p) {
+          p.applicationStatus = applicationStatus;
+          if (rejectionReason) p.rejectionReason = rejectionReason;
+          p.reviewedAt = new Date().toISOString();
+          p.reviewedBy = admin.fullName;
+        }
+      } else if (user.role === 'member') {
+        const p = db.get('society_members').find(m => m.userId === user.id || m.membershipId === user.portalId);
+        if (p) {
+          p.applicationStatus = applicationStatus;
+          if (rejectionReason) p.rejectionReason = rejectionReason;
+          p.reviewedAt = new Date().toISOString();
+          p.reviewedBy = admin.fullName;
+        }
+      } else if (user.role === 'volunteer') {
+        const p = db.get('volunteers').find(v => v.userId === user.id || v.volunteerId === user.portalId);
+        if (p) {
+          p.applicationStatus = applicationStatus;
+          if (rejectionReason) p.rejectionReason = rejectionReason;
+          p.reviewedAt = new Date().toISOString();
+          p.reviewedBy = admin.fullName;
+        }
+      }
+    }
+
+    db.save();
+    db.logAudit(admin.id, admin.fullName, 'USER_STATUS_UPDATE', 'User', `Updated user ${user.fullName} (${user.portalId || user.username}) status: ${accountStatus || applicationStatus || 'role changed'}`, req.ip);
+
+    res.json({
+      success: true,
+      message: `User account updated successfully`,
+      data: {
+        id: user.id,
+        fullName: user.fullName,
+        role: user.role,
+        portalId: user.portalId,
+        accountStatus: user.accountStatus,
+      }
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to update user status: ' + err.message });
   }
 });
 
@@ -1240,7 +703,7 @@ portalRouter.post('/admin/seva-records', (req: AuthRequest, res: Response) => {
       title: title.trim(),
       date: date.trim(),
       hoursSpent: Number(hoursSpent) || 0,
-      location: location?.trim() || 'Vyenkatesh Ashram, Mahuli',
+      location: location?.trim() || 'SBBM Social Foundation, Mahuli Centre',
       supervisorName: supervisorName?.trim() || req.user!.fullName,
       receiptNumber: receiptNumber?.trim() || `REC-${Date.now().toString().slice(-6)}`,
       description: description?.trim() || '',
@@ -1431,7 +894,7 @@ portalRouter.put('/admin/admissions/:id/status', (req: AuthRequest, res: Respons
 
     if (status === 'approved') {
       notifType = 'success';
-      notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by Vyenkatesh Ashram administration. ${adminNotes ? `Admin Notes: ${adminNotes}` : 'Our team will contact you for resident onboarding formalities.'}`;
+      notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by SBBM Social Foundation administration. ${adminNotes ? `Admin Notes: ${adminNotes}` : 'Our team will contact you for resident onboarding formalities.'}`;
     } else if (status === 'rejected') {
       notifType = 'warning';
       notifMessage = `Your admission enquiry (${applicantTargetId}) for ${item.applicantName} was reviewed and could not be approved at this time. Reason: ${rejectionReason}`;
@@ -1469,72 +932,5 @@ portalRouter.put('/admin/admissions/:id/status', (req: AuthRequest, res: Respons
     });
   } catch (err: any) {
     res.status(500).json({ success: false, message: 'Failed to update admission status: ' + err.message });
-  }
-});
-
-/**
- * 4.11 Applicant Response to More Info Request
- */
-portalRouter.post('/admission/respond-info', authMiddleware, (req: AuthRequest, res: Response) => {
-  try {
-    const user = req.user!;
-    if (user.role !== 'admission_applicant' && user.role !== 'admin') {
-      res.status(403).json({ success: false, message: 'Only admission applicants can respond to information requests.' });
-      return;
-    }
-
-    const { additionalDetails } = req.body;
-    if (!additionalDetails || !additionalDetails.trim()) {
-      res.status(400).json({ success: false, message: 'Please provide the requested details or explanations.' });
-      return;
-    }
-
-    const portalId = user.portalId || user.username;
-    const cleanMob = (user.mobile || '').replace(/\D/g, '');
-    const enquiry = db.get('admission_enquiries').find(e =>
-      e.registrationId === portalId ||
-      e.id === portalId ||
-      (cleanMob && (e.guardianPhone || '').replace(/\D/g, '') === cleanMob)
-    );
-
-    if (!enquiry) {
-      res.status(404).json({ success: false, message: 'Admission enquiry record not found.' });
-      return;
-    }
-
-    const now = new Date().toISOString();
-    enquiry.status = 'pending_review';
-    enquiry.additionalMessage = `${enquiry.additionalMessage ? enquiry.additionalMessage + '\n\n' : ''}[Applicant Info Update ${now.split('T')[0]}]: ${additionalDetails.trim()}`;
-    enquiry.updatedAt = now;
-
-    if (!Array.isArray(enquiry.statusHistory)) {
-      enquiry.statusHistory = [];
-    }
-
-    enquiry.statusHistory.push({
-      id: `hist_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      status: 'pending_review',
-      date: now,
-      updatedBy: user.fullName,
-      notes: `Applicant provided requested details: "${additionalDetails.trim().substring(0, 120)}..."`
-    });
-
-    db.save();
-    db.logAudit(
-      user.id,
-      user.fullName,
-      'ADMISSION_APPLICANT_RESPONSE',
-      'AdmissionEnquiry',
-      `Applicant submitted requested info for enquiry ${enquiry.registrationId}`,
-      req.ip
-    );
-
-    res.json({
-      success: true,
-      message: 'Your additional details have been recorded and your enquiry is back under Pending Review by the admin team.',
-      data: enquiry
-    });
-  } catch (err: any) {
-    res.status(500).json({ success: false, message: 'Failed to submit additional information: ' + err.message });
   }
 });

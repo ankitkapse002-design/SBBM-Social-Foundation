@@ -1,7 +1,7 @@
 {
   "name": "ssbm-server",
   "version": "1.0.0",
-  "description": "Backend API for SSBM Social Foundation & Vyenkatesh Ashram",
+  "description": "Backend API for SBBM Social Foundation",
   "main": "dist/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",

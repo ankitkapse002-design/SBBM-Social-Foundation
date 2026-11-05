@@ -69,11 +69,11 @@ export function generateInitialPassword(fullName: string, dobString?: string): s
     const match = dobString.match(/(\d{4})/);
     if (match) year = match[1];
   }
-  const cleanName = fullName.replace(/[^a-zA-Z]/g, '').toUpperCase();
-  let prefix = cleanName.substring(0, 4);
-  if (prefix.length < 4) {
-    prefix = prefix.padEnd(4, 'X');
-  }
+  const cleanedName = fullName.replace(/\s*\(Guardian:.*\)$/i, '').trim();
+  const rawFirst = cleanedName.split(/\s+/)[0] || '';
+  const cleanFirst = rawFirst.replace(/[^a-zA-Z]/g, '').toLowerCase();
+  let prefix = cleanFirst.length <= 4 ? cleanFirst : cleanFirst.substring(0, 4);
+  if (!prefix) prefix = 'ssbm';
   return `${prefix}${year}`;
 }
 
@@ -351,11 +351,16 @@ export interface GalleryAsset {
 export interface ServiceItem {
   id: string;
   slug: string;
+  aliases?: string[];
+  initiativeNumber?: string;
+  category?: string;
   title: string;
+  tagline?: string;
   shortDesc: string;
   fullDesc: string;
   benefits: string[];
   operationalStatus: 'active' | 'under_expansion' | 'draft';
+  location?: string;
   image: string;
   createdAt: string;
 }
@@ -515,8 +520,8 @@ class Database {
           name: 'Anand Shinde',
           email: 'anand.s@example.com',
           phone: '+91 98220 98765',
-          category: 'ashram_visit',
-          message: 'Namaste, we would like to visit Vyenkatesh Ashram this weekend to understand the admission process.',
+          category: 'foundation_visit',
+          message: 'Namaste, we would like to visit the SBBM Social Foundation Mahuli center this weekend to understand senior care opportunities.',
           status: 'unread',
           createdAt: new Date(Date.now() - 3600000 * 5).toISOString(),
         }
@@ -526,11 +531,11 @@ class Database {
           id: 'evt_001',
           title: 'Annual Senior Health & Naturopathy Camp',
           slug: 'annual-senior-health-naturopathy-camp',
-          description: 'A dedicated holistic wellness and routine health checkup camp for ashram residents and local senior citizens from Mahuli village.',
+          description: 'A dedicated holistic wellness and routine health checkup camp for senior residents and local citizens from Mahuli village.',
           category: 'Healthcare & Wellness',
           date: '2026-11-15',
           time: '09:00 AM - 02:00 PM',
-          venue: 'Vyenkatesh Ashram Hall, Anjikar Bagh, Mahuli',
+          venue: 'SBBM Social Foundation Hall, Anjikar Bagh, Mahuli',
           coverImage: '/assets/images/naturopathy.jpg',
           status: 'upcoming',
           createdAt: now,
@@ -543,7 +548,7 @@ class Database {
           category: 'Spiritual & Go-Seva',
           date: '2026-11-28',
           time: '10:00 AM - 01:00 PM',
-          venue: 'Go-Seva Kendra, Vyenkatesh Ashram, Mahuli',
+          venue: 'Go-Seva Kendra, SBBM Social Foundation, Mahuli',
           coverImage: '/assets/images/goseva.jpg',
           status: 'upcoming',
           createdAt: now,
@@ -556,7 +561,7 @@ class Database {
           category: 'Community Celebration',
           date: '2026-08-21',
           time: '10:30 AM - 04:00 PM',
-          venue: 'Vyenkatesh Ashram Veranda & Garden',
+          venue: 'SBBM Social Foundation Veranda & Garden',
           coverImage: '/assets/images/ashram_building.jpg',
           status: 'completed',
           createdAt: now,
@@ -565,8 +570,8 @@ class Database {
       gallery_assets: [
         {
           id: 'gal_01',
-          title: 'Vyenkatesh Ashram Main Residence',
-          caption: 'Two-story serene ashram building surrounded by mango and neem orchards at Anjikar Bagh.',
+          title: 'SBBM Social Foundation Main Centre',
+          caption: 'Two-story serene foundation building surrounded by mango and neem orchards at Anjikar Bagh.',
           type: 'photo',
           category: 'ashram',
           mediaUrl: '/assets/images/ashram_building.jpg',
@@ -607,98 +612,177 @@ class Database {
       services: [
         {
           id: 'srv_01',
-          slug: 'old-age-home',
-          title: 'Vyenkatesh Ashram Old-Age Home',
-          shortDesc: 'A safe, clean, supportive and dignified residential living environment for senior citizens in need.',
-          fullDesc: 'Vyenkatesh Ashram provides seniors with a home of peace, companionship, and respect. Located in the tranquil rural setting of Anjikar Bagh, Mahuli (near Mansar), the ashram offers comfortable living spaces, nutritious vegetarian meals, separate clean restroom facilities, and daily opportunities for social and mental rejuvenation.',
+          slug: 'elderly-care',
+          aliases: ['old-age-home', 'senior-care'],
+          initiativeNumber: '5.1',
+          category: 'Elderly Residential Care',
+          title: 'Elderly Care – Vyenkatesh Ashram (Old Age Home)',
+          tagline: 'Apno Se Door... Ek Apna Ghar...',
+          shortDesc: 'A dignified, loving residential sanctuary for destitute, homeless, or neglected elderly citizens (Aai-Baba) providing food, clothing, shelter, affection, security, and healthcare.',
+          fullDesc: 'Initiative 5.1 of SBBM Social Foundation: Operating under the emotional motto "Apno Se Door... Ek Apna Ghar...", Vyenkatesh Ashram at Anjikar Bagh, Mahuli provides a loving, secure, and permanent residential sanctuary for elderly individuals who have been abandoned, widowed, or lack familial care. Residents are treated not as inmates, but with filial reverence as "Aai-Baba". The facility ensures nutritious vegetarian meals, clean living quarters, daily medical checkups, emotional companionship, spiritual satsang, and dignified final rites in accordance with traditional values.',
           benefits: [
-            'Safe, clean, dignified living environment',
-            'Nutritious home-cooked vegetarian meals',
-            'Round-the-clock supportive staff and care',
-            'Calm rural atmosphere away from city pollution and noise',
-            'Spiritual satsang, library and daily recreational activities'
+            '24/7 safe, clean, and dignified residential accommodation with personal living space',
+            'Three nutritious home-cooked vegetarian meals, morning tea, and evening milk daily',
+            'Round-the-clock supportive attendants, routine vital checks, and visiting doctor consultations',
+            'Spiritual satsang, daily morning garden walks in Anjikar Bagh, and library access',
+            'Filial companionship, celebratory festivals, and dignified lifelong care'
           ],
           operationalStatus: 'active',
+          location: '434, Anjikar Bagh, Mansar Mahuli Road, Mahuli, Parseoni, Nagpur',
           image: '/assets/images/ashram_building.jpg',
           createdAt: now,
         },
         {
           id: 'srv_02',
-          slug: 'goseva-kendra',
-          title: 'Go-Seva Kendra',
-          shortDesc: 'Compassionate care, shelter and nourishment for indigenous cows promoting rural ecological harmony.',
-          fullDesc: 'At Vyenkatesh Ashram, our Go-Seva Kendra houses indigenous cattle in a clean, hygienic and naturally ventilated shelter. Cow care provides therapeutic connection for the elderly residents, while offering fresh milk and organic compost for our community garden.',
+          slug: 'social-welfare',
+          aliases: ['relief-distribution', 'essential-commodities'],
+          initiativeNumber: '5.2',
+          category: 'Grassroots Social Welfare',
+          title: 'Social Welfare & Essential Commodities Distribution',
+          tagline: 'Direct Grassroots Relief for the Vulnerable',
+          shortDesc: 'Direct distribution of dry rations, food grains, blankets, and essential relief kits to destitute families, widows, daily-wage laborers, and disaster-affected communities.',
+          fullDesc: 'Initiative 5.2 of SBBM Social Foundation: Since December 2014, the foundation has prioritized direct grassroots relief for vulnerable families across Nagpur district and rural tehsils. Interventions include regular dry ration kit drives (containing wheat flour, rice, pulses, cooking oil, spices), winter blanket distributions for homeless citizens, festive cloth donations for children, and extensive emergency food and sanitization relief during disaster and pandemic emergencies.',
           benefits: [
-            'Ethical, loving care for indigenous cows',
-            'Nutritious fresh milk for ashram elders',
-            'Therapeutic interaction and companionship for seniors',
-            'Organic composting for the ashram garden and fruit trees'
+            'Doorstep dry ration kit distribution (wheat flour, rice, dal, cooking oil, spices)',
+            'Winter relief drives providing warm blankets to homeless and street dwellers',
+            'Festive clothing and footwear distribution for underprivileged children',
+            'Emergency disaster and pandemic relief mobilization for daily-wage earners',
+            'Targeted support for destitute widows and physically challenged individuals'
           ],
           operationalStatus: 'active',
-          image: '/assets/images/goseva.jpg',
-          createdAt: now,
-        },
-        {
-          id: 'srv_03',
-          slug: 'naturopathy',
-          title: 'Naturopathy & Holistic Wellness',
-          shortDesc: 'Gentle yoga, pranayama, herbal remedies and natural lifestyle practices for senior vitality.',
-          fullDesc: 'We emphasize natural wellness to promote longevity, joint mobility, and mental peace among our residents. Morning sun exposure, gentle breathing exercises, pure herbal teas, and simple lifestyle alignment support physical and emotional balance.',
-          benefits: [
-            'Daily morning pranayama and gentle stretching',
-            'Herbal garden with Tulsi, Neem, and medicinal plants',
-            'Fresh air and sunshine therapy in Anjikar Bagh',
-            'Relaxation techniques to alleviate anxiety and loneliness'
-          ],
-          operationalStatus: 'active',
-          image: '/assets/images/naturopathy.jpg',
-          createdAt: now,
-        },
-        {
-          id: 'srv_04',
-          slug: 'education',
-          title: 'Rural Education & Student Welfare',
-          shortDesc: 'Promoting education for underprivileged students in rural Vidarbha through study materials and guidance.',
-          fullDesc: 'SBBM Social Foundation actively supports rural child and youth development by organizing book distribution drives, educational seminars, and skill training workshops in Nagpur and surrounding rural tehsils.',
-          benefits: [
-            'Notebook and study material distribution drives',
-            'Mentorship and vocational career guidance for youth',
-            'Community library access for students',
-            'Support for rural school infrastructure'
-          ],
-          operationalStatus: 'active',
+          location: 'Nagpur District, Suburban Settlements & Rural Tehsils',
           image: '/assets/images/entrance_gate.jpg',
           createdAt: now,
         },
         {
-          id: 'srv_05',
-          slug: 'daily-activities',
-          title: 'Daily Activities & Cultural Rejuvenation',
-          shortDesc: 'Engaging daily routines including bhajan, gardening, indoor games, festival celebrations and walks.',
-          fullDesc: 'A purposeful day keeps the mind active and joyful. Our daily schedule includes morning garden walks, community prayer, newspaper reading, board games (carrom, chess), devotional music, and festive gatherings with visiting families and volunteers.',
+          id: 'srv_03',
+          slug: 'education-computer-literacy',
+          aliases: ['education', 'computer-literacy'],
+          initiativeNumber: '5.3',
+          category: 'Education & Digital Skills',
+          title: 'Education & Computer Literacy Program',
+          tagline: 'Empowering Underprivileged Youth with 21st-Century Digital Skills',
+          shortDesc: 'Practical computer education, typing certification, digital literacy, and educational study material distribution for rural and underprivileged students.',
+          fullDesc: 'Initiative 5.3 of SBBM Social Foundation: Believing firmly that "Education is Development", SBBM Social Foundation conducts targeted education support and digital literacy programs. The foundation operates computer literacy centers teaching rural students basic computer handling, Marathi/Hindi/English typing, MS Office (Word, Excel, PowerPoint), and internet navigation. Additionally, annual notebook distribution drives, textbook libraries, and career guidance workshops equip rural youth for higher education and competitive employment.',
           benefits: [
-            'Scheduled daily routine encouraging active lifestyle',
-            'Celebration of all traditional Indian festivals',
-            'Interactive storytelling and intergenerational volunteer visits',
-            'Peaceful sitting areas under shaded fruit trees'
+            'Hands-on computer fundamentals and typing certification (Marathi, Hindi, English)',
+            'Microsoft Office application training (Word, Excel, PowerPoint) for office readiness',
+            'Free annual notebook, textbook, and stationery kit distribution drives',
+            'Rural student library access and digital learning resources',
+            'Educational mentorship and career guidance seminars for youth'
           ],
           operationalStatus: 'active',
+          location: 'Nagpur & Surrounding Rural Learning Centers',
+          image: '/assets/images/entrance_gate.jpg',
+          createdAt: now,
+        },
+        {
+          id: 'srv_04',
+          slug: 'child-welfare',
+          aliases: ['summer-camps', 'personality-development'],
+          initiativeNumber: '5.4',
+          category: 'Child Development & Welfare',
+          title: 'Child Welfare & Personality Development',
+          tagline: 'Nurturing Moral Character, Creative Potential, and Child Rights',
+          shortDesc: 'Holistic child development through annual summer camps, moral value education, talent workshops, child rights awareness, and nutritional support.',
+          fullDesc: 'Initiative 5.4 of SBBM Social Foundation: Dedicated to the holistic flourishing of the next generation, this initiative organizes engaging summer camps, creative workshops (drawing, drama, elocution), and moral value education classes in rural and suburban Nagpur. The foundation actively conducts child safety and awareness workshops (including POCSO guidelines and child rights), provides nutritional support, and nurtures artistic and sports talents among economically backward children.',
+          benefits: [
+            'Annual summer camps featuring sports, yoga, arts, and creative expression',
+            'Value-based moral education and cultural heritage appreciation classes',
+            'Child safety, anti-bullying, and child rights awareness drives',
+            'School bag, uniform, and nutrition supplement distributions',
+            'Public speaking, elocution, and leadership grooming sessions'
+          ],
+          operationalStatus: 'active',
+          location: 'Nagpur District Schools, Community Centers & Mahuli Campus',
           image: '/assets/images/ashram_building.jpg',
           createdAt: now,
         },
         {
-          id: 'srv_06',
-          slug: 'medical-care',
-          title: 'Basic Healthcare & Routine Monitoring',
-          shortDesc: 'Vital sign checks, medicine administration assistance, and access to local medical practitioners.',
-          fullDesc: 'We maintain routine health records, organize regular visiting doctor consultations, assist residents with their daily medication schedules, and coordinate with nearby healthcare centers in Parseoni and Nagpur for specialized care.',
+          id: 'srv_05',
+          slug: 'women-empowerment',
+          aliases: ['shg-development', 'livelihood-training'],
+          initiativeNumber: '5.5',
+          category: 'Women Empowerment & Livelihoods',
+          title: 'Women’s Empowerment & Livelihood Development',
+          tagline: 'Promoting Self-Reliance, Dignity, and Financial Independence',
+          shortDesc: 'Mobilization and mentoring of Self-Help Groups (SHGs), vocational training in tailoring and crafts, financial literacy, and micro-enterprise development.',
+          fullDesc: 'Initiative 5.5 of SBBM Social Foundation: Under the core pillar "Self-Reliance is the Foundation of an Empowered Society", the foundation mobilizes rural and semi-urban women into active Self-Help Groups (SHGs). We provide vocational training in tailoring, garment stitching, handicraft making, and local food processing (pickles, papads, spices). Through banking literacy, micro-savings facilitation, and direct market linkage, women are empowered to generate independent family income and build community leadership.',
           benefits: [
-            'Regular blood pressure, sugar, and vital monitoring',
-            'Medication administration assistance for all residents',
-            'First aid and emergency transport coordination to Nagpur',
-            'Periodic specialist health checkup camps on-site'
+            'Mobilization and structured guidance of Mahila Bachat Gats (Self-Help Groups)',
+            'Professional tailoring, sewing, and handicraft training workshops',
+            'Financial literacy, micro-credit access, and bank linkage facilitation',
+            'Marketing support and exhibition stalls for home-made goods and handicrafts',
+            'Legal awareness sessions on women\'s rights and domestic welfare'
           ],
           operationalStatus: 'active',
+          location: 'Rural Vidarbha & Semi-Urban Clusters',
+          image: '/assets/images/entrance_gate.jpg',
+          createdAt: now,
+        },
+        {
+          id: 'srv_06',
+          slug: 'healthcare-public-health',
+          aliases: ['medical-care', 'health-camps'],
+          initiativeNumber: '5.6',
+          category: 'Public Health & Preventive Medicine',
+          title: 'Healthcare & Public Health Awareness',
+          tagline: 'Preventive Medicine, Health Camps, and Community Wellbeing',
+          shortDesc: 'Free diagnostic health camps, eye checkups, preventive medicine, hygiene drives, substance de-addiction, and chronic illness awareness.',
+          fullDesc: 'Initiative 5.6 of SBBM Social Foundation: Good health is an essential prerequisite for community empowerment. The foundation organizes periodic free medical checkup camps in rural villages and urban slums, offering general health screening, eye checkups with free spectacles, blood pressure and diabetes monitoring, and basic medicine distribution. Extensive public awareness campaigns address substance de-addiction (tobacco/alcohol), menstrual hygiene, tuberculosis (TB) detection, and cancer prevention.',
+          benefits: [
+            'Free multi-specialty health checkups with qualified visiting medical practitioners',
+            'Free vision screening, eye examinations, and spectacles distribution',
+            'Tobacco and alcohol de-addiction counseling and youth awareness sessions',
+            'Community sanitation, clean water, and menstrual hygiene awareness drives',
+            'Chronic disease awareness (Hypertension, Diabetes, TB, and Cancer screening)'
+          ],
+          operationalStatus: 'active',
+          location: 'Village Camps & Slum Clusters across Nagpur District',
+          image: '/assets/images/naturopathy.jpg',
+          createdAt: now,
+        },
+        {
+          id: 'srv_07',
+          slug: 'cow-protection',
+          aliases: ['goseva-kendra', 'gaushala'],
+          initiativeNumber: '5.7',
+          category: 'Animal Welfare & Ecology',
+          title: 'Cow Protection & Animal Welfare – Shri Go Seva & Go Sanvardhan Kendra',
+          tagline: 'Sanctuary for Indigenous Cattle & Sustainable Ecological Living',
+          shortDesc: 'Compassionate sanctuary, veterinary care, nutritious fodder, and dignified lifetime shelter for abandoned, aging, and injured cows at Mahuli Centre.',
+          fullDesc: 'Initiative 5.7 of SBBM Social Foundation: Located in the green environment of Anjikar Bagh, Mahuli, Shri Go Seva & Go Sanvardhan Kendra provides ethical shelter, green and dry fodder, freshwater, and veterinary care for indigenous cows. Beyond animal protection, the Kendra serves a vital therapeutic role: elderly ashram residents find companionship and peace interacting with the gentle cattle. Organic cow-dung and gomutra are utilized for natural composting, nourishing the surrounding fruit orchards without chemical pesticides.',
+          benefits: [
+            'Permanent humane shelter and daily care for indigenous abandoned or aged cows',
+            'Nutritious green grass, dry fodder, cattle feed, and clean drinking water',
+            'Periodic veterinary checkups, vaccination, and specialized medical treatments',
+            'Organic composting and biogas utilizing cow dung for eco-friendly farming',
+            'Therapeutic bovine interaction and spiritual Go-Pujan for ashram residents'
+          ],
+          operationalStatus: 'active',
+          location: 'Anjikar Bagh, Mansar Mahuli Road, Mahuli, Parseoni, Nagpur',
+          image: '/assets/images/goseva.jpg',
+          createdAt: now,
+        },
+        {
+          id: 'srv_08',
+          slug: 'natural-therapy',
+          aliases: ['naturopathy', 'aarogyam-kendra'],
+          initiativeNumber: '5.8',
+          category: 'Naturopathy & Holistic Wellness',
+          title: 'Natural Therapy & Health Support – Aarogyam Prakritik Chikitsa Kendra',
+          tagline: 'Drugless Healing, Naturopathy, and Holistic Rejuvenation (Inaugurated 6 Dec 2018)',
+          shortDesc: 'Natural drugless therapy, dietetics, hydrotherapy, mud packs, yoga, and lifestyle disease management established on 6 December 2018.',
+          fullDesc: 'Initiative 5.8 of SBBM Social Foundation: Formally inaugurated on 6 December 2018 at Anjikar Bagh, Mahuli, Aarogyam Prakritik Chikitsa Kendra is dedicated to promoting holistic healing without chemical drugs. Emphasizing the body\'s innate power to heal itself, the center offers free natural therapy consultations on weekends/Sundays. Therapies include hydrotherapy (hip baths, spinal baths), mud packs, sun therapy, diet counseling, acupressure, and therapeutic yoga/pranayama to manage joint pain, hypertension, digestive issues, and chronic fatigue.',
+          benefits: [
+            'Free Sunday naturopathy and holistic health consultation camps',
+            'Hydrotherapy, mud packs, steam therapy, and natural detox treatments',
+            'Personalized dietary guidelines based on natural wholesome foods',
+            'Daily therapeutic yoga, pranayama, and guided relaxation routines',
+            'Drugless management of lifestyle ailments (arthritis, diabetes, acidity, stress)'
+          ],
+          operationalStatus: 'active',
+          location: 'Anjikar Bagh, Mansar Mahuli Road, Mahuli, Parseoni, Nagpur',
           image: '/assets/images/naturopathy.jpg',
           createdAt: now,
         }
@@ -706,7 +790,7 @@ class Database {
       faqs: [
         {
           id: 'faq_01',
-          question: 'What is the procedure for admission to Vyenkatesh Ashram?',
+          question: 'What is the procedure for admission to the Senior Care Sanctuary?',
           answer: 'Admission requires submitting an initial enquiry form or visiting our office. Because we maintain high care standards and limited capacity, accommodation availability, medical suitability, and admission formalities must be confirmed directly with the management (+91 98908 98081). Submitting an online enquiry does not guarantee immediate admission.',
           category: 'admission',
           orderIndex: 1,
@@ -714,8 +798,8 @@ class Database {
         },
         {
           id: 'faq_02',
-          question: 'Where is Vyenkatesh Ashram located?',
-          answer: 'The ashram is located at 434, Anjikar Bagh, Mansar Mahuli Road, Village/Post Mahuli, Tehsil Parseoni, District Nagpur, Maharashtra – 441105. The Foundation Head Office is located at C/o Ashvin V. Anjikar, Anjikar House, Panchpaoli, Timki Chimabai Peth, Nagpur – 440018.',
+          question: 'Where is SBBM Social Foundation located?',
+          answer: 'The foundation centre is located at 434, Anjikar Bagh, Mansar Mahuli Road, Village/Post Mahuli, Tehsil Parseoni, District Nagpur, Maharashtra – 441105. The Foundation Head Office is located at C/o Ashvin V. Anjikar, Anjikar House, Panchpaoli, Timki Chimabai Peth, Nagpur – 440018.',
           category: 'ashram_life',
           orderIndex: 2,
           createdAt: now,
@@ -723,14 +807,14 @@ class Database {
         {
           id: 'faq_03',
           question: 'Is SBBM Social Foundation a registered organization?',
-          answer: 'Yes, SBBM Social Foundation Society was established in 2015 and is officially registered under the Societies Registration Act (Reg No: 332-15-Nag). It operates Vyenkatesh Ashram as a charitable, non-granted old-age home.',
+          answer: 'Yes, SBBM Social Foundation Society was established in 2015 and is officially registered under the Societies Registration Act (Reg No: 332-15-Nag). It operates as a charitable social welfare society.',
           category: 'admission',
           orderIndex: 3,
           createdAt: now,
         },
         {
           id: 'faq_04',
-          question: 'Can families and well-wishers visit the ashram?',
+          question: 'Can families and well-wishers visit the foundation centre?',
           answer: 'Yes, family visits and community well-wishers are welcomed. Prior notification via telephone (+91 98908 98081) is requested to ensure resident rest hours and daily schedules are respected.',
           category: 'ashram_life',
           orderIndex: 4,
@@ -738,7 +822,7 @@ class Database {
         },
         {
           id: 'faq_05',
-          question: 'How can I support the ashram through donations or seva?',
+          question: 'How can I support the foundation through donations or seva?',
           answer: 'You can support us through direct bank transfer, contributing daily provisions (grains, oil, groceries), medicines, blankets, or green fodder for our Go-Seva Kendra cows. Official receipts are issued for all contributions. Contact our office directly for verified bank account details.',
           category: 'donations',
           orderIndex: 5,
@@ -936,11 +1020,17 @@ export function getInitialPasswordCandidates(user: User): string[] {
 
   if (cleanFirst.length > 0) {
     const four = cleanFirst.substring(0, 4).padEnd(4, 'X');
+    const exactPrefix = cleanFirst.length <= 4 ? cleanFirst : cleanFirst.substring(0, 4);
 
     // 4-letter variants
     candidates.add(`${four.toUpperCase()}${year}`);                                              // e.g. HARR2000
     candidates.add(`${four.charAt(0).toUpperCase() + four.slice(1).toLowerCase()}${year}`);       // e.g. Harr2000
     candidates.add(`${four.toLowerCase()}${year}`);                                              // e.g. harr2000
+
+    // Exact prefix variants (for short names like "Om" -> "om2004", "OM2004")
+    candidates.add(`${exactPrefix.toLowerCase()}${year}`);
+    candidates.add(`${exactPrefix.toUpperCase()}${year}`);
+    candidates.add(`${exactPrefix.charAt(0).toUpperCase() + exactPrefix.slice(1).toLowerCase()}${year}`);
 
     // Full first name variants (e.g. "Harry", "Rahul", "Ananya")
     candidates.add(`${cleanFirst.toUpperCase()}${year}`);                                        // e.g. HARRY2000

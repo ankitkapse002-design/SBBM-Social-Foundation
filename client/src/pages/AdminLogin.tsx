@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import {
   ShieldCheck, Lock, User, Eye, EyeOff, AlertCircle,
@@ -14,6 +14,17 @@ export const AdminLogin: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    document.title = 'Authorized Administrative Login | SBBM Social Foundation';
+    let metaRobots = document.querySelector('meta[name="robots"]');
+    if (!metaRobots) {
+      metaRobots = document.createElement('meta');
+      metaRobots.setAttribute('name', 'robots');
+      document.head.appendChild(metaRobots);
+    }
+    metaRobots.setAttribute('content', 'noindex, nofollow');
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,10 +66,12 @@ export const AdminLogin: React.FC = () => {
     <div className="min-h-screen bg-foundation-forestDark py-16 flex items-center justify-center px-4">
       <div className="max-w-md w-full bg-foundation-ivory rounded-3xl p-8 md:p-10 border-2 border-foundation-gold/40 shadow-2xl space-y-6">
         <div className="text-center space-y-2">
-          <div className="w-16 h-16 rounded-full bg-foundation-forest text-foundation-gold mx-auto flex items-center justify-center shadow-lg border-2 border-foundation-gold">
-            <ShieldCheck className="w-8 h-8" />
-          </div>
-          <span className="text-[10px] uppercase tracking-widest text-foundation-forest font-bold bg-foundation-forest/10 px-3 py-1 rounded-full inline-block">
+          <img
+            src="/assets/images/logo.jpg"
+            alt="Official SBBM Social Foundation Logo"
+            className="w-16 h-16 rounded-full mx-auto object-cover border-2 border-[#D4AF37] shadow-lg bg-white"
+          />
+          <span className="text-[10px] uppercase tracking-widest text-[#8B1D24] font-bold bg-red-50 border border-red-200 px-3 py-1 rounded-full inline-block">
             Protected Administration
           </span>
           <h1 className="text-2xl font-display font-bold text-foundation-charcoal">
@@ -104,7 +117,7 @@ export const AdminLogin: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 bg-foundation-forest hover:bg-foundation-forestLight disabled:opacity-50 text-foundation-ivory font-bold text-xs rounded-full shadow-md transition-all flex items-center justify-center space-x-2"
+            className="w-full py-3 bg-[#8B1D24] hover:bg-[#6E1419] disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
             id="admin-login-submit-btn"
           >
             {isLoading ? <span>Authenticating...</span> : <span>Authorize Access</span>}

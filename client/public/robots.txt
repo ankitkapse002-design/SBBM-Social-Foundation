@@ -1,0 +1,29 @@
+# Robots.txt for SBBM Social Foundation
+# Official Web Platform: https://sbbmsocialfoundation.org
+
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /old-age-home
+Allow: /admission
+Allow: /support
+Allow: /volunteer
+Allow: /membership
+Allow: /events
+Allow: /gallery
+Allow: /faq
+Allow: /contact
+Allow: /assets/
+
+# Block administrative and internal API endpoints from crawling & indexing
+Disallow: /admin
+Disallow: /admin/
+Disallow: /admin/*
+Disallow: /admin-login
+Disallow: /api/
+Disallow: /api/*
+
+# Official XML Sitemap
+Sitemap: https://sbbmsocialfoundation.org/sitemap.xml
+

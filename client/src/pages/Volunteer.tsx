@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import {
-  Heart, Users, CheckCircle2, Send,
-  Sparkles, Coffee, BookOpen, Clock, Sun
+  Heart, CheckCircle2,
+  Coffee, BookOpen, Sun
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { apiRequest } from '../api';
+import { SEO } from '../components/common/SEO';
 
 export const Volunteer: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -69,6 +70,11 @@ export const Volunteer: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+      <SEO
+        title="Volunteer & Community Seva | Get Involved"
+        description="Volunteer your time with SBBM Social Foundation in Nagpur and Mahuli. Participate in elderly companionship, daily Annadaan distribution, tree plantation, and Go-Seva."
+        canonicalPath="/volunteer"
+      />
       <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-12">
         <div className="text-center space-y-3">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs font-semibold">
@@ -76,7 +82,7 @@ export const Volunteer: React.FC = () => {
             <span>Helping Hands Seva Network</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-display font-bold text-foundation-charcoal">
-            Volunteer with Vyenkatesh Ashram
+            Volunteer with SBBM Social Foundation
           </h1>
           <p className="text-xs md:text-sm text-stone-600 max-w-2xl mx-auto leading-relaxed">
             Spend meaningful time with our elderly residents, share stories, assist in our Gaushala, and bring warmth and joy to senior lives.
@@ -105,7 +111,7 @@ export const Volunteer: React.FC = () => {
             <Coffee className="w-8 h-8 text-rose-600 mx-auto" />
             <h3 className="font-bold text-sm text-foundation-charcoal">Cultural Seva</h3>
             <p className="text-xs text-stone-500">
-              Sing bhajans, celebrate Diwali, Sankranti and birthdays with our ashram family.
+              Sing bhajans, celebrate Diwali, Sankranti and birthdays with our residents and elders.
             </p>
           </div>
         </div>

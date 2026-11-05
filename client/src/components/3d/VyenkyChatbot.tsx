@@ -111,15 +111,15 @@ export const VyenkyChatbot: React.FC = () => {
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const greetings = {
-    en: "Namaste! I'm Vyenky, your virtual guide to SBBM Social Foundation and Vyenkatesh Ashram. How may I help you today?",
-    hi: "नमस्ते! मैं वेनकी हूँ, SBBM सोशल फाउंडेशन और व्यंकटेश आश्रम में आपका वर्चुअल सहायक। मैं आपकी क्या मदद कर सकता हूँ?",
-    mr: "नमस्कार! मी वेन्की, SBBM सोशल फाउंडेशन आणि व्यंकटेश आश्रमातील तुमचा व्हर्च्युअल सहाय्यक आहे. मी तुम्हाला कशी मदत करू शकतो?"
+    en: "Namaste! I am your virtual assistant for SBBM Social Foundation. How may I assist you today?",
+    hi: "नमस्ते! मैं SBBM सोशल फाउंडेशन का वर्चुअल सहायक हूँ। मैं आज आपकी क्या मदद कर सकता हूँ?",
+    mr: "नमस्कार! मी SBBM सोशल फाउंडेशनचा व्हर्च्युअल सहाय्यक आहे. मी आज तुम्हाला कशी मदत करू शकतो?"
   };
 
   const initialQuickReplies = {
-    en: ['Admission Process', 'Ashram Address & Phone', 'Go-Seva Kendra', 'How to Donate', 'Volunteer with us'],
-    hi: ['प्रवेश प्रक्रिया', 'आश्रम का पता और फोन', 'गो-सेवा केंद्र', 'दान कैसे करें', 'स्वयंसेवक बनें'],
-    mr: ['प्रवेश प्रक्रिया', 'आश्रमाचा पत्ता व फोन', 'गो-सेवा केंद्र', 'देणगी कशी द्यावी', 'स्वयंसेवक व्हा']
+    en: ['Foundation Initiatives', 'Head Office & Phone', 'Go-Seva Initiative', 'Support & Donate', 'Join as Member / Volunteer'],
+    hi: ['फाउंडेशन उपक्रम', 'कार्यालय का पता और फोन', 'गो-सेवा उपक्रम', 'सहयोग और दान', 'सदस्य / स्वयंसेवक बनें'],
+    mr: ['फाउंडेशनचे उपक्रम', 'कार्यालयाचा पत्ता व फोन', 'गो-सेवा उपक्रम', 'सहकार्य व देणगी', 'सदस्य / स्वयंसेवक व्हा']
   };
 
   // Initialize or change language
@@ -191,7 +191,7 @@ export const VyenkyChatbot: React.FC = () => {
             ? 'क्षमा करें, वर्तमान में सेवा उपलब्ध नहीं है। कृपया +91 98908 98081 पर सीधे संपर्क करें।'
             : language === 'mr'
             ? 'माफ करा, सध्या सेवा अनुपलब्ध आहे. कृपया थेट +91 98908 98081 वर संपर्क साधा.'
-            : 'Apologies, we could not process that right now. Please call our official ashram line directly at +91 98908 98081.',
+            : 'Apologies, we could not process that right now. Please call our official foundation line directly at +91 98908 98081.',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           suggestedRoute: '/contact',
           actionLabel: 'Contact Directory',
@@ -216,14 +216,14 @@ export const VyenkyChatbot: React.FC = () => {
           whileTap={{ scale: 0.95 }}
           className="relative group cursor-pointer flex flex-col items-center"
           onClick={() => setIsOpen(!isOpen)}
-          id="vyenky-chat-launcher"
+          id="sbbm-chat-launcher"
           role="button"
           tabIndex={0}
-          aria-label="Open Vyenky 3D Assistant"
+          aria-label="Open SBBM Virtual Assistant"
         >
-          {/* Transparent 3D Bot Avatar with Synchronized Greetings (Enlarged, Clean) */}
+          {/* Transparent 3D Bot Avatar with Synchronized Greetings */}
           <SSBMBotAvatar
-            size={160}
+            size={95}
             showGreetingBadge={!isOpen}
             interactiveHover={false}
           />
@@ -256,10 +256,10 @@ export const VyenkyChatbot: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-base text-foundation-sandstone">
-                    Vyenky Assistant
+                    SBBM Assistant
                   </h3>
                   <p className="text-xs text-foundation-sageLight">
-                    Grounded in Verified Ashram Information
+                    Official SBBM Social Foundation Assistant
                   </p>
                 </div>
               </div>
@@ -356,7 +356,7 @@ export const VyenkyChatbot: React.FC = () => {
                   <div className="w-2 h-2 rounded-full bg-foundation-sage animate-bounce" />
                   <div className="w-2 h-2 rounded-full bg-foundation-sage animate-bounce delay-150" />
                   <div className="w-2 h-2 rounded-full bg-foundation-sage animate-bounce delay-300" />
-                  <span>Vyenky is thinking...</span>
+                  <span>SBBM Assistant is thinking...</span>
                 </div>
               )}
 

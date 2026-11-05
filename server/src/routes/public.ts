@@ -9,11 +9,13 @@ publicRouter.get('/services', (req: Request, res: Response) => {
   res.json({ success: true, data: services });
 });
 
-// Single service by slug or id
+// Single service by slug, id, or alias
 publicRouter.get('/services/:identifier', (req: Request, res: Response) => {
-  const { identifier } = req.params;
+  const identifier = Array.isArray(req.params.identifier) ? req.params.identifier[0] : req.params.identifier;
   const services = db.get('services');
-  const service = services.find(s => s.slug === identifier || s.id === identifier);
+  const service = services.find(
+    s => s.slug === identifier || s.id === identifier || (s.aliases && s.aliases.includes(identifier))
+  );
   if (!service) {
     res.status(404).json({ success: false, message: 'Service not found' });
     return;

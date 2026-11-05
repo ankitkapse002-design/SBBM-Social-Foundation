@@ -1,4 +1,6 @@
 import { Router, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 import { db, EventItem, GalleryAsset, FAQItem, ServiceItem } from '../db';
 import { authMiddleware, adminOnly, AuthRequest } from '../middleware/auth';
 
@@ -183,7 +185,7 @@ adminRouter.put('/admissions/:id', (req: AuthRequest, res: Response) => {
 
   if (newStatus === 'approved') {
     notifType = 'success';
-    notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by Vyenkatesh Ashram administration.`;
+    notifMessage = `Congratulations! Your admission enquiry (${applicantTargetId}) for ${item.applicantName} has been APPROVED by SBBM Social Foundation administration.`;
   } else if (newStatus === 'rejected') {
     notifType = 'warning';
     notifMessage = `Your admission enquiry (${applicantTargetId}) for ${item.applicantName} was reviewed and could not be approved at this time. Reason: ${rejectionReason}`;
@@ -275,9 +277,38 @@ adminRouter.put('/donations/:id', (req: AuthRequest, res: Response) => {
   res.json({ success: true, message: 'Donation status updated', data: item });
 });
 
-// Contact Messages
+// Contact Messages & Official Inquiries
 adminRouter.get('/messages', (req: AuthRequest, res: Response) => {
-  res.json({ success: true, data: db.get('contact_messages') });
+  const { status, search } = req.query;
+  let list = db.get('contact_messages') || [];
+
+  if (status && status !== 'all') {
+    list = list.filter(m => m.status === status);
+  }
+
+  if (search && typeof search === 'string') {
+    const q = search.toLowerCase().trim();
+    list = list.filter(m =>
+      (m.name && m.name.toLowerCase().includes(q)) ||
+      (m.email && m.email.toLowerCase().includes(q)) ||
+      (m.phone && m.phone.toLowerCase().includes(q)) ||
+      (m.message && m.message.toLowerCase().includes(q)) ||
+      (m.category && m.category.toLowerCase().includes(q))
+    );
+  }
+
+  // Sort newest first
+  list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  const allMessages = db.get('contact_messages') || [];
+  const unreadCount = allMessages.filter(m => m.status === 'unread').length;
+
+  res.json({
+    success: true,
+    data: list,
+    total: allMessages.length,
+    unreadCount
+  });
 });
 
 adminRouter.put('/messages/:id', (req: AuthRequest, res: Response) => {
@@ -289,9 +320,26 @@ adminRouter.put('/messages/:id', (req: AuthRequest, res: Response) => {
     res.status(404).json({ success: false, message: 'Message not found' });
     return;
   }
-  if (status) item.status = status;
+  if (status && ['unread', 'read', 'replied', 'archived'].includes(status)) {
+    item.status = status as any;
+  }
   db.save();
+  db.logAudit(req.user!.id, req.user!.fullName, 'MESSAGE_STATUS_UPDATE', 'ContactMessage', `Updated message ${id} status to ${status}`, req.ip);
   res.json({ success: true, message: 'Message status updated', data: item });
+});
+
+adminRouter.delete('/messages/:id', (req: AuthRequest, res: Response) => {
+  const { id } = req.params;
+  const list = db.get('contact_messages');
+  const index = list.findIndex(m => m.id === id);
+  if (index === -1) {
+    res.status(404).json({ success: false, message: 'Message not found' });
+    return;
+  }
+  const removed = list.splice(index, 1)[0];
+  db.save();
+  db.logAudit(req.user!.id, req.user!.fullName, 'MESSAGE_DELETE', 'ContactMessage', `Deleted message from ${removed.name} (${id})`, req.ip);
+  res.json({ success: true, message: 'Message deleted successfully', data: removed });
 });
 
 // Events CRUD
@@ -367,30 +415,150 @@ adminRouter.delete('/events/:id', (req: AuthRequest, res: Response) => {
   res.json({ success: true, message: 'Event deleted' });
 });
 
-// Gallery CRUD
+// Gallery Management Endpoints
+adminRouter.get('/gallery', (req: AuthRequest, res: Response) => {
+  const { category, status, search } = req.query;
+  let list = db.get('gallery_assets') || [];
+
+  if (category && category !== 'all') {
+    list = list.filter(g => g.category === category);
+  }
+
+  if (status && status !== 'all') {
+    list = list.filter(g => g.status === status);
+  }
+
+  if (search && typeof search === 'string') {
+    const q = search.toLowerCase().trim();
+    list = list.filter(g =>
+      (g.title && g.title.toLowerCase().includes(q)) ||
+      (g.caption && g.caption.toLowerCase().includes(q))
+    );
+  }
+
+  // Sort newest first
+  list.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
+  res.json({ success: true, data: list, total: list.length });
+});
+
+// Upload new photograph from computer (Base64)
+adminRouter.post('/gallery/upload', (req: AuthRequest, res: Response) => {
+  try {
+    const { image, filename } = req.body;
+    if (!image || typeof image !== 'string') {
+      res.status(400).json({ success: false, message: 'No photograph data provided.' });
+      return;
+    }
+
+    // Match base64 data URL: data:image/(png|jpeg|jpg|webp);base64,...
+    const matches = image.match(/^data:image\/([a-zA-Z0-9-+.]+);base64,(.+)$/);
+    let ext = 'jpg';
+    let base64String = image;
+
+    if (matches) {
+      ext = matches[1].toLowerCase();
+      if (ext === 'jpeg') ext = 'jpg';
+      base64String = matches[2];
+    } else if (filename && filename.includes('.')) {
+      ext = filename.split('.').pop()!.toLowerCase();
+    }
+
+    const validExtensions = ['jpg', 'jpeg', 'png', 'webp'];
+    if (!validExtensions.includes(ext)) {
+      res.status(400).json({ success: false, message: 'Unsupported format. Please upload JPG, PNG, or WebP.' });
+      return;
+    }
+
+    const buffer = Buffer.from(base64String, 'base64');
+    // Check size: 15MB max
+    if (buffer.length > 15 * 1024 * 1024) {
+      res.status(400).json({ success: false, message: 'Photograph size exceeds 15MB limit.' });
+      return;
+    }
+
+    const cleanBase = filename
+      ? filename.replace(/\.[^/.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 30)
+      : 'gallery_photo';
+    const uniqueFilename = `${cleanBase}_${Date.now()}.${ext}`;
+
+    const uploadDir = path.resolve(process.cwd(), 'client/public/assets/images/gallery');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+
+    const destPath = path.join(uploadDir, uniqueFilename);
+    fs.writeFileSync(destPath, buffer);
+
+    // Also mirror into client/dist/assets/images/gallery if client/dist exists
+    const distGalleryDir = path.resolve(process.cwd(), 'client/dist/assets/images/gallery');
+    if (fs.existsSync(path.resolve(process.cwd(), 'client/dist'))) {
+      if (!fs.existsSync(distGalleryDir)) {
+        fs.mkdirSync(distGalleryDir, { recursive: true });
+      }
+      fs.copyFileSync(destPath, path.join(distGalleryDir, uniqueFilename));
+    }
+
+    const publicUrl = `/assets/images/gallery/${uniqueFilename}`;
+    res.status(201).json({
+      success: true,
+      message: 'Photograph uploaded successfully',
+      url: publicUrl,
+      filename: uniqueFilename,
+      sizeBytes: buffer.length
+    });
+  } catch (err: any) {
+    res.status(500).json({ success: false, message: 'Failed to upload photograph: ' + err.message });
+  }
+});
+
 adminRouter.post('/gallery', (req: AuthRequest, res: Response) => {
-  const { title, caption, type, category, mediaUrl } = req.body;
+  const { title, caption, type, category, mediaUrl, status } = req.body;
   if (!title || !mediaUrl) {
-    res.status(400).json({ success: false, message: 'Title and media URL are required' });
+    res.status(400).json({ success: false, message: 'Title and photograph URL are required.' });
     return;
   }
 
   const newAsset: GalleryAsset = {
-    id: `gal_${Date.now()}`,
+    id: `gal_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
     title: title.trim(),
-    caption: caption || '',
+    caption: caption ? caption.trim() : '',
     type: type || 'photo',
-    category: category || 'ashram',
+    category: category || 'general',
     mediaUrl,
-    status: 'published',
+    status: (status === 'unpublished' || status === 'draft') ? 'draft' : 'published',
     createdAt: new Date().toISOString(),
   };
 
   db.get('gallery_assets').unshift(newAsset);
   db.save();
-  db.logAudit(req.user!.id, req.user!.fullName, 'GALLERY_UPLOAD', 'Gallery', `Added gallery media: ${title}`, req.ip);
+  db.logAudit(req.user!.id, req.user!.fullName, 'GALLERY_UPLOAD', 'Gallery', `Added gallery photograph: ${title}`, req.ip);
 
-  res.status(201).json({ success: true, message: 'Media added to gallery', data: newAsset });
+  res.status(201).json({ success: true, message: 'Photograph added to gallery successfully', data: newAsset });
+});
+
+adminRouter.put('/gallery/:id', (req: AuthRequest, res: Response) => {
+  const { id } = req.params;
+  const { title, caption, category, mediaUrl, status } = req.body;
+  const assets = db.get('gallery_assets');
+  const asset = assets.find(g => g.id === id);
+  if (!asset) {
+    res.status(404).json({ success: false, message: 'Photograph not found' });
+    return;
+  }
+
+  if (title !== undefined) asset.title = title.trim();
+  if (caption !== undefined) asset.caption = caption.trim();
+  if (category !== undefined) asset.category = category;
+  if (mediaUrl !== undefined) asset.mediaUrl = mediaUrl;
+  if (status !== undefined) {
+    asset.status = (status === 'unpublished' || status === 'draft') ? 'draft' : 'published';
+  }
+
+  db.save();
+  db.logAudit(req.user!.id, req.user!.fullName, 'GALLERY_UPDATE', 'Gallery', `Updated gallery photograph: ${asset.title} (status: ${asset.status})`, req.ip);
+
+  res.json({ success: true, message: 'Photograph updated successfully', data: asset });
 });
 
 adminRouter.delete('/gallery/:id', (req: AuthRequest, res: Response) => {
@@ -398,13 +566,13 @@ adminRouter.delete('/gallery/:id', (req: AuthRequest, res: Response) => {
   const assets = db.get('gallery_assets');
   const index = assets.findIndex(g => g.id === id);
   if (index === -1) {
-    res.status(404).json({ success: false, message: 'Asset not found' });
+    res.status(404).json({ success: false, message: 'Photograph not found' });
     return;
   }
   const removed = assets.splice(index, 1)[0];
   db.save();
-  db.logAudit(req.user!.id, req.user!.fullName, 'GALLERY_DELETE', 'Gallery', `Removed gallery asset: ${removed.title}`, req.ip);
-  res.json({ success: true, message: 'Media removed from gallery' });
+  db.logAudit(req.user!.id, req.user!.fullName, 'GALLERY_DELETE', 'Gallery', `Removed gallery photograph: ${removed.title}`, req.ip);
+  res.json({ success: true, message: 'Photograph removed from gallery successfully', data: removed });
 });
 
 // FAQs CRUD

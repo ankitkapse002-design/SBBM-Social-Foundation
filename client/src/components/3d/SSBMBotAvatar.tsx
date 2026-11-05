@@ -20,8 +20,8 @@ export const SSBMBotAvatar: React.FC<SSBMBotAvatarProps> = ({
   const [greetingIndex, setGreetingIndex] = useState(0);
 
   const greetings = [
-    'Namaste! 🙏 I am Vyenky AI',
-    'Ask me about Ashram & Seva 🌿',
+    'Namaste! 🙏 I am SBBM Assistant',
+    'Ask me about Foundation & Seva 🌿',
     'Admission • Go-Seva • Wellness ✨',
     'Click me to chat anytime! 💬',
   ];
@@ -252,16 +252,16 @@ export const SSBMBotAvatar: React.FC<SSBMBotAvatarProps> = ({
       {/* Floating Greeting Speech Bubble (Synchronized with 3D Bot) */}
       {showGreetingBadge && (
         <div
-          className="absolute -top-9 md:-top-10 right-2 md:-right-2 whitespace-nowrap z-50 pointer-events-none transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
+          className="absolute -top-10 right-0 whitespace-nowrap z-50 pointer-events-none transition-all duration-300 animate-in fade-in slide-in-from-bottom-2"
           id="ssbm-bot-greeting-bubble"
         >
-          <div className="bg-foundation-forestDark/95 text-foundation-ivory text-xs font-bold px-3.5 py-1.5 rounded-2xl shadow-xl border border-foundation-gold/60 backdrop-blur-md flex items-center space-x-2 relative">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping inline-block" />
-            <span className="text-foundation-sandstone tracking-wide">
+          <div className="bg-[#0B3B24] text-white text-xs font-semibold px-3 py-1.5 rounded-2xl shadow-xl border border-amber-400/50 backdrop-blur-md flex items-center space-x-2 relative">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block flex-shrink-0" />
+            <span className="text-amber-100 tracking-wide text-[11px] sm:text-xs">
               {greetings[greetingIndex]}
             </span>
-            {/* Speech bubble pointer */}
-            <div className="absolute -bottom-1.5 right-8 md:right-10 w-3 h-3 bg-foundation-forestDark/95 border-r border-b border-foundation-gold/60 transform rotate-45" />
+            {/* Speech bubble pointer pointing towards avatar */}
+            <div className="absolute -bottom-1 right-6 w-2.5 h-2.5 bg-[#0B3B24] border-r border-b border-amber-400/50 transform rotate-45" />
           </div>
         </div>
       )}

@@ -79,7 +79,7 @@ export const Card3D: React.FC<Card3DProps> = ({
         }}
         whileHover={{
           scale: scaleOnHover,
-          boxShadow: '0 25px 45px -12px rgba(10, 40, 25, 0.22), 0 12px 25px -8px rgba(212, 160, 23, 0.18)',
+          boxShadow: '0 25px 45px -12px rgba(15, 23, 42, 0.12), 0 12px 25px -8px rgba(139, 29, 36, 0.08)',
         }}
         transition={{ duration: 0.2 }}
         className={`relative overflow-hidden transition-shadow duration-300 ${className}`}

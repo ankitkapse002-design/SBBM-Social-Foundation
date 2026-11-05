@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- 1. Home / Institutional Overview -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 2. About Us / Governance & Ethos -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/about</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 3. Core Social Initiatives & Programs -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/services</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 4. Vyenkatesh Ashram (Old Age Home) -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/old-age-home</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 5. Senior Citizen Admission Process -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/admission</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 6. Donate & Support (80G Tax Deductible) -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/support</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- 7. Volunteer & Seva Mobilization -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/volunteer</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 8. Institutional Membership & Association -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/membership</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 9. Community Events & Seva Camps -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/events</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 10. Verified Photography Gallery -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/gallery</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 11. Frequently Asked Questions (AEO/FAQ) -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/faq</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 12. Contact Directory & Locations -->
+  <url>
+    <loc>https://sbbmsocialfoundation.org/contact</loc>
+    <lastmod>2026-10-31</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+</urlset>
+

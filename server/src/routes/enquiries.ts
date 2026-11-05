@@ -55,7 +55,7 @@ enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Res
     if (existing) {
       res.status(400).json({
         success: false,
-        message: `An admission enquiry for ${resolvedApplicantName} with guardian phone ${resolvedGuardianPhone} is already registered under Registration ID: ${existing.registrationId || existing.id}. Please sign in to your Admission Dashboard to view current status.`,
+        message: `An admission enquiry for ${resolvedApplicantName} with guardian phone ${resolvedGuardianPhone} has already been received under Registration ID: ${existing.registrationId || existing.id}. Our office will contact you regarding review status.`,
         existingRegistrationId: existing.registrationId || existing.id,
       });
       return;
@@ -64,25 +64,6 @@ enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Res
     const now = new Date().toISOString();
     const registrationId = generatePortalId('ADM');
     const enquiryId = `adm_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
-    const userId = `usr_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`;
-    const initialPlainPassword = generateAdmissionPassword(resolvedApplicantName, resolvedDobOrYear);
-    const passwordHash = bcrypt.hashSync(initialPlainPassword, 10);
-
-    const newUser: User = {
-      id: userId,
-      email: (applicantEmail || `${registrationId.toLowerCase()}@ssbmfoundation.org`).trim().toLowerCase(),
-      username: registrationId,
-      portalId: registrationId,
-      fullName: `${resolvedApplicantName} (Guardian: ${resolvedGuardianFirstName})`,
-      mobile: resolvedGuardianPhone,
-      passwordHash,
-      role: 'admission_applicant',
-      accountStatus: 'active',
-      isVerified: true,
-      mustChangePassword: true,
-      createdAt: now,
-      updatedAt: now,
-    };
 
     const enquiry: AdmissionEnquiry = {
       id: enquiryId,
@@ -106,26 +87,14 @@ enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Res
           status: 'pending_review',
           date: now,
           updatedBy: 'Guardian / Applicant',
-          notes: 'Enquiry submitted online. Initial account created and pending administrative review.'
+          notes: 'Enquiry submitted via public admission form. Pending administrative review.'
         }
       ],
       createdAt: now,
       updatedAt: now,
     };
 
-    db.get('users').push(newUser);
     db.get('admission_enquiries').unshift(enquiry);
-
-    db.get('portal_notifications').push({
-      id: `notif_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`,
-      userId: registrationId,
-      title: 'Admission Enquiry Received',
-      message: `Your admission enquiry (${registrationId}) for ${resolvedApplicantName} has been submitted. Status: Pending Review.`,
-      type: 'info',
-      isRead: false,
-      createdAt: now,
-    });
-
     db.save();
 
     db.logAudit(
@@ -144,10 +113,8 @@ enquiriesRouter.post('/admission', rateLimit(60000, 15), (req: Request, res: Res
       status: 'pending_review',
       applicantName: resolvedApplicantName,
       guardianFirstName: resolvedGuardianFirstName,
-      dobOrYear: resolvedDobOrYear,
-      initialPasswordFormat: `${((resolvedApplicantName || '').trim().split(/\s+/)[0].replace(/[^a-zA-Z]/g, '').substring(0, 4) || 'Resi').replace(/^./, (c: string) => c.toUpperCase())}${resolvedDobOrYear.match(/(\d{4})/)?.[1] || 'YYYY'}`,
-      message: `Admission enquiry submitted successfully! Your unique Admission Registration ID is ${registrationId}. Initial status: Pending Review.`,
-      contactNotice: 'For urgent admission queries, you may also reach management directly at +91 98908 98081.'
+      message: `Admission enquiry submitted successfully! Your Admission Reference ID is ${registrationId}. Our administrative team will review the details and contact the guardian directly.`,
+      contactNotice: 'For urgent admission queries, contact our office directly at +91 98908 98081 or +91 93261 72824.'
     });
   } catch (err: any) {
     res.status(500).json({ success: false, message: 'Failed to process admission enquiry: ' + err.message });

@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { db, User } from '../db';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'ssbm_vyenkatesh_secret_key_2026_dignity_care';
+const JWT_SECRET = process.env.JWT_SECRET || 'sbbm_social_foundation_secret_key_2026_dignity_care';
 
 export interface AuthRequest extends Request {
   user?: User;

@@ -15,13 +15,13 @@ function smoothstep(min: number, max: number, value: number): number {
 }
 
 // ==========================================
-// 1. REALISTIC VYENKATESH ASHRAM 3D MODEL
+// 1. SBBM FOUNDATION CAMPUS 3D MODEL
 // Perfectly centered around x = 0:
 // - Real open entrance doorway at x = 0
 // - Wooden entrance double doors swing open smoothly
 // - Warm golden interior foyer lighting spilling onto veranda steps
 // - Symmetrical grand veranda columns and entrance steps
-// - Official signboard: "व्यंकटेश आश्रम / VYENKATESH ASHRAM"
+// - Official signboard: "SBBM SOCIAL FOUNDATION"
 // ==========================================
 function AshramBuilding({
   doorsOpenProgress,
@@ -631,7 +631,7 @@ function ScrollControlledCamera({
 // ==========================================
 export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }) => {
   const targetProgress = useRef<number>(0);
-  const [displayProgress, setDisplayProgress] = useState<number>(0);
+  const [_displayProgress, setDisplayProgress] = useState<number>(0);
   const [gateOpenProgress, setGateOpenProgress] = useState<number>(0);
   const [ashramDoorProgress, setAshramDoorProgress] = useState<number>(0);
   const [hasWebGLError, setHasWebGLError] = useState(false);
@@ -713,15 +713,15 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
 
     ctx.fillStyle = '#6E4E18';
     ctx.font = 'bold 26px system-ui, sans-serif';
-    ctx.fillText('सच्चिदानंद स्वामी बापूजी मौदाकर सामाजिक संस्था द्वारा संचालित', 600, 44);
+    ctx.fillText('सच्चिदानंद स्वामी बापूजी मौदाकर सामाजिक संस्था', 600, 44);
 
     ctx.fillStyle = '#8B2500';
-    ctx.font = 'bold 54px serif, system-ui';
-    ctx.fillText('व्यंकटेश आश्रम  •  VYENKATESH ASHRAM', 600, 106);
+    ctx.font = 'bold 50px serif, system-ui';
+    ctx.fillText('SBBM SOCIAL FOUNDATION', 600, 106);
 
     ctx.fillStyle = '#1B4332';
     ctx.font = 'italic bold 24px system-ui, sans-serif';
-    ctx.fillText('A Place of Care, Dignity and Belonging • Anjikar Bagh, Mahuli', 600, 160);
+    ctx.fillText('Dedicated to Care, Dignity, Seva & Community Welfare', 600, 160);
 
     const texture = new THREE.CanvasTexture(canvas);
     texture.anisotropy = 8;
@@ -898,17 +898,17 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
         <div className="relative w-full h-full flex flex-col items-center justify-center p-6 text-center text-white bg-gradient-to-b from-[#0D2818] to-[#1B4332]">
           <img
             src="/assets/images/logo.jpg"
-            alt="SSBM Social Foundation Logo"
+            alt="SBBM Social Foundation Logo"
             className="w-24 h-24 rounded-full border-4 border-foundation-gold shadow-2xl mb-5"
           />
           <h1 className="text-3xl sm:text-4xl font-display font-bold text-foundation-sandstone mb-2">
-            SSBM SOCIAL FOUNDATION
+            SBBM SOCIAL FOUNDATION
           </h1>
           <h2 className="text-xl sm:text-2xl font-display text-foundation-ivory mb-3">
-            Vyenkatesh Ashram
+            Official Digital Platform
           </h2>
           <p className="text-sm text-foundation-sageLight max-w-lg mb-6">
-            A Place of Care, Dignity and Belonging • Anjikar Bagh, Mahuli (Nagpur)
+            Dedicated to Care, Dignity, Community Seva and Social Impact • Nagpur, Maharashtra
           </p>
           <button
             onClick={handleSkip}
@@ -925,15 +925,15 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
             <div className="flex items-center space-x-3">
               <img
                 src="/assets/images/logo.jpg"
-                alt="SSBM Foundation Logo"
+                alt="SBBM Foundation Logo"
                 className="w-11 h-11 rounded-full border-2 border-foundation-gold shadow"
               />
               <div>
                 <p className="text-xs uppercase tracking-wider text-foundation-gold font-bold">
-                  SSBM Social Foundation
+                  SBBM Social Foundation
                 </p>
                 <h2 className="text-xs md:text-sm font-display font-bold text-white">
-                  Vyenkatesh Ashram
+                  Official Portal
                 </h2>
               </div>
             </div>
@@ -1035,7 +1035,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
                     transition={{ delay: 0.25, duration: 0.6 }}
                     className="text-2xl md:text-4xl font-display font-bold text-white tracking-wide mb-1 drop-shadow-lg"
                   >
-                    व्यंकटेश आश्रम
+                    एस.बी.बी.एम. सोशल फाउंडेशन
                   </motion.h2>
 
                   <motion.p
@@ -1044,7 +1044,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
                     transition={{ delay: 0.4, duration: 0.6 }}
                     className="text-base md:text-xl font-serif italic text-amber-200 mb-3 drop-shadow"
                   >
-                    Welcome to Vyenkatesh Ashram
+                    Welcome to SBBM Social Foundation
                   </motion.p>
 
                   <div className="w-24 h-0.5 bg-gradient-to-r from-transparent via-foundation-gold to-transparent mx-auto mb-3" />
@@ -1055,7 +1055,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
                     transition={{ delay: 0.55, duration: 0.6 }}
                     className="text-xs md:text-sm text-stone-200 font-medium tracking-wide italic"
                   >
-                    “A Place of Care, Dignity & Belonging”
+                    “Dedicated to Care, Dignity & Community Seva”
                   </motion.p>
 
                   <motion.p

@@ -1,5 +1,5 @@
 # Production Deployment & Hosting Guide
-### SBBM Social Foundation & Vyenkatesh Ashram
+### SBBM Social Foundation
 
 This guide provides complete instructions for deploying the full-stack application to production.
 
@@ -86,7 +86,7 @@ Open your browser to:
 4. Configure Nginx Reverse Proxy with SSL (Certbot):
    ```nginx
    server {
-       server_name vyenkateshashram.org www.vyenkateshashram.org;
+       server_name sbbmsocialfoundation.org www.sbbmsocialfoundation.org;
 
        location / {
            proxy_pass http://localhost:5000;
@@ -100,7 +100,7 @@ Open your browser to:
        }
    }
    ```
-   Run: `sudo certbot --nginx -d vyenkateshashram.org -d www.vyenkateshashram.org`
+   Run: `sudo certbot --nginx -d sbbmsocialfoundation.org -d www.sbbmsocialfoundation.org`
 
 ### C. Docker Deployment
 A standard multi-stage Dockerfile can be placed at the root:
