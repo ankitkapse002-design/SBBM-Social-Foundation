@@ -88,9 +88,9 @@ export const Contact: React.FC = () => {
         canonicalPath="/contact"
         jsonLd={contactJsonLd}
       />
-      <div className="max-w-6xl mx-auto px-4 md:px-8 space-y-12">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-10 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_entrance_front.jpg"
@@ -101,13 +101,13 @@ export const Contact: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/20">
-              <MapPin className="w-3.5 h-3.5 text-amber-300" />
-              <span>Official Contact Directory & Community Support</span>
+          <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
+              <MapPin className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+              <span>Official Contact Directory &amp; Community Support</span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
               Contact SBBM Social Foundation
             </h1>
 
@@ -115,7 +115,7 @@ export const Contact: React.FC = () => {
               Reach out to our administrative head office in Nagpur City for legal, CSR, and membership governance, or coordinate directly with our Mahuli Centre for senior care, Go-Seva, and naturopathy appointments.
             </p>
 
-            <p className="text-xs font-bold text-amber-300">
+            <p className="text-xs font-bold text-amber-300 break-all">
               Official Email: <a href="mailto:sbbmsocialfoundation@gmail.com" className="underline hover:text-white">sbbmsocialfoundation@gmail.com</a>
             </p>
           </div>
@@ -244,9 +244,9 @@ export const Contact: React.FC = () => {
         </div>
 
         {/* Contact Inquiry Form */}
-        <div className="bg-white rounded-3xl p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-6">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-6">
           <div className="border-b border-foundation-borderMuted pb-4 space-y-1">
-            <h2 className="text-xl font-display font-bold text-foundation-charcoal">
+            <h2 className="text-lg sm:text-xl font-display font-bold text-foundation-charcoal">
               Send an Official Message or Inquiry
             </h2>
             <p className="text-xs text-stone-500">
@@ -255,16 +255,16 @@ export const Contact: React.FC = () => {
           </div>
 
           {successMessage ? (
-            <div className="p-8 bg-emerald-50 rounded-2xl border border-emerald-200 text-center space-y-3">
+            <div className="p-6 sm:p-8 bg-emerald-50 rounded-2xl border border-emerald-200 text-center space-y-3">
               <CheckCircle2 className="w-12 h-12 text-emerald-600 mx-auto" />
-              <h3 className="font-bold text-emerald-900 text-lg">Message Successfully Received!</h3>
+              <h3 className="font-bold text-emerald-900 text-base sm:text-lg">Message Successfully Received!</h3>
               <p className="text-xs text-emerald-800 max-w-md mx-auto">{successMessage}</p>
               <div className="pt-2 text-xs text-stone-600">
                 Our foundation coordinator will follow up promptly via phone or email.
               </div>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {errorMessage && (
                 <div className="p-3 bg-red-50 text-red-700 text-xs rounded-xl border border-red-200">
                   {errorMessage}
@@ -282,7 +282,7 @@ export const Contact: React.FC = () => {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     placeholder="e.g. Anand Shinde"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
                   />
                 </div>
 
@@ -296,7 +296,7 @@ export const Contact: React.FC = () => {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="e.g. +91 98220 XXXXX"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
                   />
                 </div>
 
@@ -309,7 +309,7 @@ export const Contact: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="e.g. anand@example.com"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
                   />
                 </div>
 
@@ -320,12 +320,12 @@ export const Contact: React.FC = () => {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
                   >
                     <option value="general">General Foundation Inquiry</option>
                     <option value="admission_guidance">Elderly Care Admission (Vyenkatesh Ashram)</option>
                     <option value="csr_collaboration">CSR Partnership (Companies Act Schedule VII)</option>
-                    <option value="goseva">Go-Seva Kendra & Cattle Welfare</option>
+                    <option value="goseva">Go-Seva Kendra &amp; Cattle Welfare</option>
                     <option value="naturopathy">Aarogyam Prakritik Chikitsa (Weekend Camps)</option>
                     <option value="volunteer_seva">Volunteer / Seva Member Engagement</option>
                     <option value="grievance">Feedback or Administrative Inquiries</option>
@@ -343,18 +343,18 @@ export const Contact: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Please describe how we can assist you or provide details regarding your inquiry..."
-                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
+                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-crimson focus:outline-none"
                 />
               </div>
 
               <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-foundation-borderMuted">
-                <span className="text-[11px] text-stone-500">
+                <span className="text-[11px] text-stone-500 text-center sm:text-left">
                   Privacy Notice: Contact details are used solely for foundation communications.
                 </span>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full sm:w-auto px-8 py-3 bg-foundation-crimson hover:bg-foundation-crimsonDark disabled:opacity-50 text-white font-bold text-xs rounded-full shadow-md transition-all flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-8 py-3.5 min-h-[44px] bg-foundation-crimson hover:bg-foundation-crimsonDark disabled:opacity-50 text-white font-bold text-xs rounded-full shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   {isLoading ? <span>Submitting Message...</span> : <span>Send Message</span>}
                 </button>

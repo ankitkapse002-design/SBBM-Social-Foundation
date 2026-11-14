@@ -36,9 +36,9 @@ export const OldAgeHome: React.FC = () => {
         ogImage="/assets/images/ashram/ashram_veranda_garden.jpg"
         jsonLd={ashramJsonLd}
       />
-      <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-10 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_veranda_garden.jpg"
@@ -49,17 +49,17 @@ export const OldAgeHome: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/20">
-              <HomeIcon className="w-3.5 h-3.5 text-amber-300" />
+          <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
+              <HomeIcon className="w-3.5 h-3.5 text-amber-300 shrink-0" />
               <span>Initiative 5.1 of SBBM Social Foundation • Mahuli Campus</span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
               Elderly Care – Vyenkatesh Ashram
             </h1>
 
-            <p className="text-sm md:text-base text-amber-200 font-serif italic">
+            <p className="text-xs sm:text-sm md:text-base text-amber-200 font-serif italic">
               “Apno Se Door... Ek Apna Ghar...”
             </p>
 
@@ -70,23 +70,23 @@ export const OldAgeHome: React.FC = () => {
         </div>
 
         {/* Feature Hero Card with Building Image */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-white rounded-3xl p-6 md:p-10 border border-stone-200 shadow-soft">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center bg-white rounded-3xl p-4 sm:p-6 md:p-10 border border-stone-200 shadow-soft">
           <div className="lg:col-span-6 rounded-2xl overflow-hidden border border-stone-200 shadow-md">
             <img
               src="/assets/images/ashram/ashram_exterior_main.jpg"
               alt="Vyenkatesh Ashram Building Exterior at Mahuli"
-              className="w-full h-80 object-cover"
+              className="w-full h-56 sm:h-72 lg:h-80 object-cover"
             />
           </div>
 
           <div className="lg:col-span-6 space-y-4">
             <div className="inline-flex items-center space-x-1.5 px-3 py-1 bg-red-50 text-foundation-crimson rounded-full text-xs font-bold uppercase tracking-wider">
-              <Heart className="w-3.5 h-3.5 fill-foundation-crimson" />
+              <Heart className="w-3.5 h-3.5 fill-foundation-crimson shrink-0" />
               <span>Dignified Senior Living with Filial Care</span>
             </div>
 
-            <h2 className="text-2xl md:text-3xl font-display font-bold text-stone-900 tracking-tight">
-              A Home Designed for Peace, Companionship & Care
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-display font-bold text-stone-900 tracking-tight">
+              A Home Designed for Peace, Companionship &amp; Care
             </h2>
 
             <p className="text-xs md:text-sm text-stone-600 leading-relaxed">
@@ -112,27 +112,27 @@ export const OldAgeHome: React.FC = () => {
               </div>
               <div className="flex items-center space-x-2">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Daily Spiritual Satsang & Library</span>
+                <span>Daily Spiritual Satsang &amp; Library</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                <span>Visiting Doctor & First-Aid Care</span>
+                <span>Visiting Doctor &amp; First-Aid Care</span>
               </div>
             </div>
 
-            <div className="pt-4 flex flex-wrap items-center gap-3">
+            <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
               <Link
                 to="/admission"
-                className="px-6 py-3 bg-foundation-crimson hover:bg-foundation-crimsonDark text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md transition-all flex items-center space-x-1.5"
+                className="w-full sm:w-auto px-6 py-3.5 min-h-[44px] bg-foundation-crimson hover:bg-foundation-crimsonDark text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-md transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
               >
                 <span>Submit Admission Enquiry</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <ArrowRight className="w-3.5 h-3.5 shrink-0" />
               </Link>
               <a
                 href="tel:+919890898081"
-                className="px-5 py-3 bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs uppercase tracking-wider rounded-full border border-stone-300 transition-all flex items-center space-x-1.5"
+                className="w-full sm:w-auto px-5 py-3.5 min-h-[44px] bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs uppercase tracking-wider rounded-full border border-stone-300 transition-all flex items-center justify-center space-x-1.5 cursor-pointer"
               >
-                <Phone className="w-3.5 h-3.5 text-foundation-crimson" />
+                <Phone className="w-3.5 h-3.5 text-foundation-crimson shrink-0" />
                 <span>Call +91 98908 98081</span>
               </a>
             </div>

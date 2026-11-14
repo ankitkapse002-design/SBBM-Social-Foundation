@@ -38,9 +38,9 @@ export const Support: React.FC = () => {
         canonicalPath="/support"
         jsonLd={donateJsonLd}
       />
-      <div className="max-w-5xl mx-auto px-4 md:px-8 space-y-12">
+      <div className="max-w-5xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-10 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_campus_life.jpg"
@@ -51,13 +51,13 @@ export const Support: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
           </div>
 
-          <div className="relative z-10 space-y-4 max-w-3xl mx-auto">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/20">
-              <Heart className="w-3.5 h-3.5 text-amber-300 fill-amber-300" />
-              <span>12A & 80G Certified Non-Profit Charitable Organization</span>
+          <div className="relative z-10 space-y-3 sm:space-y-4 max-w-3xl mx-auto">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
+              <Heart className="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
+              <span>12A &amp; 80G Certified Non-Profit Charitable Organization</span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
               Support SBBM Social Foundation
             </h1>
 
@@ -65,17 +65,17 @@ export const Support: React.FC = () => {
               Your generous contribution directly sustains wholesome daily meals for elderly residents at Vyenkatesh Ashram, cattle care at Shri Go Seva Kendra, rural computer literacy, and grassroots relief for vulnerable families.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2 text-[11px] font-bold text-stone-200">
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
-                🏛️ Societies Regd: MAH/332/15/NAG
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-[10.5px] sm:text-[11px] font-bold text-stone-200">
+              <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
+                🏛️ Societies: MAH/332/15/NAG
               </span>
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
-                📜 Trust Regd: F-33193
+              <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
+                📜 Trust: F-33193
               </span>
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
+              <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
                 🛡️ Section 80G Tax Exemption
               </span>
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
+              <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
                 📋 PAN: AAQTS3445R
               </span>
             </div>
@@ -147,14 +147,14 @@ export const Support: React.FC = () => {
           {/* Official Bank Account & UPI Payment Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Column A: Genuine UPI QR Code Scanner (5 Cols) */}
-            <div className="lg:col-span-5 bg-gradient-to-b from-[#8B1D24] to-[#6E1419] text-white p-6 md:p-8 rounded-3xl shadow-soft flex flex-col justify-between space-y-6">
+            <div className="lg:col-span-5 bg-gradient-to-b from-[#8B1D24] to-[#6E1419] text-white p-5 sm:p-8 rounded-3xl shadow-soft flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-bold">
                     <QrCode className="w-3.5 h-3.5" />
                     <span>Instant UPI Payment</span>
                   </div>
-                  <span className="text-[11px] text-stone-200">Zero Transaction Fees</span>
+                  <span className="text-[11px] text-stone-200">Zero Fees</span>
                 </div>
 
                 <div>
@@ -167,7 +167,7 @@ export const Support: React.FC = () => {
                 </div>
 
                 {/* Genuine QR Code Image */}
-                <div className="bg-white p-4 rounded-2xl shadow-lg max-w-[260px] mx-auto border-2 border-amber-300/40">
+                <div className="bg-white p-3 sm:p-4 rounded-2xl shadow-lg max-w-[220px] sm:max-w-[260px] mx-auto border-2 border-amber-300/40">
                   <img
                     src="/assets/images/donation_qr_code.jpg"
                     alt="Official SBBM Social Foundation UPI Donation QR Code"
@@ -181,7 +181,7 @@ export const Support: React.FC = () => {
                 </div>
 
                 {/* Copyable UPI ID Box */}
-                <div className="bg-white/10 backdrop-blur-sm p-3.5 rounded-2xl border border-white/15 space-y-2">
+                <div className="bg-white/10 backdrop-blur-sm p-3 sm:p-3.5 rounded-2xl border border-white/15 space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="text-[10.5px] uppercase font-bold tracking-wider text-amber-200">
                       Official UPI ID
@@ -193,17 +193,17 @@ export const Support: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center justify-between bg-black/20 px-3 py-2 rounded-xl">
-                    <span className="font-mono text-xs text-white font-semibold select-all break-all">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between bg-black/20 p-2.5 rounded-xl gap-2">
+                    <span className="font-mono text-xs sm:text-sm text-white font-semibold select-all break-all">
                       sbbmsocialfoundation@okhdfcbank
                     </span>
                     <button
                       type="button"
                       onClick={() => copyToClipboard('sbbmsocialfoundation@okhdfcbank', 'upi')}
-                      className="ml-2 px-2.5 py-1 bg-white hover:bg-stone-100 text-[#8B1D24] rounded-lg text-[11px] font-bold transition-colors flex items-center space-x-1 shrink-0 cursor-pointer shadow-xs"
+                      className="self-start sm:self-auto min-h-[38px] px-3 py-1.5 bg-white hover:bg-stone-100 text-[#8B1D24] rounded-lg text-xs font-bold transition-colors flex items-center space-x-1 shrink-0 cursor-pointer shadow-xs"
                       title="Copy UPI ID"
                     >
-                      {copiedField === 'upi' ? <Check className="w-3 h-3 text-emerald-700" /> : <Copy className="w-3 h-3" />}
+                      {copiedField === 'upi' ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Copy className="w-3.5 h-3.5" />}
                       <span>{copiedField === 'upi' ? 'Copied' : 'Copy'}</span>
                     </button>
                   </div>
@@ -216,10 +216,10 @@ export const Support: React.FC = () => {
               </div>
             </div>
 
-            {/* Column B: Bank Account Details Table (7 Cols) */}
-            <div className="lg:col-span-7 bg-white p-6 md:p-8 rounded-3xl border border-stone-200 shadow-soft flex flex-col justify-between space-y-6">
+            {/* Column B: Bank Account Details Cards (7 Cols) */}
+            <div className="lg:col-span-7 bg-white p-5 sm:p-8 rounded-3xl border border-stone-200 shadow-soft flex flex-col justify-between space-y-6">
               <div className="space-y-4">
-                <div className="flex items-center justify-between border-b border-stone-100 pb-3">
+                <div className="flex items-center justify-between border-b border-stone-100 pb-3 flex-wrap gap-2">
                   <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 text-blue-900 text-xs font-bold">
                     <CreditCard className="w-3.5 h-3.5 text-blue-700" />
                     <span>Direct Bank Transfer (NEFT / RTGS / IMPS)</span>
@@ -236,96 +236,68 @@ export const Support: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Bank Account Details Table */}
-                <div className="overflow-hidden rounded-2xl border border-stone-200 bg-stone-50/50">
-                  <table className="w-full text-xs text-left">
-                    <tbody className="divide-y divide-stone-200">
-                      {/* Account Name */}
-                      <tr className="hover:bg-stone-50 transition-colors">
-                        <td className="py-3 px-4 font-bold text-stone-500 w-1/3 uppercase text-[10.5px]">
-                          Account Name
-                        </td>
-                        <td className="py-3 px-4 font-bold text-stone-900 font-sans">
-                          VYENKATESH ASHRAM
-                          <span className="block text-[10.5px] font-normal text-stone-500 mt-0.5">
-                            (Operated by SBBM Social Foundation)
-                          </span>
-                        </td>
-                      </tr>
+                {/* Bank Account Details Cards */}
+                <div className="space-y-2.5">
+                  {/* Account Name */}
+                  <div className="p-3 sm:p-3.5 rounded-xl border border-stone-200 bg-stone-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
+                    <span className="text-[10.5px] font-bold text-stone-500 uppercase tracking-wider">Account Name</span>
+                    <div className="sm:text-right text-xs font-bold text-stone-900">
+                      VYENKATESH ASHRAM
+                      <span className="block text-[10.5px] font-normal text-stone-500">Operated by SBBM Social Foundation</span>
+                    </div>
+                  </div>
 
-                      {/* Bank Name */}
-                      <tr className="hover:bg-stone-50 transition-colors">
-                        <td className="py-3 px-4 font-bold text-stone-500 uppercase text-[10.5px]">
-                          Bank Name
-                        </td>
-                        <td className="py-3 px-4 font-bold text-stone-900">
-                          AXIS BANK
-                        </td>
-                      </tr>
+                  {/* Bank Name */}
+                  <div className="p-3 sm:p-3.5 rounded-xl border border-stone-200 bg-stone-50/70 flex items-center justify-between gap-2">
+                    <span className="text-[10.5px] font-bold text-stone-500 uppercase tracking-wider">Bank Name</span>
+                    <span className="text-xs font-bold text-stone-900">AXIS BANK</span>
+                  </div>
 
-                      {/* Account Number with Copy */}
-                      <tr className="hover:bg-stone-50 transition-colors bg-white">
-                        <td className="py-3.5 px-4 font-bold text-stone-500 uppercase text-[10.5px]">
-                          Bank Account No
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <div className="flex items-center justify-between">
-                            <span className="font-mono text-sm font-bold text-stone-900 tracking-wider">
-                              920020067215309
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => copyToClipboard('920020067215309', 'acc')}
-                              className="px-2.5 py-1 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-[11px] font-bold transition-colors flex items-center space-x-1 cursor-pointer"
-                              title="Copy Account Number"
-                            >
-                              {copiedField === 'acc' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                              <span>{copiedField === 'acc' ? 'Copied' : 'Copy'}</span>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
+                  {/* Account Number with Copy */}
+                  <div className="p-3 sm:p-3.5 rounded-xl border border-stone-300 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-2xs">
+                    <div>
+                      <span className="text-[10.5px] font-bold text-stone-500 uppercase tracking-wider block">Account Number</span>
+                      <span className="font-mono text-sm sm:text-base font-bold text-stone-900 tracking-wider">920020067215309</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard('920020067215309', 'acc')}
+                      className="self-start sm:self-auto min-h-[40px] px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+                      title="Copy Account Number"
+                    >
+                      {copiedField === 'acc' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedField === 'acc' ? 'Copied' : 'Copy Number'}</span>
+                    </button>
+                  </div>
 
-                      {/* IFSC Code with Copy */}
-                      <tr className="hover:bg-stone-50 transition-colors bg-white">
-                        <td className="py-3.5 px-4 font-bold text-stone-500 uppercase text-[10.5px]">
-                          IFSC Code
-                        </td>
-                        <td className="py-3.5 px-4">
-                          <div className="flex items-center justify-between">
-                            <span className="font-mono text-sm font-bold text-stone-900 tracking-wider">
-                              UTIB0001674
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => copyToClipboard('UTIB0001674', 'ifsc')}
-                              className="px-2.5 py-1 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-[11px] font-bold transition-colors flex items-center space-x-1 cursor-pointer"
-                              title="Copy IFSC Code"
-                            >
-                              {copiedField === 'ifsc' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
-                              <span>{copiedField === 'ifsc' ? 'Copied' : 'Copy'}</span>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
+                  {/* IFSC Code with Copy */}
+                  <div className="p-3 sm:p-3.5 rounded-xl border border-stone-300 bg-white flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-2xs">
+                    <div>
+                      <span className="text-[10.5px] font-bold text-stone-500 uppercase tracking-wider block">IFSC Code</span>
+                      <span className="font-mono text-sm sm:text-base font-bold text-stone-900 tracking-wider">UTIB0001674</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => copyToClipboard('UTIB0001674', 'ifsc')}
+                      className="self-start sm:self-auto min-h-[40px] px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+                      title="Copy IFSC Code"
+                    >
+                      {copiedField === 'ifsc' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                      <span>{copiedField === 'ifsc' ? 'Copied' : 'Copy IFSC'}</span>
+                    </button>
+                  </div>
 
-                      {/* Branch Address */}
-                      <tr className="hover:bg-stone-50 transition-colors">
-                        <td className="py-3 px-4 font-bold text-stone-500 uppercase text-[10.5px]">
-                          Branch Address
-                        </td>
-                        <td className="py-3 px-4 text-stone-800 font-medium">
-                          GANDHIBAG, NAGPUR BRANCH
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  {/* Branch Address */}
+                  <div className="p-3 sm:p-3.5 rounded-xl border border-stone-200 bg-stone-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-1 sm:gap-4">
+                    <span className="text-[10.5px] font-bold text-stone-500 uppercase tracking-wider">Branch Address</span>
+                    <span className="text-xs font-medium text-stone-800">GANDHIBAG, NAGPUR BRANCH</span>
+                  </div>
                 </div>
 
                 {/* 80G Tax Receipt Instructions */}
                 <div className="bg-stone-50 p-4 rounded-2xl border border-stone-200 text-xs text-stone-700 space-y-2">
                   <div className="font-bold text-stone-900 flex items-center space-x-1.5">
-                    <FileCheck className="w-4 h-4 text-foundation-crimson" />
+                    <FileCheck className="w-4 h-4 text-foundation-crimson shrink-0" />
                     <span>How to Claim Your Official Section 80G Tax Receipt:</span>
                   </div>
                   <ol className="list-decimal pl-4 space-y-1 text-[11.5px] text-stone-600">

@@ -117,9 +117,9 @@ export const Volunteer: React.FC = () => {
         </div>
 
         {/* Volunteer Application Form */}
-        <div className="bg-white rounded-3xl p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-6">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-6">
           <div className="border-b border-foundation-borderMuted pb-4 space-y-1">
-            <h2 className="text-xl font-display font-bold text-foundation-charcoal">
+            <h2 className="text-lg sm:text-xl font-display font-bold text-foundation-charcoal">
               Volunteer Seva Registration
             </h2>
             <p className="text-xs text-stone-500">
@@ -128,13 +128,13 @@ export const Volunteer: React.FC = () => {
           </div>
 
           {successMessage ? (
-            <div className="p-8 bg-emerald-50 rounded-2xl border border-emerald-200 text-center space-y-3">
+            <div className="p-6 sm:p-8 bg-emerald-50 rounded-2xl border border-emerald-200 text-center space-y-3">
               <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
-              <h3 className="font-bold text-emerald-900 text-lg">Seva Application Received!</h3>
+              <h3 className="font-bold text-emerald-900 text-base sm:text-lg">Seva Application Received!</h3>
               <p className="text-xs text-emerald-800 max-w-md mx-auto">{successMessage}</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
               {errorMessage && (
                 <div className="p-3 bg-red-50 text-red-700 text-xs rounded-xl border border-red-200">
                   {errorMessage}
@@ -152,7 +152,7 @@ export const Volunteer: React.FC = () => {
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Pooja Kulkarni"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                 </div>
 
@@ -166,7 +166,7 @@ export const Volunteer: React.FC = () => {
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     placeholder="e.g. +91 98230 XXXXX"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                 </div>
 
@@ -179,7 +179,7 @@ export const Volunteer: React.FC = () => {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     placeholder="e.g. pooja@example.com"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                 </div>
 
@@ -190,7 +190,7 @@ export const Volunteer: React.FC = () => {
                   <select
                     value={formData.availability}
                     onChange={(e) => setFormData({ ...formData, availability: e.target.value })}
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   >
                     <option value="Weekends (Saturday & Sunday)">Weekends (Saturday & Sunday)</option>
                     <option value="Weekday Mornings">Weekday Mornings</option>
@@ -210,13 +210,13 @@ export const Volunteer: React.FC = () => {
                   {availableAreas.map((area, idx) => (
                     <label
                       key={idx}
-                      className="flex items-center space-x-2 text-xs text-stone-700 p-2.5 rounded-xl border border-foundation-borderMuted bg-foundation-warmGray/40 hover:bg-foundation-warmGray cursor-pointer"
+                      className="flex items-center space-x-2.5 text-xs text-stone-700 p-3 min-h-[44px] rounded-xl border border-foundation-borderMuted bg-foundation-warmGray/40 hover:bg-foundation-warmGray cursor-pointer transition-colors"
                     >
                       <input
                         type="checkbox"
                         checked={formData.areasOfInterest.includes(area)}
                         onChange={() => handleCheckboxChange(area)}
-                        className="rounded text-foundation-forest focus:ring-foundation-forest"
+                        className="rounded text-foundation-forest focus:ring-foundation-forest w-4 h-4 shrink-0"
                       />
                       <span>{area}</span>
                     </label>
@@ -233,18 +233,18 @@ export const Volunteer: React.FC = () => {
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   placeholder="Tell us a little about yourself or how you would like to contribute..."
-                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                 />
               </div>
 
-              <div className="pt-2 flex items-center justify-between border-t border-foundation-borderMuted">
-                <span className="text-[11px] text-stone-500">
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-foundation-borderMuted">
+                <span className="text-[11px] text-stone-500 text-center sm:text-left">
                   Volunteering is non-remunerated charitable seva.
                 </span>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="px-8 py-3 bg-foundation-forest hover:bg-foundation-forestLight disabled:opacity-50 text-foundation-ivory font-bold text-xs rounded-full shadow-md transition-all flex items-center space-x-2"
+                  className="w-full sm:w-auto px-8 py-3.5 min-h-[44px] bg-foundation-forest hover:bg-foundation-forestLight disabled:opacity-50 text-foundation-ivory font-bold text-xs rounded-full shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   {isLoading ? <span>Submitting...</span> : <span>Join Volunteer Seva</span>}
                 </button>

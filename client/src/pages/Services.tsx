@@ -429,7 +429,7 @@ export const Services: React.FC = () => {
       />
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-10 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/activities/community_seva_gathering_1.jpg"
@@ -440,14 +440,14 @@ export const Services: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/20">
-              <Compass className="w-3.5 h-3.5" />
+          <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
+              <Compass className="w-3.5 h-3.5 shrink-0" />
               <span>Comprehensive Institutional Programs (2015–2026)</span>
             </div>
 
-            <h1 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm">
-              Our 8 Core Initiatives & Welfare Pillars
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
+              Our 8 Core Initiatives &amp; Welfare Pillars
             </h1>
 
             <p className="text-xs md:text-sm text-stone-200 leading-relaxed max-w-2xl mx-auto">
@@ -461,12 +461,12 @@ export const Services: React.FC = () => {
         </div>
 
         {/* Filter Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 pt-2">
+        <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 pt-2 scroll-smooth pb-1">
           {filterOptions.map((opt) => (
             <button
               key={opt.id}
               onClick={() => setFilterCategory(opt.id)}
-              className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${
+              className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                 filterCategory === opt.id
                   ? 'bg-foundation-crimson text-white shadow-md'
                   : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'

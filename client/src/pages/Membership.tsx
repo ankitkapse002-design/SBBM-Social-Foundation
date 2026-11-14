@@ -88,9 +88,9 @@ export const Membership: React.FC = () => {
         </div>
 
         {/* Application Form */}
-        <div className="bg-white rounded-3xl p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-6">
+        <div className="bg-white rounded-3xl p-4 sm:p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-6">
           <div className="space-y-1 border-b border-foundation-borderMuted pb-4">
-            <h2 className="text-xl font-display font-bold text-foundation-charcoal">
+            <h2 className="text-lg sm:text-xl font-display font-bold text-foundation-charcoal">
               Apply for Society Membership
             </h2>
             <p className="text-xs text-stone-500">
@@ -99,13 +99,13 @@ export const Membership: React.FC = () => {
           </div>
 
           {successMessage ? (
-            <div className="p-6 bg-emerald-50 rounded-2xl border border-emerald-200 text-center space-y-3">
+            <div className="p-6 sm:p-8 bg-emerald-50 rounded-2xl border border-emerald-200 text-center space-y-3">
               <CheckCircle2 className="w-10 h-10 text-emerald-600 mx-auto" />
               <h3 className="font-bold text-emerald-900 text-base">Application Submitted</h3>
               <p className="text-xs text-emerald-800 max-w-md mx-auto">{successMessage}</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
               {errorMessage && (
                 <div className="p-3 bg-red-50 text-red-700 text-xs rounded-xl border border-red-200">
                   {errorMessage}
@@ -195,14 +195,14 @@ export const Membership: React.FC = () => {
                 />
               </div>
 
-              <div className="pt-2 flex items-center justify-between border-t border-foundation-borderMuted">
-                <span className="text-[11px] text-stone-500">
+              <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-foundation-borderMuted">
+                <span className="text-[11px] text-stone-500 text-center sm:text-left">
                   Society verification process applies.
                 </span>
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="px-8 py-3 bg-foundation-forest hover:bg-foundation-forestLight disabled:opacity-50 text-foundation-ivory font-bold text-xs rounded-full shadow-md transition-all flex items-center space-x-2"
+                  className="w-full sm:w-auto px-8 py-3.5 min-h-[44px] bg-foundation-forest hover:bg-foundation-forestLight disabled:opacity-50 text-foundation-ivory font-bold text-xs rounded-full shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
                 >
                   {isLoading ? <span>Submitting...</span> : <span>Submit Membership Application</span>}
                 </button>

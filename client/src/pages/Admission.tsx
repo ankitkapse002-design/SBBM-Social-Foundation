@@ -122,14 +122,14 @@ export const Admission: React.FC = () => {
         </div>
 
         {/* Admission Status Strip */}
-        <div className="bg-white rounded-2xl py-3 px-4 border border-foundation-borderMuted shadow-xs flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
+        <div className="bg-white rounded-2xl py-3 px-4 border border-foundation-borderMuted shadow-xs flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
           <div className="flex items-center space-x-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="font-bold text-stone-700">Admission Enquiries Status:</span>
-            <span className="text-emerald-700 font-medium">Currently Accepting Applications for Vyenkatesh Ashram</span>
+            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span className="font-bold text-stone-700">Admission Status:</span>
+            <span className="text-emerald-700 font-medium">Currently Accepting Applications</span>
           </div>
-          <div className="text-stone-500 flex items-center space-x-2">
-            <span>Direct Office Helpline:</span>
+          <div className="text-stone-500 flex items-center space-x-2 flex-wrap">
+            <span>Direct Helpline:</span>
             <a href="tel:+919890898081" className="font-bold text-[#8B1D24] hover:underline">
               +91 98908 98081
             </a>
@@ -240,7 +240,7 @@ export const Admission: React.FC = () => {
           /* Form Card */
           <form
             onSubmit={handleSubmit}
-            className="bg-white rounded-3xl p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-8"
+            className="bg-white rounded-3xl p-4 sm:p-6 md:p-10 border border-foundation-borderMuted shadow-soft space-y-6 sm:space-y-8"
           >
             {errorMessage && (
               <div className="p-4 bg-red-50 text-red-800 text-xs rounded-2xl border border-red-200 flex items-start space-x-2.5">
@@ -268,7 +268,7 @@ export const Admission: React.FC = () => {
                     value={formData.applicantName}
                     onChange={(e) => setFormData({ ...formData, applicantName: e.target.value })}
                     placeholder="e.g. Anand Gopal Deshmukh"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                   <p className="text-[10px] text-stone-500 mt-0.5">First 4 letters are used with birth year to create default admission password.</p>
                 </div>
@@ -284,7 +284,7 @@ export const Admission: React.FC = () => {
                     value={formData.dobOrYear}
                     onChange={(e) => setFormData({ ...formData, dobOrYear: e.target.value })}
                     placeholder="e.g. 1952 or 15/08/1952"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                   <p className="text-[10px] text-stone-500 mt-0.5">Used for initial credential generation.</p>
                 </div>
@@ -296,7 +296,7 @@ export const Admission: React.FC = () => {
                   <select
                     value={formData.residentGender}
                     onChange={(e) => setFormData({ ...formData, residentGender: e.target.value })}
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
@@ -311,7 +311,7 @@ export const Admission: React.FC = () => {
                   <select
                     value={formData.admissionCategory}
                     onChange={(e) => setFormData({ ...formData, admissionCategory: e.target.value })}
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   >
                     <option value="Elder Care Sanctuary (Permanent Old Age Home)">Elder Care Sanctuary (Permanent Old Age Home)</option>
                     <option value="Assisted Living & Personal Care">Assisted Living & Personal Care</option>
@@ -327,7 +327,7 @@ export const Admission: React.FC = () => {
                   <select
                     value={formData.mobilityStatus}
                     onChange={(e) => setFormData({ ...formData, mobilityStatus: e.target.value })}
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   >
                     <option value="Independent with daily routine">Independent with daily routine</option>
                     <option value="Walks with cane/stick, independent">Walks with cane/stick, independent</option>
@@ -357,7 +357,7 @@ export const Admission: React.FC = () => {
                     value={formData.guardianFirstName}
                     onChange={(e) => setFormData({ ...formData, guardianFirstName: e.target.value })}
                     placeholder="e.g. Rahul"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                 </div>
 
@@ -372,7 +372,7 @@ export const Admission: React.FC = () => {
                     value={formData.guardianPhone}
                     onChange={(e) => setFormData({ ...formData, guardianPhone: e.target.value })}
                     placeholder="e.g. +91 98220 XXXXX"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                 </div>
 
@@ -385,7 +385,7 @@ export const Admission: React.FC = () => {
                     value={formData.applicantEmail}
                     onChange={(e) => setFormData({ ...formData, applicantEmail: e.target.value })}
                     placeholder="e.g. rahul@example.com"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                 </div>
 
@@ -396,7 +396,7 @@ export const Admission: React.FC = () => {
                   <select
                     value={formData.relationWithResident}
                     onChange={(e) => setFormData({ ...formData, relationWithResident: e.target.value })}
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   >
                     <option value="Son / Daughter">Son / Daughter</option>
                     <option value="Self (Senior Enquiring)">Self (Senior Enquiring)</option>
@@ -418,7 +418,7 @@ export const Admission: React.FC = () => {
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     placeholder="e.g. Flat 302, Gokulpeth, Nagpur, Maharashtra - 440010"
-                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                    className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                   />
                 </div>
               </div>
@@ -432,14 +432,14 @@ export const Admission: React.FC = () => {
 
               <div>
                 <label className="block text-xs font-bold text-stone-700 mb-1">
-                  Health Background, Medical History & Regular Prescription Medicines
+                  Health Background, Medical History &amp; Regular Prescription Medicines
                 </label>
                 <textarea
                   rows={2}
                   value={formData.medicalNotes}
                   onChange={(e) => setFormData({ ...formData, medicalNotes: e.target.value })}
                   placeholder="Mention any known conditions (e.g. Hypertension, Diabetes, Asthma, mobility restrictions) and regular medications..."
-                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                 />
               </div>
 
@@ -452,7 +452,7 @@ export const Admission: React.FC = () => {
                   value={formData.additionalMessage}
                   onChange={(e) => setFormData({ ...formData, additionalMessage: e.target.value })}
                   placeholder="Any particular requirements, preferred admission timeline, special diet considerations, or questions for management..."
-                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                  className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
                 />
               </div>
             </div>
@@ -460,16 +460,16 @@ export const Admission: React.FC = () => {
             {/* Submission notice & Button */}
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-foundation-borderMuted">
               <span className="text-[11px] text-stone-500">
-                Data saved securely. A unique Admission ID & credentials will be generated.
+                Data saved securely. A unique Admission ID &amp; credentials will be generated.
               </span>
               <button
                 type="submit"
                 disabled={isLoading}
-                className="w-full sm:w-auto px-8 py-3 bg-foundation-crimson hover:bg-foundation-crimsonDark disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transition-all flex items-center justify-center space-x-2"
+                className="w-full sm:w-auto px-8 py-3.5 min-h-[44px] bg-foundation-crimson hover:bg-foundation-crimsonDark disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-full shadow-lg transition-all flex items-center justify-center space-x-2 cursor-pointer"
                 id="submit-admission-enquiry-btn"
               >
                 {isLoading ? (
-                  <span>Submitting & Creating Account...</span>
+                  <span>Submitting &amp; Creating Account...</span>
                 ) : (
                   <>
                     <span>Submit Admission Enquiry</span>

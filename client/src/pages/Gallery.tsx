@@ -93,9 +93,9 @@ export const Gallery: React.FC = () => {
         </div>
 
         {/* Filter Controls */}
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-foundation-borderMuted pb-4 text-xs font-bold">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 border-b border-foundation-borderMuted pb-4 text-xs font-bold">
           {/* Category Filters */}
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center gap-2 pb-1 sm:pb-0 scroll-smooth">
             {[
               { id: 'all', label: 'All Photographs' },
               { id: 'ashram', label: 'Ashram Facility & Campus' },
@@ -107,7 +107,7 @@ export const Gallery: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-full transition-all ${
+                className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer ${
                   selectedCategory === cat.id
                     ? 'bg-foundation-forest text-foundation-ivory shadow'
                     : 'bg-white text-stone-700 border border-foundation-borderMuted hover:bg-stone-50'
@@ -119,10 +119,10 @@ export const Gallery: React.FC = () => {
           </div>
 
           {/* Type Filters */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 self-start sm:self-auto shrink-0">
             <button
               onClick={() => setSelectedType('all')}
-              className={`px-3 py-1.5 rounded-xl text-xs transition-all ${
+              className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer ${
                 selectedType === 'all' ? 'bg-foundation-charcoal text-white' : 'bg-white text-stone-600 border'
               }`}
             >
@@ -130,7 +130,7 @@ export const Gallery: React.FC = () => {
             </button>
             <button
               onClick={() => setSelectedType('photo')}
-              className={`px-3 py-1.5 rounded-xl text-xs transition-all flex items-center space-x-1 ${
+              className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs transition-all flex items-center space-x-1 cursor-pointer ${
                 selectedType === 'photo' ? 'bg-foundation-charcoal text-white' : 'bg-white text-stone-600 border'
               }`}
             >
@@ -139,7 +139,7 @@ export const Gallery: React.FC = () => {
             </button>
             <button
               onClick={() => setSelectedType('video')}
-              className={`px-3 py-1.5 rounded-xl text-xs transition-all flex items-center space-x-1 ${
+              className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs transition-all flex items-center space-x-1 cursor-pointer ${
                 selectedType === 'video' ? 'bg-foundation-charcoal text-white' : 'bg-white text-stone-600 border'
               }`}
             >
@@ -195,17 +195,17 @@ export const Gallery: React.FC = () => {
         {/* Lightbox Modal with Keyboard & Prev/Next Navigation */}
         {activeAsset && (
           <div
-            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in"
+            className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in"
             onClick={() => setActiveAsset(null)}
           >
             <div
-              className="relative max-w-4xl w-full bg-stone-900 rounded-3xl overflow-hidden border border-stone-700 shadow-2xl text-stone-100"
+              className="relative max-w-4xl w-full bg-stone-900 rounded-2xl sm:rounded-3xl overflow-hidden border border-stone-700 shadow-2xl text-stone-100 max-h-[90vh] flex flex-col"
               onClick={(e) => e.stopPropagation()}
             >
               {/* Close Button */}
               <button
                 onClick={() => setActiveAsset(null)}
-                className="absolute top-4 right-4 z-20 bg-black/60 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer"
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 z-20 bg-black/70 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
                 aria-label="Close Preview (Esc)"
                 title="Close (Esc)"
               >
@@ -216,7 +216,7 @@ export const Gallery: React.FC = () => {
               {filteredAssets.length > 1 && (
                 <button
                   onClick={handlePrev}
-                  className="absolute left-4 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer"
+                  className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Previous Image"
                   title="Previous (Left Arrow)"
                 >
@@ -228,7 +228,7 @@ export const Gallery: React.FC = () => {
               {filteredAssets.length > 1 && (
                 <button
                   onClick={handleNext}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-black/60 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer"
+                  className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-black/70 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
                   aria-label="Next Image"
                   title="Next (Right Arrow)"
                 >
@@ -236,26 +236,26 @@ export const Gallery: React.FC = () => {
                 </button>
               )}
 
-              <div className="max-h-[70vh] bg-black flex items-center justify-center overflow-hidden relative">
+              <div className="flex-1 bg-black flex items-center justify-center overflow-hidden relative min-h-[200px]">
                 <img
                   src={activeAsset.mediaUrl}
                   alt={activeAsset.title}
-                  className="max-h-[70vh] w-auto object-contain transition-all"
+                  className="max-h-[55vh] sm:max-h-[70vh] w-auto max-w-full object-contain transition-all"
                 />
               </div>
 
-              <div className="p-6 space-y-2 bg-stone-900 border-t border-stone-800">
+              <div className="p-4 sm:p-6 space-y-1.5 sm:space-y-2 bg-stone-900 border-t border-stone-800 shrink-0">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs uppercase text-amber-400 font-bold tracking-wider">
+                  <span className="text-[10px] sm:text-xs uppercase text-amber-400 font-bold tracking-wider">
                     {activeAsset.category} • SBBM Social Foundation Archives
                   </span>
                   {currentIndex >= 0 && (
-                    <span className="text-[11px] font-mono text-stone-400 font-semibold">
+                    <span className="text-[10.5px] font-mono text-stone-400 font-semibold">
                       {currentIndex + 1} of {filteredAssets.length}
                     </span>
                   )}
                 </div>
-                <h2 className="text-xl font-bold text-white">
+                <h2 className="text-base sm:text-xl font-bold text-white">
                   {activeAsset.title}
                 </h2>
                 <p className="text-xs text-stone-300 leading-relaxed">

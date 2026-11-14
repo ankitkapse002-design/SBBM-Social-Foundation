@@ -209,11 +209,11 @@ export const VyenkyChatbot: React.FC = () => {
 
   return (
     <>
-      {/* Floating 3D Animated Bot Launcher with Greetings & Real-time Background Removal */}
-      <div className="fixed bottom-4 right-4 md:bottom-6 md:right-6 z-40">
+      {/* Floating 3D Animated Bot Launcher with Greetings & Responsive Scaling */}
+      <div className="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-40">
         <motion.div
-          whileHover={{ scale: 1.08, y: -4 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.06, y: -2 }}
+          whileTap={{ scale: 0.94 }}
           className="relative group cursor-pointer flex flex-col items-center"
           onClick={() => setIsOpen(!isOpen)}
           id="sbbm-chat-launcher"
@@ -221,32 +221,41 @@ export const VyenkyChatbot: React.FC = () => {
           tabIndex={0}
           aria-label="Open SBBM Virtual Assistant"
         >
-          {/* Transparent 3D Bot Avatar with Synchronized Greetings */}
-          <SSBMBotAvatar
-            size={95}
-            showGreetingBadge={!isOpen}
-            interactiveHover={false}
-          />
+          {/* Responsive Bot Avatar: 66px on mobile, 90px on desktop */}
+          <div className="hidden sm:block">
+            <SSBMBotAvatar
+              size={90}
+              showGreetingBadge={!isOpen}
+              interactiveHover={false}
+            />
+          </div>
+          <div className="sm:hidden">
+            <SSBMBotAvatar
+              size={66}
+              showGreetingBadge={!isOpen}
+              interactiveHover={false}
+            />
+          </div>
 
           {/* Unread / Active Ping Indicator */}
           {!isOpen && (
-            <span className="absolute top-3 right-5 flex h-3.5 w-3.5 pointer-events-none">
+            <span className="absolute top-1 right-2 sm:top-3 sm:right-5 flex h-3 w-3 sm:h-3.5 sm:w-3.5 pointer-events-none">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-foundation-gold opacity-75" />
-              <span className="relative inline-flex rounded-full h-3.5 w-3.5 bg-foundation-gold" />
+              <span className="relative inline-flex rounded-full h-3 w-3 sm:h-3.5 sm:w-3.5 bg-foundation-gold" />
             </span>
           )}
         </motion.div>
       </div>
 
-      {/* Expandable Chat Drawer */}
+      {/* Expandable Chat Drawer (Mobile Native Bottom Sheet) */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            initial={{ opacity: 0, y: 30, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 30, scale: 0.95 }}
+            exit={{ opacity: 0, y: 30, scale: 0.96 }}
             transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-            className="fixed bottom-24 right-4 md:right-8 w-[92vw] sm:w-[420px] h-[580px] max-h-[82vh] bg-foundation-ivory rounded-3xl shadow-2xl border border-foundation-borderMuted z-50 flex flex-col overflow-hidden"
+            className="fixed inset-x-2 bottom-2 sm:inset-x-auto sm:right-6 sm:bottom-24 w-auto sm:w-[420px] h-[520px] sm:h-[580px] max-h-[86vh] bg-foundation-ivory rounded-3xl shadow-2xl border border-foundation-borderMuted z-50 flex flex-col overflow-hidden"
           >
             {/* Header with 3D Animated Bot character avatar & Language switch */}
             <div className="bg-gradient-to-r from-foundation-forestDark via-foundation-forest to-foundation-forestLight text-foundation-ivory p-3.5 flex items-center justify-between border-b border-foundation-gold/30">

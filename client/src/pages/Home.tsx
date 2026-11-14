@@ -279,52 +279,56 @@ export const Home: React.FC = () => {
           Clean, authoritative editorial canvas with floating 3D ambient particles
           and interactive authentic photography showcase.
          ========================================================================= */}
-      <section className="relative overflow-hidden border-b border-[#E5E7EB] py-14 lg:py-20 bg-gradient-to-b from-[#FAF9F6] via-white to-[#FAF9F6]">
+      <section className="relative overflow-hidden border-b border-[#E5E7EB] py-10 sm:py-14 lg:py-20 bg-gradient-to-b from-[#FAF9F6] via-white to-[#FAF9F6]">
         {/* Subtle 3D Ambient Particles Canvas */}
         <HeroParticles3D />
 
-        <div className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
 
           {/* Left Column: Authoritative Editorial Storytelling */}
-          <div className="lg:col-span-7 space-y-6">
+          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
             <FadeIn direction="up" delay={0.05}>
-              <div className="inline-flex items-center space-x-2.5 px-4 py-1.5 rounded-full bg-[#FDF2F2] border border-[#FCDADA] text-[#8B1D24] text-xs font-bold shadow-xs">
-                <span className="w-2 h-2 rounded-full bg-[#8B1D24] animate-pulse" />
-                <span>Estd. Dec 2014 • Registered Society MAH/332/15/NAG • Section 12A & 80G Certified Non-Profit</span>
+              <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 rounded-xl sm:rounded-full bg-[#FDF2F2] border border-[#FCDADA] text-[#8B1D24] text-[11px] sm:text-xs font-semibold leading-relaxed shadow-xs max-w-full">
+                <span className="w-2 h-2 rounded-full bg-[#8B1D24] animate-pulse shrink-0" />
+                <span>Estd. Dec 2014</span>
+                <span className="text-[#8B1D24]/40">•</span>
+                <span>Regd. Society MAH/332/15/NAG</span>
+                <span className="hidden sm:inline text-[#8B1D24]/40">•</span>
+                <span className="font-bold">12A &amp; 80G Certified Non-Profit</span>
               </div>
             </FadeIn>
 
             <FadeIn direction="up" delay={0.12}>
-              <div className="space-y-3">
-                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-[#0F172A] leading-[1.12]">
-                  Serving humanity with <span className="text-[#8B1D24] underline decoration-[#8B1D24]/20 underline-offset-8">dignity</span>, education, and lifelong care.
+              <div className="space-y-2 sm:space-y-3">
+                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#0F172A] leading-[1.15]">
+                  Serving humanity with <span className="text-[#8B1D24] underline decoration-[#8B1D24]/20 underline-offset-4 sm:underline-offset-8">dignity</span>, education, and lifelong care.
                 </h1>
-                <p className="text-sm sm:text-base text-[#8B1D24] font-serif italic pt-1">
+                <p className="text-xs sm:text-base text-[#8B1D24] font-serif italic pt-1">
                   “Service is Humanity • Education is Development • Self-Reliance is Empowerment”
                 </p>
               </div>
             </FadeIn>
 
             <FadeIn direction="up" delay={0.18}>
-              <p className="text-sm sm:text-base text-[#475569] leading-relaxed max-w-2xl">
+              <p className="text-xs sm:text-base text-[#475569] leading-relaxed max-w-2xl">
                 <strong>SBBM Social Foundation</strong> is an active grassroots non-profit dedicated to uplifting destitute senior citizens at Vyenkatesh Ashram, empowering rural youth with digital computer skills, fostering women’s self-reliance, and providing social relief across Nagpur District since December 2014.
               </p>
             </FadeIn>
 
             {/* Primary & Secondary Action Buttons */}
             <FadeIn direction="up" delay={0.24}>
-              <div className="flex flex-wrap items-center gap-3.5 pt-1">
-                <Link to="/support">
-                  <MagneticButton className="px-6 py-3.5 bg-[#8B1D24] hover:bg-[#6E1419] text-white font-semibold text-xs rounded-xl transition-all shadow-md flex items-center space-x-2">
-                    <Heart className="w-4 h-4 fill-white" />
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-1">
+                <Link to="/support" className="w-full sm:w-auto">
+                  <MagneticButton className="w-full sm:w-auto justify-center px-5 sm:px-6 py-3.5 min-h-[44px] bg-[#8B1D24] hover:bg-[#6E1419] text-white font-semibold text-xs rounded-xl transition-all shadow-md flex items-center space-x-2">
+                    <Heart className="w-4 h-4 fill-white shrink-0" />
                     <span>Support Our Work (80G Tax Deductible)</span>
                   </MagneticButton>
                 </Link>
 
-                <Link to="/services">
-                  <MagneticButton className="px-5 py-3.5 bg-white hover:bg-stone-50 border border-stone-300 text-[#0F172A] font-semibold text-xs rounded-xl transition-all shadow-xs flex items-center space-x-2">
+                <Link to="/services" className="w-full sm:w-auto">
+                  <MagneticButton className="w-full sm:w-auto justify-center px-5 py-3.5 min-h-[44px] bg-white hover:bg-stone-50 border border-stone-300 text-[#0F172A] font-semibold text-xs rounded-xl transition-all shadow-xs flex items-center space-x-2">
                     <span>Explore What We Do</span>
-                    <ArrowRight className="w-4 h-4 text-[#8B1D24]" />
+                    <ArrowRight className="w-4 h-4 text-[#8B1D24] shrink-0" />
                   </MagneticButton>
                 </Link>
 
@@ -333,12 +337,12 @@ export const Home: React.FC = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Visit Vyenkatesh Ashram official website (opens in a new tab)"
-                  className="inline-block"
+                  className="w-full sm:w-auto inline-block"
                 >
-                  <MagneticButton className="px-5 py-3.5 bg-white hover:bg-[#FDF8F3] border border-stone-300 hover:border-[#8B1D24]/40 text-[#0F172A] hover:text-[#8B1D24] font-semibold text-xs rounded-xl transition-all shadow-xs flex items-center space-x-2 group cursor-pointer">
-                    <Landmark className="w-4 h-4 text-[#8B1D24] group-hover:scale-110 transition-transform duration-200" />
+                  <MagneticButton className="w-full sm:w-auto justify-center px-5 py-3.5 min-h-[44px] bg-white hover:bg-[#FDF8F3] border border-stone-300 hover:border-[#8B1D24]/40 text-[#0F172A] hover:text-[#8B1D24] font-semibold text-xs rounded-xl transition-all shadow-xs flex items-center space-x-2 group cursor-pointer">
+                    <Landmark className="w-4 h-4 text-[#8B1D24] group-hover:scale-110 transition-transform duration-200 shrink-0" />
                     <span>Visit Vyenkatesh Ashram</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#8B1D24] transition-colors" />
+                    <ExternalLink className="w-3.5 h-3.5 text-stone-400 group-hover:text-[#8B1D24] transition-colors shrink-0" />
                   </MagneticButton>
                 </a>
               </div>
@@ -346,14 +350,14 @@ export const Home: React.FC = () => {
 
             {/* Verified Helpline & Headquarters Strip */}
             <FadeIn direction="up" delay={0.3}>
-              <div className="pt-4 flex flex-wrap items-center gap-4 text-xs text-[#64748B] border-t border-stone-200/80">
-                <span className="flex items-center space-x-1.5 font-medium">
-                  <Phone className="w-3.5 h-3.5 text-[#8B1D24]" />
+              <div className="pt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs text-[#64748B] border-t border-stone-200/80">
+                <span className="flex items-center space-x-1.5 font-medium flex-wrap">
+                  <Phone className="w-3.5 h-3.5 text-[#8B1D24] shrink-0" />
                   <span>24/7 Helplines: <a href="tel:+919890898081" className="font-bold text-[#0F172A] hover:text-[#8B1D24] transition-colors">+91 98908 98081</a> / <a href="tel:+919326172824" className="font-bold text-[#0F172A] hover:text-[#8B1D24] transition-colors">+91 93261 72824</a></span>
                 </span>
                 <span className="hidden sm:inline text-stone-300">•</span>
                 <span className="flex items-center space-x-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#8B1D24]" />
+                  <MapPin className="w-3.5 h-3.5 text-[#8B1D24] shrink-0" />
                   <span>Nagpur City & Mahuli Campus</span>
                 </span>
               </div>
@@ -363,10 +367,10 @@ export const Home: React.FC = () => {
           {/* Right Column: Interactive Authentic Photography Showcase */}
           <div className="lg:col-span-5">
             <FadeIn direction="left" delay={0.2}>
-              <div className="bg-white rounded-3xl border border-stone-200 p-5 shadow-card space-y-4 relative">
+              <div className="bg-white rounded-3xl border border-stone-200 p-4 sm:p-5 shadow-card space-y-4 relative">
 
                 {/* Active Photo Container with Cross-Fade */}
-                <div className="h-64 sm:h-76 rounded-2xl overflow-hidden relative border border-stone-200 bg-stone-900 group">
+                <div className="h-56 sm:h-76 rounded-2xl overflow-hidden relative border border-stone-200 bg-stone-900 group">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={heroPhotos[heroPhotoIdx].src}
@@ -400,7 +404,7 @@ export const Home: React.FC = () => {
                       key={item.label}
                       type="button"
                       onClick={() => setHeroPhotoIdx(idx)}
-                      className={`text-left p-2 rounded-xl border transition-all cursor-pointer ${heroPhotoIdx === idx
+                      className={`text-left p-2 rounded-xl border transition-all cursor-pointer min-h-[44px] ${heroPhotoIdx === idx
                           ? 'border-[#8B1D24] bg-[#FDF2F2] ring-2 ring-[#8B1D24]/20'
                           : 'border-stone-200 hover:border-stone-300 bg-stone-50'
                         }`}
@@ -416,21 +420,21 @@ export const Home: React.FC = () => {
                 </div>
 
                 {/* Institutional Registry Badges */}
-                <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs">
-                  <div className="flex items-center space-x-2">
+                <div className="pt-2 border-t border-stone-100 flex items-center justify-between text-xs gap-2">
+                  <div className="flex items-center space-x-2 min-w-0">
                     <img
                       src="/assets/images/logo.jpg"
                       alt="SBBM Social Foundation Emblem"
-                      className="w-7 h-7 rounded-full border border-stone-300 object-cover"
+                      className="w-7 h-7 rounded-full border border-stone-300 object-cover shrink-0"
                     />
-                    <div>
-                      <span className="block font-bold text-[#0F172A] text-[11.5px] leading-none">
+                    <div className="min-w-0">
+                      <span className="block font-bold text-[#0F172A] text-[11.5px] leading-none truncate">
                         SBBM Social Foundation
                       </span>
-                      <span className="text-[10px] text-stone-500">Regd. F-33193 • PAN: AAQTS3445R</span>
+                      <span className="text-[10px] text-stone-500 block truncate">Regd. F-33193 • PAN: AAQTS3445R</span>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[10px] font-bold rounded border border-emerald-200">
+                  <span className="px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[10px] font-bold rounded border border-emerald-200 shrink-0">
                     Verified Society
                   </span>
                 </div>
@@ -445,12 +449,12 @@ export const Home: React.FC = () => {
       {/* =========================================================================
           METRICS STRIP: Verified Institutional Impact (Animated Counters)
          ========================================================================= */}
-      <section className="bg-white border-b border-[#E5E7EB] py-8">
+      <section className="bg-white border-b border-[#E5E7EB] py-6 sm:py-8">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
 
             <StaggerItem className="space-y-1 p-2">
-              <p className="text-2xl md:text-4xl font-bold text-[#8B1D24] tracking-tight">
+              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#8B1D24] tracking-tight">
                 Dec 2014
               </p>
               <p className="text-xs text-[#0F172A] font-bold">Commencement of Service</p>
@@ -458,27 +462,27 @@ export const Home: React.FC = () => {
             </StaggerItem>
 
             <StaggerItem className="space-y-1 p-2 border-l border-stone-200">
-              <p className="text-2xl md:text-4xl font-bold text-[#0F172A] tracking-tight">
+              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#0F172A] tracking-tight">
                 <AnimatedCounter value={8} suffix=" Pillars" />
               </p>
               <p className="text-xs text-[#0F172A] font-bold">Core Welfare Programs</p>
               <p className="text-[11px] text-[#64748B]">Elderly care, youth, education, cow sanctuary</p>
             </StaggerItem>
 
-            <StaggerItem className="space-y-1 p-2 border-l border-stone-200">
-              <p className="text-2xl md:text-4xl font-bold text-[#8B1D24] tracking-tight">
-                12A & 80G
+            <StaggerItem className="space-y-1 p-2 border-t sm:border-t-0 md:border-l border-stone-200">
+              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#8B1D24] tracking-tight">
+                12A &amp; 80G
               </p>
               <p className="text-xs text-[#0F172A] font-bold">Income Tax Certified</p>
               <p className="text-[11px] text-[#64748B]">50% tax deduction for contributors</p>
             </StaggerItem>
 
-            <StaggerItem className="space-y-1 p-2 border-l border-stone-200">
-              <p className="text-2xl md:text-4xl font-bold text-emerald-700 tracking-tight">
+            <StaggerItem className="space-y-1 p-2 border-t sm:border-t-0 border-l border-stone-200">
+              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-emerald-700 tracking-tight">
                 100% Free
               </p>
               <p className="text-xs text-[#0F172A] font-bold">Destitute Senior Care</p>
-              <p className="text-[11px] text-[#64748B]">Boarding, meals & healthcare provided gratis</p>
+              <p className="text-[11px] text-[#64748B]">Boarding, meals &amp; healthcare provided gratis</p>
             </StaggerItem>
 
           </StaggerContainer>
@@ -505,24 +509,25 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Interactive Story Tabs */}
-          <div className="space-y-8">
-            <div className="flex flex-wrap items-center gap-2 border-b border-stone-200 pb-3 text-xs font-bold">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center gap-2 border-b border-stone-200 pb-3 text-xs font-bold scroll-smooth">
               {[
-                { id: 'ashram', label: '1. Elderly Sanctuary (Vyenkatesh Ashram)' },
-                { id: 'education', label: '2. Rural Youth Computer Literacy' },
-                { id: 'women', label: '3. Women’s Self-Help Groups (SHGs)' },
-                { id: 'goseva', label: '4. Shri Go Seva & Naturopathy' },
+                { id: 'ashram', label: '1. Elderly Sanctuary', fullLabel: '1. Elderly Sanctuary (Vyenkatesh Ashram)' },
+                { id: 'education', label: '2. Computer Literacy', fullLabel: '2. Rural Youth Computer Literacy' },
+                { id: 'women', label: '3. Women SHGs', fullLabel: '3. Women’s Self-Help Groups (SHGs)' },
+                { id: 'goseva', label: '4. Go Seva & Wellness', fullLabel: '4. Shri Go Seva & Naturopathy' },
               ].map((tab) => (
                 <button
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveStoryTab(tab.id as any)}
-                  className={`px-4 py-2.5 rounded-full transition-all cursor-pointer ${activeStoryTab === tab.id
+                  className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${activeStoryTab === tab.id
                       ? 'bg-[#8B1D24] text-white shadow-md'
                       : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'
                     }`}
                 >
-                  {tab.label}
+                  <span className="sm:hidden">{tab.label}</span>
+                  <span className="hidden sm:inline">{tab.fullLabel}</span>
                 </button>
               ))}
             </div>
@@ -535,9 +540,9 @@ export const Home: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -15 }}
                 transition={{ duration: 0.35 }}
-                className="bg-white rounded-3xl border border-stone-200 p-6 md:p-10 shadow-card grid grid-cols-1 lg:grid-cols-12 gap-8 items-center"
+                className="bg-white rounded-3xl border border-stone-200 p-4 sm:p-6 md:p-10 shadow-card grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center"
               >
-                <div className="lg:col-span-5 h-72 sm:h-84 rounded-2xl overflow-hidden border border-stone-200 bg-stone-900">
+                <div className="lg:col-span-5 h-56 sm:h-72 lg:h-84 rounded-2xl overflow-hidden border border-stone-200 bg-stone-900">
                   <img
                     src={storyTabs[activeStoryTab].image}
                     alt={storyTabs[activeStoryTab].title}
@@ -545,12 +550,12 @@ export const Home: React.FC = () => {
                   />
                 </div>
 
-                <div className="lg:col-span-7 space-y-5">
+                <div className="lg:col-span-7 space-y-4 sm:space-y-5">
                   <div className="space-y-1">
                     <span className="text-xs font-mono font-bold text-[#8B1D24] uppercase tracking-wider block">
                       {storyTabs[activeStoryTab].badge}
                     </span>
-                    <h3 className="text-xl sm:text-2xl font-bold text-[#0F172A]">
+                    <h3 className="text-lg sm:text-2xl font-bold text-[#0F172A]">
                       {storyTabs[activeStoryTab].title}
                     </h3>
                     <p className="text-xs font-serif italic text-[#8B1D24]">
@@ -571,13 +576,13 @@ export const Home: React.FC = () => {
                     ))}
                   </div>
 
-                  <div className="pt-2 flex items-center space-x-4">
+                  <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                     <Link
                       to={storyTabs[activeStoryTab].link}
-                      className="px-5 py-2.5 rounded-xl bg-[#8B1D24] hover:bg-[#6E1419] text-white text-xs font-semibold transition-colors flex items-center space-x-2 shadow-xs"
+                      className="w-full sm:w-auto justify-center px-5 py-3 sm:py-2.5 rounded-xl bg-[#8B1D24] hover:bg-[#6E1419] text-white text-xs font-semibold transition-colors flex items-center space-x-2 shadow-xs min-h-[44px]"
                     >
                       <span>{storyTabs[activeStoryTab].linkText}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                     </Link>
                   </div>
                 </div>
@@ -634,7 +639,7 @@ export const Home: React.FC = () => {
             </div>
 
             {/* Filter Pills */}
-            <div className="flex flex-wrap items-center gap-2 self-start md:self-auto text-xs font-semibold">
+            <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center gap-2 self-stretch sm:self-start md:self-auto text-xs font-semibold pb-1 sm:pb-0 scroll-smooth">
               {[
                 { id: 'all', label: 'All 8 Pillars' },
                 { id: 'health', label: 'Healthcare' },
@@ -647,7 +652,7 @@ export const Home: React.FC = () => {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedPillarCategory(cat.id)}
-                  className={`px-3.5 py-1.5 rounded-full transition-all cursor-pointer ${selectedPillarCategory === cat.id
+                  className={`shrink-0 sm:shrink min-h-[38px] px-3.5 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${selectedPillarCategory === cat.id
                       ? 'bg-[#8B1D24] text-white shadow-xs'
                       : 'bg-stone-100 hover:bg-stone-200 text-stone-700'
                     }`}
@@ -659,18 +664,18 @@ export const Home: React.FC = () => {
           </div>
 
           {/* FLAGSHIP FEATURE CARD: Initiative 5.1 (Vyenkatesh Ashram) */}
-          <InteractiveCard3D className="p-6 md:p-8 bg-[#FAF9F6] border border-stone-200">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+          <InteractiveCard3D className="p-4 sm:p-6 md:p-8 bg-[#FAF9F6] border border-stone-200">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
               <div className="lg:col-span-5 rounded-2xl overflow-hidden border border-stone-200">
                 <img
                   src="/assets/images/ashram/ashram_veranda_garden.jpg"
                   alt="Vyenkatesh Ashram Shaded Veranda and Grounds"
-                  className="w-full h-64 sm:h-76 object-cover"
+                  className="w-full h-52 sm:h-64 lg:h-76 object-cover"
                 />
               </div>
 
               <div className="lg:col-span-7 space-y-4">
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-2 flex-wrap gap-y-1">
                   <span className="px-2 py-0.5 bg-[#8B1D24] text-white font-mono font-bold text-[10px] rounded">
                     Initiative 5.1
                   </span>
@@ -679,7 +684,7 @@ export const Home: React.FC = () => {
                   </span>
                 </div>
 
-                <h3 className="text-xl sm:text-2xl font-bold text-[#0F172A]">
+                <h3 className="text-lg sm:text-2xl font-bold text-[#0F172A]">
                   Elderly Care – Vyenkatesh Ashram (Old Age Home)
                 </h3>
 
@@ -702,7 +707,7 @@ export const Home: React.FC = () => {
                   </div>
                   <div className="flex items-center space-x-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span>Routine vital checks & visiting doctor</span>
+                    <span>Routine vital checks &amp; visiting doctor</span>
                   </div>
                   <div className="flex items-center space-x-2">
                     <Check className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -710,19 +715,19 @@ export const Home: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="pt-2 flex flex-wrap items-center gap-3">
+                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                   <Link
                     to="/old-age-home"
-                    className="px-5 py-2.5 bg-[#8B1D24] hover:bg-[#6E1419] text-white font-semibold text-xs rounded-xl transition-colors flex items-center space-x-1.5 shadow-xs"
+                    className="w-full sm:w-auto justify-center px-5 py-3 sm:py-2.5 bg-[#8B1D24] hover:bg-[#6E1419] text-white font-semibold text-xs rounded-xl transition-colors flex items-center space-x-1.5 shadow-xs min-h-[44px]"
                   >
                     <span>Explore Senior Care Program</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
+                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
                   </Link>
                   <Link
                     to="/admission"
-                    className="px-4 py-2.5 bg-white hover:bg-stone-50 border border-stone-300 text-[#0F172A] font-semibold text-xs rounded-xl transition-colors"
+                    className="w-full sm:w-auto justify-center text-center px-4 py-3 sm:py-2.5 bg-white hover:bg-stone-50 border border-stone-300 text-[#0F172A] font-semibold text-xs rounded-xl transition-colors min-h-[44px] flex items-center"
                   >
-                    Admission Guidelines & Enquiry
+                    Admission Guidelines &amp; Enquiry
                   </Link>
                 </div>
               </div>
@@ -865,34 +870,34 @@ export const Home: React.FC = () => {
       {/* Lightbox Modal for Field Moments */}
       {lightboxPhoto && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in"
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-3 sm:p-4 animate-in fade-in"
           onClick={() => setLightboxPhoto(null)}
         >
           <div
-            className="relative max-w-4xl w-full bg-stone-900 rounded-3xl overflow-hidden border border-stone-700 shadow-2xl text-white"
+            className="relative max-w-4xl w-full bg-stone-900 rounded-2xl sm:rounded-3xl overflow-hidden border border-stone-700 shadow-2xl text-white max-h-[90vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             <button
               onClick={() => setLightboxPhoto(null)}
-              className="absolute top-4 right-4 z-10 bg-black/60 hover:bg-black text-white p-2 rounded-full transition-all cursor-pointer"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 z-10 bg-black/70 hover:bg-black text-white p-2.5 rounded-full transition-all cursor-pointer min-w-[44px] min-h-[44px] flex items-center justify-center"
               aria-label="Close Preview"
             >
               <X className="w-5 h-5" />
             </button>
 
-            <div className="max-h-[70vh] bg-black flex items-center justify-center overflow-hidden">
+            <div className="flex-1 bg-black flex items-center justify-center overflow-hidden min-h-[220px]">
               <img
                 src={lightboxPhoto.src}
                 alt={lightboxPhoto.title}
-                className="max-h-[70vh] w-auto object-contain"
+                className="max-h-[55vh] sm:max-h-[70vh] w-auto max-w-full object-contain"
               />
             </div>
 
-            <div className="p-6 space-y-2 bg-stone-900">
-              <span className="text-xs uppercase font-bold text-amber-400 tracking-wider">
+            <div className="p-4 sm:p-6 space-y-1.5 sm:space-y-2 bg-stone-900 shrink-0">
+              <span className="text-[10px] sm:text-xs uppercase font-bold text-amber-400 tracking-wider block">
                 {lightboxPhoto.category} • SBBM Social Foundation Field Evidence
               </span>
-              <h2 className="text-xl font-bold text-white">
+              <h2 className="text-base sm:text-xl font-bold text-white">
                 {lightboxPhoto.title}
               </h2>
               <p className="text-xs text-stone-300 leading-relaxed">
@@ -906,7 +911,7 @@ export const Home: React.FC = () => {
       {/* =========================================================================
           SECTION E: FINAL CALL TO ACTION (Visible Welcoming Campus Backdrop)
          ========================================================================= */}
-      <section className="relative py-20 md:py-28 text-white overflow-hidden bg-stone-950 border-y border-stone-800">
+      <section className="relative py-14 sm:py-20 md:py-28 text-white overflow-hidden bg-stone-950 border-y border-stone-800">
         {/* Real Visible Background Photograph: Welcoming Entrance Gate */}
         <div className="absolute inset-0 z-0">
           <img
@@ -918,35 +923,35 @@ export const Home: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-stone-950/85 via-stone-950/70 to-stone-950/90" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 text-center space-y-6">
+        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 text-center space-y-5 sm:space-y-6">
           <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/20">
-            <Heart className="w-3.5 h-3.5 fill-amber-300" />
+            <Heart className="w-3.5 h-3.5 fill-amber-300 shrink-0" />
             <span>Join Hands in Service</span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-white drop-shadow-sm">
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white drop-shadow-sm leading-tight">
             Have questions or wish to visit our campus?
           </h2>
 
-          <p className="text-sm sm:text-base text-stone-200 max-w-xl mx-auto leading-relaxed">
+          <p className="text-xs sm:text-base text-stone-200 max-w-xl mx-auto leading-relaxed">
             Whether you want to sponsor meals, volunteer your skills, explore CSR opportunities, or enroll an elderly resident, our doors and helplines are always open.
           </p>
 
-          <div className="pt-2 flex flex-wrap items-center justify-center gap-4">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full sm:w-auto max-w-md mx-auto sm:max-w-none">
             <Link
               to="/contact"
-              className="px-6 py-3.5 rounded-xl bg-[#8B1D24] hover:bg-[#A82B33] text-white font-semibold text-xs transition-colors shadow-md flex items-center space-x-2"
+              className="w-full sm:w-auto justify-center px-6 py-3.5 rounded-xl bg-[#8B1D24] hover:bg-[#A82B33] text-white font-semibold text-xs transition-colors shadow-md flex items-center space-x-2 min-h-[44px]"
             >
               <span>Contact Our Team</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
             </Link>
 
             <Link
               to="/support"
-              className="px-6 py-3.5 rounded-xl bg-white/95 hover:bg-white text-[#0F172A] font-semibold text-xs transition-colors shadow-md flex items-center space-x-1.5"
+              className="w-full sm:w-auto justify-center px-6 py-3.5 rounded-xl bg-white/95 hover:bg-white text-[#0F172A] font-semibold text-xs transition-colors shadow-md flex items-center space-x-1.5 min-h-[44px]"
             >
-              <Heart className="w-3.5 h-3.5 text-[#8B1D24]" />
-              <span>Donate via UPI & Bank (80G)</span>
+              <Heart className="w-3.5 h-3.5 text-[#8B1D24] shrink-0" />
+              <span>Donate via UPI &amp; Bank (80G)</span>
             </Link>
           </div>
         </div>

@@ -49,7 +49,7 @@ export const About: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-10">
         
         {/* Page Hero Header with Real Visible Background Photograph */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-10 md:p-16 text-center">
+        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_exterior_main.jpg"
@@ -60,30 +60,30 @@ export const About: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto space-y-4">
-            <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/20">
-              <Award className="w-3.5 h-3.5" />
+          <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
+              <Award className="w-3.5 h-3.5 shrink-0" />
               <span>Official Institutional Profile • Estd. Dec 2014 / Regd. 2015</span>
             </div>
-            <h1 className="text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm">
+            <h1 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
               About SBBM Social Foundation
             </h1>
-            <p className="text-sm md:text-base text-amber-200 leading-relaxed font-serif italic">
+            <p className="text-xs sm:text-sm md:text-base text-amber-200 leading-relaxed font-serif italic">
               “Service is Humanity • Education is Development • Self-Reliance is the Foundation of an Empowered Society”
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[11px] font-mono text-stone-200">
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">Soc Reg: MAH/332/15/NAG</span>
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">Trust Reg: F-33193</span>
-              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">12A & 80G Approved</span>
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[10.5px] sm:text-[11px] font-mono text-stone-200">
+              <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">Soc: MAH/332/15/NAG</span>
+              <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">Trust: F-33193</span>
+              <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">12A &amp; 80G Certified</span>
             </div>
           </div>
         </div>
 
         {/* Sub-navigation tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2 border-b border-stone-200 pb-4 text-xs font-bold">
+        <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 border-b border-stone-200 pb-3 text-xs font-bold scroll-smooth">
           {[
             { id: 'overview', label: 'Who We Are' },
-            { id: 'vision', label: 'Vision, Mission & 10 Objectives' },
+            { id: 'vision', label: 'Vision, Mission & Objectives' },
             { id: 'leadership', label: "Founder's Message" },
             { id: 'board', label: 'Committee Members' },
             { id: 'history', label: 'History & Priorities' },
@@ -92,7 +92,7 @@ export const About: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-4 py-2.5 rounded-full transition-all cursor-pointer ${
+              className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-foundation-crimson text-white shadow-md font-bold'
                   : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'
@@ -253,44 +253,44 @@ export const About: React.FC = () => {
 
         {/* TAB 3: FOUNDER'S MESSAGE */}
         {activeTab === 'leadership' && (
-          <div className="bg-white p-6 md:p-10 rounded-3xl border border-stone-200 shadow-soft space-y-8 max-w-4xl mx-auto">
+          <div className="bg-white p-4 sm:p-6 md:p-10 rounded-3xl border border-stone-200 shadow-soft space-y-6 sm:space-y-8 max-w-4xl mx-auto">
             <div className="border-b border-stone-100 pb-4">
               <span className="text-xs uppercase tracking-widest text-foundation-crimson font-bold">
                 Message from the Founders
               </span>
-              <h2 className="text-2xl font-display font-bold text-foundation-charcoal mt-1">
+              <h2 className="text-xl sm:text-2xl font-display font-bold text-foundation-charcoal mt-1">
                 “Service is Humanity, Love is the Cure”
               </h2>
               <p className="text-xs text-stone-500">
-                Mr. Ashwin Vyenkatrao Anjikar (Founder & President) & Mrs. Tina Anjikar (Secretary & Director)
+                Mr. Ashwin Vyenkatrao Anjikar (Founder &amp; President) &amp; Mrs. Tina Anjikar (Secretary &amp; Director)
               </p>
             </div>
 
             {/* Founders Authentic Portraits */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              <div className="flex items-center space-x-4 p-4 rounded-2xl bg-[#faf9f6] border border-stone-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+              <div className="flex items-center space-x-3 sm:space-x-4 p-3.5 sm:p-4 rounded-2xl bg-[#faf9f6] border border-stone-200">
                 <img
                   src="/assets/images/leadership/ashwin_anjikar_portrait.jpg"
                   alt="Mr. Ashwin Vyenkatrao Anjikar"
-                  className="w-20 h-24 object-cover rounded-xl border-2 border-foundation-gold/60 shadow-sm shrink-0"
+                  className="w-18 h-22 sm:w-20 sm:h-24 object-cover rounded-xl border-2 border-foundation-gold/60 shadow-sm shrink-0"
                 />
-                <div className="space-y-1">
-                  <h4 className="font-bold text-sm text-stone-900">Mr. Ashwin V. Anjikar</h4>
-                  <p className="text-xs font-semibold text-foundation-crimson">Founder & President</p>
-                  <p className="text-[11px] text-stone-500">Leading grassroots seva & resident elderly care since 2014.</p>
+                <div className="space-y-1 min-w-0">
+                  <h4 className="font-bold text-sm text-stone-900 truncate">Mr. Ashwin V. Anjikar</h4>
+                  <p className="text-xs font-semibold text-foundation-crimson">Founder &amp; President</p>
+                  <p className="text-[11px] text-stone-500 leading-snug">Leading grassroots seva &amp; resident elderly care since 2014.</p>
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 p-4 rounded-2xl bg-[#faf9f6] border border-stone-200">
+              <div className="flex items-center space-x-3 sm:space-x-4 p-3.5 sm:p-4 rounded-2xl bg-[#faf9f6] border border-stone-200">
                 <img
                   src="/assets/images/leadership/tina_anjikar_secretary.jpg"
                   alt="Mrs. Tina Ashwin Anjikar"
-                  className="w-20 h-24 object-cover rounded-xl border-2 border-foundation-gold/60 shadow-sm shrink-0"
+                  className="w-18 h-22 sm:w-20 sm:h-24 object-cover rounded-xl border-2 border-foundation-gold/60 shadow-sm shrink-0"
                 />
-                <div className="space-y-1">
-                  <h4 className="font-bold text-sm text-stone-900">Mrs. Tina Ashwin Anjikar</h4>
-                  <p className="text-xs font-semibold text-foundation-crimson">Secretary & Director</p>
-                  <p className="text-[11px] text-stone-500">Directing administration, women empowerment & welfare projects.</p>
+                <div className="space-y-1 min-w-0">
+                  <h4 className="font-bold text-sm text-stone-900 truncate">Mrs. Tina Ashwin Anjikar</h4>
+                  <p className="text-xs font-semibold text-foundation-crimson">Secretary &amp; Director</p>
+                  <p className="text-[11px] text-stone-500 leading-snug">Directing administration, women empowerment &amp; welfare projects.</p>
                 </div>
               </div>
             </div>

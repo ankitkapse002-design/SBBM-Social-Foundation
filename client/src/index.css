@@ -17,12 +17,17 @@
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     color: #334155;
     background-color: #FAFAF9;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
   }
 
   body {
     background-color: #FAFAF9;
     color: #334155;
     overflow-x: hidden;
+    position: relative;
+    width: 100%;
+    min-width: 320px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -31,6 +36,8 @@
     color: #0F172A;
     font-weight: 700;
     letter-spacing: -0.02em;
+    overflow-wrap: break-word;
+    word-break: break-word;
   }
 
   ::selection {
@@ -43,12 +50,24 @@
     outline: 2px solid #8B1D24;
     outline-offset: 2px;
   }
+
+  /* Prevent automatic iOS zoom on form inputs below 16px */
+  @media screen and (max-width: 640px) {
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"],
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
 }
 
 /* Custom Clean Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
   background: #F1F1F0;
@@ -59,6 +78,26 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94A3B8;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera (Horizontal swiping pill bars) */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Touch-optimized horizontal scrolling */
+.touch-scroll-x {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+}
+.touch-scroll-x > * {
+  scroll-snap-align: start;
 }
 
 /* Subtle, dignified utility classes */
@@ -81,6 +120,10 @@
   font-weight: 600;
   border-radius: 8px;
   transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .btn-primary:hover {
   background-color: #6E1419;
@@ -94,6 +137,10 @@
   font-weight: 600;
   border-radius: 8px;
   transition: all 0.15s ease-in-out;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .btn-secondary:hover {
   background-color: #F9FAFB;

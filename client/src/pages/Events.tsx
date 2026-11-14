@@ -60,33 +60,33 @@ export const Events: React.FC = () => {
         </div>
 
         {/* Filter buttons */}
-        <div className="flex justify-center space-x-2 border-b border-foundation-borderMuted pb-4 text-xs font-bold">
+        <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 border-b border-foundation-borderMuted pb-3 text-xs font-bold scroll-smooth">
           <button
             onClick={() => setFilter('all')}
-            className={`px-4 py-2 rounded-full transition-all ${
+            className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full transition-all cursor-pointer whitespace-nowrap ${
               filter === 'all'
-                ? 'bg-foundation-forest text-foundation-ivory'
-                : 'bg-white text-stone-700 border border-foundation-borderMuted'
+                ? 'bg-foundation-forest text-foundation-ivory shadow-xs'
+                : 'bg-white text-stone-700 border border-foundation-borderMuted hover:bg-stone-50'
             }`}
           >
             All Events
           </button>
           <button
             onClick={() => setFilter('upcoming')}
-            className={`px-4 py-2 rounded-full transition-all ${
+            className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full transition-all cursor-pointer whitespace-nowrap ${
               filter === 'upcoming'
-                ? 'bg-foundation-forest text-foundation-ivory'
-                : 'bg-white text-stone-700 border border-foundation-borderMuted'
+                ? 'bg-foundation-forest text-foundation-ivory shadow-xs'
+                : 'bg-white text-stone-700 border border-foundation-borderMuted hover:bg-stone-50'
             }`}
           >
             Upcoming
           </button>
           <button
             onClick={() => setFilter('completed')}
-            className={`px-4 py-2 rounded-full transition-all ${
+            className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full transition-all cursor-pointer whitespace-nowrap ${
               filter === 'completed'
-                ? 'bg-foundation-forest text-foundation-ivory'
-                : 'bg-white text-stone-700 border border-foundation-borderMuted'
+                ? 'bg-foundation-forest text-foundation-ivory shadow-xs'
+                : 'bg-white text-stone-700 border border-foundation-borderMuted hover:bg-stone-50'
             }`}
           >
             Past Gatherings

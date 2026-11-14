@@ -86,7 +86,7 @@ export const FAQ: React.FC = () => {
             />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-bold">
+          <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 text-xs font-bold pb-1 scroll-smooth">
             {[
               { id: 'all', label: 'All FAQs' },
               { id: 'admission', label: 'Admission & Eligibility' },
@@ -97,9 +97,9 @@ export const FAQ: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-full transition-all ${
+                className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer ${
                   selectedCategory === cat.id
-                    ? 'bg-foundation-forest text-foundation-ivory'
+                    ? 'bg-foundation-forest text-foundation-ivory shadow-xs'
                     : 'bg-white text-stone-700 border border-foundation-borderMuted hover:bg-stone-50'
                 }`}
               >

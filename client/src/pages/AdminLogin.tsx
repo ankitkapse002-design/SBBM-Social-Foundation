@@ -63,8 +63,8 @@ export const AdminLogin: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-foundation-forestDark py-16 flex items-center justify-center px-4">
-      <div className="max-w-md w-full bg-foundation-ivory rounded-3xl p-8 md:p-10 border-2 border-foundation-gold/40 shadow-2xl space-y-6">
+    <div className="min-h-screen bg-foundation-forestDark py-10 sm:py-16 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-foundation-ivory rounded-3xl p-6 sm:p-8 md:p-10 border-2 border-foundation-gold/40 shadow-2xl space-y-6">
         <div className="text-center space-y-2">
           <img
             src="/assets/images/logo.jpg"
@@ -74,7 +74,7 @@ export const AdminLogin: React.FC = () => {
           <span className="text-[10px] uppercase tracking-widest text-[#8B1D24] font-bold bg-red-50 border border-red-200 px-3 py-1 rounded-full inline-block">
             Protected Administration
           </span>
-          <h1 className="text-2xl font-display font-bold text-foundation-charcoal">
+          <h1 className="text-xl sm:text-2xl font-display font-bold text-foundation-charcoal">
             Management Portal
           </h1>
           <p className="text-xs text-stone-500">
@@ -101,7 +101,7 @@ export const AdminLogin: React.FC = () => {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Admin username"
-                className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 text-xs text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
+                className="w-full bg-foundation-warmGray border border-foundation-borderMuted rounded-xl px-4 py-2.5 min-h-[44px] text-xs sm:text-sm text-foundation-charcoal focus:ring-2 focus:ring-foundation-forest focus:outline-none"
               />
             </div>
           </div>
@@ -117,7 +117,7 @@ export const AdminLogin: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3 bg-[#8B1D24] hover:bg-[#6E1419] disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
+            className="w-full py-3.5 min-h-[44px] bg-[#8B1D24] hover:bg-[#6E1419] disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
             id="admin-login-submit-btn"
           >
             {isLoading ? <span>Authenticating...</span> : <span>Authorize Access</span>}
@@ -125,7 +125,7 @@ export const AdminLogin: React.FC = () => {
         </form>
 
         <div className="text-center pt-2 border-t border-foundation-borderMuted text-xs text-stone-500">
-          <Link to="/" className="text-stone-500 hover:text-stone-800">
+          <Link to="/" className="text-stone-500 hover:text-stone-800 min-h-[44px] inline-flex items-center">
             ← Return to Public Website
           </Link>
         </div>
