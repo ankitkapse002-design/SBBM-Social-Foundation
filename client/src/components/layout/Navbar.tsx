@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import {
   Menu, X, ChevronDown, Phone, Heart, User, ShieldCheck,
-  Award, LogOut, Lock, Mail, ExternalLink, ArrowRight, ChevronRight
+  Award, LogOut, Mail, ExternalLink, ArrowRight, ChevronRight
 } from 'lucide-react';
 import { getAuthToken, clearAuthToken, apiRequest } from '../../api';
 
@@ -367,7 +367,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                   aria-label="Admin Login"
                   id="nav-admin-login-icon"
                 >
-                  <Lock className="w-4 h-4" />
+                  <User className="w-4.5 h-4.5" />
                 </Link>
               )}
 
@@ -426,7 +426,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                   {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
                 </span>
               ) : (
-                <Lock className="w-4 h-4" />
+                <User className="w-4.5 h-4.5" />
               )}
             </Link>
 
@@ -649,7 +649,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="w-full py-2.5 bg-stone-100 hover:bg-stone-200 text-[#0F172A] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 border border-stone-300 min-h-[44px]"
                 >
-                  <Lock className="w-3.5 h-3.5 text-[#8B1D24]" />
+                  <User className="w-4 h-4 text-[#8B1D24]" />
                   <span>Administrative Login</span>
                 </Link>
               )}
