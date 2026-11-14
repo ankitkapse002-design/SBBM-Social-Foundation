@@ -69,9 +69,9 @@ export const AdminLogin: React.FC = () => {
           <img
             src="/assets/images/logo.jpg"
             alt="Official SBBM Social Foundation Logo"
-            className="w-16 h-16 rounded-full mx-auto object-cover border-2 border-[#D4AF37] shadow-lg bg-white"
+            className="w-16 h-16 rounded-full mx-auto object-cover border-2 border-[#C5A059] shadow-lg bg-white"
           />
-          <span className="text-[10px] uppercase tracking-widest text-[#8B1D24] font-bold bg-red-50 border border-red-200 px-3 py-1 rounded-full inline-block">
+          <span className="text-[10px] uppercase tracking-widest text-[#9B1B22] font-bold bg-[#FDF2F2] border border-[#FCDADA] px-3 py-1 rounded-full inline-block">
             Protected Administration
           </span>
           <h1 className="text-xl sm:text-2xl font-display font-bold text-foundation-charcoal">
@@ -117,7 +117,7 @@ export const AdminLogin: React.FC = () => {
           <button
             type="submit"
             disabled={isLoading}
-            className="w-full py-3.5 min-h-[44px] bg-[#8B1D24] hover:bg-[#6E1419] disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
+            className="w-full py-3.5 min-h-[44px] bg-[#9B1B22] hover:bg-[#7D131A] disabled:opacity-50 text-white font-bold text-xs uppercase tracking-wider rounded-xl shadow-md transition-all flex items-center justify-center space-x-2 cursor-pointer"
             id="admin-login-submit-btn"
           >
             {isLoading ? <span>Authenticating...</span> : <span>Authorize Access</span>}
@@ -125,7 +125,7 @@ export const AdminLogin: React.FC = () => {
         </form>
 
         <div className="text-center pt-2 border-t border-foundation-borderMuted text-xs text-stone-500">
-          <Link to="/" className="text-stone-500 hover:text-stone-800 min-h-[44px] inline-flex items-center">
+          <Link to="/" className="text-stone-600 hover:text-[#9B1B22] min-h-[44px] inline-flex items-center">
             ← Return to Public Website
           </Link>
         </div>

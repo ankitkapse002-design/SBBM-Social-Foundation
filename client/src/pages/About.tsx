@@ -49,7 +49,7 @@ export const About: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-10">
         
         {/* Page Hero Header with Real Visible Background Photograph */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border border-[#1E293B] shadow-card bg-[#0A111A] text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_exterior_main.jpg"
@@ -57,21 +57,21 @@ export const About: React.FC = () => {
               className="w-full h-full object-cover object-center scale-105"
             />
             {/* Calibrated dark scrim: full building, arches & trees clearly visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/85 via-[#0A111A]/70 to-[#0A111A]/90" />
           </div>
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
-            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-[#0E1726]/70 backdrop-blur-md text-[#C5A059] text-[11px] sm:text-xs font-bold border border-[#C5A059]/30">
               <Award className="w-3.5 h-3.5 shrink-0" />
               <span>Official Institutional Profile • Estd. Dec 2014 / Regd. 2015</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
               About SBBM Social Foundation
             </h1>
-            <p className="text-xs sm:text-sm md:text-base text-amber-200 leading-relaxed font-serif italic">
+            <p className="text-xs sm:text-sm md:text-base text-[#C5A059] leading-relaxed font-serif italic">
               “Service is Humanity • Education is Development • Self-Reliance is the Foundation of an Empowered Society”
             </p>
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[10.5px] sm:text-[11px] font-mono text-stone-200">
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-1 text-[10.5px] sm:text-[11px] font-mono text-slate-200">
               <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">Soc: MAH/332/15/NAG</span>
               <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">Trust: F-33193</span>
               <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">12A &amp; 80G Certified</span>
@@ -80,7 +80,7 @@ export const About: React.FC = () => {
         </div>
 
         {/* Sub-navigation tabs */}
-        <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 border-b border-stone-200 pb-3 text-xs font-bold scroll-smooth">
+        <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 border-b border-[#E8E6E1] pb-3 text-xs font-bold scroll-smooth">
           {[
             { id: 'overview', label: 'Who We Are' },
             { id: 'vision', label: 'Vision, Mission & Objectives' },
@@ -94,8 +94,8 @@ export const About: React.FC = () => {
               onClick={() => setActiveTab(tab.id as any)}
               className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'bg-foundation-crimson text-white shadow-md font-bold'
-                  : 'bg-white hover:bg-stone-100 text-stone-700 border border-stone-200'
+                  ? 'bg-[#9B1B22] text-white shadow-md font-bold'
+                  : 'bg-white hover:bg-[#F4F3EE] text-[#334155] border border-[#E8E6E1]'
               }`}
             >
               {tab.label}

@@ -28,7 +28,7 @@ export const OldAgeHome: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf8] py-12 md:py-16 font-sans">
+    <div className="min-h-screen bg-[#FBFBFA] py-12 md:py-16 font-sans">
       <SEO
         title="Vyenkatesh Ashram | Lifelong Senior Citizen Care & Shelter"
         description="Vyenkatesh Ashram at Mahuli, Parseoni (Nagpur District) is SBBM Social Foundation's residential old-age home providing lifelong dignity, 24/7 care, nutritious meals, and medical support."
@@ -38,7 +38,7 @@ export const OldAgeHome: React.FC = () => {
       />
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border border-[#1E293B] shadow-card bg-[#0A111A] text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_veranda_garden.jpg"
@@ -46,12 +46,12 @@ export const OldAgeHome: React.FC = () => {
               className="w-full h-full object-cover object-[center_35%] scale-105"
             />
             {/* Calibrated dark overlay: veranda & palms clearly visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/85 via-[#0A111A]/70 to-[#0A111A]/90" />
           </div>
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
-            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
-              <HomeIcon className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-[#0E1726]/70 backdrop-blur-md text-[#C5A059] text-[11px] sm:text-xs font-bold border border-[#C5A059]/30">
+              <HomeIcon className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
               <span>Initiative 5.1 of SBBM Social Foundation • Mahuli Campus</span>
             </div>
 
@@ -59,11 +59,11 @@ export const OldAgeHome: React.FC = () => {
               Elderly Care – Vyenkatesh Ashram
             </h1>
 
-            <p className="text-xs sm:text-sm md:text-base text-amber-200 font-serif italic">
+            <p className="text-xs sm:text-sm md:text-base text-[#C5A059] font-serif italic">
               “Apno Se Door... Ek Apna Ghar...”
             </p>
 
-            <p className="text-xs md:text-sm text-stone-200 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-xs md:text-sm text-slate-200 leading-relaxed max-w-2xl mx-auto">
               A loving, non-granted residential sanctuary operated by SBBM Social Foundation at Anjikar Bagh, Mahuli to provide senior citizens (“Aai-Baba”) with dignified living, nutritious vegetarian meals, and filial affection.
             </p>
           </div>

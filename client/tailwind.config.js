@@ -7,42 +7,86 @@ export default {
   theme: {
     extend: {
       colors: {
-        brand: {
-          crimson: '#8B1D24',       // Primary brand crimson/burgundy - rich, grounded, institutional
-          crimsonDark: '#6E1419',   // Darker shade for active/hover states
-          crimsonLight: '#FDF2F2',  // Subtle tint for badge backgrounds
-          gold: '#C5A059',          // Refined institutional brass/gold for official accents
-          goldLight: '#FDF8EE',     // Soft gold wash
+        /* =========================================================================
+           60:30:10 COLOR SYSTEM DESIGN TOKENS
+           ========================================================================= */
+        // 60% DOMINANT: Serene Sanctuary Canvas & Surfaces
+        canvas: {
+          base: '#FBFBFA',        // 60% Dominant page canvas - comfortable, warm porcelain
+          subtle: '#F4F3EE',      // Alternating section background - gentle alabaster
+          card: '#FFFFFF',        // Pristine white for cards and surface elevation
+          border: '#E8E6E1',      // Refined 1px card and divider tone
+          borderMedium: '#D8D5CD',// Interactive borders for inputs and buttons
         },
-        surface: {
-          canvas: '#FAFAF9',        // Warm neutral stone canvas - comfortable for eyes
-          card: '#FFFFFF',          // Crisp pure white for cards
-          subtle: '#F4F4F5',        // Soft alternating section background
-          muted: '#E5E7EB',         // Crisp 1px border tone
+
+        // 30% SECONDARY: Deep Institutional Slate & Typography
+        secondary: {
+          base: '#0E1726',        // 30% Deep midnight slate - institutional trust & governance
+          surface: '#131F33',     // Dark section / card surface
+          dark: '#0A111A',        // Deepest footer / backdrop base
+          border: '#1E293B',      // Dark divider tone
         },
+
+        // 10% ACCENT: Filial Seva Crimson & Temple Gold
+        accent: {
+          crimson: '#9B1B22',     // 10% Primary Action Crimson - compassion & active seva
+          crimsonDark: '#7D131A', // Active / hover state
+          crimsonLight: '#FDF2F2',// Soft crimson badge / pill background
+          crimsonBorder: '#FCDADA',// Delicate crimson border
+          gold: '#C5A059',        // Auspicious institutional gold for official seals & 80G
+          goldLight: '#FDF8EE',   // Soft gold badge background
+          goldBorder: '#F0E5CC',  // Soft gold border
+        },
+
+        // Typography Color Scale
         content: {
-          heading: '#0F172A',       // Slate-900: High contrast, sharp, legible headings
-          body: '#334155',          // Slate-700: Natural, comfortable, readable body copy
-          muted: '#64748B',         // Slate-500: Subtitles, metadata, captions
-          subtle: '#94A3B8',        // Slate-400: Timestamps, dividers
+          heading: '#0E1726',     // Deep midnight slate: High-contrast (15:1), authoritative
+          body: '#334155',        // Slate-700: Natural, warm, highly readable body copy (9.8:1)
+          muted: '#64748B',       // Slate-500: Subtitles, metadata, captions
+          subtle: '#94A3B8',      // Slate-400: Timestamps, placeholder text
         },
-        foundation: {
-          ivory: '#FAFAF9',
-          forest: '#8B1D24',        // Aligned to Primary Brand Crimson
-          forestDark: '#0F172A',    // Aligned to Executive Deep Slate
-          forestLight: '#A82B33',   // Aligned to Hover Brand Crimson
-          crimson: '#8B1D24',
-          crimsonDark: '#6E1419',
-          ruby: '#9E2228',
-          sage: '#475569',
-          sageLight: '#94A3B8',
-          sandstone: '#F5F2EB',
+
+        // Feedback & Semantic Status
+        status: {
+          success: '#15803D',
+          successBg: '#F0FDF4',
+          warning: '#B45309',
+          warningBg: '#FFFBEB',
+          error: '#B91C1C',
+          errorBg: '#FEF2F2',
+        },
+
+        /* Backward-compatible Aliases for Existing Components */
+        brand: {
+          crimson: '#9B1B22',
+          crimsonDark: '#7D131A',
+          crimsonLight: '#FDF2F2',
           gold: '#C5A059',
           goldLight: '#FDF8EE',
-          charcoal: '#0F172A',
-          terracotta: '#9E2228',
-          warmGray: '#F4F4F5',
-          borderMuted: '#E5E7EB',
+        },
+        surface: {
+          canvas: '#FBFBFA',
+          card: '#FFFFFF',
+          subtle: '#F4F3EE',
+          muted: '#E8E6E1',
+        },
+        foundation: {
+          ivory: '#FBFBFA',
+          forest: '#9B1B22',
+          forestDark: '#0E1726',
+          forestLight: '#B3262E',
+          crimson: '#9B1B22',
+          crimsonDark: '#7D131A',
+          ruby: '#9B1B22',
+          sage: '#475569',
+          sageLight: '#94A3B8',
+          sandstone: '#F4F3EE',
+          gold: '#C5A059',
+          goldLight: '#FDF8EE',
+          charcoal: '#0E1726',
+          terracotta: '#9B1B22',
+          warmGray: '#F4F3EE',
+          borderMuted: '#E8E6E1',
         }
       },
       fontFamily: {
@@ -51,15 +95,16 @@ export default {
         serif: ['Cinzel', 'Playfair Display', 'Georgia', 'serif'],
       },
       boxShadow: {
-        'subtle-xs': '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
-        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.06)',
-        'card': '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05)',
-        'elevated': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03)',
-        'elevated-lg': '0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.03)',
-        'soft-sm': '0 1px 3px rgba(0, 0, 0, 0.05)',
-        'soft': '0 4px 12px rgba(0, 0, 0, 0.05)',
-        'soft-lg': '0 12px 28px rgba(0, 0, 0, 0.07)',
-        'gold-glow': '0 0 15px rgba(197, 160, 89, 0.2)',
+        'subtle-xs': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
+        'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.04)',
+        'card': '0 4px 14px -2px rgba(14, 23, 38, 0.05), 0 2px 6px -2px rgba(14, 23, 38, 0.03)',
+        'elevated': '0 12px 24px -4px rgba(14, 23, 38, 0.08), 0 4px 8px -4px rgba(14, 23, 38, 0.03)',
+        'elevated-lg': '0 20px 32px -6px rgba(14, 23, 38, 0.1), 0 8px 12px -6px rgba(14, 23, 38, 0.04)',
+        'soft-sm': '0 1px 3px rgba(14, 23, 38, 0.04)',
+        'soft': '0 4px 16px rgba(14, 23, 38, 0.05)',
+        'soft-lg': '0 12px 30px rgba(14, 23, 38, 0.07)',
+        'crimson-glow': '0 4px 14px rgba(155, 27, 34, 0.25)',
+        'gold-glow': '0 0 15px rgba(197, 160, 89, 0.25)',
       }
     },
   },

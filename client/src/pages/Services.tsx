@@ -429,7 +429,7 @@ export const Services: React.FC = () => {
       />
       <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border border-[#1E293B] shadow-card bg-[#0A111A] text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/activities/community_seva_gathering_1.jpg"
@@ -437,11 +437,11 @@ export const Services: React.FC = () => {
               className="w-full h-full object-cover object-center scale-105"
             />
             {/* Calibrated dark overlay: community seva clearly visible while text pops */}
-            <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/85 via-[#0A111A]/70 to-[#0A111A]/90" />
           </div>
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
-            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-[#0E1726]/70 backdrop-blur-md text-[#C5A059] text-[11px] sm:text-xs font-bold border border-[#C5A059]/30">
               <Compass className="w-3.5 h-3.5 shrink-0" />
               <span>Comprehensive Institutional Programs (2015–2026)</span>
             </div>
@@ -450,11 +450,11 @@ export const Services: React.FC = () => {
               Our 8 Core Initiatives &amp; Welfare Pillars
             </h1>
 
-            <p className="text-xs md:text-sm text-stone-200 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-xs md:text-sm text-slate-200 leading-relaxed max-w-2xl mx-auto">
               Founded in December 2014 and registered under the Societies Registration Act (MAH/332/15/NAG) and Bombay Public Trusts Act (F-33193). We serve grassroots communities through dignified elder care, social welfare distribution, digital education, women's self-reliance, and animal sanctuary.
             </p>
 
-            <p className="text-xs font-semibold text-amber-200 font-serif italic">
+            <p className="text-xs font-semibold text-[#C5A059] font-serif italic">
               "Service is Humanity • Education is Development • Self-Reliance is the Foundation of an Empowered Society"
             </p>
           </div>
@@ -468,8 +468,8 @@ export const Services: React.FC = () => {
               onClick={() => setFilterCategory(opt.id)}
               className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
                 filterCategory === opt.id
-                  ? 'bg-foundation-crimson text-white shadow-md'
-                  : 'bg-white text-stone-600 border border-stone-200 hover:bg-stone-50'
+                  ? 'bg-[#9B1B22] text-white shadow-md'
+                  : 'bg-white text-[#334155] border border-[#E8E6E1] hover:bg-[#F4F3EE]'
               }`}
             >
               {opt.label}

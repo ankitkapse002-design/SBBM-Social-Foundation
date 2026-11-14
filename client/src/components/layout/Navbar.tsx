@@ -119,13 +119,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
       {/* =========================================================================
           1. TOP ANNOUNCEMENT TICKER (Mobile-Optimized & Compact)
          ========================================================================= */}
-      <div className="bg-[#F8F9FA] border-b border-[#E5E7EB] text-[11px] py-1.5 sm:py-2 px-3 sm:px-6 md:px-8 overflow-hidden select-none">
+      <div className="bg-[#0E1726] border-b border-[#1E293B] text-[11px] py-1.5 sm:py-2 px-3 sm:px-6 md:px-8 overflow-hidden select-none text-slate-300">
         <div className="max-w-[1400px] mx-auto flex items-center">
           
           {/* Left Anchor Badge */}
-          <div className="shrink-0 flex items-center space-x-1.5 pr-2.5 sm:pr-3.5 border-r border-stone-200 z-10 bg-[#F8F9FA]">
-            <span className="w-2 h-2 rounded-full bg-emerald-600 inline-block animate-pulse shrink-0" />
-            <span className="font-bold text-[#8B1D24] text-[10.5px] sm:text-[11.5px] whitespace-nowrap">
+          <div className="shrink-0 flex items-center space-x-1.5 pr-2.5 sm:pr-3.5 border-r border-[#1E293B] z-10 bg-[#0E1726]">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse shrink-0" />
+            <span className="font-bold text-[#C5A059] text-[10.5px] sm:text-[11.5px] whitespace-nowrap">
               <span className="hidden sm:inline">SBBM Social Foundation</span>
               <span className="sm:hidden">SBBM</span>
             </span>
@@ -133,43 +133,43 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
           {/* Smooth Horizontal Ticker Track */}
           <div className="overflow-hidden flex-1 relative flex items-center px-2">
-            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-4 sm:w-6 bg-gradient-to-r from-[#F8F9FA] to-transparent z-10" />
-            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-4 sm:w-6 bg-gradient-to-l from-[#F8F9FA] to-transparent z-10" />
-            <div className="animate-ticker text-[10.5px] sm:text-[11.5px] text-[#475569] space-x-6 sm:space-x-8">
+            <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-4 sm:w-6 bg-gradient-to-r from-[#0E1726] to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-4 sm:w-6 bg-gradient-to-l from-[#0E1726] to-transparent z-10" />
+            <div className="animate-ticker text-[10.5px] sm:text-[11.5px] text-slate-300 space-x-6 sm:space-x-8">
               {announcements.map((item, idx) => (
                 <span key={`t1-${idx}`} className="inline-flex items-center space-x-1.5 shrink-0">
                   <span>
-                    {item.prefix && <strong className="font-semibold text-[#0F172A]">{item.prefix}: </strong>}
+                    {item.prefix && <strong className="font-semibold text-white">{item.prefix}: </strong>}
                     {item.text}
                   </span>
-                  <span className="text-stone-300">✦</span>
+                  <span className="text-[#C5A059]/60">✦</span>
                 </span>
               ))}
               {announcements.map((item, idx) => (
                 <span key={`t2-${idx}`} className="inline-flex items-center space-x-1.5 shrink-0">
                   <span>
-                    {item.prefix && <strong className="font-semibold text-[#0F172A]">{item.prefix}: </strong>}
+                    {item.prefix && <strong className="font-semibold text-white">{item.prefix}: </strong>}
                     {item.text}
                   </span>
-                  <span className="text-stone-300">✦</span>
+                  <span className="text-[#C5A059]/60">✦</span>
                 </span>
               ))}
             </div>
           </div>
 
           {/* Right Quick Contact on Desktop */}
-          <div className="hidden xl:flex items-center space-x-3 shrink-0 pl-3.5 border-l border-stone-200 z-10 bg-[#F8F9FA] text-[11px]">
+          <div className="hidden xl:flex items-center space-x-3 shrink-0 pl-3.5 border-l border-[#1E293B] z-10 bg-[#0E1726] text-[11px]">
             <a
               href="tel:+919890898081"
-              className="text-[#334155] font-semibold hover:text-[#8B1D24] flex items-center space-x-1 transition-colors"
+              className="text-slate-200 font-semibold hover:text-[#C5A059] flex items-center space-x-1 transition-colors"
             >
-              <Phone className="w-3 h-3 text-[#8B1D24]" />
+              <Phone className="w-3 h-3 text-[#C5A059]" />
               <span>+91 98908 98081</span>
             </a>
-            <span className="text-stone-300">•</span>
+            <span className="text-slate-600">•</span>
             <Link
               to="/support"
-              className="text-[#8B1D24] font-semibold hover:underline"
+              className="text-[#C5A059] font-semibold hover:underline"
             >
               80G 50% Tax Exemption
             </Link>
@@ -181,7 +181,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
       {/* =========================================================================
           2. MAIN STICKY NAVIGATION (Mobile-First Header)
          ========================================================================= */}
-      <nav className="bg-white/98 backdrop-blur-md border-b border-[#E5E7EB] px-3 sm:px-6 xl:px-8 py-2.5 sm:py-3.5 transition-all">
+      <nav className="bg-white/95 backdrop-blur-md border-b border-[#E8E6E1] px-3 sm:px-6 xl:px-8 py-2.5 sm:py-3.5 transition-all">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Logo & Foundation Identity (Responsive Scaling) */}
@@ -189,13 +189,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
             <img
               src="/assets/images/logo.jpg"
               alt="SBBM Social Foundation Official Seal"
-              className="w-9 h-9 xs:w-10 xs:h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full border border-stone-200 shadow-xs object-cover shrink-0"
+              className="w-9 h-9 xs:w-10 xs:h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full border border-[#E8E6E1] shadow-xs object-cover shrink-0"
             />
             <div className="flex flex-col min-w-0">
-              <span className="text-[9px] sm:text-[10px] tracking-wider uppercase text-[#8B1D24] font-bold leading-none truncate">
+              <span className="text-[9px] sm:text-[10px] tracking-wider uppercase text-[#9B1B22] font-bold leading-none truncate">
                 ESTD 2015 • REGD. F-33193
               </span>
-              <span className="text-sm xs:text-base sm:text-lg font-bold tracking-tight text-[#0F172A] leading-tight truncate">
+              <span className="text-sm xs:text-base sm:text-lg font-bold tracking-tight text-[#0E1726] leading-tight truncate">
                 SBBM Social Foundation
               </span>
               <span className="text-[10px] sm:text-[10.5px] text-[#64748B] leading-none pt-0.5 hidden sm:block truncate">
@@ -212,8 +212,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
               to="/"
               className={`py-1.5 transition-colors ${
                 location.pathname === '/'
-                  ? 'text-[#8B1D24] font-semibold'
-                  : 'hover:text-[#8B1D24]'
+                  ? 'text-[#9B1B22] font-semibold'
+                  : 'hover:text-[#9B1B22]'
               }`}
             >
               <span>Home</span>
@@ -229,8 +229,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/about"
                 className={`inline-flex items-center space-x-1 py-1.5 transition-colors ${
                   isActive('/about')
-                    ? 'text-[#8B1D24] font-semibold'
-                    : 'hover:text-[#8B1D24]'
+                    ? 'text-[#9B1B22] font-semibold'
+                    : 'hover:text-[#9B1B22]'
                 }`}
               >
                 <span>About Us</span>
@@ -238,21 +238,21 @@ export const Navbar: React.FC<NavbarProps> = () => {
               </Link>
 
               {isAboutDropdownOpen && (
-                <div className="absolute top-full left-0 w-72 bg-white rounded-xl shadow-card border border-[#E5E7EB] p-2 z-50 animate-in fade-in slide-in-from-top-1">
-                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
-                    <strong className="text-[#0F172A] block font-semibold">Institutional Overview</strong>
+                <div className="absolute top-full left-0 w-72 bg-white rounded-xl shadow-card border border-[#E8E6E1] p-2 z-50 animate-in fade-in slide-in-from-top-1">
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-[#F4F3EE] rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0E1726] block font-semibold">Institutional Overview</strong>
                     <span className="text-[11px] text-[#64748B]">Inception (Dec 2014), history & charter</span>
                   </Link>
-                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
-                    <strong className="text-[#0F172A] block font-semibold">Vision, Mission & 10 Objectives</strong>
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-[#F4F3EE] rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0E1726] block font-semibold">Vision, Mission & 10 Objectives</strong>
                     <span className="text-[11px] text-[#64748B]">Core institutional principles</span>
                   </Link>
-                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
-                    <strong className="text-[#0F172A] block font-semibold">Founder's Message</strong>
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-[#F4F3EE] rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0E1726] block font-semibold">Founder's Message</strong>
                     <span className="text-[11px] text-[#64748B]">Mr. Ashwin V. Anjikar & Mrs. Tina Anjikar</span>
                   </Link>
-                  <Link to="/about" className="block px-3.5 py-2 hover:bg-stone-50 rounded-lg text-xs transition-colors">
-                    <strong className="text-[#0F172A] block font-semibold">Statutory Registrations</strong>
+                  <Link to="/about" className="block px-3.5 py-2 hover:bg-[#F4F3EE] rounded-lg text-xs transition-colors">
+                    <strong className="text-[#0E1726] block font-semibold">Statutory Registrations</strong>
                     <span className="text-[11px] text-[#64748B]">MAH/332/15/NAG • F-33193 • 12A & 80G</span>
                   </Link>
                 </div>
@@ -269,8 +269,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/services"
                 className={`inline-flex items-center space-x-1 py-1.5 transition-colors ${
                   isActive('/services') || isActive('/old-age-home')
-                    ? 'text-[#8B1D24] font-semibold'
-                    : 'hover:text-[#8B1D24]'
+                    ? 'text-[#9B1B22] font-semibold'
+                    : 'hover:text-[#9B1B22]'
                 }`}
               >
                 <span>What We Do</span>
@@ -278,10 +278,10 @@ export const Navbar: React.FC<NavbarProps> = () => {
               </Link>
 
               {isWhatWeDoDropdownOpen && (
-                <div className="absolute top-full left-0 w-[420px] bg-white rounded-xl shadow-card border border-[#E5E7EB] p-3 z-50 animate-in fade-in slide-in-from-top-1">
-                  <div className="px-3 py-1.5 border-b border-stone-100 flex items-center justify-between text-[11px] font-semibold text-[#8B1D24] uppercase tracking-wider">
+                <div className="absolute top-full left-0 w-[420px] bg-white rounded-xl shadow-card border border-[#E8E6E1] p-3 z-50 animate-in fade-in slide-in-from-top-1">
+                  <div className="px-3 py-1.5 border-b border-[#E8E6E1] flex items-center justify-between text-[11px] font-semibold text-[#9B1B22] uppercase tracking-wider">
                     <span>The 8 Core Initiatives (2015–2026)</span>
-                    <Link to="/services" className="text-[11px] text-[#64748B] hover:text-[#8B1D24] normal-case font-normal">
+                    <Link to="/services" className="text-[11px] text-[#64748B] hover:text-[#9B1B22] normal-case font-normal">
                       Directory →
                     </Link>
                   </div>
@@ -290,13 +290,13 @@ export const Navbar: React.FC<NavbarProps> = () => {
                       <Link
                         key={init.num}
                         to={init.route}
-                        className="p-2 hover:bg-stone-50 rounded-lg flex items-start space-x-2.5 transition-colors group"
+                        className="p-2 hover:bg-[#F4F3EE] rounded-lg flex items-start space-x-2.5 transition-colors group"
                       >
-                        <span className="px-1.5 py-0.5 bg-stone-100 group-hover:bg-[#8B1D24] group-hover:text-white text-[#8B1D24] font-mono font-semibold text-[10px] rounded transition-colors mt-0.5">
+                        <span className="px-1.5 py-0.5 bg-[#F4F3EE] group-hover:bg-[#9B1B22] group-hover:text-white text-[#9B1B22] font-mono font-semibold text-[10px] rounded transition-colors mt-0.5">
                           {init.num}
                         </span>
                         <div>
-                          <strong className="text-[#0F172A] group-hover:text-[#8B1D24] text-xs block leading-tight font-semibold transition-colors">
+                          <strong className="text-[#0E1726] group-hover:text-[#9B1B22] text-xs block leading-tight font-semibold transition-colors">
                             {init.title}
                           </strong>
                           <span className="text-[11px] text-[#64748B] block leading-tight pt-0.5">
@@ -315,8 +315,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
               to="/support#csr"
               className={`py-1.5 transition-colors ${
                 location.pathname === '/partnership' || (location.pathname === '/support' && location.hash === '#csr')
-                  ? 'text-[#8B1D24] font-semibold'
-                  : 'hover:text-[#8B1D24]'
+                  ? 'text-[#9B1B22] font-semibold'
+                  : 'hover:text-[#9B1B22]'
               }`}
             >
               <span>Partnership</span>
@@ -327,8 +327,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
               to="/contact"
               className={`py-1.5 transition-colors ${
                 isActive('/contact')
-                  ? 'text-[#8B1D24] font-semibold'
-                  : 'hover:text-[#8B1D24]'
+                  ? 'text-[#9B1B22] font-semibold'
+                  : 'hover:text-[#9B1B22]'
               }`}
             >
               <span>Contact</span>
@@ -339,8 +339,8 @@ export const Navbar: React.FC<NavbarProps> = () => {
               to="/support"
               className={`inline-flex items-center space-x-1.5 px-4 py-2 rounded-lg text-xs font-semibold shadow-xs transition-all ${
                 isActive('/support') && location.hash !== '#csr'
-                  ? 'bg-[#6E1419] text-white ring-2 ring-[#8B1D24]/20'
-                  : 'bg-[#8B1D24] hover:bg-[#6E1419] text-white'
+                  ? 'bg-[#7D131A] text-white ring-2 ring-[#9B1B22]/30'
+                  : 'bg-[#9B1B22] hover:bg-[#7D131A] text-white shadow-sm'
               }`}
             >
               <Heart className="w-3.5 h-3.5 fill-white" />
@@ -353,7 +353,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <button
                   type="button"
                   onClick={() => setIsAccountDropdownOpen(!isAccountDropdownOpen)}
-                  className="w-9 h-9 rounded-full bg-[#8B1D24] hover:bg-[#6E1419] text-white font-bold text-xs flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+                  className="w-9 h-9 rounded-full bg-[#9B1B22] hover:bg-[#7D131A] text-white font-bold text-xs flex items-center justify-center shadow-xs transition-colors cursor-pointer"
                   title="Administrator - Open Admin Menu"
                   aria-label="Admin Account Menu"
                 >
@@ -362,7 +362,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
               ) : (
                 <Link
                   to="/admin-login"
-                  className="w-9 h-9 rounded-full border border-stone-300 hover:border-[#8B1D24] bg-stone-50 hover:bg-white text-[#334155] hover:text-[#8B1D24] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
+                  className="w-9 h-9 rounded-full border border-[#D8D5CD] hover:border-[#9B1B22] bg-white hover:bg-[#FDF2F2] text-[#0E1726] hover:text-[#9B1B22] flex items-center justify-center transition-colors shadow-xs cursor-pointer"
                   title="Admin Login"
                   aria-label="Admin Login"
                   id="nav-admin-login-icon"
@@ -372,11 +372,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
               )}
 
               {user && user.role === 'admin' && isAccountDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-elevated border border-[#E5E7EB] p-3 z-50 animate-in fade-in slide-in-from-top-1">
-                  <div className="bg-stone-50 p-3 rounded-lg border border-stone-200">
-                    <p className="text-xs font-bold text-[#0F172A] truncate">{user.fullName}</p>
+                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-xl shadow-elevated border border-[#E8E6E1] p-3 z-50 animate-in fade-in slide-in-from-top-1">
+                  <div className="bg-[#F4F3EE] p-3 rounded-lg border border-[#E8E6E1]">
+                    <p className="text-xs font-bold text-[#0E1726] truncate">{user.fullName}</p>
                     <p className="text-[11px] text-[#64748B] truncate">{user.email}</p>
-                    <span className="inline-block mt-1 px-2 py-0.5 bg-red-100 text-red-800 text-[10px] font-semibold rounded">
+                    <span className="inline-block mt-1 px-2 py-0.5 bg-[#FDF2F2] border border-[#FCDADA] text-[#9B1B22] text-[10px] font-semibold rounded">
                       Administrator
                     </span>
                   </div>
@@ -384,16 +384,16 @@ export const Navbar: React.FC<NavbarProps> = () => {
                   <Link
                     to="/admin/dashboard"
                     onClick={() => setIsAccountDropdownOpen(false)}
-                    className="flex items-center space-x-2 px-3 py-2 mt-2 rounded-lg hover:bg-stone-50 text-xs font-semibold text-[#8B1D24] transition-colors"
+                    className="flex items-center space-x-2 px-3 py-2 mt-2 rounded-lg hover:bg-[#F4F3EE] text-xs font-semibold text-[#9B1B22] transition-colors"
                   >
                     <ShieldCheck className="w-4 h-4" />
                     <span>Go to Admin Dashboard</span>
                   </Link>
 
-                  <div className="pt-2 mt-1 border-t border-stone-100">
+                  <div className="pt-2 mt-1 border-t border-[#E8E6E1]">
                     <button
                       onClick={handleLogout}
-                      className="w-full flex items-center justify-center space-x-1.5 px-3 py-1.5 rounded-lg bg-red-50 hover:bg-red-100 text-red-700 text-xs font-semibold transition-colors cursor-pointer"
+                      className="w-full flex items-center justify-center space-x-1.5 px-3 py-1.5 rounded-lg bg-[#FDF2F2] hover:bg-[#FCDADA] text-[#9B1B22] text-xs font-semibold transition-colors cursor-pointer"
                     >
                       <LogOut className="w-3.5 h-3.5" />
                       <span>Sign Out</span>
@@ -409,7 +409,7 @@ export const Navbar: React.FC<NavbarProps> = () => {
           <div className="lg:hidden flex items-center space-x-1.5 sm:space-x-2">
             <Link
               to="/support"
-              className="px-2.5 sm:px-3.5 py-2 bg-[#8B1D24] active:bg-[#6E1419] text-white font-semibold rounded-lg text-xs shadow-xs min-h-[40px] flex items-center space-x-1"
+              className="px-2.5 sm:px-3.5 py-2 bg-[#9B1B22] active:bg-[#7D131A] text-white font-semibold rounded-lg text-xs shadow-xs min-h-[40px] flex items-center space-x-1"
             >
               <Heart className="w-3.5 h-3.5 fill-white shrink-0" />
               <span>Support</span>
@@ -417,12 +417,12 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
             <Link
               to={user && user.role === 'admin' ? "/admin/dashboard" : "/admin-login"}
-              className="w-10 h-10 rounded-full border border-stone-300 bg-stone-50 flex items-center justify-center text-[#334155] shrink-0"
+              className="w-10 h-10 rounded-full border border-[#D8D5CD] bg-[#F4F3EE] flex items-center justify-center text-[#0E1726] shrink-0"
               title="Admin Login"
               aria-label="Admin Login"
             >
               {user && user.role === 'admin' ? (
-                <span className="w-7 h-7 rounded-full bg-[#8B1D24] text-white text-[11px] font-bold flex items-center justify-center">
+                <span className="w-7 h-7 rounded-full bg-[#9B1B22] text-white text-[11px] font-bold flex items-center justify-center">
                   {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
                 </span>
               ) : (
@@ -432,11 +432,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-10 h-10 rounded-lg text-[#334155] hover:bg-stone-100 flex items-center justify-center transition-colors shrink-0"
+              className="w-10 h-10 rounded-lg text-[#0E1726] hover:bg-[#F4F3EE] flex items-center justify-center transition-colors shrink-0"
               aria-label="Toggle navigation menu"
               aria-expanded={isMobileMenuOpen}
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6 text-[#8B1D24]" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? <X className="w-6 h-6 text-[#9B1B22]" /> : <Menu className="w-6 h-6" />}
             </button>
           </div>
 
@@ -447,16 +447,16 @@ export const Navbar: React.FC<NavbarProps> = () => {
           3. MOBILE MENU DRAWER (Mobile-First Polish, Accordion Submenus, Safe-Area)
          ========================================================================= */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[96px] sm:top-[104px] bottom-0 bg-black/40 backdrop-blur-xs z-50 flex flex-col justify-start animate-in fade-in">
-          <div className="bg-white border-b border-[#E5E7EB] max-h-[calc(100vh-100px)] overflow-y-auto p-4 sm:p-6 space-y-4 shadow-2xl">
+        <div className="lg:hidden fixed inset-x-0 top-[96px] sm:top-[104px] bottom-0 bg-[#0E1726]/60 backdrop-blur-xs z-50 flex flex-col justify-start animate-in fade-in">
+          <div className="bg-white border-b border-[#E8E6E1] max-h-[calc(100vh-100px)] overflow-y-auto p-4 sm:p-6 space-y-4 shadow-2xl">
             
             {/* Quick Contact & Helpline Bar */}
-            <div className="bg-[#FAF9F6] border border-stone-200 rounded-xl p-3 flex items-center justify-between text-xs">
+            <div className="bg-[#F4F3EE] border border-[#E8E6E1] rounded-xl p-3 flex items-center justify-between text-xs">
               <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-[#8B1D24] shrink-0" />
-                <span className="text-stone-700">Helpline: <a href="tel:+919890898081" className="font-bold text-[#8B1D24]">+91 98908 98081</a></span>
+                <Phone className="w-4 h-4 text-[#9B1B22] shrink-0" />
+                <span className="text-[#334155]">Helpline: <a href="tel:+919890898081" className="font-bold text-[#9B1B22]">+91 98908 98081</a></span>
               </div>
-              <span className="text-[10.5px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-semibold">24/7 Support</span>
+              <span className="text-[10.5px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">24/7 Support</span>
             </div>
 
             {/* Primary Navigation Item List with 48px Minimum Touch Target */}
@@ -467,11 +467,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  location.pathname === '/' ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                  location.pathname === '/' ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                 }`}
               >
                 <span>Home</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-[#64748B]" />
               </Link>
 
               {/* 2. About Us (Accordion Submenu) */}
@@ -480,39 +480,39 @@ export const Navbar: React.FC<NavbarProps> = () => {
                   type="button"
                   onClick={() => setMobileSubmenu(mobileSubmenu === 'about' ? 'none' : 'about')}
                   className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                    isActive('/about') ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                    isActive('/about') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                   }`}
                 >
                   <span>About Us</span>
-                  <ChevronDown className={`w-4 h-4 text-stone-400 transition-transform ${mobileSubmenu === 'about' ? 'rotate-180 text-[#8B1D24]' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-[#64748B] transition-transform ${mobileSubmenu === 'about' ? 'rotate-180 text-[#9B1B22]' : ''}`} />
                 </button>
                 {mobileSubmenu === 'about' && (
-                  <div className="ml-3 pl-3 border-l-2 border-[#8B1D24]/30 space-y-1 py-1 animate-in fade-in">
+                  <div className="ml-3 pl-3 border-l-2 border-[#9B1B22]/30 space-y-1 py-1 animate-in fade-in">
                     <Link
                       to="/about"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-stone-700 hover:text-[#8B1D24] rounded-lg"
+                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
                     >
                       Institutional Overview & Charter
                     </Link>
                     <Link
                       to="/about"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-stone-700 hover:text-[#8B1D24] rounded-lg"
+                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
                     >
                       Vision, Mission & 10 Objectives
                     </Link>
                     <Link
                       to="/about"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-stone-700 hover:text-[#8B1D24] rounded-lg"
+                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
                     >
                       Founder's Message & Governing Board
                     </Link>
                     <Link
                       to="/about"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-stone-700 hover:text-[#8B1D24] rounded-lg"
+                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
                     >
                       Legal Registrations (MAH/332/15/NAG)
                     </Link>
@@ -526,22 +526,22 @@ export const Navbar: React.FC<NavbarProps> = () => {
                   type="button"
                   onClick={() => setMobileSubmenu(mobileSubmenu === 'initiatives' ? 'none' : 'initiatives')}
                   className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                    isActive('/services') || isActive('/old-age-home') ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                    isActive('/services') || isActive('/old-age-home') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                   }`}
                 >
                   <span>What We Do (The 8 Pillars)</span>
-                  <ChevronDown className={`w-4 h-4 text-stone-400 transition-transform ${mobileSubmenu === 'initiatives' ? 'rotate-180 text-[#8B1D24]' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-[#64748B] transition-transform ${mobileSubmenu === 'initiatives' ? 'rotate-180 text-[#9B1B22]' : ''}`} />
                 </button>
                 {mobileSubmenu === 'initiatives' && (
-                  <div className="ml-3 pl-3 border-l-2 border-[#8B1D24]/30 space-y-1 py-1 max-h-60 overflow-y-auto animate-in fade-in">
+                  <div className="ml-3 pl-3 border-l-2 border-[#9B1B22]/30 space-y-1 py-1 max-h-60 overflow-y-auto animate-in fade-in">
                     {initiatives.map((init) => (
                       <Link
                         key={init.num}
                         to={init.route}
                         onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center space-x-2 px-3 py-2 text-xs text-stone-700 hover:text-[#8B1D24] rounded-lg"
+                        className="flex items-center space-x-2 px-3 py-2 text-xs text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
                       >
-                        <span className="font-mono text-[10px] font-bold text-[#8B1D24] bg-stone-100 px-1.5 py-0.5 rounded">{init.num}</span>
+                        <span className="font-mono text-[10px] font-bold text-[#9B1B22] bg-[#F4F3EE] px-1.5 py-0.5 rounded">{init.num}</span>
                         <span className="truncate">{init.title}</span>
                       </Link>
                     ))}
@@ -554,11 +554,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/old-age-home"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/old-age-home') ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                  isActive('/old-age-home') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                 }`}
               >
                 <span>Vyenkatesh Ashram (Old Age Home)</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-[#64748B]" />
               </Link>
 
               {/* 5. Senior Admission Enquiry */}
@@ -566,11 +566,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/admission"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/admission') ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                  isActive('/admission') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                 }`}
               >
                 <span>Apply for Admission</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-[#64748B]" />
               </Link>
 
               {/* 6. Partnership & CSR */}
@@ -578,11 +578,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/support#csr"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  location.hash === '#csr' ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                  location.hash === '#csr' ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                 }`}
               >
                 <span>Partnership (CSR & Schedule VII)</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-[#64748B]" />
               </Link>
 
               {/* 7. Gallery */}
@@ -590,11 +590,11 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/gallery"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/gallery') ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                  isActive('/gallery') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                 }`}
               >
                 <span>Photo & Video Gallery</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-[#64748B]" />
               </Link>
 
               {/* 8. Contact */}
@@ -602,18 +602,18 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 to="/contact"
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/contact') ? 'text-[#8B1D24] bg-red-50/80 font-bold' : 'text-[#0F172A] hover:bg-stone-50'
+                  isActive('/contact') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
                 }`}
               >
                 <span>Contact Directory & Locations</span>
-                <ChevronRight className="w-4 h-4 text-stone-400" />
+                <ChevronRight className="w-4 h-4 text-[#64748B]" />
               </Link>
 
               {/* 9. Support Our Work */}
               <Link
                 to="/support"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm bg-gradient-to-r from-[#8B1D24] to-[#6E1419] text-white shadow-xs min-h-[46px] mt-2"
+                className="flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm bg-[#9B1B22] hover:bg-[#7D131A] text-white shadow-xs min-h-[46px] mt-2"
               >
                 <div className="flex items-center space-x-2">
                   <Heart className="w-4 h-4 fill-white" />
@@ -624,20 +624,20 @@ export const Navbar: React.FC<NavbarProps> = () => {
             </div>
 
             {/* Admin Management Section */}
-            <div className="pt-3 border-t border-[#E5E7EB] space-y-2">
+            <div className="pt-3 border-t border-[#E8E6E1] space-y-2">
               {user && user.role === 'admin' ? (
                 <div className="space-y-2">
                   <Link
                     to="/admin/dashboard"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full py-3 bg-[#8B1D24] text-white font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 min-h-[44px]"
+                    className="w-full py-3 bg-[#9B1B22] hover:bg-[#7D131A] text-white font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 min-h-[44px]"
                   >
                     <ShieldCheck className="w-4 h-4" />
                     <span>Go to Admin Dashboard</span>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full py-2.5 bg-red-50 text-red-700 font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-1.5 min-h-[44px] cursor-pointer"
+                    className="w-full py-2.5 bg-[#FDF2F2] hover:bg-[#FCDADA] text-[#9B1B22] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-1.5 min-h-[44px] cursor-pointer"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>
@@ -647,9 +647,9 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   to="/admin-login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full py-2.5 bg-stone-100 hover:bg-stone-200 text-[#0F172A] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 border border-stone-300 min-h-[44px]"
+                  className="w-full py-2.5 bg-[#F4F3EE] hover:bg-[#E8E6E1] text-[#0E1726] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 border border-[#D8D5CD] min-h-[44px]"
                 >
-                  <User className="w-4 h-4 text-[#8B1D24]" />
+                  <User className="w-4 h-4 text-[#9B1B22]" />
                   <span>Administrative Login</span>
                 </Link>
               )}

@@ -75,8 +75,8 @@ export const Membership: React.FC = () => {
 
         {/* Society Membership Overview Banner */}
         <div className="bg-white p-6 md:p-8 rounded-3xl border border-foundation-borderMuted shadow-soft space-y-3">
-          <div className="flex items-center space-x-2 text-[#8B1D24]">
-            <Shield className="w-5 h-5 text-[#8B1D24]" />
+          <div className="flex items-center space-x-2 text-[#9B1B22]">
+            <Shield className="w-5 h-5 text-[#9B1B22]" />
             <h3 className="font-display font-bold text-lg text-foundation-charcoal">Official Society Registered Membership</h3>
           </div>
           <p className="text-xs sm:text-sm text-stone-600 leading-relaxed">

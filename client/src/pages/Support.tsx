@@ -31,7 +31,7 @@ export const Support: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf8] py-12 md:py-16 font-sans">
+    <div className="min-h-screen bg-[#FBFBFA] py-12 md:py-16 font-sans">
       <SEO
         title="Donate & Support | 80G Tax Exempt Contributions"
         description="Contribute to SBBM Social Foundation for elder care, free Annadaan meals, and Go-Seva. All donations qualify for 50% tax exemption under Section 80G. Verified Axis Bank & UPI details."
@@ -40,7 +40,7 @@ export const Support: React.FC = () => {
       />
       <div className="max-w-5xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border border-[#1E293B] shadow-card bg-[#0A111A] text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_campus_life.jpg"
@@ -48,12 +48,12 @@ export const Support: React.FC = () => {
               className="w-full h-full object-cover object-center scale-105"
             />
             {/* Calibrated dark overlay: residents & campus clearly visible while text is 100% readable */}
-            <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/85 via-[#0A111A]/70 to-[#0A111A]/90" />
           </div>
 
           <div className="relative z-10 space-y-3 sm:space-y-4 max-w-3xl mx-auto">
-            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
-              <Heart className="w-3.5 h-3.5 text-amber-300 fill-amber-300 shrink-0" />
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-[#0E1726]/70 backdrop-blur-md text-[#C5A059] text-[11px] sm:text-xs font-bold border border-[#C5A059]/30">
+              <Heart className="w-3.5 h-3.5 text-[#C5A059] fill-[#C5A059] shrink-0" />
               <span>12A &amp; 80G Certified Non-Profit Charitable Organization</span>
             </div>
 
@@ -61,11 +61,11 @@ export const Support: React.FC = () => {
               Support SBBM Social Foundation
             </h1>
 
-            <p className="text-xs md:text-sm text-stone-200 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-xs md:text-sm text-slate-200 leading-relaxed max-w-2xl mx-auto">
               Your generous contribution directly sustains wholesome daily meals for elderly residents at Vyenkatesh Ashram, cattle care at Shri Go Seva Kendra, rural computer literacy, and grassroots relief for vulnerable families.
             </p>
 
-            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-[10.5px] sm:text-[11px] font-bold text-stone-200">
+            <div className="flex flex-wrap items-center justify-center gap-2 pt-2 text-[10.5px] sm:text-[11px] font-bold text-slate-200">
               <span className="px-2.5 py-1 bg-white/10 backdrop-blur-sm rounded-full border border-white/15">
                 🏛️ Societies: MAH/332/15/NAG
               </span>

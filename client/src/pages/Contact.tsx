@@ -81,7 +81,7 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#fafaf8] py-12 md:py-16 font-sans">
+    <div className="min-h-screen bg-[#FBFBFA] py-12 md:py-16 font-sans">
       <SEO
         title="Contact Directory & Verified Locations | Nagpur & Mahuli"
         description="Official contact directory for SBBM Social Foundation & Vyenkatesh Ashram. 24/7 Helplines: +91 98908 98081 / +91 93261 72824. Nagpur Head Office and Mahuli Campus addresses."
@@ -90,7 +90,7 @@ export const Contact: React.FC = () => {
       />
       <div className="max-w-6xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border-2 border-stone-700/60 shadow-elevated bg-stone-950 text-white p-5 sm:p-8 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border border-[#1E293B] shadow-card bg-[#0A111A] text-white p-5 sm:p-8 md:p-14 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/ashram/ashram_entrance_front.jpg"
@@ -98,12 +98,12 @@ export const Contact: React.FC = () => {
               className="w-full h-full object-cover object-center scale-105"
             />
             {/* Calibrated dark overlay: entrance gate clearly visible */}
-            <div className="absolute inset-0 bg-gradient-to-b from-stone-950/80 via-stone-950/65 to-stone-950/85" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/85 via-[#0A111A]/70 to-[#0A111A]/90" />
           </div>
 
           <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
-            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-[11px] sm:text-xs font-bold border border-white/20">
-              <MapPin className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-[#0E1726]/70 backdrop-blur-md text-[#C5A059] text-[11px] sm:text-xs font-bold border border-[#C5A059]/30">
+              <MapPin className="w-3.5 h-3.5 text-[#C5A059] shrink-0" />
               <span>Official Contact Directory &amp; Community Support</span>
             </div>
 
@@ -111,11 +111,11 @@ export const Contact: React.FC = () => {
               Contact SBBM Social Foundation
             </h1>
 
-            <p className="text-xs md:text-sm text-stone-200 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xs md:text-sm text-slate-200 max-w-2xl mx-auto leading-relaxed">
               Reach out to our administrative head office in Nagpur City for legal, CSR, and membership governance, or coordinate directly with our Mahuli Centre for senior care, Go-Seva, and naturopathy appointments.
             </p>
 
-            <p className="text-xs font-bold text-amber-300 break-all">
+            <p className="text-xs font-bold text-[#C5A059] break-all">
               Official Email: <a href="mailto:sbbmsocialfoundation@gmail.com" className="underline hover:text-white">sbbmsocialfoundation@gmail.com</a>
             </p>
           </div>

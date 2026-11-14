@@ -130,7 +130,7 @@ export const Admission: React.FC = () => {
           </div>
           <div className="text-stone-500 flex items-center space-x-2 flex-wrap">
             <span>Direct Helpline:</span>
-            <a href="tel:+919890898081" className="font-bold text-[#8B1D24] hover:underline">
+            <a href="tel:+919890898081" className="font-bold text-[#9B1B22] hover:underline">
               +91 98908 98081
             </a>
           </div>
