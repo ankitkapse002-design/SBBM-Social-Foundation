@@ -1,0 +1,6 @@
+# Netlify Redirects & SPA Fallback for SBBM Social Foundation
+# Official Domain: https://sbbmsocialfoundation.org
+
+# SPA Fallback: Direct all routes to index.html with HTTP 200
+/*    /index.html   200
+
