@@ -871,66 +871,6 @@
       "status": "published"
     },
     {
-      "id": "gal_elder_06",
-      "title": "Aai-Baba Resident: Smt. Sakhu Bhaiyya Dadmal",
-      "category": "elders",
-      "mediaUrl": "/assets/images/elders/resident_sakhu_dadmal.jpg",
-      "caption": "Cherished elder family member at Vyenkatesh Ashram Mahuli.",
-      "createdAt": "2026-02-06T10:00:00.000Z",
-      "type": "photo",
-      "status": "published"
-    },
-    {
-      "id": "gal_elder_05",
-      "title": "Aai-Baba Resident: Smt. Rukhna Sumegir Giri",
-      "category": "elders",
-      "mediaUrl": "/assets/images/elders/resident_rukhna_giri.jpg",
-      "caption": "Living with dignity and peace of mind under compassionate shelter.",
-      "createdAt": "2026-02-05T10:00:00.000Z",
-      "type": "photo",
-      "status": "published"
-    },
-    {
-      "id": "gal_elder_04",
-      "title": "Aai-Baba Resident: Shri Shirpurkar",
-      "category": "elders",
-      "mediaUrl": "/assets/images/elders/resident_shirpurkar.jpg",
-      "caption": "Finding peace, brotherhood, and spiritual contentment at the ashram.",
-      "createdAt": "2026-02-04T10:00:00.000Z",
-      "type": "photo",
-      "status": "published"
-    },
-    {
-      "id": "gal_elder_03",
-      "title": "Aai-Baba Resident: Smt. Kalabai Khapekar",
-      "category": "elders",
-      "mediaUrl": "/assets/images/elders/resident_kalabai_khapekar.jpg",
-      "caption": "Surrounded by filial care and loving attendants at Vyenkatesh Ashram.",
-      "createdAt": "2026-02-03T10:00:00.000Z",
-      "type": "photo",
-      "status": "published"
-    },
-    {
-      "id": "gal_elder_02",
-      "title": "Aai-Baba Resident: Smt. Kamala Daulat Dadmal",
-      "category": "elders",
-      "mediaUrl": "/assets/images/elders/resident_kamala_dadmal.jpg",
-      "caption": "Receiving dignified care and warm companionship in her golden years.",
-      "createdAt": "2026-02-02T10:00:00.000Z",
-      "type": "photo",
-      "status": "published"
-    },
-    {
-      "id": "gal_elder_01",
-      "title": "Aai-Baba Resident: Shri Anandrao Umredkar",
-      "category": "elders",
-      "mediaUrl": "/assets/images/elders/resident_anandrao_umredkar.jpg",
-      "caption": "Living with respect, security, and familial affection at Vyenkatesh Ashram.",
-      "createdAt": "2026-02-01T10:00:00.000Z",
-      "type": "photo",
-      "status": "published"
-    },
-    {
       "id": "gal_ashram_05",
       "title": "Morning Garden Life & Open Sanctuary",
       "category": "ashram",
@@ -986,16 +926,6 @@
       "category": "leadership",
       "mediaUrl": "/assets/images/leadership/ashwin_anjikar_president.jpg",
       "caption": "Official leadership portrait of Founder President Mr. Ashwin Vyenkatrao Anjikar.",
-      "createdAt": "2026-01-01T10:00:00.000Z",
-      "type": "photo",
-      "status": "published"
-    },
-    {
-      "id": "gal_lead_02",
-      "title": "Secretary & Director Mrs. Tina Ashwin Anjikar",
-      "category": "leadership",
-      "mediaUrl": "/assets/images/leadership/tina_anjikar_secretary.jpg",
-      "caption": "Official leadership portrait of Secretary Mrs. Tina Anjikar.",
       "createdAt": "2026-01-01T10:00:00.000Z",
       "type": "photo",
       "status": "published"

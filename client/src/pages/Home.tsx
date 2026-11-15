@@ -279,56 +279,53 @@ export const Home: React.FC = () => {
           Clean, authoritative editorial canvas with floating 3D ambient particles
           and interactive authentic photography showcase.
          ========================================================================= */}
-      <section className="relative overflow-hidden border-b border-[#E8E6E1] py-10 sm:py-14 lg:py-20 bg-gradient-to-b from-[#F4F3EE] via-white to-[#FBFBFA]">
-        {/* Subtle 3D Ambient Particles Canvas */}
-        <HeroParticles3D />
-
+      <section className="relative overflow-hidden border-b border-[#E8E6E1] py-12 sm:py-16 lg:py-24 bg-gradient-to-b from-[#F4F3EE] via-white to-[#FBFBFA]">
         <div className="relative z-10 max-w-[1400px] mx-auto px-4 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
 
           {/* Left Column: Authoritative Editorial Storytelling */}
-          <div className="lg:col-span-7 space-y-5 sm:space-y-6">
+          <div className="lg:col-span-7 space-y-6 sm:space-y-7">
             <FadeIn direction="up" delay={0.05}>
-              <div className="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 sm:px-4 rounded-xl sm:rounded-full bg-[#FDF2F2] border border-[#FCDADA] text-[#9B1B22] text-[11px] sm:text-xs font-semibold leading-relaxed shadow-xs max-w-full">
-                <span className="w-2 h-2 rounded-full bg-[#9B1B22] animate-pulse shrink-0" />
+              <div className="inline-flex flex-wrap items-center gap-2 px-4 py-2 rounded-full bg-[#FDF2F2] border border-[#FCDADA] text-[#9B1B22] text-xs sm:text-sm font-bold shadow-xs max-w-full">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#9B1B22] animate-pulse shrink-0" />
                 <span>Estd. Dec 2014</span>
                 <span className="text-[#9B1B22]/40">•</span>
                 <span>Regd. Society MAH/332/15/NAG</span>
                 <span className="hidden sm:inline text-[#9B1B22]/40">•</span>
-                <span className="font-bold">12A &amp; 80G Certified Non-Profit</span>
+                <span>12A &amp; 80G Certified Non-Profit</span>
               </div>
             </FadeIn>
 
             <FadeIn direction="up" delay={0.12}>
-              <div className="space-y-2 sm:space-y-3">
-                <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-[#0E1726] leading-[1.15]">
+              <div className="space-y-3">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[48px] font-bold tracking-tight text-[#0E1726] leading-[1.18]">
                   Serving humanity with <span className="text-[#9B1B22] underline decoration-[#9B1B22]/20 underline-offset-4 sm:underline-offset-8">dignity</span>, education, and lifelong care.
                 </h1>
-                <p className="text-xs sm:text-base text-[#9B1B22] font-serif italic pt-1">
+                <p className="text-base sm:text-lg md:text-xl text-[#9B1B22] font-serif italic pt-1">
                   “Service is Humanity • Education is Development • Self-Reliance is Empowerment”
                 </p>
               </div>
             </FadeIn>
 
             <FadeIn direction="up" delay={0.18}>
-              <p className="text-xs sm:text-base text-[#475569] leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-lg text-[#334155] leading-relaxed max-w-2xl">
                 <strong>SBBM Social Foundation</strong> is an active grassroots non-profit dedicated to uplifting destitute senior citizens at Vyenkatesh Ashram, empowering rural youth with digital computer skills, fostering women’s self-reliance, and providing social relief across Nagpur District since December 2014.
               </p>
             </FadeIn>
 
-            {/* Primary & Secondary Action Buttons */}
+            {/* Primary & Secondary Action Buttons (16-18px readable text) */}
             <FadeIn direction="up" delay={0.24}>
-              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 pt-1">
+              <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3.5 pt-2">
                 <Link to="/support" className="w-full sm:w-auto">
-                  <MagneticButton className="w-full sm:w-auto justify-center px-5 sm:px-6 py-3.5 min-h-[44px] bg-[#9B1B22] hover:bg-[#7D131A] text-white font-semibold text-xs rounded-xl transition-all shadow-md flex items-center space-x-2">
-                    <Heart className="w-4 h-4 fill-white shrink-0" />
+                  <MagneticButton className="w-full sm:w-auto justify-center px-6 py-4 min-h-[48px] bg-[#9B1B22] hover:bg-[#7D131A] text-white font-bold text-[16px] rounded-xl transition-all shadow-md flex items-center space-x-2.5">
+                    <Heart className="w-4.5 h-4.5 fill-white shrink-0" />
                     <span>Support Our Work (80G Tax Deductible)</span>
                   </MagneticButton>
                 </Link>
 
                 <Link to="/services" className="w-full sm:w-auto">
-                  <MagneticButton className="w-full sm:w-auto justify-center px-5 py-3.5 min-h-[44px] bg-white hover:bg-[#F4F3EE] border border-[#D8D5CD] text-[#0E1726] font-semibold text-xs rounded-xl transition-all shadow-xs flex items-center space-x-2">
+                  <MagneticButton className="w-full sm:w-auto justify-center px-6 py-4 min-h-[48px] bg-white hover:bg-[#F4F3EE] border border-[#D8D5CD] text-[#0E1726] font-bold text-[16px] rounded-xl transition-all shadow-xs flex items-center space-x-2.5">
                     <span>Explore What We Do</span>
-                    <ArrowRight className="w-4 h-4 text-[#9B1B22] shrink-0" />
+                    <ArrowRight className="w-4.5 h-4.5 text-[#9B1B22] shrink-0" />
                   </MagneticButton>
                 </Link>
 
@@ -339,10 +336,10 @@ export const Home: React.FC = () => {
                   aria-label="Visit Vyenkatesh Ashram official website (opens in a new tab)"
                   className="w-full sm:w-auto inline-block"
                 >
-                  <MagneticButton className="w-full sm:w-auto justify-center px-5 py-3.5 min-h-[44px] bg-white hover:bg-[#FDF8EE] border border-[#D8D5CD] hover:border-[#9B1B22]/40 text-[#0E1726] hover:text-[#9B1B22] font-semibold text-xs rounded-xl transition-all shadow-xs flex items-center space-x-2 group cursor-pointer">
-                    <Landmark className="w-4 h-4 text-[#9B1B22] group-hover:scale-110 transition-transform duration-200 shrink-0" />
+                  <MagneticButton className="w-full sm:w-auto justify-center px-6 py-4 min-h-[48px] bg-white hover:bg-[#FDF8EE] border border-[#D8D5CD] hover:border-[#9B1B22]/40 text-[#0E1726] hover:text-[#9B1B22] font-bold text-[16px] rounded-xl transition-all shadow-xs flex items-center space-x-2.5 group cursor-pointer">
+                    <Landmark className="w-4.5 h-4.5 text-[#9B1B22] group-hover:scale-110 transition-transform duration-200 shrink-0" />
                     <span>Visit Vyenkatesh Ashram</span>
-                    <ExternalLink className="w-3.5 h-3.5 text-[#64748B] group-hover:text-[#9B1B22] transition-colors shrink-0" />
+                    <ExternalLink className="w-4 h-4 text-[#64748B] group-hover:text-[#9B1B22] transition-colors shrink-0" />
                   </MagneticButton>
                 </a>
               </div>
@@ -350,14 +347,14 @@ export const Home: React.FC = () => {
 
             {/* Verified Helpline & Headquarters Strip */}
             <FadeIn direction="up" delay={0.3}>
-              <div className="pt-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs text-[#64748B] border-t border-[#E8E6E1]">
-                <span className="flex items-center space-x-1.5 font-medium flex-wrap">
-                  <Phone className="w-3.5 h-3.5 text-[#9B1B22] shrink-0" />
+              <div className="pt-4 flex flex-col sm:flex-row sm:items-center gap-2.5 sm:gap-4 text-sm sm:text-base text-[#475569] border-t border-[#E8E6E1]">
+                <span className="flex items-center space-x-2 font-medium flex-wrap">
+                  <Phone className="w-4 h-4 text-[#9B1B22] shrink-0" />
                   <span>24/7 Helplines: <a href="tel:+919890898081" className="font-bold text-[#0E1726] hover:text-[#9B1B22] transition-colors">+91 98908 98081</a> / <a href="tel:+919326172824" className="font-bold text-[#0E1726] hover:text-[#9B1B22] transition-colors">+91 93261 72824</a></span>
                 </span>
                 <span className="hidden sm:inline text-stone-300">•</span>
-                <span className="flex items-center space-x-1.5">
-                  <MapPin className="w-3.5 h-3.5 text-[#9B1B22] shrink-0" />
+                <span className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4 text-[#9B1B22] shrink-0" />
                   <span>Nagpur City & Mahuli Campus</span>
                 </span>
               </div>
@@ -367,10 +364,10 @@ export const Home: React.FC = () => {
           {/* Right Column: Interactive Authentic Photography Showcase */}
           <div className="lg:col-span-5">
             <FadeIn direction="left" delay={0.2}>
-              <div className="bg-white rounded-3xl border border-[#E8E6E1] p-4 sm:p-5 shadow-card space-y-4 relative">
+              <div className="bg-white rounded-3xl border border-[#E8E6E1] p-5 sm:p-6 shadow-card space-y-4 relative">
 
                 {/* Active Photo Container with Cross-Fade */}
-                <div className="h-56 sm:h-76 rounded-2xl overflow-hidden relative border border-[#E8E6E1] bg-stone-900 group">
+                <div className="h-64 sm:h-84 rounded-2xl overflow-hidden relative border border-[#E8E6E1] bg-stone-900 group">
                   <AnimatePresence mode="wait">
                     <motion.img
                       key={heroPhotos[heroPhotoIdx].src}
@@ -387,32 +384,32 @@ export const Home: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent pointer-events-none" />
 
                   {/* Caption & Location Tag */}
-                  <div className="absolute bottom-3 left-3 right-3 text-white space-y-1">
-                    <span className="inline-block px-2.5 py-0.5 rounded bg-[#9B1B22]/90 text-[10.5px] font-bold tracking-wide">
+                  <div className="absolute bottom-4 left-4 right-4 text-white space-y-1">
+                    <span className="inline-block px-3 py-1 rounded-md bg-[#9B1B22]/95 text-xs font-bold tracking-wide">
                       {heroPhotos[heroPhotoIdx].tag}
                     </span>
-                    <p className="text-xs text-stone-200 line-clamp-1">
+                    <p className="text-sm sm:text-base text-stone-100 line-clamp-1 font-medium">
                       {heroPhotos[heroPhotoIdx].caption}
                     </p>
                   </div>
                 </div>
 
                 {/* Interactive Thumbnail Switcher */}
-                <div className="grid grid-cols-3 gap-2 pt-1">
+                <div className="grid grid-cols-3 gap-2.5 pt-1">
                   {heroPhotos.map((item, idx) => (
                     <button
                       key={item.label}
                       type="button"
                       onClick={() => setHeroPhotoIdx(idx)}
-                      className={`text-left p-2 rounded-xl border transition-all cursor-pointer min-h-[44px] ${heroPhotoIdx === idx
+                      className={`text-left p-2.5 rounded-xl border transition-all cursor-pointer min-h-[46px] ${heroPhotoIdx === idx
                           ? 'border-[#9B1B22] bg-[#FDF2F2] ring-2 ring-[#9B1B22]/20'
                           : 'border-[#E8E6E1] hover:border-[#D8D5CD] bg-[#F4F3EE]'
                         }`}
                     >
-                      <span className={`block text-[10px] uppercase font-bold tracking-wider ${heroPhotoIdx === idx ? 'text-[#9B1B22]' : 'text-[#64748B]'}`}>
+                      <span className={`block text-[11px] uppercase font-bold tracking-wider ${heroPhotoIdx === idx ? 'text-[#9B1B22]' : 'text-[#64748B]'}`}>
                         View {idx + 1}
                       </span>
-                      <strong className="block text-xs font-semibold text-[#0E1726] truncate">
+                      <strong className="block text-xs sm:text-sm font-bold text-[#0E1726] truncate">
                         {item.label}
                       </strong>
                     </button>
@@ -420,21 +417,21 @@ export const Home: React.FC = () => {
                 </div>
 
                 {/* Institutional Registry Badges */}
-                <div className="pt-2 border-t border-[#E8E6E1] flex items-center justify-between text-xs gap-2">
-                  <div className="flex items-center space-x-2 min-w-0">
+                <div className="pt-3 border-t border-[#E8E6E1] flex items-center justify-between text-xs gap-2">
+                  <div className="flex items-center space-x-2.5 min-w-0">
                     <img
-                      src="/assets/images/logo.jpg"
+                      src="/assets/images/logo.png"
                       alt="SBBM Social Foundation Emblem"
-                      className="w-7 h-7 rounded-full border border-[#D8D5CD] object-cover shrink-0"
+                      className="w-8 h-8 object-contain shrink-0 drop-shadow-xs"
                     />
                     <div className="min-w-0">
-                      <span className="block font-bold text-[#0E1726] text-[11.5px] leading-none truncate">
+                      <span className="block font-bold text-[#0E1726] text-xs sm:text-sm leading-none truncate">
                         SBBM Social Foundation
                       </span>
-                      <span className="text-[10px] text-[#64748B] block truncate">Regd. F-33193 • PAN: AAQTS3445R</span>
+                      <span className="text-[11px] text-[#64748B] block truncate pt-0.5">Regd. F-33193 • PAN: AAQTS3445R</span>
                     </div>
                   </div>
-                  <span className="px-2 py-0.5 bg-emerald-50 text-emerald-800 text-[10px] font-bold rounded border border-emerald-200 shrink-0">
+                  <span className="px-2.5 py-1 bg-emerald-50 text-emerald-800 text-xs font-bold rounded-md border border-emerald-200 shrink-0">
                     Verified Society
                   </span>
                 </div>
@@ -447,42 +444,42 @@ export const Home: React.FC = () => {
       </section>
 
       {/* =========================================================================
-          METRICS STRIP: Verified Institutional Impact (Animated Counters)
+          METRICS STRIP: Verified Institutional Impact (Big, High-Readability Numbers)
          ========================================================================= */}
-      <section className="bg-white border-b border-[#E8E6E1] py-6 sm:py-8">
+      <section className="bg-white border-b border-[#E8E6E1] py-10 sm:py-14">
         <div className="max-w-[1400px] mx-auto px-4 md:px-8">
-          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 text-center">
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center">
 
-            <StaggerItem className="space-y-1 p-2">
-              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#9B1B22] tracking-tight">
+            <StaggerItem className="space-y-1.5 p-3">
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#9B1B22] tracking-tight">
                 Dec 2014
               </p>
-              <p className="text-xs text-[#0E1726] font-bold">Commencement of Service</p>
-              <p className="text-[11px] text-[#64748B]">Over a decade of continuous service</p>
+              <p className="text-base sm:text-lg text-[#0E1726] font-bold">Commencement of Service</p>
+              <p className="text-sm sm:text-[15px] text-[#64748B] leading-relaxed">Over a decade of continuous seva</p>
             </StaggerItem>
 
-            <StaggerItem className="space-y-1 p-2 border-l border-[#E8E6E1]">
-              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#0E1726] tracking-tight">
+            <StaggerItem className="space-y-1.5 p-3 border-l border-[#E8E6E1]">
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0E1726] tracking-tight">
                 <AnimatedCounter value={8} suffix=" Pillars" />
               </p>
-              <p className="text-xs text-[#0E1726] font-bold">Core Welfare Programs</p>
-              <p className="text-[11px] text-[#64748B]">Elderly care, youth, education, cow sanctuary</p>
+              <p className="text-base sm:text-lg text-[#0E1726] font-bold">Core Welfare Programs</p>
+              <p className="text-sm sm:text-[15px] text-[#64748B] leading-relaxed">Elderly care, youth, education, cow sanctuary</p>
             </StaggerItem>
 
-            <StaggerItem className="space-y-1 p-2 border-t md:border-t-0 md:border-l border-[#E8E6E1]">
-              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#9B1B22] tracking-tight">
+            <StaggerItem className="space-y-1.5 p-3 border-t md:border-t-0 md:border-l border-[#E8E6E1]">
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-[#9B1B22] tracking-tight">
                 12A &amp; 80G
               </p>
-              <p className="text-xs text-[#0E1726] font-bold">Income Tax Certified</p>
-              <p className="text-[11px] text-[#64748B]">50% tax deduction for contributors</p>
+              <p className="text-base sm:text-lg text-[#0E1726] font-bold">Income Tax Certified</p>
+              <p className="text-sm sm:text-[15px] text-[#64748B] leading-relaxed">50% tax deduction for contributors</p>
             </StaggerItem>
 
-            <StaggerItem className="space-y-1 p-2 border-t md:border-t-0 border-l border-[#E8E6E1]">
-              <p className="text-xl sm:text-2xl md:text-4xl font-bold text-emerald-700 tracking-tight">
+            <StaggerItem className="space-y-1.5 p-3 border-t md:border-t-0 border-l border-[#E8E6E1]">
+              <p className="text-3xl sm:text-4xl md:text-5xl font-bold text-emerald-700 tracking-tight">
                 100% Free
               </p>
-              <p className="text-xs text-[#0E1726] font-bold">Destitute Senior Care</p>
-              <p className="text-[11px] text-[#64748B]">Boarding, meals &amp; healthcare provided gratis</p>
+              <p className="text-base sm:text-lg text-[#0E1726] font-bold">Destitute Senior Care</p>
+              <p className="text-sm sm:text-[15px] text-[#64748B] leading-relaxed">Boarding, meals &amp; healthcare provided gratis</p>
             </StaggerItem>
 
           </StaggerContainer>
@@ -497,20 +494,20 @@ export const Home: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 space-y-12">
 
           <div className="max-w-3xl space-y-3">
-            <span className="text-xs font-bold text-[#9B1B22] uppercase tracking-wider block">
+            <span className="text-xs sm:text-sm font-bold text-[#9B1B22] uppercase tracking-wider block">
               Core Institutional Story
             </span>
-            <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0E1726] leading-tight">
+            <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#0E1726] leading-tight">
               Restoring dignity to elders and building self-reliance for rural families.
             </h2>
-            <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+            <p className="text-base sm:text-lg text-[#475569] leading-relaxed">
               Founded under the leadership of <strong>Mr. Ashwin Vyenkatrao Anjikar</strong> (President) and <strong>Mrs. Tina Anjikar</strong> (Secretary), SBBM Social Foundation addresses the critical needs of destitute elders and rural communities across Vidarbha through four interconnected seva initiatives:
             </p>
           </div>
 
-          {/* Interactive Story Tabs */}
+          {/* Interactive Story Tabs (Readable 15-16px text) */}
           <div className="space-y-6 sm:space-y-8">
-            <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center gap-2 border-b border-[#E8E6E1] pb-3 text-xs font-bold scroll-smooth">
+            <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center gap-2.5 border-b border-[#E8E6E1] pb-3 text-sm sm:text-base font-bold scroll-smooth">
               {[
                 { id: 'ashram', label: '1. Elderly Sanctuary', fullLabel: '1. Elderly Sanctuary (Vyenkatesh Ashram)' },
                 { id: 'education', label: '2. Computer Literacy', fullLabel: '2. Rural Youth Computer Literacy' },
@@ -550,27 +547,27 @@ export const Home: React.FC = () => {
                   />
                 </div>
 
-                <div className="lg:col-span-7 space-y-4 sm:space-y-5">
-                  <div className="space-y-1">
-                    <span className="text-xs font-mono font-bold text-[#9B1B22] uppercase tracking-wider block">
+                <div className="lg:col-span-7 space-y-4 sm:space-y-6">
+                  <div className="space-y-1.5">
+                    <span className="text-xs sm:text-sm font-mono font-bold text-[#9B1B22] uppercase tracking-wider block">
                       {storyTabs[activeStoryTab].badge}
                     </span>
-                    <h3 className="text-lg sm:text-2xl font-bold text-[#0E1726]">
+                    <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#0E1726]">
                       {storyTabs[activeStoryTab].title}
                     </h3>
-                    <p className="text-xs font-serif italic text-[#9B1B22]">
+                    <p className="text-sm sm:text-base font-serif italic text-[#9B1B22]">
                       {storyTabs[activeStoryTab].subtitle}
                     </p>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                  <p className="text-base sm:text-lg text-[#475569] leading-relaxed">
                     {storyTabs[activeStoryTab].description}
                   </p>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#334155] pt-1">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[15px] sm:text-[16px] text-[#334155] pt-1">
                     {storyTabs[activeStoryTab].points.map((pt, i) => (
-                      <div key={i} className="flex items-start space-x-2">
-                        <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                      <div key={i} className="flex items-start space-x-2.5">
+                        <Check className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{pt}</span>
                       </div>
                     ))}
@@ -579,10 +576,10 @@ export const Home: React.FC = () => {
                   <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
                     <Link
                       to={storyTabs[activeStoryTab].link}
-                      className="w-full sm:w-auto justify-center px-5 py-3 sm:py-2.5 rounded-xl bg-[#9B1B22] hover:bg-[#7D131A] text-white text-xs font-semibold transition-colors flex items-center space-x-2 shadow-xs min-h-[44px]"
+                      className="w-full sm:w-auto justify-center px-6 py-3.5 rounded-xl bg-[#9B1B22] hover:bg-[#7D131A] text-white text-[16px] font-bold transition-colors flex items-center space-x-2 shadow-xs min-h-[48px]"
                     >
                       <span>{storyTabs[activeStoryTab].linkText}</span>
-                      <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                      <ArrowRight className="w-4 h-4 shrink-0" />
                     </Link>
                   </div>
                 </div>
@@ -590,25 +587,25 @@ export const Home: React.FC = () => {
             </AnimatePresence>
           </div>
 
-          {/* Founder Ethos Strip */}
-          <div className="p-4 sm:p-6 md:p-8 bg-white rounded-3xl border border-[#E8E6E1] shadow-card grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-            <div className="lg:col-span-2 flex items-center justify-center">
+          {/* Founder Ethos Strip (Retain Founder's Photograph with Prominence) */}
+          <div className="p-6 sm:p-8 md:p-10 bg-white rounded-3xl border border-[#E8E6E1] shadow-card grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+            <div className="lg:col-span-3 flex items-center justify-center">
               <img
                 src="/assets/images/leadership/ashwin_anjikar_president.jpg"
-                alt="Mr. Ashwin V. Anjikar — President"
-                className="w-24 h-28 object-cover rounded-2xl border-2 border-[#9B1B22]/20 shadow-xs"
+                alt="Mr. Ashwin V. Anjikar — Founder & President"
+                className="w-32 h-38 sm:w-36 sm:h-44 object-cover rounded-2xl border-2 border-[#9B1B22]/30 shadow-md"
               />
             </div>
-            <div className="lg:col-span-10 space-y-2">
-              <Quote className="w-6 h-6 text-[#9B1B22]/30" />
-              <p className="text-xs sm:text-sm text-[#334155] italic leading-relaxed font-serif">
+            <div className="lg:col-span-9 space-y-3">
+              <Quote className="w-8 h-8 text-[#9B1B22]/30" />
+              <p className="text-base sm:text-lg lg:text-xl text-[#0E1726] italic leading-relaxed font-serif">
                 “Our elders are not beneficiaries; they are our mothers and fathers (‘Aai-Baba’). At Vyenkatesh Ashram and across all our welfare initiatives, our sacred duty is to provide them with safety, peace, and loving companionship in their twilight years.”
               </p>
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-3 pt-2 text-sm sm:text-base">
                 <span className="font-bold text-[#0E1726]">
                   — Mr. Ashwin Vyenkatrao Anjikar (Founder & President)
                 </span>
-                <Link to="/about" className="text-[#9B1B22] hover:underline font-semibold">
+                <Link to="/about" className="text-[#9B1B22] hover:underline font-bold">
                   Read Full Leadership Profile & Governance →
                 </Link>
               </div>
@@ -627,19 +624,19 @@ export const Home: React.FC = () => {
 
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="max-w-2xl space-y-2">
-              <span className="text-xs font-bold text-[#9B1B22] uppercase tracking-wider block">
+              <span className="text-xs sm:text-sm font-bold text-[#9B1B22] uppercase tracking-wider block">
                 Comprehensive Program Directory (2015–2026)
               </span>
-              <h2 className="text-2xl sm:text-4xl font-bold tracking-tight text-[#0E1726]">
+              <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-bold tracking-tight text-[#0E1726]">
                 The 8 Pillars of Community Service
               </h2>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+              <p className="text-base sm:text-lg text-[#475569] leading-relaxed">
                 Every initiative addresses an authentic grassroots need across Nagpur District, structured according to Section 5 of the Foundation's Official Charter.
               </p>
             </div>
 
             {/* Filter Pills */}
-            <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center gap-2 self-stretch sm:self-start md:self-auto text-xs font-semibold pb-1 sm:pb-0 scroll-smooth">
+            <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center gap-2 self-stretch sm:self-start md:self-auto text-sm sm:text-[15px] font-bold pb-1 sm:pb-0 scroll-smooth">
               {[
                 { id: 'all', label: 'All 8 Pillars' },
                 { id: 'health', label: 'Healthcare' },
@@ -663,139 +660,139 @@ export const Home: React.FC = () => {
             </div>
           </div>
 
-          {/* FLAGSHIP FEATURE CARD: Initiative 5.1 (Vyenkatesh Ashram) */}
-          <InteractiveCard3D className="p-4 sm:p-6 md:p-8 bg-[#F4F3EE] border border-[#E8E6E1]">
+          {/* FLAGSHIP FEATURE CARD: Initiative 5.1 (Vyenkatesh Ashram) - Minimalist & Clean */}
+          <div className="p-6 sm:p-8 md:p-10 bg-[#F4F3EE] rounded-3xl border border-[#E8E6E1] shadow-card">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
               <div className="lg:col-span-5 rounded-2xl overflow-hidden border border-[#E8E6E1]">
                 <img
                   src="/assets/images/ashram/ashram_veranda_garden.jpg"
                   alt="Vyenkatesh Ashram Shaded Veranda and Grounds"
-                  className="w-full h-52 sm:h-64 lg:h-76 object-cover"
+                  className="w-full h-60 sm:h-72 lg:h-80 object-cover"
                 />
               </div>
 
-              <div className="lg:col-span-7 space-y-4">
+              <div className="lg:col-span-7 space-y-4 sm:space-y-5">
                 <div className="flex items-center space-x-2 flex-wrap gap-y-1">
-                  <span className="px-2 py-0.5 bg-[#9B1B22] text-white font-mono font-bold text-[10px] rounded">
+                  <span className="px-2.5 py-1 bg-[#9B1B22] text-white font-mono font-bold text-xs rounded">
                     Initiative 5.1
                   </span>
-                  <span className="text-xs font-bold text-[#9B1B22]">
+                  <span className="text-sm font-bold text-[#9B1B22]">
                     Elderly Residential Sanctuary • Flagship Program
                   </span>
                 </div>
 
-                <h3 className="text-lg sm:text-2xl font-bold text-[#0E1726]">
+                <h3 className="text-2xl sm:text-3xl font-bold text-[#0E1726]">
                   Elderly Care – Vyenkatesh Ashram (Old Age Home)
                 </h3>
 
-                <p className="text-xs font-serif italic text-[#9B1B22]">
+                <p className="text-base font-serif italic text-[#9B1B22]">
                   “Apno Se Door... Ek Apna Ghar...”
                 </p>
 
-                <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+                <p className="text-base sm:text-lg text-[#475569] leading-relaxed">
                   Operating at Anjikar Bagh, Mahuli (near Mansar), Vyenkatesh Ashram provides a loving, secure, and permanent home for abandoned, widowed, or solitary senior citizens. Residents are cared for with filial reverence as "Aai-Baba", receiving nutritious vegetarian meals, clean living rooms, daily medical checkups, spiritual satsang, and dignified lifelong care.
                 </p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-[#334155] pt-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[15px] sm:text-[16px] text-[#334155] pt-1">
                   <div className="flex items-center space-x-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-5 h-5 text-emerald-600 shrink-0" />
                     <span>24/7 safe residential accommodation</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-5 h-5 text-emerald-600 shrink-0" />
                     <span>Three home-cooked vegetarian meals daily</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-5 h-5 text-emerald-600 shrink-0" />
                     <span>Routine vital checks &amp; visiting doctor</span>
                   </div>
                   <div className="flex items-center space-x-2">
-                    <Check className="w-4 h-4 text-emerald-600 shrink-0" />
+                    <Check className="w-5 h-5 text-emerald-600 shrink-0" />
                     <span>Daily morning garden walks in Anjikar Bagh</span>
                   </div>
                 </div>
 
-                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5">
                   <Link
                     to="/old-age-home"
-                    className="w-full sm:w-auto justify-center px-5 py-3 sm:py-2.5 bg-[#9B1B22] hover:bg-[#7D131A] text-white font-semibold text-xs rounded-xl transition-colors flex items-center space-x-1.5 shadow-xs min-h-[44px]"
+                    className="w-full sm:w-auto justify-center px-6 py-3.5 bg-[#9B1B22] hover:bg-[#7D131A] text-white font-bold text-[16px] rounded-xl transition-colors flex items-center space-x-2 shadow-xs min-h-[48px]"
                   >
                     <span>Explore Senior Care Program</span>
-                    <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+                    <ArrowRight className="w-4 h-4 shrink-0" />
                   </Link>
                   <Link
                     to="/admission"
-                    className="w-full sm:w-auto justify-center text-center px-4 py-3 sm:py-2.5 bg-white hover:bg-[#F4F3EE] border border-[#D8D5CD] text-[#0E1726] font-semibold text-xs rounded-xl transition-colors min-h-[44px] flex items-center"
+                    className="w-full sm:w-auto justify-center text-center px-6 py-3.5 bg-white hover:bg-[#F4F3EE] border border-[#D8D5CD] text-[#0E1726] font-bold text-[16px] rounded-xl transition-colors min-h-[48px] flex items-center"
                   >
                     Admission Guidelines &amp; Enquiry
                   </Link>
                 </div>
               </div>
             </div>
-          </InteractiveCard3D>
+          </div>
 
-          {/* SECONDARY INITIATIVES: Grid of Interactive 3D Cards */}
-          <div className="space-y-4 pt-2">
-            <h3 className="text-lg font-bold text-[#0E1726]">
+          {/* SECONDARY INITIATIVES: Clean, Readable Cards */}
+          <div className="space-y-5 pt-2">
+            <h3 className="text-xl sm:text-2xl font-bold text-[#0E1726]">
               Community Development, Health & Animal Welfare Programs
             </h3>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredInitiatives.map((item) => {
                 const IconComp = item.icon;
                 return (
-                  <InteractiveCard3D
+                  <div
                     key={item.num}
-                    className="p-5 flex flex-col justify-between space-y-4 border border-[#E8E6E1] bg-white"
+                    className="p-6 rounded-2xl border border-[#E8E6E1] bg-white flex flex-col justify-between space-y-4 shadow-sm hover:border-[#D8D5CD] transition-all"
                   >
                     <div className="space-y-3">
                       <div className="flex items-center justify-between">
                         <div
-                          className="w-9 h-9 rounded-xl flex items-center justify-center text-white shrink-0 shadow-xs"
+                          className="w-10 h-10 rounded-xl flex items-center justify-center text-white shrink-0 shadow-xs"
                           style={{ backgroundColor: item.color }}
                         >
-                          <IconComp className="w-4 h-4" />
+                          <IconComp className="w-5 h-5" />
                         </div>
-                        <span className="font-mono text-[11px] font-bold text-[#9B1B22] bg-[#F4F3EE] px-2 py-0.5 rounded">
+                        <span className="font-mono text-xs font-bold text-[#9B1B22] bg-[#F4F3EE] px-2.5 py-1 rounded">
                           {item.num}
                         </span>
                       </div>
 
-                      <h4 className="font-bold text-sm text-[#0E1726] leading-snug">
+                      <h4 className="font-bold text-base sm:text-lg text-[#0E1726] leading-snug">
                         {item.title}
                       </h4>
 
-                      <p className="text-[11px] font-medium text-[#9B1B22] italic">
+                      <p className="text-xs sm:text-sm font-semibold text-[#9B1B22] italic">
                         {item.tagline}
                       </p>
 
-                      <p className="text-xs text-[#475569] leading-relaxed line-clamp-3">
+                      <p className="text-sm sm:text-base text-[#475569] leading-relaxed line-clamp-3">
                         {item.description}
                       </p>
                     </div>
 
-                    <div className="pt-2 border-t border-[#E8E6E1]">
+                    <div className="pt-3 border-t border-[#E8E6E1]">
                       <Link
                         to={item.route}
-                        className="inline-flex items-center space-x-1 text-xs font-semibold text-[#9B1B22] hover:underline"
+                        className="inline-flex items-center space-x-1.5 text-sm sm:text-[15px] font-bold text-[#9B1B22] hover:underline"
                       >
                         <span>Read Full Details</span>
-                        <ArrowRight className="w-3 h-3" />
+                        <ArrowRight className="w-3.5 h-3.5" />
                       </Link>
                     </div>
-                  </InteractiveCard3D>
+                  </div>
                 );
               })}
             </div>
           </div>
 
-          <div className="text-center pt-2">
+          <div className="text-center pt-3">
             <Link
               to="/services"
-              className="inline-flex items-center space-x-1.5 px-6 py-3 rounded-xl bg-[#F4F3EE] hover:bg-[#E8E6E1] text-[#0E1726] font-semibold text-xs border border-[#D8D5CD] transition-colors shadow-xs"
+              className="inline-flex items-center space-x-2 px-7 py-4 rounded-xl bg-[#F4F3EE] hover:bg-[#E8E6E1] text-[#0E1726] font-bold text-[16px] border border-[#D8D5CD] transition-colors shadow-xs min-h-[48px]"
             >
               <span>View Full 8 Pillars Directory & CSR Alignment</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
         </div>
@@ -809,24 +806,24 @@ export const Home: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-4 md:px-8 space-y-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div className="space-y-2 max-w-2xl">
-              <span className="text-xs font-bold text-[#9B1B22] uppercase tracking-wider flex items-center space-x-1.5">
-                <Camera className="w-3.5 h-3.5" />
+              <span className="text-xs sm:text-sm font-bold text-[#9B1B22] uppercase tracking-wider flex items-center space-x-2">
+                <Camera className="w-4 h-4" />
                 <span>Documented Field Evidence • Original Photographs</span>
               </span>
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0E1726]">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight text-[#0E1726]">
                 Real Faces, Real Service, Authentic Impact
               </h2>
-              <p className="text-xs sm:text-sm text-[#475569] leading-relaxed">
+              <p className="text-base sm:text-lg text-[#475569] leading-relaxed">
                 Click any photograph to view in high definition. Every image documents authentic humanitarian service at Vyenkatesh Ashram and across rural Vidarbha.
               </p>
             </div>
 
             <Link
               to="/gallery"
-              className="inline-flex items-center space-x-2 text-xs font-semibold text-[#9B1B22] hover:text-[#7D131A] bg-[#FDF2F2] hover:bg-[#FCDADA] border border-[#FCDADA] px-4 py-2.5 rounded-xl transition-all self-start md:self-auto shrink-0 shadow-2xs"
+              className="inline-flex items-center space-x-2 text-sm sm:text-base font-bold text-[#9B1B22] hover:text-[#7D131A] bg-[#FDF2F2] hover:bg-[#FCDADA] border border-[#FCDADA] px-5 py-3 rounded-xl transition-all self-start md:self-auto shrink-0 shadow-2xs min-h-[46px]"
             >
               <span>Explore Complete Gallery</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 
@@ -838,26 +835,26 @@ export const Home: React.FC = () => {
                 onClick={() => setLightboxPhoto(item)}
                 className="group bg-white rounded-2xl overflow-hidden border border-[#E8E6E1] shadow-card hover:border-[#D8D5CD] transition-all cursor-pointer"
               >
-                <div className="h-52 overflow-hidden relative">
+                <div className="h-56 overflow-hidden relative">
                   <img
                     src={item.src}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                    <span className="p-2 bg-white/90 text-stone-900 rounded-full shadow-lg">
-                      <Maximize2 className="w-4 h-4" />
+                    <span className="p-2.5 bg-white/90 text-stone-900 rounded-full shadow-lg">
+                      <Maximize2 className="w-5 h-5" />
                     </span>
                   </div>
-                  <span className="absolute bottom-2 left-2 bg-[#0E1726]/85 text-white text-[10px] font-semibold px-2.5 py-0.5 rounded backdrop-blur-xs">
+                  <span className="absolute bottom-2.5 left-2.5 bg-[#0E1726]/85 text-white text-xs font-semibold px-3 py-1 rounded backdrop-blur-xs">
                     {item.category}
                   </span>
                 </div>
-                <div className="p-4 space-y-1.5">
-                  <h3 className="font-bold text-sm text-[#0E1726] group-hover:text-[#9B1B22] transition-colors">
+                <div className="p-5 space-y-2">
+                  <h3 className="font-bold text-base sm:text-lg text-[#0E1726] group-hover:text-[#9B1B22] transition-colors leading-snug">
                     {item.title}
                   </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed">
+                  <p className="text-sm sm:text-[15px] text-[#64748B] leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -893,14 +890,14 @@ export const Home: React.FC = () => {
               />
             </div>
 
-            <div className="p-4 sm:p-6 space-y-1.5 sm:space-y-2 bg-[#0E1726] shrink-0 border-t border-[#1E293B]">
-              <span className="text-[10px] sm:text-xs uppercase font-bold text-[#C5A059] tracking-wider block">
+            <div className="p-5 sm:p-7 space-y-2 bg-[#0E1726] shrink-0 border-t border-[#1E293B]">
+              <span className="text-xs sm:text-sm uppercase font-bold text-[#C5A059] tracking-wider block">
                 {lightboxPhoto.category} • SBBM Social Foundation Field Evidence
               </span>
-              <h2 className="text-base sm:text-xl font-bold text-white">
+              <h2 className="text-lg sm:text-2xl font-bold text-white">
                 {lightboxPhoto.title}
               </h2>
-              <p className="text-xs text-slate-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-slate-200 leading-relaxed">
                 {lightboxPhoto.description}
               </p>
             </div>
@@ -911,7 +908,7 @@ export const Home: React.FC = () => {
       {/* =========================================================================
           SECTION E: FINAL CALL TO ACTION (Visible Welcoming Campus Backdrop)
          ========================================================================= */}
-      <section className="relative py-14 sm:py-20 md:py-28 text-white overflow-hidden bg-[#0A111A] border-y border-[#1E293B]">
+      <section className="relative py-16 sm:py-24 md:py-32 text-white overflow-hidden bg-[#0A111A] border-y border-[#1E293B]">
         {/* Real Visible Background Photograph: Welcoming Entrance Gate */}
         <div className="absolute inset-0 z-0">
           <img
@@ -923,34 +920,34 @@ export const Home: React.FC = () => {
           <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/85 via-[#0A111A]/70 to-[#0A111A]/90" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 text-center space-y-5 sm:space-y-6">
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-[#0E1726]/60 backdrop-blur-md text-[#C5A059] text-xs font-bold border border-[#C5A059]/30">
-            <Heart className="w-3.5 h-3.5 fill-[#C5A059] shrink-0" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 md:px-8 text-center space-y-6 sm:space-y-7">
+          <div className="inline-flex items-center space-x-2 px-4 py-2 rounded-full bg-[#0E1726]/60 backdrop-blur-md text-[#C5A059] text-xs sm:text-sm font-bold border border-[#C5A059]/30">
+            <Heart className="w-4 h-4 fill-[#C5A059] shrink-0" />
             <span>Join Hands in Service</span>
           </div>
 
-          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white drop-shadow-sm leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white drop-shadow-sm leading-tight">
             Have questions or wish to visit our campus?
           </h2>
 
-          <p className="text-xs sm:text-base text-slate-200 max-w-xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg md:text-xl text-slate-200 max-w-2xl mx-auto leading-relaxed">
             Whether you want to sponsor meals, volunteer your skills, explore CSR opportunities, or enroll an elderly resident, our doors and helplines are always open.
           </p>
 
-          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 w-full sm:w-auto max-w-md mx-auto sm:max-w-none">
+          <div className="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3.5 w-full sm:w-auto max-w-md mx-auto sm:max-w-none">
             <Link
               to="/contact"
-              className="w-full sm:w-auto justify-center px-6 py-3.5 rounded-xl bg-[#9B1B22] hover:bg-[#7D131A] text-white font-semibold text-xs transition-colors shadow-md flex items-center space-x-2 min-h-[44px]"
+              className="w-full sm:w-auto justify-center px-7 py-4 rounded-xl bg-[#9B1B22] hover:bg-[#7D131A] text-white font-bold text-[16px] sm:text-[17px] transition-colors shadow-md flex items-center space-x-2 min-h-[50px]"
             >
               <span>Contact Our Team</span>
-              <ArrowRight className="w-3.5 h-3.5 shrink-0" />
+              <ArrowRight className="w-4 h-4 shrink-0" />
             </Link>
 
             <Link
               to="/support"
-              className="w-full sm:w-auto justify-center px-6 py-3.5 rounded-xl bg-white/95 hover:bg-white text-[#0E1726] font-semibold text-xs transition-colors shadow-md flex items-center space-x-1.5 min-h-[44px]"
+              className="w-full sm:w-auto justify-center px-7 py-4 rounded-xl bg-white/95 hover:bg-white text-[#0E1726] font-bold text-[16px] sm:text-[17px] transition-colors shadow-md flex items-center space-x-2 min-h-[50px]"
             >
-              <Heart className="w-3.5 h-3.5 text-[#9B1B22] shrink-0" />
+              <Heart className="w-4 h-4 text-[#9B1B22] shrink-0" />
               <span>Donate via UPI &amp; Bank (80G)</span>
             </Link>
           </div>
@@ -963,19 +960,19 @@ export const Home: React.FC = () => {
       <section className="py-16 md:py-24 bg-white">
         <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-8">
 
-          <div className="text-center space-y-2">
-            <span className="text-xs font-bold text-[#9B1B22] uppercase tracking-wider block">
+          <div className="text-center space-y-3">
+            <span className="text-xs sm:text-sm font-bold text-[#9B1B22] uppercase tracking-wider block">
               Institutional Information
             </span>
-            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#0E1726]">
+            <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-[#0E1726]">
               Frequently Asked Questions
             </h2>
-            <p className="text-xs sm:text-sm text-[#64748B]">
+            <p className="text-base sm:text-lg text-[#64748B]">
               Authentic verified answers regarding governance, old-age home admissions, and statutory certifications.
             </p>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3.5">
             {faqs.map((faq, idx) => {
               const isOpen = openFaq === idx;
               return (
@@ -986,10 +983,10 @@ export const Home: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => toggleFaq(idx)}
-                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-xs sm:text-sm text-[#0E1726] hover:bg-[#E8E6E1]/50 transition-colors cursor-pointer"
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 font-bold text-base sm:text-lg text-[#0E1726] hover:bg-[#E8E6E1]/50 transition-colors cursor-pointer"
                   >
                     <span>{faq.q}</span>
-                    <ChevronDown className={`w-4 h-4 text-[#64748B] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#9B1B22]' : ''}`} />
+                    <ChevronDown className={`w-5 h-5 text-[#64748B] shrink-0 transition-transform duration-200 ${isOpen ? 'rotate-180 text-[#9B1B22]' : ''}`} />
                   </button>
 
                   <AnimatePresence>
@@ -1000,7 +997,7 @@ export const Home: React.FC = () => {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.2 }}
                       >
-                        <div className="px-4 sm:px-5 pb-5 pt-1 text-xs sm:text-sm text-[#334155] leading-relaxed border-t border-[#E8E6E1]">
+                        <div className="px-5 sm:px-6 pb-6 pt-2 text-base sm:text-[17px] text-[#334155] leading-relaxed border-t border-[#E8E6E1]">
                           {faq.a}
                         </div>
                       </motion.div>
@@ -1011,13 +1008,13 @@ export const Home: React.FC = () => {
             })}
           </div>
 
-          <div className="text-center pt-2">
+          <div className="text-center pt-3">
             <Link
               to="/faq"
-              className="text-xs font-semibold text-[#9B1B22] hover:underline inline-flex items-center space-x-1"
+              className="text-sm sm:text-base font-bold text-[#9B1B22] hover:underline inline-flex items-center space-x-1.5"
             >
               <span>Have more questions? Read our full FAQ Knowledgebase</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
 

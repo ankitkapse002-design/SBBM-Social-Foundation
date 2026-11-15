@@ -497,9 +497,9 @@ export const AdminDashboard: React.FC = () => {
           {/* Left Brand Identity */}
           <div className="flex items-center space-x-3">
             <img
-              src="/assets/images/logo.jpg"
+              src="/assets/images/logo.png"
               alt="SBBM Social Foundation"
-              className="w-10 h-10 rounded-full object-cover border border-[#D4AF37] shadow-xs bg-white"
+              className="w-10 h-10 object-contain shrink-0 drop-shadow-xs"
             />
             <div>
               <div className="flex items-center space-x-2">

@@ -7,7 +7,6 @@ import {
   Calendar, Award, HandHeart, Info
 } from 'lucide-react';
 import { apiRequest } from '../api';
-import { MinimalistBackdrop } from '../components/ui/MinimalistBackdrop';
 import { SEO } from '../components/common/SEO';
 
 export interface ServiceItem {
@@ -208,7 +207,6 @@ export const Services: React.FC = () => {
     apiRequest<{ success: boolean; data: ServiceItem[] }>('/public/services')
       .then((res) => {
         if (res.success && Array.isArray(res.data) && res.data.length > 0) {
-          // Merge API data with rich official metadata
           const merged = OFFICIAL_SERVICES.map(off => {
             const apiMatch = res.data.find(
               d => d.slug === off.slug || d.id === off.id || (off.aliases && off.aliases.includes(d.slug))
@@ -269,7 +267,7 @@ export const Services: React.FC = () => {
 
   if (slug && selectedService) {
     return (
-      <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+      <div className="min-h-screen bg-foundation-ivory py-10 sm:py-14 md:py-16 font-sans">
         <SEO
           title={`${selectedService.title} | Initiatives`}
           description={selectedService.shortDesc}
@@ -288,10 +286,10 @@ export const Services: React.FC = () => {
             'areaServed': 'Nagpur District, Maharashtra',
           }}
         />
-        <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-8">
+        <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-6 sm:space-y-8">
           <Link
             to="/services"
-            className="inline-flex items-center space-x-2 text-xs font-bold text-foundation-crimson hover:text-foundation-crimsonDark"
+            className="inline-flex items-center space-x-2 text-sm font-bold text-foundation-crimson hover:text-foundation-crimsonDark"
           >
             <span>← Back to All 8 Core Initiatives</span>
           </Link>
@@ -306,10 +304,10 @@ export const Services: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
               <div className="absolute bottom-6 left-6 right-6 text-white space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="px-3 py-1 rounded-full bg-foundation-gold text-foundation-charcoal text-[11px] font-bold">
+                  <span className="px-3 py-1 rounded-full bg-foundation-gold text-foundation-charcoal text-xs font-bold">
                     Initiative {selectedService.initiativeNumber || '5.0'}
                   </span>
-                  <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur text-white text-[11px] font-semibold">
+                  <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur text-white text-xs font-semibold">
                     {selectedService.category || 'SBBM Social Foundation'}
                   </span>
                 </div>
@@ -317,7 +315,7 @@ export const Services: React.FC = () => {
                   {selectedService.title}
                 </h1>
                 {selectedService.tagline && (
-                  <p className="text-xs sm:text-sm text-foundation-gold italic">
+                  <p className="text-sm sm:text-base text-foundation-gold italic">
                     "{selectedService.tagline}"
                   </p>
                 )}
@@ -326,14 +324,14 @@ export const Services: React.FC = () => {
 
             <div className="p-6 sm:p-10 space-y-8">
               {/* Location & Status Stripe */}
-              <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-foundation-warmGray border border-foundation-borderMuted text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-foundation-warmGray border border-foundation-borderMuted text-sm">
                 <div className="flex items-center space-x-2 text-stone-700">
                   <MapPin className="w-4 h-4 text-foundation-crimson flex-shrink-0" />
                   <span><strong>Operational Location:</strong> {selectedService.location || 'Nagpur District / Mahuli Centre'}</span>
                 </div>
                 <div className="flex items-center space-x-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-bold text-emerald-800 uppercase tracking-wider text-[11px]">
+                  <span className="font-bold text-emerald-800 uppercase tracking-wider text-xs">
                     {selectedService.operationalStatus === 'active' ? 'Fully Operational' : 'Active Program'}
                   </span>
                 </div>
@@ -341,24 +339,24 @@ export const Services: React.FC = () => {
 
               {/* Program Overview */}
               <div className="space-y-3">
-                <h2 className="text-xl font-display font-bold text-foundation-charcoal flex items-center space-x-2">
-                  <BookOpen className="w-5 h-5 text-foundation-crimson" />
-                  <span>Program Overview & Institutional Scope</span>
+                <h2 className="text-2xl font-display font-bold text-foundation-charcoal flex items-center space-x-2.5">
+                  <BookOpen className="w-6 h-6 text-foundation-crimson" />
+                  <span>Program Overview &amp; Institutional Scope</span>
                 </h2>
-                <p className="text-xs sm:text-sm text-stone-600 leading-relaxed whitespace-pre-line">
+                <p className="text-[16px] sm:text-[17px] text-stone-700 leading-relaxed whitespace-pre-line">
                   {selectedService.fullDesc}
                 </p>
               </div>
 
               {/* Key Features & Beneficiary Scope */}
               <div className="space-y-4 pt-2">
-                <h3 className="text-base font-display font-bold text-foundation-forest flex items-center space-x-2">
-                  <CheckCircle2 className="w-5 h-5 text-foundation-forest" />
-                  <span>Key Features & Beneficiary Scope</span>
+                <h3 className="text-xl font-display font-bold text-foundation-forest flex items-center space-x-2.5">
+                  <CheckCircle2 className="w-6 h-6 text-foundation-forest" />
+                  <span>Key Features &amp; Beneficiary Scope</span>
                 </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   {selectedService.benefits.map((benefit, i) => (
-                    <div key={i} className="flex items-start space-x-2 text-xs text-stone-700 bg-emerald-50/50 border border-emerald-100 p-3.5 rounded-xl">
+                    <div key={i} className="flex items-start space-x-2.5 text-sm sm:text-[15px] text-stone-700 bg-emerald-50/50 border border-emerald-100 p-4 rounded-2xl">
                       <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0 mt-0.5" />
                       <span className="leading-relaxed">{benefit}</span>
                     </div>
@@ -367,19 +365,19 @@ export const Services: React.FC = () => {
               </div>
 
               {/* Transparent Institutional Notice */}
-              <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-amber-950 flex items-start space-x-3">
+              <div className="p-4 sm:p-5 bg-amber-50 rounded-2xl border border-amber-200 text-xs sm:text-sm text-amber-950 flex items-start space-x-3">
                 <Info className="w-5 h-5 text-amber-700 flex-shrink-0 mt-0.5" />
                 <div className="space-y-1">
-                  <p className="font-bold">Institutional Transparency & Tax Exemption Notice:</p>
-                  <p>
-                    All programs of SBBM Social Foundation operate under our registered non-profit charter (MAH/332/15/NAG & F-33193). Contributions to these initiatives are eligible for income tax benefits under Section 80G of the Income Tax Act, 1961.
+                  <p className="font-bold text-sm">Institutional Transparency &amp; Tax Exemption Notice:</p>
+                  <p className="leading-relaxed">
+                    All programs of SBBM Social Foundation operate under our registered non-profit charter (MAH/332/15/NAG &amp; F-33193). Contributions to these initiatives are eligible for income tax benefits under Section 80G of the Income Tax Act, 1961.
                   </p>
                 </div>
               </div>
 
               {/* CTA and Contact Information */}
               <div className="pt-6 border-t border-foundation-borderMuted flex flex-wrap items-center justify-between gap-4">
-                <div className="text-xs text-stone-500 space-y-1">
+                <div className="text-xs sm:text-sm text-stone-600 space-y-1">
                   <p>Operational Helpline: <strong>+91 98908 98081 / +91 93261 72824</strong></p>
                   <p>Email: <strong>sbbmsocialfoundation@gmail.com</strong></p>
                 </div>
@@ -387,16 +385,16 @@ export const Services: React.FC = () => {
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
                   <Link
                     to="/support"
-                    className="justify-center px-5 py-3 bg-[#9B1B22] hover:bg-[#7D131A] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center space-x-1.5 min-h-[44px]"
+                    className="justify-center px-6 py-3.5 bg-[#9B1B22] hover:bg-[#7D131A] text-white text-sm font-bold rounded-xl shadow-xs transition-colors flex items-center space-x-2 min-h-[48px]"
                   >
-                    <Heart className="w-3.5 h-3.5 fill-white" />
+                    <Heart className="w-4 h-4 fill-white" />
                     <span>Support this Program</span>
                   </Link>
                   <Link
                     to="/contact"
-                    className="justify-center px-5 py-3 bg-[#0E1726] hover:bg-[#131F33] text-white text-xs font-bold rounded-xl shadow-xs transition-colors flex items-center space-x-1.5 min-h-[44px]"
+                    className="justify-center px-6 py-3.5 bg-[#0E1726] hover:bg-[#131F33] text-white text-sm font-bold rounded-xl shadow-xs transition-colors flex items-center space-x-2 min-h-[48px]"
                   >
-                    <Phone className="w-3.5 h-3.5" />
+                    <Phone className="w-4 h-4" />
                     <span>Enquire or Visit</span>
                   </Link>
                 </div>
@@ -409,7 +407,7 @@ export const Services: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#fafaf8] py-12 md:py-16 font-sans">
+    <div className="min-h-screen bg-[#fafaf8] py-10 sm:py-14 md:py-16 font-sans">
       <SEO
         title="Core Social Initiatives & Grassroots Programs"
         description="Explore the 8 active grassroots welfare initiatives of SBBM Social Foundation — elder care at Vyenkatesh Ashram, free Annadaan, youth computer literacy, women self-reliance, and Go-Seva across Nagpur."
@@ -427,9 +425,9 @@ export const Services: React.FC = () => {
           })),
         }}
       />
-      <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-12">
+      <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
         {/* Full-Width Visual Photographic Header Banner */}
-        <div className="relative rounded-3xl overflow-hidden border border-[#1E293B] shadow-card bg-[#0A111A] text-white p-5 sm:p-8 md:p-14 text-center">
+        <div className="relative rounded-3xl overflow-hidden border border-[#1E293B] shadow-card bg-[#0A111A] text-white p-6 sm:p-10 md:p-16 text-center">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/activities/community_seva_gathering_1.jpg"
@@ -437,24 +435,24 @@ export const Services: React.FC = () => {
               className="w-full h-full object-cover object-center scale-105"
             />
             {/* Calibrated dark overlay: community seva clearly visible while text pops */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/85 via-[#0A111A]/70 to-[#0A111A]/90" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A111A]/90 via-[#0A111A]/75 to-[#0A111A]/92" />
           </div>
 
-          <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-4">
-            <div className="inline-flex flex-wrap items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl sm:rounded-full bg-[#0E1726]/70 backdrop-blur-md text-[#C5A059] text-[11px] sm:text-xs font-bold border border-[#C5A059]/30">
-              <Compass className="w-3.5 h-3.5 shrink-0" />
+          <div className="relative z-10 max-w-3xl mx-auto space-y-3 sm:space-y-5">
+            <div className="inline-flex flex-wrap items-center justify-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0E1726]/80 backdrop-blur-md text-[#C5A059] text-xs sm:text-sm font-bold border border-[#C5A059]/30">
+              <Compass className="w-4 h-4 shrink-0" />
               <span>Comprehensive Institutional Programs (2015–2026)</span>
             </div>
 
-            <h1 className="text-2xl sm:text-3xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-white tracking-tight drop-shadow-sm leading-tight">
               Our 8 Core Initiatives &amp; Welfare Pillars
             </h1>
 
-            <p className="text-xs md:text-sm text-slate-200 leading-relaxed max-w-2xl mx-auto">
+            <p className="text-sm sm:text-base md:text-[17px] text-slate-200 leading-relaxed max-w-2xl mx-auto">
               Founded in December 2014 and registered under the Societies Registration Act (MAH/332/15/NAG) and Bombay Public Trusts Act (F-33193). We serve grassroots communities through dignified elder care, social welfare distribution, digital education, women's self-reliance, and animal sanctuary.
             </p>
 
-            <p className="text-xs font-semibold text-[#C5A059] font-serif italic">
+            <p className="text-sm sm:text-base font-semibold text-[#C5A059] font-serif italic">
               "Service is Humanity • Education is Development • Self-Reliance is the Foundation of an Empowered Society"
             </p>
           </div>
@@ -466,9 +464,9 @@ export const Services: React.FC = () => {
             <button
               key={opt.id}
               onClick={() => setFilterCategory(opt.id)}
-              className={`shrink-0 sm:shrink min-h-[44px] px-3.5 sm:px-4 py-2 rounded-full text-xs font-bold transition-all whitespace-nowrap cursor-pointer ${
+              className={`shrink-0 sm:shrink min-h-[46px] px-4 sm:px-5 py-2.5 rounded-full text-sm sm:text-[15px] font-semibold transition-all whitespace-nowrap cursor-pointer ${
                 filterCategory === opt.id
-                  ? 'bg-[#9B1B22] text-white shadow-md'
+                  ? 'bg-[#9B1B22] text-white shadow-md font-bold'
                   : 'bg-white text-[#334155] border border-[#E8E6E1] hover:bg-[#F4F3EE]'
               }`}
             >
@@ -478,51 +476,51 @@ export const Services: React.FC = () => {
         </div>
 
         {/* Initiatives Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           {filteredServices.map((srv) => (
             <div
               key={srv.id}
               className="bg-white rounded-3xl overflow-hidden border border-stone-200 shadow-soft hover:shadow-soft-lg transition-all group flex flex-col justify-between"
             >
               <div>
-                <div className="h-52 overflow-hidden relative">
+                <div className="h-56 overflow-hidden relative">
                   <img
                     src={srv.image}
                     alt={srv.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
-                    <span className="px-3 py-1 bg-foundation-crimson/95 text-white text-[10px] font-bold rounded-full uppercase tracking-wider">
+                    <span className="px-3 py-1 bg-foundation-crimson/95 text-white text-[11px] font-bold rounded-full uppercase tracking-wider">
                       Initiative {srv.initiativeNumber}
                     </span>
-                    <span className="px-2.5 py-1 bg-black/60 backdrop-blur text-white text-[10px] font-medium rounded-full">
+                    <span className="px-2.5 py-1 bg-black/60 backdrop-blur text-white text-[11px] font-medium rounded-full">
                       {srv.category}
                     </span>
                   </div>
-                  <span className="absolute bottom-3 right-3 px-2.5 py-0.5 bg-white/90 text-stone-700 text-[10px] font-bold rounded-full shadow-sm">
+                  <span className="absolute bottom-3 right-3 px-2.5 py-0.5 bg-white/90 text-stone-700 text-xs font-bold rounded-full shadow-sm">
                     {srv.operationalStatus === 'active' ? 'Operational' : 'Active'}
                   </span>
                 </div>
 
-                <div className="p-6 space-y-3">
-                  <h3 className="text-lg font-display font-bold text-foundation-charcoal group-hover:text-foundation-crimson transition-colors leading-snug">
+                <div className="p-6 sm:p-7 space-y-3">
+                  <h3 className="text-xl font-display font-bold text-foundation-charcoal group-hover:text-foundation-crimson transition-colors leading-snug">
                     {srv.title}
                   </h3>
 
                   {srv.tagline && (
-                    <p className="text-[11px] text-foundation-crimson font-medium italic">
+                    <p className="text-xs sm:text-sm text-foundation-crimson font-medium italic">
                       "{srv.tagline}"
                     </p>
                   )}
 
-                  <p className="text-xs text-stone-600 leading-relaxed line-clamp-3">
+                  <p className="text-sm sm:text-[15px] text-stone-600 leading-relaxed line-clamp-3">
                     {srv.shortDesc}
                   </p>
 
                   <div className="space-y-1.5 pt-2 border-t border-foundation-borderMuted/60">
                     {srv.benefits.slice(0, 2).map((b, bi) => (
-                      <p key={bi} className="text-[11px] text-stone-500 flex items-start space-x-1.5">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-foundation-forest flex-shrink-0 mt-0.5" />
+                      <p key={bi} className="text-xs sm:text-sm text-stone-500 flex items-start space-x-2">
+                        <CheckCircle2 className="w-4 h-4 text-foundation-forest flex-shrink-0 mt-0.5" />
                         <span className="line-clamp-1">{b}</span>
                       </p>
                     ))}
@@ -530,18 +528,18 @@ export const Services: React.FC = () => {
                 </div>
               </div>
 
-              <div className="p-6 pt-0 flex items-center justify-between border-t border-foundation-borderMuted/40">
-                <div className="flex items-center space-x-1 text-[11px] text-stone-500">
-                  <MapPin className="w-3 h-3 text-stone-400" />
+              <div className="p-6 sm:p-7 pt-0 flex items-center justify-between border-t border-foundation-borderMuted/40">
+                <div className="flex items-center space-x-1.5 text-xs text-stone-500">
+                  <MapPin className="w-3.5 h-3.5 text-stone-400 shrink-0" />
                   <span className="truncate max-w-[140px]">{srv.location?.split(',')[0]}</span>
                 </div>
 
                 <Link
                   to={`/services/${srv.slug}`}
-                  className="inline-flex items-center space-x-1 text-xs font-bold text-foundation-crimson hover:text-foundation-crimsonDark"
+                  className="inline-flex items-center space-x-1 text-sm font-bold text-foundation-crimson hover:text-foundation-crimsonDark min-h-[44px] py-1"
                 >
                   <span>Read Details</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
             </div>
@@ -549,7 +547,7 @@ export const Services: React.FC = () => {
         </div>
 
         {/* Bottom Assurance Banner with Visible Background Photograph */}
-        <div className="relative rounded-3xl overflow-hidden p-8 sm:p-10 text-white shadow-elevated bg-stone-950 border border-stone-800">
+        <div className="relative rounded-3xl overflow-hidden p-8 sm:p-12 text-white shadow-elevated bg-stone-950 border border-stone-800">
           <div className="absolute inset-0 z-0">
             <img
               src="/assets/images/activities/independence_day_2022.jpg"
@@ -561,15 +559,15 @@ export const Services: React.FC = () => {
           </div>
 
           <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="space-y-2 text-center md:text-left max-w-2xl">
-              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs font-bold border border-white/20">
-                <Shield className="w-3.5 h-3.5" />
-                <span>Section 12A & 80G Certified Society</span>
+            <div className="space-y-2.5 text-center md:text-left max-w-2xl">
+              <div className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-amber-300 text-xs sm:text-sm font-bold border border-white/20">
+                <Shield className="w-4 h-4" />
+                <span>Section 12A &amp; 80G Certified Society</span>
               </div>
-              <h2 className="text-xl sm:text-2xl font-display font-bold text-white">
-                Partner With SBBM Social Foundation for CSR & Community Welfare
+              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">
+                Partner With SBBM Social Foundation for CSR &amp; Community Welfare
               </h2>
-              <p className="text-xs text-stone-200 leading-relaxed">
+              <p className="text-sm sm:text-base text-stone-200 leading-relaxed">
                 Explore corporate CSR partnerships under Schedule VII of the Companies Act, 2013 or sponsor meals, cow fodder, education kits, and medical checkups with 100% transparent reporting.
               </p>
             </div>
@@ -577,13 +575,13 @@ export const Services: React.FC = () => {
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
               <Link
                 to="/support"
-                className="justify-center px-6 py-3.5 bg-[#9B1B22] hover:bg-[#7D131A] text-white text-xs font-bold rounded-xl shadow-md transition-all flex items-center min-h-[44px]"
+                className="justify-center px-6 py-3.5 bg-[#9B1B22] hover:bg-[#7D131A] text-white text-sm font-bold rounded-xl shadow-md transition-all flex items-center min-h-[48px]"
               >
                 Support Our Work
               </Link>
               <Link
                 to="/contact"
-                className="justify-center px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs font-bold rounded-xl transition-all flex items-center min-h-[44px]"
+                className="justify-center px-6 py-3.5 bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-bold rounded-xl transition-all flex items-center min-h-[48px]"
               >
                 Contact Office
               </Link>

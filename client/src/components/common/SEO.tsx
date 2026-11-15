@@ -12,7 +12,7 @@ export interface SEOProps {
 
 const SITE_NAME = 'SBBM Social Foundation';
 const BASE_URL = 'https://sbbmsocialfoundation.org';
-const DEFAULT_IMAGE = `${BASE_URL}/assets/images/logo.jpg`;
+const DEFAULT_IMAGE = `${BASE_URL}/assets/images/logo.png`;
 const DEFAULT_DESCRIPTION =
   'Official platform of SBBM Social Foundation — an active grassroots non-profit in Nagpur dedicated to senior citizens shelter at Vyenkatesh Ashram, free Annadaan, youth computer education, women self-reliance, and Go-Seva. Registered under MAH/332/15/NAG with 80G tax benefits.';
 

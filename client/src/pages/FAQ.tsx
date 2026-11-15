@@ -52,23 +52,23 @@ export const FAQ: React.FC = () => {
   } : undefined;
 
   return (
-    <div className="min-h-screen bg-foundation-ivory py-12 md:py-16">
+    <div className="min-h-screen bg-foundation-ivory py-10 sm:py-14 md:py-16 font-sans">
       <SEO
         title="Frequently Asked Questions (FAQ) | Verified Answers"
         description="Clear, honest answers about SBBM Social Foundation, elder resident admissions at Vyenkatesh Ashram, daily Annadaan meals, Go-Seva, visiting hours, and 80G tax benefits."
         canonicalPath="/faq"
         jsonLd={faqJsonLd}
       />
-      <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-12">
-        <div className="text-center space-y-3">
-          <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs font-semibold">
-            <HelpCircle className="w-3.5 h-3.5" />
-            <span>Common Questions & Honest Guidance</span>
+      <div className="max-w-4xl mx-auto px-4 md:px-8 space-y-8 sm:space-y-12">
+        <div className="text-center space-y-3 sm:space-y-4">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-foundation-forest/10 text-foundation-forest text-xs sm:text-sm font-bold">
+            <HelpCircle className="w-4 h-4" />
+            <span>Common Questions &amp; Honest Guidance</span>
           </div>
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-foundation-charcoal">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-foundation-charcoal">
             Frequently Asked Questions
           </h1>
-          <p className="text-xs md:text-sm text-stone-600 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-[17px] text-stone-600 max-w-2xl mx-auto leading-relaxed">
             Find verified information regarding admissions, foundation facilities, visiting hours, Go-Seva, and donations.
           </p>
         </div>
@@ -76,17 +76,17 @@ export const FAQ: React.FC = () => {
         {/* Search Bar & Category Filters */}
         <div className="space-y-4">
           <div className="relative">
-            <Search className="w-4 h-4 text-stone-400 absolute left-4 top-3.5" />
+            <Search className="w-5 h-5 text-stone-400 absolute left-4 top-4" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search questions (e.g. admission, address, cows, donations)..."
-              className="w-full pl-11 pr-4 py-3 bg-white rounded-2xl border border-foundation-borderMuted shadow-soft-sm text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-foundation-forest"
+              className="w-full pl-12 pr-4 py-3.5 min-h-[50px] bg-white rounded-2xl border border-foundation-borderMuted shadow-soft-sm text-[16px] text-foundation-charcoal focus:outline-none focus:ring-2 focus:ring-foundation-forest"
             />
           </div>
 
-          <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 text-xs font-bold pb-1 scroll-smooth">
+          <div className="flex overflow-x-auto no-scrollbar touch-scroll-x sm:flex-wrap items-center sm:justify-center gap-2 text-sm font-semibold pb-1 scroll-smooth">
             {[
               { id: 'all', label: 'All FAQs' },
               { id: 'admission', label: 'Admission & Eligibility' },
@@ -97,9 +97,9 @@ export const FAQ: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer ${
+                className={`shrink-0 sm:shrink min-h-[46px] px-4 sm:px-5 py-2.5 rounded-full transition-all whitespace-nowrap cursor-pointer text-sm font-semibold ${
                   selectedCategory === cat.id
-                    ? 'bg-foundation-forest text-foundation-ivory shadow-xs'
+                    ? 'bg-foundation-forest text-foundation-ivory shadow font-bold'
                     : 'bg-white text-stone-700 border border-foundation-borderMuted hover:bg-stone-50'
                 }`}
               >
@@ -111,36 +111,36 @@ export const FAQ: React.FC = () => {
 
         {/* Accordion FAQ list */}
         {isLoading ? (
-          <div className="text-center py-12 text-stone-400 text-xs">
+          <div className="text-center py-16 text-stone-400 text-sm">
             Loading FAQs...
           </div>
         ) : filteredFaqs.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-2xl border border-foundation-borderMuted text-xs text-stone-500">
+          <div className="text-center py-16 bg-white rounded-3xl border border-foundation-borderMuted text-sm text-stone-500">
             No FAQs found matching your search. Call our helpline at +91 98908 98081 for immediate assistance.
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-4">
             {filteredFaqs.map((faq) => {
               const isOpen = openId === faq.id;
               return (
                 <div
                   key={faq.id}
-                  className="bg-white rounded-2xl border border-foundation-borderMuted shadow-soft-sm overflow-hidden transition-all"
+                  className="bg-white rounded-2xl border border-foundation-borderMuted shadow-soft overflow-hidden transition-all"
                 >
                   <button
                     onClick={() => setOpenId(isOpen ? null : faq.id)}
-                    className="w-full p-5 text-left flex items-center justify-between text-xs md:text-sm font-bold text-foundation-charcoal hover:text-foundation-forest transition-colors"
+                    className="w-full p-5 sm:p-6 text-left flex items-center justify-between text-base sm:text-lg font-bold text-foundation-charcoal hover:text-foundation-forest transition-colors cursor-pointer min-h-[56px]"
                   >
-                    <span>{faq.question}</span>
+                    <span className="pr-2">{faq.question}</span>
                     {isOpen ? (
-                      <ChevronUp className="w-4 h-4 text-foundation-forest flex-shrink-0 ml-2" />
+                      <ChevronUp className="w-5 h-5 text-foundation-forest flex-shrink-0 ml-2" />
                     ) : (
-                      <ChevronDown className="w-4 h-4 text-stone-400 flex-shrink-0 ml-2" />
+                      <ChevronDown className="w-5 h-5 text-stone-400 flex-shrink-0 ml-2" />
                     )}
                   </button>
 
                   {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs md:text-sm text-stone-600 leading-relaxed border-t border-foundation-borderMuted/40">
+                    <div className="px-5 sm:px-6 pb-6 pt-2 text-[15px] sm:text-[16px] text-stone-700 leading-relaxed border-t border-foundation-borderMuted/40">
                       {faq.answer}
                     </div>
                   )}
@@ -151,26 +151,26 @@ export const FAQ: React.FC = () => {
         )}
 
         {/* Have more questions card */}
-        <div className="bg-gradient-to-r from-foundation-forest to-foundation-forestDark text-foundation-ivory rounded-3xl p-6 md:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
-          <div className="space-y-1 text-center sm:text-left">
-            <h3 className="text-xl font-display font-bold text-foundation-sandstone">
+        <div className="bg-gradient-to-r from-foundation-forest to-foundation-forestDark text-foundation-ivory rounded-3xl p-6 sm:p-8 md:p-10 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
+          <div className="space-y-1.5 text-center sm:text-left">
+            <h3 className="text-2xl sm:text-3xl font-display font-bold text-foundation-sandstone">
               Still have questions?
             </h3>
-            <p className="text-xs text-stone-300">
+            <p className="text-sm sm:text-base text-stone-200">
               Speak directly with our coordinator or schedule a visit.
             </p>
           </div>
-          <div className="flex items-center space-x-3">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full sm:w-auto">
             <a
               href="tel:+919890898081"
-              className="px-5 py-2.5 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold text-xs rounded-full shadow transition-all flex items-center space-x-1.5"
+              className="px-6 py-3.5 bg-foundation-gold hover:bg-yellow-500 text-foundation-forestDark font-bold text-sm rounded-full shadow transition-all flex items-center justify-center space-x-2 min-h-[48px]"
             >
-              <Phone className="w-3.5 h-3.5" />
+              <Phone className="w-4 h-4" />
               <span>+91 98908 98081</span>
             </a>
             <Link
               to="/contact"
-              className="px-5 py-2.5 bg-white/10 hover:bg-white/20 text-white font-semibold text-xs rounded-full border border-white/20 transition-all"
+              className="px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white font-semibold text-sm rounded-full border border-white/20 transition-all flex items-center justify-center min-h-[48px]"
             >
               Contact Us
             </Link>

@@ -771,7 +771,7 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
   useEffect(() => {
     const loader = new THREE.TextureLoader();
     loader.load(
-      '/assets/images/logo.jpg',
+      '/assets/images/logo.png',
       (tex) => setLogoTexture(tex),
       undefined,
       () => setLogoTexture(null)
@@ -897,9 +897,9 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
         // Non-WebGL Fallback View
         <div className="relative w-full h-full flex flex-col items-center justify-center p-6 text-center text-white bg-gradient-to-b from-[#0D2818] to-[#1B4332]">
           <img
-            src="/assets/images/logo.jpg"
+            src="/assets/images/logo.png"
             alt="SBBM Social Foundation Logo"
-            className="w-24 h-24 rounded-full border-4 border-foundation-gold shadow-2xl mb-5"
+            className="w-24 h-24 object-contain drop-shadow-2xl mb-5"
           />
           <h1 className="text-3xl sm:text-4xl font-display font-bold text-foundation-sandstone mb-2">
             SBBM SOCIAL FOUNDATION
@@ -924,9 +924,9 @@ export const CinematicIntro3D: React.FC<CinematicIntro3DProps> = ({ onComplete }
           <div className="absolute top-0 left-0 right-0 z-30 flex items-center justify-between p-4 md:p-6 bg-gradient-to-b from-black/80 via-black/35 to-transparent">
             <div className="flex items-center space-x-3">
               <img
-                src="/assets/images/logo.jpg"
+                src="/assets/images/logo.png"
                 alt="SBBM Foundation Logo"
-                className="w-11 h-11 rounded-full border-2 border-foundation-gold shadow"
+                className="w-11 h-11 object-contain drop-shadow"
               />
               <div>
                 <p className="text-xs uppercase tracking-wider text-foundation-gold font-bold">

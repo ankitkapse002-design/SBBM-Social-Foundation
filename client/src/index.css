@@ -35,6 +35,13 @@
     background-color: #FBFBFA;
     -webkit-text-size-adjust: 100%;
     overflow-x: hidden;
+    font-size: 16px;
+  }
+
+  @media (min-width: 1024px) {
+    html {
+      font-size: 16.5px;
+    }
   }
 
   body {
@@ -46,6 +53,12 @@
     min-width: 320px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    font-size: 1.0625rem; /* 17px default body text for high readability */
+    line-height: 1.7;
+  }
+
+  p {
+    line-height: 1.7;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -54,6 +67,7 @@
     letter-spacing: -0.02em;
     overflow-wrap: break-word;
     word-break: break-word;
+    line-height: 1.25;
   }
 
   ::selection {

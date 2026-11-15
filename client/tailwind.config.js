@@ -94,6 +94,15 @@ export default {
         display: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
         serif: ['Cinzel', 'Playfair Display', 'Georgia', 'serif'],
       },
+      fontSize: {
+        'readable-hero': ['2.75rem', { lineHeight: '1.18', letterSpacing: '-0.02em' }],   // ~44px
+        'readable-h1': ['2.25rem', { lineHeight: '1.22', letterSpacing: '-0.02em' }],     // ~36px
+        'readable-h2': ['1.75rem', { lineHeight: '1.28', letterSpacing: '-0.015em' }],    // ~28px
+        'readable-h3': ['1.375rem', { lineHeight: '1.35', letterSpacing: '-0.01em' }],    // ~22px
+        'readable-body': ['1.0625rem', { lineHeight: '1.7' }],                            // 17px
+        'readable-lg': ['1.125rem', { lineHeight: '1.75' }],                              // 18px
+        'readable-sub': ['0.9375rem', { lineHeight: '1.6' }],                             // 15px
+      },
       boxShadow: {
         'subtle-xs': '0 1px 2px 0 rgba(0, 0, 0, 0.03)',
         'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.04)',

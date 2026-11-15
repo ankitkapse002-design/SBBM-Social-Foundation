@@ -67,9 +67,9 @@ export const AdminLogin: React.FC = () => {
       <div className="max-w-md w-full bg-foundation-ivory rounded-3xl p-6 sm:p-8 md:p-10 border-2 border-foundation-gold/40 shadow-2xl space-y-6">
         <div className="text-center space-y-2">
           <img
-            src="/assets/images/logo.jpg"
+            src="/assets/images/logo.png"
             alt="Official SBBM Social Foundation Logo"
-            className="w-16 h-16 rounded-full mx-auto object-cover border-2 border-[#C5A059] shadow-lg bg-white"
+            className="w-16 h-16 mx-auto object-contain drop-shadow-md"
           />
           <span className="text-[10px] uppercase tracking-widest text-[#9B1B22] font-bold bg-[#FDF2F2] border border-[#FCDADA] px-3 py-1 rounded-full inline-block">
             Protected Administration
