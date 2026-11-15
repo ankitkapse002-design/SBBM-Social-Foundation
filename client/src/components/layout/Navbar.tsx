@@ -63,6 +63,20 @@ export const Navbar: React.FC<NavbarProps> = () => {
     };
   }, [isMobileMenuOpen]);
 
+  // Support Escape key to close mobile menu or any open dropdown
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMobileMenuOpen(false);
+        setIsAboutDropdownOpen(false);
+        setIsWhatWeDoDropdownOpen(false);
+        setIsAccountDropdownOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
   useEffect(() => {
     const token = getAuthToken();
     if (token) {
@@ -405,38 +419,31 @@ export const Navbar: React.FC<NavbarProps> = () => {
 
           </div>
 
-          {/* Mobile Header Controls (High Touch Target & Clean Proportions) */}
-          <div className="lg:hidden flex items-center space-x-1.5 sm:space-x-2">
+          {/* Mobile Header Controls: Exactly Logo (left) | Support Button | Hamburger Menu (right) */}
+          <div className="lg:hidden flex items-center space-x-2 shrink-0">
+            {/* 1. Support Button */}
             <Link
               to="/support"
-              className="px-2.5 sm:px-3.5 py-2 bg-[#9B1B22] active:bg-[#7D131A] text-white font-semibold rounded-lg text-xs shadow-xs min-h-[40px] flex items-center space-x-1"
+              className="px-3 sm:px-3.5 py-2 bg-[#9B1B22] hover:bg-[#7D131A] active:bg-[#7D131A] text-white font-semibold rounded-lg text-xs shadow-xs min-h-[44px] flex items-center space-x-1.5 shrink-0 transition-colors"
+              id="mobile-header-support-btn"
             >
               <Heart className="w-3.5 h-3.5 fill-white shrink-0" />
               <span>Support</span>
             </Link>
 
-            <Link
-              to={user && user.role === 'admin' ? "/admin/dashboard" : "/admin-login"}
-              className="w-10 h-10 rounded-full border border-[#D8D5CD] bg-[#F4F3EE] flex items-center justify-center text-[#0E1726] shrink-0"
-              title="Admin Login"
-              aria-label="Admin Login"
-            >
-              {user && user.role === 'admin' ? (
-                <span className="w-7 h-7 rounded-full bg-[#9B1B22] text-white text-[11px] font-bold flex items-center justify-center">
-                  {user.fullName ? user.fullName.charAt(0).toUpperCase() : 'A'}
-                </span>
-              ) : (
-                <User className="w-4.5 h-4.5" />
-              )}
-            </Link>
-
+            {/* 2. Hamburger Menu Button (Positioned immediately beside Support button, replaces old Login icon) */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-10 h-10 rounded-lg text-[#0E1726] hover:bg-[#F4F3EE] flex items-center justify-center transition-colors shrink-0"
-              aria-label="Toggle navigation menu"
+              className="w-11 h-11 min-w-[44px] min-h-[44px] rounded-lg border border-[#D8D5CD] bg-white hover:bg-[#F4F3EE] active:bg-[#E8E6E1] text-[#0E1726] flex items-center justify-center transition-colors shrink-0 cursor-pointer shadow-xs"
+              aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
               aria-expanded={isMobileMenuOpen}
+              id="mobile-hamburger-toggle"
             >
-              {isMobileMenuOpen ? <X className="w-6 h-6 text-[#9B1B22]" /> : <Menu className="w-6 h-6" />}
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6 text-[#9B1B22]" />
+              ) : (
+                <Menu className="w-6 h-6 text-[#0E1726]" />
+              )}
             </button>
           </div>
 
@@ -444,200 +451,238 @@ export const Navbar: React.FC<NavbarProps> = () => {
       </nav>
 
       {/* =========================================================================
-          3. MOBILE MENU DRAWER (Mobile-First Polish, Accordion Submenus, Safe-Area)
+          3. MOBILE NAVIGATION SLIDE-IN DRAWER (Outside Click, Escape Key, Scroll-Lock)
          ========================================================================= */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden fixed inset-x-0 top-[96px] sm:top-[104px] bottom-0 bg-[#0E1726]/60 backdrop-blur-xs z-50 flex flex-col justify-start animate-in fade-in">
-          <div className="bg-white border-b border-[#E8E6E1] max-h-[calc(100vh-100px)] overflow-y-auto p-4 sm:p-6 space-y-4 shadow-2xl">
-            
-            {/* Quick Contact & Helpline Bar */}
-            <div className="bg-[#F4F3EE] border border-[#E8E6E1] rounded-xl p-3 flex items-center justify-between text-xs">
-              <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-[#9B1B22] shrink-0" />
-                <span className="text-[#334155]">Helpline: <a href="tel:+919890898081" className="font-bold text-[#9B1B22]">+91 98908 98081</a></span>
-              </div>
-              <span className="text-[10.5px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">24/7 Support</span>
-            </div>
-
-            {/* Primary Navigation Item List with 48px Minimum Touch Target */}
-            <div className="space-y-1">
-              
-              {/* 1. Home */}
-              <Link
-                to="/"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  location.pathname === '/' ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                }`}
-              >
-                <span>Home</span>
-                <ChevronRight className="w-4 h-4 text-[#64748B]" />
-              </Link>
-
-              {/* 2. About Us (Accordion Submenu) */}
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setMobileSubmenu(mobileSubmenu === 'about' ? 'none' : 'about')}
-                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                    isActive('/about') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                  }`}
-                >
-                  <span>About Us</span>
-                  <ChevronDown className={`w-4 h-4 text-[#64748B] transition-transform ${mobileSubmenu === 'about' ? 'rotate-180 text-[#9B1B22]' : ''}`} />
-                </button>
-                {mobileSubmenu === 'about' && (
-                  <div className="ml-3 pl-3 border-l-2 border-[#9B1B22]/30 space-y-1 py-1 animate-in fade-in">
-                    <Link
-                      to="/about"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
-                    >
-                      Institutional Overview & Charter
-                    </Link>
-                    <Link
-                      to="/about"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
-                    >
-                      Vision, Mission & 10 Objectives
-                    </Link>
-                    <Link
-                      to="/about"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
-                    >
-                      Founder's Message & Governing Board
-                    </Link>
-                    <Link
-                      to="/about"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
-                    >
-                      Legal Registrations (MAH/332/15/NAG)
-                    </Link>
-                  </div>
-                )}
-              </div>
-
-              {/* 3. What We Do (Accordion Submenu with 8 Initiatives) */}
-              <div>
-                <button
-                  type="button"
-                  onClick={() => setMobileSubmenu(mobileSubmenu === 'initiatives' ? 'none' : 'initiatives')}
-                  className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                    isActive('/services') || isActive('/old-age-home') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                  }`}
-                >
-                  <span>What We Do (The 8 Pillars)</span>
-                  <ChevronDown className={`w-4 h-4 text-[#64748B] transition-transform ${mobileSubmenu === 'initiatives' ? 'rotate-180 text-[#9B1B22]' : ''}`} />
-                </button>
-                {mobileSubmenu === 'initiatives' && (
-                  <div className="ml-3 pl-3 border-l-2 border-[#9B1B22]/30 space-y-1 py-1 max-h-60 overflow-y-auto animate-in fade-in">
-                    {initiatives.map((init) => (
-                      <Link
-                        key={init.num}
-                        to={init.route}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className="flex items-center space-x-2 px-3 py-2 text-xs text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
-                      >
-                        <span className="font-mono text-[10px] font-bold text-[#9B1B22] bg-[#F4F3EE] px-1.5 py-0.5 rounded">{init.num}</span>
-                        <span className="truncate">{init.title}</span>
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              {/* 4. Old Age Home Flagship Sanctuary */}
-              <Link
-                to="/old-age-home"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/old-age-home') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                }`}
-              >
-                <span>Vyenkatesh Ashram (Old Age Home)</span>
-                <ChevronRight className="w-4 h-4 text-[#64748B]" />
-              </Link>
-
-              {/* 5. Senior Admission Enquiry */}
-              <Link
-                to="/admission"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/admission') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                }`}
-              >
-                <span>Apply for Admission</span>
-                <ChevronRight className="w-4 h-4 text-[#64748B]" />
-              </Link>
-
-              {/* 6. Partnership & CSR */}
-              <Link
-                to="/support#csr"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  location.hash === '#csr' ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                }`}
-              >
-                <span>Partnership (CSR & Schedule VII)</span>
-                <ChevronRight className="w-4 h-4 text-[#64748B]" />
-              </Link>
-
-              {/* 7. Gallery */}
-              <Link
-                to="/gallery"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/gallery') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                }`}
-              >
-                <span>Photo & Video Gallery</span>
-                <ChevronRight className="w-4 h-4 text-[#64748B]" />
-              </Link>
-
-              {/* 8. Contact */}
-              <Link
-                to="/contact"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
-                  isActive('/contact') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
-                }`}
-              >
-                <span>Contact Directory & Locations</span>
-                <ChevronRight className="w-4 h-4 text-[#64748B]" />
-              </Link>
-
-              {/* 9. Support Our Work */}
-              <Link
-                to="/support"
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm bg-[#9B1B22] hover:bg-[#7D131A] text-white shadow-xs min-h-[46px] mt-2"
-              >
-                <div className="flex items-center space-x-2">
-                  <Heart className="w-4 h-4 fill-white" />
-                  <span>Support Our Work (80G Tax Exemption)</span>
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-[#0E1726]/60 backdrop-blur-xs flex justify-end animate-in fade-in"
+          onClick={() => setIsMobileMenuOpen(false)}
+          aria-modal="true"
+          role="dialog"
+          aria-label="Mobile Navigation Menu"
+        >
+          <div
+            className="w-full max-w-[340px] sm:max-w-[380px] bg-white h-full shadow-2xl flex flex-col justify-between overflow-hidden animate-in slide-in-from-right duration-200 border-l border-[#E8E6E1]"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Drawer Header with Title & Close (X) button */}
+            <div className="p-4 border-b border-[#E8E6E1] flex items-center justify-between bg-[#FBFBFA] shrink-0">
+              <div className="flex items-center space-x-2.5 min-w-0">
+                <img
+                  src="/assets/images/logo.jpg"
+                  alt="SBBM Social Foundation"
+                  className="w-8 h-8 rounded-full border border-[#D8D5CD] object-cover shrink-0"
+                />
+                <div className="flex flex-col min-w-0">
+                  <span className="text-[9px] tracking-wider uppercase text-[#9B1B22] font-bold leading-none truncate">
+                    ESTD 2015 • REGD. F-33193
+                  </span>
+                  <span className="text-xs font-bold text-[#0E1726] leading-tight truncate">
+                    SBBM Social Foundation
+                  </span>
                 </div>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="w-10 h-10 min-w-[40px] min-h-[40px] rounded-lg text-[#0E1726] hover:bg-[#F4F3EE] active:bg-[#E8E6E1] flex items-center justify-center transition-colors shrink-0 cursor-pointer"
+                aria-label="Close navigation menu"
+              >
+                <X className="w-5 h-5 text-[#9B1B22]" />
+              </button>
             </div>
 
-            {/* Admin Management Section */}
-            <div className="pt-3 border-t border-[#E8E6E1] space-y-2">
+            {/* Scrollable Navigation Body */}
+            <div className="flex-1 overflow-y-auto p-4 sm:p-5 space-y-3">
+              {/* Quick Contact & Helpline Bar */}
+              <div className="bg-[#F4F3EE] border border-[#E8E6E1] rounded-xl p-3 flex items-center justify-between text-xs">
+                <div className="flex items-center space-x-2">
+                  <Phone className="w-4 h-4 text-[#9B1B22] shrink-0" />
+                  <span className="text-[#334155]">Helpline: <a href="tel:+919890898081" className="font-bold text-[#9B1B22]">+91 98908 98081</a></span>
+                </div>
+                <span className="text-[10.5px] px-2 py-0.5 rounded bg-emerald-50 text-emerald-800 border border-emerald-200 font-semibold">24/7</span>
+              </div>
+
+              {/* Primary Navigation Item List with 44px+ Minimum Touch Target */}
+              <div className="space-y-1">
+                {/* 1. Home */}
+                <Link
+                  to="/"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
+                    location.pathname === '/' ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                  }`}
+                >
+                  <span>Home</span>
+                  <ChevronRight className="w-4 h-4 text-[#64748B]" />
+                </Link>
+
+                {/* 2. About Us (Accordion Submenu) */}
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setMobileSubmenu(mobileSubmenu === 'about' ? 'none' : 'about')}
+                    className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] cursor-pointer ${
+                      isActive('/about') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                    }`}
+                  >
+                    <span>About Us</span>
+                    <ChevronDown className={`w-4 h-4 text-[#64748B] transition-transform ${mobileSubmenu === 'about' ? 'rotate-180 text-[#9B1B22]' : ''}`} />
+                  </button>
+                  {mobileSubmenu === 'about' && (
+                    <div className="ml-3 pl-3 border-l-2 border-[#9B1B22]/30 space-y-1 py-1 animate-in fade-in">
+                      <Link
+                        to="/about"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
+                      >
+                        Institutional Overview & Charter
+                      </Link>
+                      <Link
+                        to="/about"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
+                      >
+                        Vision, Mission & 10 Objectives
+                      </Link>
+                      <Link
+                        to="/about"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
+                      >
+                        Founder's Message & Governing Board
+                      </Link>
+                      <Link
+                        to="/about"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="block px-3 py-2 text-xs font-medium text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
+                      >
+                        Legal Registrations (MAH/332/15/NAG)
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
+                {/* 3. What We Do (Accordion Submenu with 8 Initiatives) */}
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => setMobileSubmenu(mobileSubmenu === 'initiatives' ? 'none' : 'initiatives')}
+                    className={`w-full flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] cursor-pointer ${
+                      isActive('/services') || isActive('/old-age-home') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                    }`}
+                  >
+                    <span>What We Do (The 8 Pillars)</span>
+                    <ChevronDown className={`w-4 h-4 text-[#64748B] transition-transform ${mobileSubmenu === 'initiatives' ? 'rotate-180 text-[#9B1B22]' : ''}`} />
+                  </button>
+                  {mobileSubmenu === 'initiatives' && (
+                    <div className="ml-3 pl-3 border-l-2 border-[#9B1B22]/30 space-y-1 py-1 max-h-60 overflow-y-auto animate-in fade-in">
+                      {initiatives.map((init) => (
+                        <Link
+                          key={init.num}
+                          to={init.route}
+                          onClick={() => setIsMobileMenuOpen(false)}
+                          className="flex items-center space-x-2 px-3 py-2 text-xs text-[#334155] hover:text-[#9B1B22] rounded-lg hover:bg-[#F4F3EE]"
+                        >
+                          <span className="font-mono text-[10px] font-bold text-[#9B1B22] bg-[#F4F3EE] px-1.5 py-0.5 rounded">{init.num}</span>
+                          <span className="truncate">{init.title}</span>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* 4. Old Age Home Flagship Sanctuary */}
+                <Link
+                  to="/old-age-home"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
+                    isActive('/old-age-home') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                  }`}
+                >
+                  <span>Vyenkatesh Ashram (Old Age Home)</span>
+                  <ChevronRight className="w-4 h-4 text-[#64748B]" />
+                </Link>
+
+                {/* 5. Senior Admission Enquiry */}
+                <Link
+                  to="/admission"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
+                    isActive('/admission') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                  }`}
+                >
+                  <span>Apply for Admission</span>
+                  <ChevronRight className="w-4 h-4 text-[#64748B]" />
+                </Link>
+
+                {/* 6. Partnership & CSR */}
+                <Link
+                  to="/support#csr"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
+                    location.hash === '#csr' ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                  }`}
+                >
+                  <span>Partnership (CSR & Schedule VII)</span>
+                  <ChevronRight className="w-4 h-4 text-[#64748B]" />
+                </Link>
+
+                {/* 7. Gallery */}
+                <Link
+                  to="/gallery"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
+                    isActive('/gallery') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                  }`}
+                >
+                  <span>Photo & Video Gallery</span>
+                  <ChevronRight className="w-4 h-4 text-[#64748B]" />
+                </Link>
+
+                {/* 8. Contact */}
+                <Link
+                  to="/contact"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-3 rounded-xl font-semibold text-sm transition-colors min-h-[46px] ${
+                    isActive('/contact') ? 'text-[#9B1B22] bg-[#FDF2F2] border border-[#FCDADA]/60 font-bold' : 'text-[#0E1726] hover:bg-[#F4F3EE]'
+                  }`}
+                >
+                  <span>Contact Directory & Locations</span>
+                  <ChevronRight className="w-4 h-4 text-[#64748B]" />
+                </Link>
+
+                {/* 9. Support Our Work */}
+                <Link
+                  to="/support"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="flex items-center justify-between px-3.5 py-3 rounded-xl font-bold text-sm bg-[#9B1B22] hover:bg-[#7D131A] text-white shadow-xs min-h-[46px] mt-2 transition-colors"
+                >
+                  <div className="flex items-center space-x-2">
+                    <Heart className="w-4 h-4 fill-white" />
+                    <span>Support Our Work (80G Tax Exemption)</span>
+                  </div>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Drawer Footer: Admin Access & Verified Helpline */}
+            <div className="p-4 border-t border-[#E8E6E1] bg-[#FBFBFA] space-y-2 shrink-0">
               {user && user.role === 'admin' ? (
                 <div className="space-y-2">
                   <Link
                     to="/admin/dashboard"
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="w-full py-3 bg-[#9B1B22] hover:bg-[#7D131A] text-white font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 min-h-[44px]"
+                    className="w-full py-2.5 bg-[#9B1B22] hover:bg-[#7D131A] text-white font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 min-h-[44px] transition-colors"
                   >
                     <ShieldCheck className="w-4 h-4" />
                     <span>Go to Admin Dashboard</span>
                   </Link>
                   <button
                     onClick={handleLogout}
-                    className="w-full py-2.5 bg-[#FDF2F2] hover:bg-[#FCDADA] text-[#9B1B22] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-1.5 min-h-[44px] cursor-pointer"
+                    className="w-full py-2 bg-[#FDF2F2] hover:bg-[#FCDADA] text-[#9B1B22] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-1.5 min-h-[44px] cursor-pointer transition-colors"
                   >
                     <LogOut className="w-4 h-4" />
                     <span>Sign Out</span>
@@ -647,12 +692,16 @@ export const Navbar: React.FC<NavbarProps> = () => {
                 <Link
                   to="/admin-login"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-full py-2.5 bg-[#F4F3EE] hover:bg-[#E8E6E1] text-[#0E1726] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 border border-[#D8D5CD] min-h-[44px]"
+                  className="w-full py-2.5 bg-white hover:bg-[#F4F3EE] active:bg-[#E8E6E1] text-[#0E1726] font-semibold rounded-xl text-xs text-center flex items-center justify-center space-x-2 border border-[#D8D5CD] min-h-[44px] transition-colors"
                 >
                   <User className="w-4 h-4 text-[#9B1B22]" />
                   <span>Administrative Login</span>
                 </Link>
               )}
+
+              <p className="text-[10.5px] text-center text-[#64748B] pt-0.5">
+                Regd: MAH/332/15/NAG • F-33193 • 12A &amp; 80G
+              </p>
             </div>
 
           </div>

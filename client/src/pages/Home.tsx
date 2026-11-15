@@ -469,7 +469,7 @@ export const Home: React.FC = () => {
               <p className="text-[11px] text-[#64748B]">Elderly care, youth, education, cow sanctuary</p>
             </StaggerItem>
 
-            <StaggerItem className="space-y-1 p-2 border-t sm:border-t-0 md:border-l border-[#E8E6E1]">
+            <StaggerItem className="space-y-1 p-2 border-t md:border-t-0 md:border-l border-[#E8E6E1]">
               <p className="text-xl sm:text-2xl md:text-4xl font-bold text-[#9B1B22] tracking-tight">
                 12A &amp; 80G
               </p>
@@ -477,7 +477,7 @@ export const Home: React.FC = () => {
               <p className="text-[11px] text-[#64748B]">50% tax deduction for contributors</p>
             </StaggerItem>
 
-            <StaggerItem className="space-y-1 p-2 border-t sm:border-t-0 border-l border-[#E8E6E1]">
+            <StaggerItem className="space-y-1 p-2 border-t md:border-t-0 border-l border-[#E8E6E1]">
               <p className="text-xl sm:text-2xl md:text-4xl font-bold text-emerald-700 tracking-tight">
                 100% Free
               </p>
@@ -521,7 +521,7 @@ export const Home: React.FC = () => {
                   key={tab.id}
                   type="button"
                   onClick={() => setActiveStoryTab(tab.id as any)}
-                  className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${activeStoryTab === tab.id
+                  className={`shrink-0 sm:shrink min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${activeStoryTab === tab.id
                       ? 'bg-[#9B1B22] text-white shadow-md'
                       : 'bg-white hover:bg-[#F4F3EE] text-[#334155] border border-[#E8E6E1]'
                     }`}
@@ -591,7 +591,7 @@ export const Home: React.FC = () => {
           </div>
 
           {/* Founder Ethos Strip */}
-          <div className="p-6 md:p-8 bg-white rounded-3xl border border-[#E8E6E1] shadow-card grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div className="p-4 sm:p-6 md:p-8 bg-white rounded-3xl border border-[#E8E6E1] shadow-card grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
             <div className="lg:col-span-2 flex items-center justify-center">
               <img
                 src="/assets/images/leadership/ashwin_anjikar_president.jpg"
@@ -652,7 +652,7 @@ export const Home: React.FC = () => {
                   key={cat.id}
                   type="button"
                   onClick={() => setSelectedPillarCategory(cat.id)}
-                  className={`shrink-0 sm:shrink min-h-[38px] px-3.5 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${selectedPillarCategory === cat.id
+                  className={`shrink-0 sm:shrink min-h-[44px] px-3.5 py-1.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${selectedPillarCategory === cat.id
                       ? 'bg-[#9B1B22] text-white shadow-xs'
                       : 'bg-[#F4F3EE] hover:bg-[#E8E6E1] text-[#334155]'
                     }`}

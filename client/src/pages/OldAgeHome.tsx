@@ -153,7 +153,7 @@ export const OldAgeHome: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
             <div className="bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-soft-sm group">
               <div className="h-44 sm:h-52 overflow-hidden">
                 <img

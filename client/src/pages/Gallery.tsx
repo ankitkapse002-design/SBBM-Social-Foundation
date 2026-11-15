@@ -107,7 +107,7 @@ export const Gallery: React.FC = () => {
               <button
                 key={cat.id}
                 onClick={() => setSelectedCategory(cat.id)}
-                className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer ${
+                className={`shrink-0 sm:shrink min-h-[44px] px-3.5 sm:px-4 py-2 rounded-full transition-all whitespace-nowrap cursor-pointer ${
                   selectedCategory === cat.id
                     ? 'bg-foundation-forest text-foundation-ivory shadow'
                     : 'bg-white text-stone-700 border border-foundation-borderMuted hover:bg-stone-50'
@@ -122,7 +122,7 @@ export const Gallery: React.FC = () => {
           <div className="flex items-center space-x-2 self-start sm:self-auto shrink-0">
             <button
               onClick={() => setSelectedType('all')}
-              className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs transition-all cursor-pointer ${
+              className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs transition-all cursor-pointer ${
                 selectedType === 'all' ? 'bg-foundation-charcoal text-white' : 'bg-white text-stone-600 border'
               }`}
             >
@@ -130,7 +130,7 @@ export const Gallery: React.FC = () => {
             </button>
             <button
               onClick={() => setSelectedType('photo')}
-              className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs transition-all flex items-center space-x-1 cursor-pointer ${
+              className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs transition-all flex items-center space-x-1 cursor-pointer ${
                 selectedType === 'photo' ? 'bg-foundation-charcoal text-white' : 'bg-white text-stone-600 border'
               }`}
             >
@@ -139,7 +139,7 @@ export const Gallery: React.FC = () => {
             </button>
             <button
               onClick={() => setSelectedType('video')}
-              className={`min-h-[38px] px-3 py-1.5 rounded-xl text-xs transition-all flex items-center space-x-1 cursor-pointer ${
+              className={`min-h-[44px] px-3.5 py-2 rounded-xl text-xs transition-all flex items-center space-x-1 cursor-pointer ${
                 selectedType === 'video' ? 'bg-foundation-charcoal text-white' : 'bg-white text-stone-600 border'
               }`}
             >

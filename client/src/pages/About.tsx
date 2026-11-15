@@ -92,7 +92,7 @@ export const About: React.FC = () => {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`shrink-0 sm:shrink min-h-[40px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${
+              className={`shrink-0 sm:shrink min-h-[44px] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-full transition-all cursor-pointer whitespace-nowrap ${
                 activeTab === tab.id
                   ? 'bg-[#9B1B22] text-white shadow-md font-bold'
                   : 'bg-white hover:bg-[#F4F3EE] text-[#334155] border border-[#E8E6E1]'
@@ -318,7 +318,7 @@ export const About: React.FC = () => {
         {activeTab === 'board' && (
           <div className="space-y-8 max-w-5xl mx-auto">
             {/* Committee Members Authentic Portraits */}
-            <div className="bg-white p-6 md:p-8 rounded-3xl border border-stone-200 shadow-soft space-y-5">
+            <div className="bg-white p-4 sm:p-6 md:p-8 rounded-3xl border border-stone-200 shadow-soft space-y-5">
               <div className="border-b border-stone-100 pb-3">
                 <h3 className="font-display font-bold text-xl text-foundation-charcoal">
                   Committee Members
@@ -328,7 +328,7 @@ export const About: React.FC = () => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 text-center">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 sm:gap-4 text-center">
                 <div className="p-3 rounded-2xl bg-stone-50 border border-stone-200 space-y-2">
                   <img
                     src="/assets/images/governance/devkumar_moundekar.jpg"

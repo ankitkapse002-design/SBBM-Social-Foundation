@@ -147,7 +147,7 @@ export const Support: React.FC = () => {
           {/* Official Bank Account & UPI Payment Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {/* Column A: Genuine UPI QR Code Scanner (5 Cols) */}
-            <div className="lg:col-span-5 bg-gradient-to-b from-[#8B1D24] to-[#6E1419] text-white p-5 sm:p-8 rounded-3xl shadow-soft flex flex-col justify-between space-y-6">
+            <div className="lg:col-span-5 bg-gradient-to-b from-[#9B1B22] to-[#7D131A] text-white p-5 sm:p-8 rounded-3xl shadow-soft flex flex-col justify-between space-y-6">
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-white/10 text-amber-300 text-xs font-bold">
@@ -200,7 +200,7 @@ export const Support: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => copyToClipboard('sbbmsocialfoundation@okhdfcbank', 'upi')}
-                      className="self-start sm:self-auto min-h-[38px] px-3 py-1.5 bg-white hover:bg-stone-100 text-[#8B1D24] rounded-lg text-xs font-bold transition-colors flex items-center space-x-1 shrink-0 cursor-pointer shadow-xs"
+                      className="self-start sm:self-auto min-h-[44px] px-3.5 py-2 bg-white hover:bg-stone-100 text-[#9B1B22] rounded-lg text-xs font-bold transition-colors flex items-center space-x-1 shrink-0 cursor-pointer shadow-xs"
                       title="Copy UPI ID"
                     >
                       {copiedField === 'upi' ? <Check className="w-3.5 h-3.5 text-emerald-700" /> : <Copy className="w-3.5 h-3.5" />}
@@ -262,7 +262,7 @@ export const Support: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => copyToClipboard('920020067215309', 'acc')}
-                      className="self-start sm:self-auto min-h-[40px] px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+                      className="self-start sm:self-auto min-h-[44px] px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
                       title="Copy Account Number"
                     >
                       {copiedField === 'acc' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
@@ -279,7 +279,7 @@ export const Support: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => copyToClipboard('UTIB0001674', 'ifsc')}
-                      className="self-start sm:self-auto min-h-[40px] px-3.5 py-1.5 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
+                      className="self-start sm:self-auto min-h-[44px] px-3.5 py-2 bg-stone-100 hover:bg-stone-200 text-stone-800 rounded-lg text-xs font-bold transition-colors flex items-center space-x-1.5 cursor-pointer shadow-2xs"
                       title="Copy IFSC Code"
                     >
                       {copiedField === 'ifsc' ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
